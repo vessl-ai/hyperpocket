@@ -1,0 +1,1 @@
+hyperpocket_anthropic==0.1.6

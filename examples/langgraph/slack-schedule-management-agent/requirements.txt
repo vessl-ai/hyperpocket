@@ -1,0 +1,2 @@
+slack_sdk==3.34.0
+hyperpocket-langgraph==0.0.1

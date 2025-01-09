@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "hyperpocket-root"
+version = "0.0.1"
+description = ""
+authors = ["moon <moon@vessl.ai>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.6"
+pytest = "^8.3.4"
+hyperpocket-langchain = {path = "libs/extensions/langchain"}
+hyperpocket-langgraph = {path = "libs/extensions/langgraph"}
+hyperpocket-openai = {path = "libs/extensions/openai"}
+hyperpocket-anthropic = {path = "libs/extensions/anthropic"}
+hyperpocket-llamaindex = {path = "libs/extensions/llamaindex"}
+hyperpocket = {path = "libs/hyperpocket"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
