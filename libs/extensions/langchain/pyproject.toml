@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "hyperpocket-langchain"
+version = "0.0.2"
+description = ""
+authors = ["VESSL AI Devs <dev@vessl.ai>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+langchain-core = "^0.3.22"
+pydantic = "^2.10.3"
+langchain = "^0.3.12"
+hyperpocket = "^0.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

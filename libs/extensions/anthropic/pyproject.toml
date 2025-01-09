@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "hyperpocket-anthropic"
+version = "0.1.7"
+description = ""
+authors = ["moon <moon@vessl.ai>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+anthropic = "^0.40.0"
+hyperpocket = "^0.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "hyperpocket-openai"
+version = "0.0.1"
+description = ""
+authors = ["moon <moon@vessl.ai>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+openai = "^1.57.3"
+hyperpocket = "0.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "hyperpocket-langgraph"
+version = "0.0.1"
+description = ""
+authors = ["moon <moon@vessl.ai>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+langgraph = "^0.2.59"
+hyperpocket = "0.0.3"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
