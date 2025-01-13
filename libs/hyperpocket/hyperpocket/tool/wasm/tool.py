@@ -1,5 +1,7 @@
+import os
 import json
 import pathlib
+from dotenv import dotenv_values
 from typing import Any, Optional
 
 import toml
@@ -68,6 +70,7 @@ class WasmTool(Tool):
         schema_path = rootpath / "schema.json"
         config_path = rootpath / "config.toml"
         readme_path = rootpath / "README.md"
+        envvar_path = rootpath / ".env"
 
         try:
             with schema_path.open("r") as f:
@@ -100,6 +103,10 @@ class WasmTool(Tool):
                 readme = f.read()
         else:
             readme = None
+        
+        if envvar_path.exists():
+            cls._inject_envvar(envvar_path)
+            
         return cls(
             name=name,
             description=description,
@@ -124,7 +131,31 @@ class WasmTool(Tool):
             auth_handler=auth_handler,
             scopes=scopes,
         )
+    
+    @classmethod
+    def _inject_envvar(cls, envvar_path: pathlib.Path) -> None:
+        current_env_path = pathlib.Path(os.getcwd()) / ".env"
+        current_env = dotenv_values(current_env_path)
+        tool_env = dotenv_values(envvar_path)
+        not_found_envvars = []
 
+        for k, v in tool_env.items():
+            if k in current_env:
+                tool_env[k] = current_env[k]
+            else:
+                not_found_envvars.append(k)
+
+        for k in not_found_envvars:
+            print(f"The following environment variables {k} are not found in the current environment:")
+            print(f"Please add the following environment variables to the current environment:")
+            user_input = input(f"{k}: ")
+            if user_input:
+                tool_env[k] = user_input
+
+        with open(envvar_path, "w") as f:
+            for k, v in tool_env.items():
+                f.write(f"{k}={v}\n")
+    
     def template_arguments(self) -> dict[str, str]:
         return {}
 
