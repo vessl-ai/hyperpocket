@@ -1,13 +1,11 @@
 import abc
-from typing import Optional, Type, Callable, Any
+from typing import Optional, Type, Callable
 
 from pydantic import BaseModel, Field
 
 from hyperpocket.auth.provider import AuthProvider
 from hyperpocket.config.logger import pocket_logger
 from hyperpocket.util.json_schema_to_model import json_schema_to_model
-
-PostprocessFunction = Callable[[str], Any]
 
 
 class ToolAuth(BaseModel):
@@ -29,23 +27,23 @@ class ToolAuth(BaseModel):
 
 
 class ToolRequest(abc.ABC):
-    postprocessings: Optional[list[PostprocessFunction]] = None
+    postprocessings: Optional[list[Callable]] = None
 
     @abc.abstractmethod
     def __str__(self):
         raise NotImplementedError
     
-    def add_postprocessing(self, postprocessing: PostprocessFunction):
+    def add_postprocessing(self, postprocessing: Callable):
         if self.postprocessings is None:
             self.postprocessings = [postprocessing]
         else:
             self.postprocessings.append(postprocessing)
 
-    def __or__(self, other: PostprocessFunction):
+    def __or__(self, other: Callable):
         self.add_postprocessing(other)
         return self
 
-    def with_postprocessings(self, postprocessings: list[PostprocessFunction]):
+    def with_postprocessings(self, postprocessings: list[Callable]):
         if self.postprocessings is None:
             self.postprocessings = postprocessings
         else:
@@ -61,7 +59,7 @@ class Tool(BaseModel, abc.ABC):
     description: str = Field(description="tool description")
     argument_json_schema: Optional[dict] = Field(default=None, description="tool argument json schema")
     auth: Optional[ToolAuth] = Field(default=None, description="authentication information to invoke tool")
-    postprocessings: Optional[list[PostprocessFunction]] = None
+    postprocessings: Optional[list[Callable]] = None
 
     @abc.abstractmethod
     def invoke(self, **kwargs) -> str:
@@ -127,17 +125,17 @@ class Tool(BaseModel, abc.ABC):
             pocket_logger.warning(f"failed to get tool({name}) schema model. error : {e}")
             pass
 
-    def add_postprocessing(self, postprocessing: PostprocessFunction):
+    def add_postprocessing(self, postprocessing: Callable):
         if self.postprocessings is None:
             self.postprocessings = [postprocessing]
         else:
             self.postprocessings.append(postprocessing)
 
-    def __or__(self, other: PostprocessFunction):
+    def __or__(self, other: Callable):
         self.add_postprocessing(other)
         return self
 
-    def with_postprocessings(self, postprocessings: list[PostprocessFunction]):
+    def with_postprocessings(self, postprocessings: list[Callable]):
         if self.postprocessings is None:
             self.postprocessings = postprocessings
         else:
