@@ -16,27 +16,24 @@ python_template = '''
             scriptID: `{{ SCRIPT_ID }}`
         }
     }
-    async function main() {
+    async function _main() {
+        // load the script configs
         loadConfig();
-        const b64FilesResp = await fetch(`/tools/wasm/scripts/${globalThis.toolConfigs.scriptID}/file_tree`);
-        const b64Files = await b64FilesResp.json();
-        const code = atob(b64Files.tree["main.py"].file.contents);
-        const requirements = atob(b64Files.tree["requirements.txt"].file.contents);
         
+        // get entrypoint wheel
+        const entrypointResp = await fetch(`/tools/wasm/scripts/${globalThis.toolConfigs.scriptID}/entrypoint`);
+        const { package_name: packageName, entrypoint } = await entrypointResp.json();
+        
+        // initialize pyodide
         const pyodide = await loadPyodide({
             env: JSON.parse(globalThis.toolConfigs.envs),
         });
         await pyodide.loadPackage("micropip");
         await pyodide.loadPackage("ssl");
         const micropip = pyodide.pyimport("micropip");
+        await micropip.install(entrypoint);
         await micropip.install("pyodide-http")
-        const installation = requirements.split("\\n").map(async (req) => {
-            if (req) {
-                const pkg = req.split("==")[0];
-                await micropip.install(pkg);
-            }
-        });
-        await Promise.all(installation);
+        
         let emitted = false;
         const decodedBytes = atob(globalThis.toolConfigs.body);
         pyodide.setStdin({
@@ -50,14 +47,19 @@ python_template = '''
             autoEOF: true,
         })
         let stdout = "";
+        let stderr = "";
         pyodide.setStdout({
             batched: (x) => { stdout += x; },
+        })
+        pyodide.setStderr({
+            batched: (x) => { stderr += x; },
         })
         await pyodide.runPythonAsync(`
 import pyodide_http
 pyodide_http.patch_all()
 
-${code}
+import ${packageName}
+${packageName}.main()
 `);
         console.log(stdout)
         await fetch(`/tools/wasm/scripts/${globalThis.toolConfigs.scriptID}/done`, {
@@ -65,9 +67,25 @@ ${code}
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ stdout })
+            body: JSON.stringify({ stdout, stderr })
         });
     }
+    
+    async function main() {
+        try {
+            await _main();
+        } catch (e) {
+            console.error(e);
+            await fetch(`/tools/wasm/scripts/${globalThis.toolConfigs.scriptID}/done`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ error: e.message })
+            });
+        }
+    }
+    
     main();
 </script>
 </body>
