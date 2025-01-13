@@ -327,7 +327,7 @@ class Pocket(object):
             pocket_logger.warning("Timeout tool call.")
             return "timeout tool call"
 
-        if hasattr(tool, "postprocessings") and tool.postprocessings is not None:
+        if tool.postprocessings is not None:
             for postprocessing in tool.postprocessings:
                 try:
                     result = postprocessing(result)
