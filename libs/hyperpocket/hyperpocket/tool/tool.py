@@ -1,11 +1,13 @@
 import abc
-from typing import Optional, Type
+from typing import Optional, Type, Callable, Any
 
 from pydantic import BaseModel, Field
 
 from hyperpocket.auth.provider import AuthProvider
 from hyperpocket.config.logger import pocket_logger
 from hyperpocket.util.json_schema_to_model import json_schema_to_model
+
+PostprocessFunction = Callable[[str], Any]
 
 
 class ToolAuth(BaseModel):
@@ -27,9 +29,28 @@ class ToolAuth(BaseModel):
 
 
 class ToolRequest(abc.ABC):
+    postprocessings: Optional[list[PostprocessFunction]] = None
+
     @abc.abstractmethod
     def __str__(self):
         raise NotImplementedError
+    
+    def add_postprocessing(self, postprocessing: PostprocessFunction):
+        if self.postprocessings is None:
+            self.postprocessings = [postprocessing]
+        else:
+            self.postprocessings.append(postprocessing)
+
+    def __or__(self, other: PostprocessFunction):
+        self.add_postprocessing(other)
+        return self
+
+    def with_postprocessings(self, postprocessings: list[PostprocessFunction]):
+        if self.postprocessings is None:
+            self.postprocessings = postprocessings
+        else:
+            self.postprocessings.extend(postprocessings)
+        return self
 
 
 class Tool(BaseModel, abc.ABC):
@@ -40,6 +61,7 @@ class Tool(BaseModel, abc.ABC):
     description: str = Field(description="tool description")
     argument_json_schema: Optional[dict] = Field(default=None, description="tool argument json schema")
     auth: Optional[ToolAuth] = Field(default=None, description="authentication information to invoke tool")
+    postprocessings: Optional[list[PostprocessFunction]] = None
 
     @abc.abstractmethod
     def invoke(self, **kwargs) -> str:
@@ -104,3 +126,20 @@ class Tool(BaseModel, abc.ABC):
         except Exception as e:
             pocket_logger.warning(f"failed to get tool({name}) schema model. error : {e}")
             pass
+
+    def add_postprocessing(self, postprocessing: PostprocessFunction):
+        if self.postprocessings is None:
+            self.postprocessings = [postprocessing]
+        else:
+            self.postprocessings.append(postprocessing)
+
+    def __or__(self, other: PostprocessFunction):
+        self.add_postprocessing(other)
+        return self
+
+    def with_postprocessings(self, postprocessings: list[PostprocessFunction]):
+        if self.postprocessings is None:
+            self.postprocessings = postprocessings
+        else:
+            self.postprocessings.extend(postprocessings)
+        return self
