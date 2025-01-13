@@ -9,7 +9,7 @@ from hyperpocket.auth.handler import AuthHandlerInterface, AuthenticateRequest
 from hyperpocket.config import config, pocket_logger
 from hyperpocket.futures import FutureStore
 from hyperpocket.session import SESSION_STORAGE_LIST
-from hyperpocket.session.interface import SessionStorageInterface
+from hyperpocket.session.interface import SessionStorageInterface, BaseSessionValue
 
 
 class AuthState(enum.Enum):
@@ -99,7 +99,12 @@ class PocketAuth(object):
         """
         handler = self.find_handler_instance(auth_handler_name, auth_provider)
         session = self.session_storage.get(handler.provider(), thread_id, profile)
+        auth_state = self.get_session_state(session=session, auth_req=auth_req)
 
+        return auth_state
+
+    @staticmethod
+    def get_session_state(session: Optional[BaseSessionValue], auth_req: Optional[AuthenticateRequest]) -> AuthState:
         if not session:
             return AuthState.NO_SESSION
 
@@ -110,7 +115,8 @@ class PocketAuth(object):
 
             return AuthState.PENDING_RESOLVE
 
-        if not session.is_auth_applicable(auth_provider_name=handler.provider().name, auth_req=auth_req):
+        if auth_req is not None and not session.is_auth_applicable(auth_provider_name=session.auth_provider_name,
+                                                                   auth_req=auth_req):
             return AuthState.DO_AUTH
 
         if session.is_near_expires():
@@ -282,9 +288,6 @@ class PocketAuth(object):
             FutureStore.delete_future(session.auth_resolve_uid)
             raise e
 
-    def delete_session(self, auth_provider: AuthProvider, thread_id: str = "default", profile: str = "default") -> bool:
-        return self.session_storage.delete(auth_provider, thread_id, profile)
-
     def get_auth_context(self, auth_provider: AuthProvider, thread_id: str = "default", profile: str = "default",
                          **kwargs) -> Optional[AuthContext]:
         session = self.session_storage.get(auth_provider, thread_id, profile, **kwargs)
@@ -292,6 +295,23 @@ class PocketAuth(object):
             return None
 
         return session.auth_context
+
+    def list_session_state(self, thread_id: str, auth_provider: Optional[AuthProvider] = None):
+        session_list = self.session_storage.get_by_thread_id(thread_id=thread_id, auth_provider=auth_provider)
+        session_state_list = []
+        for session in session_list:
+            state = self.get_session_state(session=session, auth_req=None)
+
+            session_state_list.append({
+                "provider": session.auth_provider_name,
+                "scope": session.auth_scopes,
+                "state": state,
+            })
+
+        return session_state_list
+
+    def delete_session(self, auth_provider: AuthProvider, thread_id: str = "default", profile: str = "default") -> bool:
+        return self.session_storage.delete(auth_provider, thread_id, profile)
 
     def find_handler_instance(self, name: Optional[str] = None,
                               auth_provider: Optional[AuthProvider] = None) -> AuthHandlerInterface:

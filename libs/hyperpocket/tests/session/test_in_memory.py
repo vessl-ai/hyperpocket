@@ -25,7 +25,7 @@ class TestInMemorySessionStorage(unittest.TestCase):
 
     def test_make_session_key(self):
         key = self.storage._make_session_key(
-            auth_provider=AuthProvider.SLACK,
+            auth_provider_name=AuthProvider.SLACK.name,
             thread_id="default_thread_id",
             profile="default_profile"
         )

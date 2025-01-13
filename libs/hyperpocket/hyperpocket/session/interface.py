@@ -69,6 +69,20 @@ class SessionStorageInterface(ABC, Generic[K, V]):
         raise NotImplementedError
 
     @abstractmethod
+    def get_by_thread_id(self, thread_id: str, auth_provider: Optional[AuthProvider] = None, **kwargs) -> List[V]:
+        """
+        Get session list by thread id
+
+        Args:
+            auth_provider (AuthProvider): auth provider
+            thread_id (str): thread id
+
+        Returns:
+            List[V(BaseSessionValue)]: Session List
+        """
+        raise NotImplementedError
+
+    @abstractmethod
     def set(self,
             auth_provider: AuthProvider,
             thread_id: str,
