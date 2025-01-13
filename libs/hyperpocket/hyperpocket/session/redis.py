@@ -25,13 +25,37 @@ class RedisSessionStorage(SessionStorageInterface[RedisSessionKey, RedisSessionV
         return SessionType.REDIS
 
     def get(self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs) -> Optional[V]:
-        key = self._make_session_key(auth_provider, thread_id, profile)
+        key = self._make_session_key(auth_provider.name, thread_id, profile)
         raw_session: Any = self.client.get(key)
         if raw_session is None:
             return None
 
         session = self._deserialize(raw_session)
         return session
+
+    def get_by_thread_id(self, thread_id: str, auth_provider: Optional[AuthProvider] = None, **kwargs) -> List[V]:
+        if auth_provider is None:
+            auth_provider_name = "*"
+        else:
+            auth_provider_name = auth_provider.name
+
+        pattern = self._make_session_key(auth_provider_name, thread_id, "*")
+        key_list = []
+        cursor = 0
+        while True:
+            cursor, keys = self.client.scan(cursor=cursor, match=pattern)
+            key_list.extend(keys)
+            if cursor == 0:
+                break
+
+        with self.client.pipeline() as pipe:
+            for key in key_list:
+                pipe.get(key)
+
+            raw_sessions = pipe.execute()
+        session_list = [self._deserialize(raw) for raw in raw_sessions]
+
+        return session_list
 
     def set(self, auth_provider: AuthProvider,
             thread_id: str,
@@ -47,20 +71,20 @@ class RedisSessionStorage(SessionStorageInterface[RedisSessionKey, RedisSessionV
             auth_resolve_uid=auth_resolve_uid,
             is_auth_scope_universal=is_auth_scope_universal)
 
-        key = self._make_session_key(auth_provider, thread_id, profile)
+        key = self._make_session_key(auth_provider.name, thread_id, profile)
 
         raw_session = self._serialize(session)
         self.client.set(key, raw_session)
         return session
 
     def delete(self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs) -> bool:
-        key = self._make_session_key(auth_provider, thread_id, profile)
+        key = self._make_session_key(auth_provider.name, thread_id, profile)
         return self.client.delete(key) == 1
 
     @staticmethod
-    def _make_session_key(auth_provider: AuthProvider, thread_id: str, profile: str) -> K:
+    def _make_session_key(auth_provider_name: str, thread_id: str, profile: str) -> K:
         return "{auth_provider}{delimiter}{thread_id}{delimiter}{profile}".format(
-            auth_provider=auth_provider.name,
+            auth_provider=auth_provider_name,
             thread_id=thread_id,
             profile=profile,
             delimiter=SESSION_KEY_DELIMITER,
