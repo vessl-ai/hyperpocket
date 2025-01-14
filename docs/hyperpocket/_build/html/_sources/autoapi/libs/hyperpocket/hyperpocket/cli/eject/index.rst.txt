@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.cli.eject
+======================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.eject
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.cli.eject.eject
+
+
+Module Contents
+---------------
+
+.. py:function:: eject(url: str, ref: str, remote_path: str, lockfile: Optional[pathlib.Path])
+

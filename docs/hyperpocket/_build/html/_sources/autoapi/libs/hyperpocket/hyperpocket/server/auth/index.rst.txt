@@ -1,0 +1,39 @@
+libs.hyperpocket.hyperpocket.server.auth
+========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/calendly/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/github/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/google/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/linear/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/slack/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/token/index
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.auth_router
+   libs.hyperpocket.hyperpocket.server.auth.routers
+
+
+Package Contents
+----------------
+
+.. py:data:: auth_router
+
+.. py:data:: routers
+   :value: []
+
+

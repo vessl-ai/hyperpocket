@@ -1,0 +1,40 @@
+libs.hyperpocket.hyperpocket.tool.wasm.templates
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.tool.wasm.templates
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/hyperpocket/hyperpocket/tool/wasm/templates/node/index
+   /autoapi/libs/hyperpocket/hyperpocket/tool/wasm/templates/python/index
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.tool.wasm.templates.TemplateEnvironments
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.tool.wasm.templates.render
+
+
+Package Contents
+----------------
+
+.. py:data:: TemplateEnvironments
+
+.. py:function:: render(language: str, script_id: str, env: dict[str, str], body: str, **kwargs) -> str
+

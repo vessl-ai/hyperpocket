@@ -1,0 +1,29 @@
+libs.hyperpocket.hyperpocket
+============================
+
+.. py:module:: libs.hyperpocket.hyperpocket
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/hyperpocket/hyperpocket/auth/index
+   /autoapi/libs/hyperpocket/hyperpocket/cli/index
+   /autoapi/libs/hyperpocket/hyperpocket/config/index
+   /autoapi/libs/hyperpocket/hyperpocket/constants/index
+   /autoapi/libs/hyperpocket/hyperpocket/external/index
+   /autoapi/libs/hyperpocket/hyperpocket/futures/index
+   /autoapi/libs/hyperpocket/hyperpocket/pocket_auth/index
+   /autoapi/libs/hyperpocket/hyperpocket/pocket_main/index
+   /autoapi/libs/hyperpocket/hyperpocket/prompts/index
+   /autoapi/libs/hyperpocket/hyperpocket/repository/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/index
+   /autoapi/libs/hyperpocket/hyperpocket/session/index
+   /autoapi/libs/hyperpocket/hyperpocket/tool/index
+   /autoapi/libs/hyperpocket/hyperpocket/util/index
+
+

@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.external.github_client
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.external.github_client
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.external.github_client.github_instance
+
+
+Module Contents
+---------------
+
+.. py:function:: github_instance() -> github.Github
+

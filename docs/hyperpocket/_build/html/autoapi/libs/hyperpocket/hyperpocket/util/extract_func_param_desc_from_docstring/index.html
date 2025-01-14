@@ -1,0 +1,165 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring &mdash; hyperpocket  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../index.html" class="icon icon-home">
+            hyperpocket
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../managed/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../managed/conceptual_guide.html">Conceptual Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../managed/quick_start.html">Quick Start</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">hyperpocket</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/autoapi/libs/hyperpocket/hyperpocket/util/extract_func_param_desc_from_docstring/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring">
+<span id="libs-hyperpocket-hyperpocket-util-extract-func-param-desc-from-docstring"></span><h1>libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring" title="Link to this heading"></a></h1>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_docstring_mapping" title="libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_docstring_mapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_param_docstring_mapping</span></code></a>(→ dict[str, str])</p></td>
+<td><p>Extracts a mapping between function parameters and their descriptions</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.clean_bracket_content" title="libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.clean_bracket_content"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_bracket_content</span></code></a>(content)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_other_styles" title="libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_other_styles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_param_desc_by_other_styles</span></code></a>(→ dict[str, str])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_google_stype_docstring" title="libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_google_stype_docstring"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_param_desc_by_google_stype_docstring</span></code></a>(...)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_docstring_mapping">
+<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.</span></span><span class="sig-name descname"><span class="pre">extract_param_docstring_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_docstring_mapping" title="Link to this definition"></a></dt>
+<dd><p>Extracts a mapping between function parameters and their descriptions
+from the Google-style docstring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>function</em>) – The function whose docstring needs to be parsed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A list of tuples where each tuple contains a parameter name</dt><dd><p>and its description.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.clean_bracket_content">
+<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.</span></span><span class="sig-name descname"><span class="pre">clean_bracket_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.clean_bracket_content" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_other_styles">
+<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.</span></span><span class="sig-name descname"><span class="pre">extract_param_desc_by_other_styles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">docstring</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func_params</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_other_styles" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_google_stype_docstring">
+<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.</span></span><span class="sig-name descname"><span class="pre">extract_param_desc_by_google_stype_docstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">docstring</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func_params</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_google_stype_docstring" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, vessl-ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

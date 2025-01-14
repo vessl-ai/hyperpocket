@@ -1,0 +1,31 @@
+libs.hyperpocket.hyperpocket.external
+=====================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.external
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/hyperpocket/hyperpocket/external/github_client/index
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.external.github
+
+
+Package Contents
+----------------
+
+.. py:data:: github
+   :value: None
+
+

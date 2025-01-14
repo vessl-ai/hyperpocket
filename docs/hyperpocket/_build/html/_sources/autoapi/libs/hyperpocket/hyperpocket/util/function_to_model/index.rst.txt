@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.util.function_to_model
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.util.function_to_model
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.util.function_to_model.function_to_model
+
+
+Module Contents
+---------------
+
+.. py:function:: function_to_model(func: callable) -> Type[pydantic.BaseModel]
+

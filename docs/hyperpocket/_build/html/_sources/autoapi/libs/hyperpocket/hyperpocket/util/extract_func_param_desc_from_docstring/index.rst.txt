@@ -1,0 +1,42 @@
+libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring
+========================================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_docstring_mapping
+   libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.clean_bracket_content
+   libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_other_styles
+   libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_google_stype_docstring
+
+
+Module Contents
+---------------
+
+.. py:function:: extract_param_docstring_mapping(func) -> dict[str, str]
+
+   Extracts a mapping between function parameters and their descriptions
+   from the Google-style docstring.
+
+   :param func: The function whose docstring needs to be parsed.
+   :type func: function
+
+   :returns:
+
+             A list of tuples where each tuple contains a parameter name
+                   and its description.
+   :rtype: list
+
+
+.. py:function:: clean_bracket_content(content)
+
+.. py:function:: extract_param_desc_by_other_styles(docstring, func_params) -> dict[str, str]
+
+.. py:function:: extract_param_desc_by_google_stype_docstring(docstring, func_params) -> dict[str, str]
+
