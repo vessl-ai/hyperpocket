@@ -80,10 +80,19 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.Script" title="libs.hyperpocket.hyperpocket.server.tool.dto.script.Script"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Script</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptStdout" title="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptStdout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScriptStdout</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult" title="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScriptResult</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileTree" title="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileTree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScriptFileTree</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint" title="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScriptEntrypoint</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEncodedFile" title="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEncodedFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScriptEncodedFile</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileRequest" title="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileRequest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScriptFileRequest</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -108,12 +117,22 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptStdout">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.tool.dto.script.</span></span><span class="sig-name descname"><span class="pre">ScriptStdout</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptStdout" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.tool.dto.script.</span></span><span class="sig-name descname"><span class="pre">ScriptResult</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pydantic.BaseModel</span></code></p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptStdout.stdout">
-<span class="sig-name descname"><span class="pre">stdout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptStdout.stdout" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult.stdout">
+<span class="sig-name descname"><span class="pre">stdout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult.stdout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult.stderr">
+<span class="sig-name descname"><span class="pre">stderr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult.stderr" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult.error">
+<span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult.error" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -125,6 +144,44 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileTree.tree">
 <span class="sig-name descname"><span class="pre">tree</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../../tool/wasm/script/index.html#libs.hyperpocket.hyperpocket.tool.wasm.script.ScriptFileNode" title="libs.hyperpocket.hyperpocket.tool.wasm.script.ScriptFileNode"><span class="pre">hyperpocket.tool.wasm.script.ScriptFileNode</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileTree.tree" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.tool.dto.script.</span></span><span class="sig-name descname"><span class="pre">ScriptEntrypoint</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pydantic.BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint.package_name">
+<span class="sig-name descname"><span class="pre">package_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint.package_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint.entrypoint">
+<span class="sig-name descname"><span class="pre">entrypoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint.entrypoint" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEncodedFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.tool.dto.script.</span></span><span class="sig-name descname"><span class="pre">ScriptEncodedFile</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEncodedFile" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pydantic.BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEncodedFile.encoded_file">
+<span class="sig-name descname"><span class="pre">encoded_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEncodedFile.encoded_file" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.tool.dto.script.</span></span><span class="sig-name descname"><span class="pre">ScriptFileRequest</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileRequest" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pydantic.BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileRequest.path">
+<span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileRequest.path" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

@@ -106,27 +106,24 @@
 <span class="sd">            scriptID: `{{ SCRIPT_ID }}`</span>
 <span class="sd">        }</span>
 <span class="sd">    }</span>
-<span class="sd">    async function main() {</span>
+<span class="sd">    async function _main() {</span>
+<span class="sd">        // load the script configs</span>
 <span class="sd">        loadConfig();</span>
-<span class="sd">        const b64FilesResp = await fetch(`/tools/wasm/scripts/${globalThis.toolConfigs.scriptID}/file_tree`);</span>
-<span class="sd">        const b64Files = await b64FilesResp.json();</span>
-<span class="sd">        const code = atob(b64Files.tree[&quot;main.py&quot;].file.contents);</span>
-<span class="sd">        const requirements = atob(b64Files.tree[&quot;requirements.txt&quot;].file.contents);</span>
 
+<span class="sd">        // get entrypoint wheel</span>
+<span class="sd">        const entrypointResp = await fetch(`/tools/wasm/scripts/${globalThis.toolConfigs.scriptID}/entrypoint`);</span>
+<span class="sd">        const { package_name: packageName, entrypoint } = await entrypointResp.json();</span>
+
+<span class="sd">        // initialize pyodide</span>
 <span class="sd">        const pyodide = await loadPyodide({</span>
 <span class="sd">            env: JSON.parse(globalThis.toolConfigs.envs),</span>
 <span class="sd">        });</span>
 <span class="sd">        await pyodide.loadPackage(&quot;micropip&quot;);</span>
 <span class="sd">        await pyodide.loadPackage(&quot;ssl&quot;);</span>
 <span class="sd">        const micropip = pyodide.pyimport(&quot;micropip&quot;);</span>
+<span class="sd">        await micropip.install(entrypoint);</span>
 <span class="sd">        await micropip.install(&quot;pyodide-http&quot;)</span>
-<span class="sd">        const installation = requirements.split(&quot;\n&quot;).map(async (req) =&gt; {</span>
-<span class="sd">            if (req) {</span>
-<span class="sd">                const pkg = req.split(&quot;==&quot;)[0];</span>
-<span class="sd">                await micropip.install(pkg);</span>
-<span class="sd">            }</span>
-<span class="sd">        });</span>
-<span class="sd">        await Promise.all(installation);</span>
+
 <span class="sd">        let emitted = false;</span>
 <span class="sd">        const decodedBytes = atob(globalThis.toolConfigs.body);</span>
 <span class="sd">        pyodide.setStdin({</span>
@@ -140,14 +137,19 @@
 <span class="sd">            autoEOF: true,</span>
 <span class="sd">        })</span>
 <span class="sd">        let stdout = &quot;&quot;;</span>
+<span class="sd">        let stderr = &quot;&quot;;</span>
 <span class="sd">        pyodide.setStdout({</span>
 <span class="sd">            batched: (x) =&gt; { stdout += x; },</span>
+<span class="sd">        })</span>
+<span class="sd">        pyodide.setStderr({</span>
+<span class="sd">            batched: (x) =&gt; { stderr += x; },</span>
 <span class="sd">        })</span>
 <span class="sd">        await pyodide.runPythonAsync(`</span>
 <span class="sd">import pyodide_http</span>
 <span class="sd">pyodide_http.patch_all()</span>
 
-<span class="sd">${code}</span>
+<span class="sd">import ${packageName}</span>
+<span class="sd">${packageName}.main()</span>
 <span class="sd">`);</span>
 <span class="sd">        console.log(stdout)</span>
 <span class="sd">        await fetch(`/tools/wasm/scripts/${globalThis.toolConfigs.scriptID}/done`, {</span>
@@ -155,9 +157,25 @@
 <span class="sd">            headers: {</span>
 <span class="sd">                &#39;Content-Type&#39;: &#39;application/json&#39;</span>
 <span class="sd">            },</span>
-<span class="sd">            body: JSON.stringify({ stdout })</span>
+<span class="sd">            body: JSON.stringify({ stdout, stderr })</span>
 <span class="sd">        });</span>
 <span class="sd">    }</span>
+
+<span class="sd">    async function main() {</span>
+<span class="sd">        try {</span>
+<span class="sd">            await _main();</span>
+<span class="sd">        } catch (e) {</span>
+<span class="sd">            console.error(e);</span>
+<span class="sd">            await fetch(`/tools/wasm/scripts/${globalThis.toolConfigs.scriptID}/done`, {</span>
+<span class="sd">                method: &#39;POST&#39;,</span>
+<span class="sd">                headers: {</span>
+<span class="sd">                    &#39;Content-Type&#39;: &#39;application/json&#39;</span>
+<span class="sd">                },</span>
+<span class="sd">                body: JSON.stringify({ error: e.message })</span>
+<span class="sd">            });</span>
+<span class="sd">        }</span>
+<span class="sd">    }</span>
+
 <span class="sd">    main();</span>
 <span class="sd">&lt;/script&gt;</span>
 <span class="sd">&lt;/body&gt;</span>

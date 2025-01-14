@@ -107,5 +107,18 @@ Module Contents
    .. py:method:: load_file_tree() -> dict[str, ScriptFileNode]
 
 
+   .. py:property:: package_name
+      :type: Optional[str]
+
+
+
+   .. py:property:: entrypoint
+      :type: str
+
+
+
+   .. py:method:: dist_file_path(file_name: str) -> str
+
+
 .. py:data:: ScriptStore
 

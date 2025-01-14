@@ -11,8 +11,11 @@ Classes
 .. autoapisummary::
 
    libs.hyperpocket.hyperpocket.server.tool.dto.script.Script
-   libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptStdout
+   libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult
    libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileTree
+   libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint
+   libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEncodedFile
+   libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileRequest
 
 
 Module Contents
@@ -31,13 +34,21 @@ Module Contents
       :type:  str
 
 
-.. py:class:: ScriptStdout
+.. py:class:: ScriptResult
 
    Bases: :py:obj:`pydantic.BaseModel`
 
 
    .. py:attribute:: stdout
-      :type:  str
+      :type:  Optional[str]
+
+
+   .. py:attribute:: stderr
+      :type:  Optional[str]
+
+
+   .. py:attribute:: error
+      :type:  Optional[str]
 
 
 .. py:class:: ScriptFileTree
@@ -47,5 +58,36 @@ Module Contents
 
    .. py:attribute:: tree
       :type:  dict[str, hyperpocket.tool.wasm.script.ScriptFileNode]
+
+
+.. py:class:: ScriptEntrypoint
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: package_name
+      :type:  Optional[str]
+
+
+   .. py:attribute:: entrypoint
+      :type:  str
+
+
+.. py:class:: ScriptEncodedFile
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: encoded_file
+      :type:  str
+
+
+.. py:class:: ScriptFileRequest
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: path
+      :type:  str
 
 

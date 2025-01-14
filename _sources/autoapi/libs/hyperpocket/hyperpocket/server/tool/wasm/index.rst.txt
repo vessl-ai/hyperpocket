@@ -20,8 +20,9 @@ Functions
 
    libs.hyperpocket.hyperpocket.server.tool.wasm.browse_script_page
    libs.hyperpocket.hyperpocket.server.tool.wasm.done_script_page
-   libs.hyperpocket.hyperpocket.server.tool.wasm.fail_script_page
    libs.hyperpocket.hyperpocket.server.tool.wasm.get_file_tree
+   libs.hyperpocket.hyperpocket.server.tool.wasm.get_entrypoint
+   libs.hyperpocket.hyperpocket.server.tool.wasm.get_dist_file
 
 
 Module Contents
@@ -33,15 +34,19 @@ Module Contents
    :async:
 
 
-.. py:function:: done_script_page(script_id: str, req: hyperpocket.server.tool.dto.script.ScriptStdout) -> hyperpocket.server.tool.dto.script.ScriptStdout
-   :async:
-
-
-.. py:function:: fail_script_page(script_id: str, req: hyperpocket.server.tool.dto.script.ScriptStdout) -> hyperpocket.server.tool.dto.script.ScriptStdout
+.. py:function:: done_script_page(script_id: str, req: hyperpocket.server.tool.dto.script.ScriptResult) -> hyperpocket.server.tool.dto.script.ScriptResult
    :async:
 
 
 .. py:function:: get_file_tree(script_id: str) -> hyperpocket.server.tool.dto.script.ScriptFileTree
+   :async:
+
+
+.. py:function:: get_entrypoint(script_id: str) -> hyperpocket.server.tool.dto.script.ScriptEntrypoint
+   :async:
+
+
+.. py:function:: get_dist_file(script_id: str, file_name: str)
    :async:
 
 
