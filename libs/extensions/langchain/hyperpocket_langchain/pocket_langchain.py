@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 class PocketLangchain(Pocket):
     def get_tools(self) -> List[BaseTool]:
-        tools = [self.get_tool(pk) for pk in self.tools.values()]
+        tools = [self.get_tool(pk) for pk in self.core.tools.values()]
         return tools
 
     def get_tool(self, pocket_tool: Tool) -> BaseTool:

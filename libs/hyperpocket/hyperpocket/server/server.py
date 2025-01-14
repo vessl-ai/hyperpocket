@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from uvicorn import Config, Server
 
 from hyperpocket.config import config, pocket_logger
+from hyperpocket.pocket_core import PocketCore
 from hyperpocket.server.auth import auth_router
 from hyperpocket.server.tool import tool_router
 
@@ -59,19 +60,24 @@ class PocketServer(object):
         _, conn = self.pipe
 
         async def _acall(_conn, _op, _uid, a, kw):
-            result = await self.child_pocket.acall(*a, **kw)
+            try:
+                result = await self.pocket_core.acall(*a, **kw)
+            except Exception as e:
+                pocket_logger.error(f"failed to acall in pocket subprocess. error: {e}")
+                result = (str(e), False)
+
             _conn.send((_op, _uid, result))
 
         async def _prepare(_conn, _op, _uid, a, kw):
-            result = self.child_pocket.prepare_auth(*a, **kw)
+            result = self.pocket_core.prepare_auth(*a, **kw)
             _conn.send((_op, _uid, result))
 
         async def _authenticate(_conn, _op, _uid, a, kw):
-            result = await self.child_pocket.authenticate(*a, **kw)
+            result = await self.pocket_core.authenticate(*a, **kw)
             _conn.send((_op, _uid, result))
 
         async def _tool_call(_conn, _op, _uid, a, kw):
-            result = await self.child_pocket.tool_call(*a, **kw)
+            result = await self.pocket_core.tool_call(*a, **kw)
             _conn.send((_op, _uid, result))
 
         while True:
@@ -122,15 +128,15 @@ class PocketServer(object):
         loop.create_task(self.poll_in_parent())
         return await self.future_store[uid]
 
-    def run(self, child_pocket):
+    def run(self, pocket_core: PocketCore):
         self._set_mp_start_method()
 
         self.pipe = mp.Pipe()
-        self.process = mp.Process(target=self._run, args=(child_pocket,), daemon=True)
+        self.process = mp.Process(target=self._run, args=(pocket_core,), daemon=True)
         self.process.start()
 
-    def _run(self, child_pocket):
-        self.child_pocket = child_pocket
+    def _run(self, pocket_core):
+        self.pocket_core = pocket_core
         self.main_server = self._create_main_server()
         self.proxy_server = self._create_https_proxy_server()
         loop = asyncio.new_event_loop()
