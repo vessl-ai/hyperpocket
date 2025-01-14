@@ -21,7 +21,8 @@ class TestPocket(IsolatedAsyncioTestCase):
 
         self.pocket = Pocket(
             tools=[
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/simple-echo-tool"),
+                # TODO(moon): temporarily remove before hyperawesometools is open public.
+                # from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/simple-echo-tool"),
                 self.add,
                 self.add_pydantic_args
             ],
@@ -67,22 +68,22 @@ class TestPocket(IsolatedAsyncioTestCase):
         # then
         self.assertEqual(result, "4")
 
-    async def test_wasm_tool(self):
-        # given
-        tool_name = "simple_echo_text"
-
-        # when
-        result = await self.pocket.ainvoke(
-            tool_name=tool_name,
-            body={
-                "text": "test"
-            },
-            thread_id=self.thread_id,
-            profile=self.profile,
-        )
-
-        # then
-        self.assertTrue(result.startswith("echo message : test"))
+    # async def test_wasm_tool(self):
+    #     # given
+    #     tool_name = "simple_echo_text"
+    #
+    #     # when
+    #     result = await self.pocket.ainvoke(
+    #         tool_name=tool_name,
+    #         body={
+    #             "text": "test"
+    #         },
+    #         thread_id=self.thread_id,
+    #         profile=self.profile,
+    #     )
+    #
+    #     # then
+    #     self.assertTrue(result.startswith("echo message : test"))
 
     @staticmethod
     def add(a: int, b: int) -> int:

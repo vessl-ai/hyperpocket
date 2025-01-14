@@ -67,7 +67,8 @@ class TestPocketAnthropic(IsolatedAsyncioTestCase):
         ])
 
         # when
-        get_tool, send_tool = pocket.get_anthropic_tool_specs()
+        specs = pocket.get_anthropic_tool_specs()
+        get_tool, send_tool = specs[0], specs[1]
 
         # then
         self.assertIsInstance(get_tool, dict)

@@ -1,3 +1,4 @@
+import re
 from typing import Dict, List, Optional
 
 from hyperpocket.auth import AuthProvider
@@ -22,8 +23,20 @@ class InMemorySessionStorage(SessionStorageInterface[InMemorySessionKey, InMemor
         return SessionType.IN_MEMORY
 
     def get(self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs) -> Optional[V]:
-        key = self._make_session_key(auth_provider, thread_id, profile)
+        key = self._make_session_key(auth_provider.name, thread_id, profile)
         return self.storage.get(key, None)
+
+    def get_by_thread_id(self, thread_id: str, auth_provider: Optional[AuthProvider] = None, **kwargs) -> List[V]:
+        if auth_provider is None:
+            auth_provider_name = ".*"
+        else:
+            auth_provider_name = auth_provider.name
+
+        pattern = rf'{self._make_session_key(auth_provider_name, thread_id, ".*")}'
+        compiled = re.compile(pattern)
+
+        session_list = [value for key, value in self.storage.items() if compiled.match(key)]
+        return session_list
 
     def set(self, auth_provider: AuthProvider,
             thread_id: str,
@@ -32,7 +45,7 @@ class InMemorySessionStorage(SessionStorageInterface[InMemorySessionKey, InMemor
             auth_resolve_uid: Optional[str],
             auth_context: Optional[AuthContext],
             is_auth_scope_universal: bool, **kwargs) -> V:
-        key = self._make_session_key(auth_provider, thread_id, profile)
+        key = self._make_session_key(auth_provider.name, thread_id, profile)
         session = self._make_session(
             auth_provider_name=auth_provider.name,
             auth_scopes=auth_scopes,
@@ -44,7 +57,7 @@ class InMemorySessionStorage(SessionStorageInterface[InMemorySessionKey, InMemor
         return session
 
     def delete(self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs) -> bool:
-        key = self._make_session_key(auth_provider, thread_id, profile)
+        key = self._make_session_key(auth_provider.name, thread_id, profile)
         if key in self.storage:
             self.storage.pop(key)
             return True
@@ -52,9 +65,9 @@ class InMemorySessionStorage(SessionStorageInterface[InMemorySessionKey, InMemor
         return False
 
     @staticmethod
-    def _make_session_key(auth_provider: AuthProvider, thread_id: str, profile: str) -> K:
+    def _make_session_key(auth_provider_name: str, thread_id: str, profile: str) -> K:
         return "{auth_provider}{delimiter}{thread_id}{delimiter}{profile}".format(
-            auth_provider=auth_provider.name,
+            auth_provider=auth_provider_name,
             thread_id=thread_id,
             profile=profile,
             delimiter=SESSION_KEY_DELIMITER,

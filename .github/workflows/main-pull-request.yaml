@@ -58,10 +58,13 @@ jobs:
         continue-on-error: true
 
       - name: Test with pytest
+        env:
+          POCKET_ENV: TEST
         run: |
+          echo "POCKET ENV : $POCKET_ENV"
+          
           cd libs/hyperpocket
           poetry add pytest
           poetry add pytest-cov
           
-          export POCKET_ENV=TEST
           poetry run pytest  -v --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html

@@ -1,13 +1,15 @@
 import asyncio
 import pathlib
-from typing import Union, Any, Optional, Callable
+from typing import Union, Any, Optional, Callable, List
 
+from hyperpocket.auth import AuthProvider
 from hyperpocket.config import pocket_logger
 from hyperpocket.pocket_auth import PocketAuth
 from hyperpocket.repository import Lockfile
 from hyperpocket.repository.lock import LocalLock, GitLock
 from hyperpocket.server.server import PocketServer, PocketServerOperations
-from hyperpocket.tool import Tool, ToolRequest
+from hyperpocket.session.interface import BaseSessionValue
+from hyperpocket.tool import Tool, ToolRequest, from_func
 from hyperpocket.tool.function.tool import FunctionTool
 from hyperpocket.tool.wasm import WasmTool
 from hyperpocket.tool.wasm.tool import WasmToolRequest
@@ -27,6 +29,7 @@ class Pocket(object):
                  force_update: bool = False):
         if auth is None:
             auth = PocketAuth()
+        self.auth = auth
 
         if lockfile_path is None:
             lockfile_path = "./pocket.lock"
@@ -62,9 +65,13 @@ class Pocket(object):
                 raise ValueError(f"Duplicate tool name: {tool.name}")
             self.tools[tool.name] = tool
 
-        pocket_logger.info(f"All Tools Loaded successfully. total registered tools : {len(self.tools)}")
+        pocket_logger.info(f"All Registered Tools Loaded successfully. total registered tools : {len(self.tools)}")
 
-        self.auth = auth
+        builtin_tools = get_builtin_tools(self.auth)
+        for tool in builtin_tools:
+            self.tools[tool.name] = tool
+        pocket_logger.info(f"All BuiltIn Tools Loaded successfully. total tools : {len(self.tools)}")
+
         self.server = PocketServer()
         self.server.run(self)
 
@@ -156,7 +163,7 @@ class Pocket(object):
             result = loop.run_until_complete(
                 self.ainvoke_with_state(tool_name, body, thread_id, profile, *args, **kwargs))
 
-        except RuntimeError:
+        except RuntimeError as e:
             pocket_logger.warning("Can't execute sync def in event loop. use nest-asyncio")
 
             import nest_asyncio
@@ -338,11 +345,11 @@ class Pocket(object):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.__dict__.get('server'):
-            self._teardown_server()
+            self.server.teardown()
 
     def __del__(self):
         if self.__dict__.get('server'):
-            self._teardown_server()
+            self.server.teardown()
 
     def __getstate__(self):
         state = self.__dict__.copy()
@@ -352,3 +359,54 @@ class Pocket(object):
 
     def __setstate__(self, state):
         self.__dict__.update(state)
+
+
+def get_builtin_tools(pocket_auth: PocketAuth) -> List[Tool]:
+    """
+    Get Builtin Tools
+
+    Builtin Tool can access to Pocket Core.
+    """
+
+    def __get_current_thread_session_state(thread_id: str) -> List[BaseSessionValue]:
+        """
+        Get current authentication session list in the thread.
+
+        The output format should be like this
+
+        - [AUTH PROVIDER] [state] [scopes, ...] : some explanation ..
+        - [AUTH PROVIDER] [state] [scopes, ...] : some explanation ..
+        - [AUTH PROVIDER] [state] [scopes, ...] : some explanation ..
+        ...
+
+        Args:
+            thread_id(str): thread id
+
+        Returns:
+
+        """
+        session_list = pocket_auth.list_session_state(thread_id)
+        return session_list
+
+    def __delete_session(auth_provider_name: str, thread_id: str = "default", profile: str = "default") -> bool:
+        """
+        Delete Session in thread
+
+        Args:
+            auth_provider_name(str): auth provider name
+            thread_id(str): thread id
+            profile(str): profile name
+
+        Returns:
+            bool: Flag indicating success or failure
+        """
+
+        auth_provider = AuthProvider.get_auth_provider(auth_provider_name)
+        return pocket_auth.delete_session(auth_provider, thread_id, profile)
+
+    builtin_tools = [
+        from_func(func=__get_current_thread_session_state),
+        from_func(func=__delete_session),
+    ]
+
+    return builtin_tools
