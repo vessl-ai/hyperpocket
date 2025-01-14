@@ -1,7 +1,0 @@
-libs.hyperpocket.hyperpocket.constants
-======================================
-
-.. py:module:: libs.hyperpocket.hyperpocket.constants
-
-
-
