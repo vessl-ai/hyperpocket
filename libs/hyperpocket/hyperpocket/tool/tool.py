@@ -59,7 +59,7 @@ class Tool(BaseModel, abc.ABC):
     description: str = Field(description="tool description")
     argument_json_schema: Optional[dict] = Field(default=None, description="tool argument json schema")
     auth: Optional[ToolAuth] = Field(default=None, description="authentication information to invoke tool")
-    postprocessings: Optional[list[Callable]] = None
+    postprocessings: Optional[list[Callable]] = Field(default=None, description="postprocessing functions after tool is invoked")
 
     @abc.abstractmethod
     def invoke(self, **kwargs) -> str:
@@ -126,6 +126,9 @@ class Tool(BaseModel, abc.ABC):
             pass
 
     def add_postprocessing(self, postprocessing: Callable):
+        """
+        Add a postprocessing function to the tool
+        """
         if self.postprocessings is None:
             self.postprocessings = [postprocessing]
         else:
@@ -136,6 +139,10 @@ class Tool(BaseModel, abc.ABC):
         return self
 
     def with_postprocessings(self, postprocessings: list[Callable]):
+        """
+        Add a list of postprocessing functions to the tool
+        Returns the tool itself
+        """
         if self.postprocessings is None:
             self.postprocessings = postprocessings
         else:
