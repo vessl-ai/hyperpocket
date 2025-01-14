@@ -40,13 +40,16 @@ async def main():
         ]
     )
 
+    # 01. get authenticatio URI
     prepare_list = await pocket.initialize_tool_auth()
 
     for idx, prepare in enumerate(prepare_list):
         print(f"{idx + 1}. {prepare}")
 
+    # 02. wait until auth is done
     await pocket.wait_tool_auth()
 
+    # 03. tool invoke without interrupt
     slack_auth_function_result = await pocket.ainvoke(tool_name="function_tool_with_slack_auth", body={})
     google_auth_function_result = await pocket.ainvoke(tool_name="function_tool_with_google_auth", body={})
 
