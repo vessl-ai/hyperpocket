@@ -12,6 +12,7 @@ jobs:
     if: >-
       github.event.pull_request.merged == true &&
       github.event.pull_request.base.ref == 'main'
+
     runs-on: ubuntu-latest
 
     steps:
@@ -47,8 +48,12 @@ jobs:
         run: |
           ls -al
           
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
           git checkout gh-pages
           cp -r docs/hyperpocket/_build/html/* .
+          rm -rf docs/hyperpocket/_build/html/
           
           git add .
           if ! git diff-index --quiet HEAD --; then
