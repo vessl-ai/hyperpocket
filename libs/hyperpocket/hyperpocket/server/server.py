@@ -27,7 +27,7 @@ class PocketServer(object):
     pipe: mp.Pipe
     process: mp.Process
     future_store: dict[str, asyncio.Future]
-    teared_down: bool = False
+    torn_down: bool = False
 
     def __init__(self,
                  internal_server_port: int = config.internal_server_port,
@@ -38,9 +38,9 @@ class PocketServer(object):
 
     def teardown(self):
         # @XXX(seokju) is it ok to call this method both in __del__ and __exit__?
-        if self.teared_down:
+        if self.torn_down:
             return
-        self.teared_down = True
+        self.torn_down = True
         self.process.terminate()
         self.process.join()
 
