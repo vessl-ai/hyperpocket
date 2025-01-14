@@ -3,7 +3,10 @@ import enum
 import pathlib
 from typing import Optional
 
+import toml
 from pydantic import BaseModel
+
+from hyperpocket.config import pocket_logger
 
 
 class ScriptRuntime(enum.Enum):
@@ -62,7 +65,43 @@ class Script(BaseModel):
                 encoded_str = encoded_bytes.decode()
                 file_tree = ScriptFileNode.merge(file_tree, ScriptFileNode.create_file_tree(p, encoded_str))
         return file_tree
-                
+    
+    @property
+    def package_name(self) -> Optional[str]:
+        if self.runtime != ScriptRuntime.Python:
+            return
+        pyproject = toml.load(pathlib.Path(self.tool_path) / "pyproject.toml")
+        if "project" in pyproject:
+            name = pyproject["project"]["name"]
+        if "tool" in pyproject and "poetry" in pyproject["tool"]:
+            name = pyproject["tool"]["poetry"]["name"]
+        if not name:
+            raise ValueError("Could not find package name")
+        return name.replace("-", "_")
+    
+    @property
+    def entrypoint(self) -> str:
+        pocket_logger.info(self.tool_path)
+        if self.runtime == ScriptRuntime.Node:
+            return "dist/index.js"
+        elif self.runtime == ScriptRuntime.Wasm:
+            return "dist/main.wasm"
+        pyproject = toml.load(pathlib.Path(self.tool_path) / "pyproject.toml")
+        version = None
+        if "project" in pyproject:
+            version = pyproject["project"]["version"]
+        elif "tool" in pyproject and "poetry" in pyproject["tool"]:
+            version = pyproject["tool"]["poetry"]["version"]
+        else:
+            raise ValueError("Could not find package version")
+        wheel_name = f"{self.package_name}-{version}-py3-none-any.whl"
+        wheel_path = pathlib.Path(self.tool_path) / "dist" / wheel_name
+        if not wheel_path.exists():
+            raise ValueError(f"Wheel file {wheel_path} does not exist")
+        return wheel_name
+    
+    def dist_file_path(self, file_name: str) -> str:
+        return str(pathlib.Path(self.tool_path) / "dist" / file_name)
 
 class _ScriptStore(object):
     scripts: dict[str, Script] = {}
