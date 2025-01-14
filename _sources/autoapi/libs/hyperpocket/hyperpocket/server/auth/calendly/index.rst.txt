@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.calendly
+=================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.calendly
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.calendly.calendly_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.calendly.calendly_oauth2_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: calendly_auth_router
+
+.. py:function:: calendly_oauth2_callback(request: fastapi.Request, state: str, code: str)
+   :async:
+
+

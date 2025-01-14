@@ -1,0 +1,23 @@
+libs.hyperpocket.hyperpocket.util.json_schema_to_model
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.util.json_schema_to_model
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.util.json_schema_to_model.json_schema_to_model
+
+
+Module Contents
+---------------
+
+.. py:function:: json_schema_to_model(schema: dict, model_name: str = 'DynamicModel') -> Type[pydantic.BaseModel]
+
+   Recursively create a Pydantic model from a JSON Schema.
+
+

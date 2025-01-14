@@ -1,0 +1,173 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Session Storage &mdash; hyperpocket  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            hyperpocket
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../managed/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../managed/conceptual_guide.html">Conceptual Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../managed/quick_start.html">Quick Start</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">hyperpocket</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Session Storage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/hyperpocket/session/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="session-storage">
+<h1>Session Storage<a class="headerlink" href="#session-storage" title="Link to this heading"></a></h1>
+<p>Storage for saving user authentication(auth) sessions.</p>
+<section id="current-supported-session-storages">
+<h2>Current Supported Session Storages<a class="headerlink" href="#current-supported-session-storages" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>[x] InMemory</p></li>
+<li><p>[x] Redis</p></li>
+<li><p>[ ] Postgres</p></li>
+<li><p>[ ] Mysql</p></li>
+<li><p>[ ] Mongodb</p></li>
+</ul>
+</section>
+<section id="sessionkey">
+<h2>SessionKey<a class="headerlink" href="#sessionkey" title="Link to this heading"></a></h2>
+<p>Session key is a unique key to identify each authentication information.</p>
+<p>Generally this session key can be composed of the following three components:</p>
+<ul class="simple">
+<li><p>Auth Provider : authentication provider</p></li>
+<li><p>Thread ID : thread id</p></li>
+<li><p>Profile : profile</p></li>
+</ul>
+<p>Each auth provider can only have one active session at a time.</p>
+<ul class="simple">
+<li><p>For example, if a user already authenticated with a Slack token attempts to authenticate with OAuth, the previous
+session will be invalidated.</p></li>
+<li><p>Profile is a concept supported by Pocket that allows multiple profiles to exist within a single thread ID.</p></li>
+<li><p>Using profiles, a single user can operate with multiple personas for various tasks.</p>
+<ul>
+<li><p>e.g., Reading messages from Group A’s Slack and summarizing them for Group B.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="basesessionvalue">
+<h2>BaseSessionValue<a class="headerlink" href="#basesessionvalue" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">BaseSessionValue</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">auth_provider_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">auth_context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AuthContext</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">scoped</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">auth_scopes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">auth_resolve_uid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>A session contains the following basic information:</p>
+<ul class="simple">
+<li><p>auth_provider_name: The name of the auth provider used for the current session.</p></li>
+<li><p>auth_context: The actual session data contained in the auth context.</p></li>
+<li><p>scoped: Indicates whether the current session is a scoped session.</p></li>
+<li><p>auth_scopes: Auth scopes for the current session. This exists only for scoped sessions.</p></li>
+<li><p>auth_resolve_uid: A UID for asynchronously checking whether the user has completed authentication.</p></li>
+</ul>
+</section>
+<section id="sessionstorageinterface">
+<h2>SessionStorageInterface<a class="headerlink" href="#sessionstorageinterface" title="Link to this heading"></a></h2>
+<p>To Be Updated (TBU)</p>
+</section>
+<section id="how-to-implement">
+<h2>How to Implement<a class="headerlink" href="#how-to-implement" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Add the SessionType enum in <code class="docutils literal notranslate"><span class="pre">hyperpocket/config/session.py</span></code>.</p></li>
+<li><p>Add the SessionConfig in <code class="docutils literal notranslate"><span class="pre">hyperpocket/config/session.py</span></code>.</p></li>
+<li><p>Implement the SessionStorageInterface</p>
+<ul class="simple">
+<li><p>The session storage must be initialized with the SessionConfig defined above.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, vessl-ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

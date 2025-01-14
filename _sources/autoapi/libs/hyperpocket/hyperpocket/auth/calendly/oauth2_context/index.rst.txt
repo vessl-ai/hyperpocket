@@ -1,0 +1,31 @@
+libs.hyperpocket.hyperpocket.auth.calendly.oauth2_context
+=========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.calendly.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.calendly.oauth2_context.CalendlyOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: CalendlyOAuth2AuthContext(/, **data: Any)
+
+   Bases: :py:obj:`hyperpocket.auth.calendly.context.CalendlyAuthContext`
+
+
+   This class is used to define the interface of the authentication model.
+
+
+   .. py:method:: from_calendly_oauth2_response(response: hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response) -> CalendlyOAuth2AuthContext
+      :classmethod:
+
+
+

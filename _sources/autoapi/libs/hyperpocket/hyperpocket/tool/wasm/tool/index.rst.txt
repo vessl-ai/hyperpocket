@@ -1,0 +1,115 @@
+libs.hyperpocket.hyperpocket.tool.wasm.tool
+===========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.tool.wasm.tool
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest
+   libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.tool.wasm.tool.from_local
+   libs.hyperpocket.hyperpocket.tool.wasm.tool.from_git
+   libs.hyperpocket.hyperpocket.tool.wasm.tool.from_github
+
+
+Module Contents
+---------------
+
+.. py:class:: WasmToolRequest(lock: hyperpocket.repository.Lock, rel_path: str)
+
+   Bases: :py:obj:`hyperpocket.tool.ToolRequest`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: lock
+      :type:  hyperpocket.repository.Lock
+
+
+   .. py:attribute:: rel_path
+      :type:  str
+
+
+.. py:function:: from_local(path: str) -> WasmToolRequest
+
+.. py:function:: from_git(repository: str, ref: str, rel_path: str) -> WasmToolRequest
+
+.. py:function:: from_github(owner: str, repo: str, ref: str, rel_path: str) -> WasmToolRequest
+
+.. py:class:: WasmTool(/, **data: Any)
+
+   Bases: :py:obj:`hyperpocket.tool.Tool`
+
+
+   WasmTool is Tool executing local python method.
+
+
+   .. py:attribute:: pkg_lock
+      :type:  hyperpocket.repository.Lock
+      :value: None
+
+
+
+   .. py:attribute:: rel_path
+      :type:  str
+
+
+   .. py:attribute:: runtime
+      :type:  hyperpocket.tool.wasm.script.ScriptRuntime
+      :value: None
+
+
+
+   .. py:attribute:: json_schema
+      :type:  Optional[dict]
+      :value: None
+
+
+
+   .. py:attribute:: readme
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:property:: invoker
+      :type: hyperpocket.tool.wasm.invoker.WasmInvoker
+
+
+
+   .. py:method:: from_tool_request(tool_req: WasmToolRequest, lockfile: hyperpocket.repository.Lockfile = None, **kwargs) -> WasmTool
+      :classmethod:
+
+
+
+   .. py:method:: template_arguments() -> dict[str, str]
+
+
+   .. py:method:: invoke(body: Any, envs: dict, **kwargs) -> str
+
+      Invoke the tool
+
+
+
+   .. py:method:: ainvoke(body: Any, envs: dict, **kwargs) -> str
+      :async:
+
+
+      Asynchronously invoke the tool
+
+
+

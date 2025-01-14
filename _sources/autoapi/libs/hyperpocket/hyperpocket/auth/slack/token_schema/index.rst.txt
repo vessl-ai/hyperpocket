@@ -1,0 +1,39 @@
+libs.hyperpocket.hyperpocket.auth.slack.token_schema
+====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.slack.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenRequest
+   libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: SlackTokenRequest(/, **data: Any)
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+   This class is used to define the interface of the authentication request.
+
+
+.. py:class:: SlackTokenResponse(/, **data: Any)
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   This class is used to define the interface of the authentication response.
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

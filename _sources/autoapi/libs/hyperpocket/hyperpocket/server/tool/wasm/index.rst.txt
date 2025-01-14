@@ -1,0 +1,47 @@
+libs.hyperpocket.hyperpocket.server.tool.wasm
+=============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.tool.wasm
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.tool.wasm.wasm_tool_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.tool.wasm.browse_script_page
+   libs.hyperpocket.hyperpocket.server.tool.wasm.done_script_page
+   libs.hyperpocket.hyperpocket.server.tool.wasm.fail_script_page
+   libs.hyperpocket.hyperpocket.server.tool.wasm.get_file_tree
+
+
+Module Contents
+---------------
+
+.. py:data:: wasm_tool_router
+
+.. py:function:: browse_script_page(script_id: str)
+   :async:
+
+
+.. py:function:: done_script_page(script_id: str, req: hyperpocket.server.tool.dto.script.ScriptStdout) -> hyperpocket.server.tool.dto.script.ScriptStdout
+   :async:
+
+
+.. py:function:: fail_script_page(script_id: str, req: hyperpocket.server.tool.dto.script.ScriptStdout) -> hyperpocket.server.tool.dto.script.ScriptStdout
+   :async:
+
+
+.. py:function:: get_file_tree(script_id: str) -> hyperpocket.server.tool.dto.script.ScriptFileTree
+   :async:
+
+

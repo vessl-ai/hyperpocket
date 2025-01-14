@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wasm(WebAssembly) &mdash; hyperpocket  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            hyperpocket
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../managed/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../managed/conceptual_guide.html">Conceptual Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../managed/quick_start.html">Quick Start</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">hyperpocket</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Wasm(WebAssembly)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/hyperpocket/tool/wasm/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="wasm-webassembly">
+<h1>Wasm(WebAssembly)<a class="headerlink" href="#wasm-webassembly" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+<section id="how-to-use">
+<h2>How To Use<a class="headerlink" href="#how-to-use" title="Link to this heading"></a></h2>
+<section id="plain-url">
+<h3>plain url<a class="headerlink" href="#plain-url" title="Link to this heading"></a></h3>
+<p>load the tool by providing a GitHub URL</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+    <span class="s1">&#39;https://github.com/your-organization/your-repository/tree/main&#39;</span><span class="p">,</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>in this case, read tool code from <code class="docutils literal notranslate"><span class="pre">main</span></code> branch by default</p></li>
+</ul>
+</section>
+<section id="from-git">
+<h3>from_git<a class="headerlink" href="#from-git" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>using <code class="docutils literal notranslate"><span class="pre">from_git</span></code>, you can specify branch and tool code path</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
+
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/your-organization/your-repository&quot;</span><span class="p">,</span> <span class="s2">&quot;branch-name&quot;</span><span class="p">,</span> <span class="s2">&quot;your/tool/code/path&quot;</span><span class="p">),</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="from-local">
+<h3>from_local<a class="headerlink" href="#from-local" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>using <code class="docutils literal notranslate"><span class="pre">from_local</span></code>, you can load a tool by specifying a local path</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_local</span>
+
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">from_local</span><span class="p">(</span><span class="s2">&quot;your/local/tool/code/path&quot;</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="wasmtoolrequest">
+<h2>WasmToolRequest<a class="headerlink" href="#wasmtoolrequest" title="Link to this heading"></a></h2>
+<p>The class to initiate WasmTool</p>
+<p>WasmToolRequest offer those build method:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">from_local</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">from_git</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">from_github</span></code></p></li>
+</ul>
+<p>Each <code class="docutils literal notranslate"><span class="pre">WasmToolRequest</span></code> has it’s own <code class="docutils literal notranslate"><span class="pre">Lock</span></code> object</p>
+<p>Those <code class="docutils literal notranslate"><span class="pre">Lock</span></code> object is managed by <code class="docutils literal notranslate"><span class="pre">Lockfile</span></code> in the <code class="docutils literal notranslate"><span class="pre">Pocket</span></code> class</p>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>classDiagram
+    class WasmToolRequest {
+        +Lock lock
+        + from_git()
+        + from_local()
+    }
+
+    class Lock{
+        +key()
+        +sync()
+    }
+
+    class GitLock{
+        +key()
+        +sync()
+    }
+
+    class LocalLock{
+        +key()
+        +sync()
+    }
+
+    class Lockfile {
+        +dict[tuple,Lock] locks
+
+        + add_lock()
+        + get_lock()
+        + sync()
+        + write()
+    }
+
+    ToolRequest &lt;|.. WasmToolRequest : Implementation
+    Lock o-- WasmToolRequest : 1..1
+    Lock &lt;|.. GitLock : Implementation
+    Lock &lt;|.. LocalLock : Implementation
+    Lock o-- Lockfile : n..1
+    Lockfile o-- Pocket : 1..1
+</pre></div>
+</div>
+</section>
+<section id="wasmtool">
+<h2>WasmTool<a class="headerlink" href="#wasmtool" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">WasmTool</span><span class="p">(</span><span class="n">Tool</span><span class="p">):</span>
+    <span class="n">_invoker</span><span class="p">:</span> <span class="n">WasmInvoker</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">pkg_lock</span><span class="p">:</span> <span class="n">Lock</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">rel_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">runtime</span><span class="p">:</span> <span class="n">ScriptRuntime</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">json_schema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">readme</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_invoker</span></code>: A class for executing WASM.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pkg_lock</span></code>: The lock class for the tool.</p>
+<ul>
+<li><p>Used to determine the package path where the current WASM code is stored.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rel_path</span></code>: The relative path to the location of the WASM code within the package.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">runtime</span></code>: The runtime language of the WASM code.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">json_schema</span></code>: The JSON schema for the WASM tool.</p>
+<ul>
+<li><p>Information read from schema.json.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readme</span></code>: The README information.</p></li>
+</ul>
+</section>
+<section id="wasminvoker">
+<h2>WasmInvoker<a class="headerlink" href="#wasminvoker" title="Link to this heading"></a></h2>
+<p>A class for running actual WASM</p>
+<ol class="arabic simple">
+<li><p>Combines runtime information, authentication details, and body content to render HTML.</p></li>
+<li><p>Stores the rendered HTML in memory.</p></li>
+<li><p>Launches a browser to execute the WASM.</p></li>
+<li><p>The browser sends a request to the server to retrieve the rendered HTML.</p></li>
+<li><p>Executes code specific to each runtime within the HTML and returns the result.</p></li>
+</ol>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>sequenceDiagram
+    participant WasmTool as WasmTool (Includes Server)
+    participant Browser as Browser (Executes WASM Runtime)
+
+
+    WasmTool-&gt;&gt;WasmTool: Render HTML and Store in Memory
+    WasmTool-&gt;&gt;Browser: Launch Browser
+    Browser-&gt;&gt;WasmTool: Request Rendered HTML
+    WasmTool-&gt;&gt;Browser: Provide Rendered HTML
+    Browser-&gt;&gt;Browser: Execute Injected WASM Runtime Script
+    Browser-&gt;&gt;WasmTool: Return Execution Result
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, vessl-ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

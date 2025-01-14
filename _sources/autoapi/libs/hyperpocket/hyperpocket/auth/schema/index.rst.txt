@@ -1,0 +1,41 @@
+libs.hyperpocket.hyperpocket.auth.schema
+========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest
+   libs.hyperpocket.hyperpocket.auth.schema.AuthenticateResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: AuthenticateRequest(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   This class is used to define the interface of the authentication request.
+
+
+   .. py:attribute:: auth_scopes
+      :type:  Optional[list[str]]
+      :value: None
+
+
+
+.. py:class:: AuthenticateResponse(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   This class is used to define the interface of the authentication response.
+
+

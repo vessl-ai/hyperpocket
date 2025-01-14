@@ -1,0 +1,131 @@
+libs.hyperpocket.hyperpocket.config.auth
+========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.config.auth
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.config.auth.DefaultAuthConfig
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.config.auth.BaseAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.SlackAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.GoogleAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.GithubAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.CalendlyAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.AuthConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: BaseAuthConfig(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: use_recommended_scope
+      :type:  bool
+      :value: None
+
+
+
+.. py:class:: SlackAuthConfig(/, **data: Any)
+
+   Bases: :py:obj:`BaseAuthConfig`
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
+.. py:class:: GoogleAuthConfig(/, **data: Any)
+
+   Bases: :py:obj:`BaseAuthConfig`
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
+.. py:class:: GithubAuthConfig(/, **data: Any)
+
+   Bases: :py:obj:`BaseAuthConfig`
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
+.. py:class:: CalendlyAuthConfig(/, **data: Any)
+
+   Bases: :py:obj:`BaseAuthConfig`
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
+.. py:class:: AuthConfig(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: slack
+      :type:  Optional[SlackAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: google
+      :type:  Optional[GoogleAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: github
+      :type:  Optional[GithubAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: calendly
+      :type:  Optional[CalendlyAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: use_prebuilt_auth
+      :type:  bool
+      :value: None
+
+
+
+.. py:data:: DefaultAuthConfig
+

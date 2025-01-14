@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Function &mdash; hyperpocket  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            hyperpocket
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../managed/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../managed/conceptual_guide.html">Conceptual Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../managed/quick_start.html">Quick Start</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">hyperpocket</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Function</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/hyperpocket/tool/function/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="function">
+<h1>Function<a class="headerlink" href="#function" title="Link to this heading"></a></h1>
+<p>Register and use Python functions as tools.</p>
+<hr class="docutils" />
+<section id="how-to-use">
+<h2>How To Use<a class="headerlink" href="#how-to-use" title="Link to this heading"></a></h2>
+<section id="no-authentication-required">
+<h3>No Authentication Required<a class="headerlink" href="#no-authentication-required" title="Link to this heading"></a></h3>
+<p>Directly pass Python methods into the pocket tool.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">my_function</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="with-authentication">
+<h3>With Authentication<a class="headerlink" href="#with-authentication" title="Link to this heading"></a></h3>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">&#64;function_tool</span></code> decorator to specify the required authentication provider for a Python method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_tool</span>
+
+
+<span class="nd">@function_tool</span><span class="p">(</span>
+    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">SLACK</span><span class="p">,</span>
+    <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;channels:history&quot;</span><span class="p">,</span> <span class="s2">&quot;im:history&quot;</span><span class="p">,</span> <span class="s2">&quot;mpim:history&quot;</span><span class="p">,</span> <span class="s2">&quot;groups:history&quot;</span><span class="p">,</span> <span class="s2">&quot;reactions:read&quot;</span><span class="p">,</span> <span class="s2">&quot;mpim:read&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;im:read&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_function</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">my_function</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>You can temporarily convert a function into a FunctionTool when initializing a Pocket instance using <code class="docutils literal notranslate"><span class="pre">from_func</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_func</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolAuth</span>
+
+<span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">from_func</span><span class="p">(</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">my_function</span><span class="p">,</span>
+        <span class="n">auth</span><span class="o">=</span><span class="n">ToolAuth</span><span class="p">(</span>
+            <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">SLACK</span><span class="p">,</span>
+            <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;channels:history&quot;</span><span class="p">,</span> <span class="s2">&quot;im:history&quot;</span><span class="p">,</span> <span class="s2">&quot;mpim:history&quot;</span><span class="p">,</span> <span class="s2">&quot;groups:history&quot;</span><span class="p">,</span> <span class="s2">&quot;reactions:read&quot;</span><span class="p">,</span> <span class="s2">&quot;mpim:read&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;im:read&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>Authentication access tokens are passed to the Python function as <strong>variable keyword</strong> arguments.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_tool</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthProvider</span>
+
+
+<span class="nd">@function_tool</span><span class="p">(</span>
+    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">SLACK</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_function</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;SLACK_BOT_TOKEN&quot;</span><span class="p">]</span>
+
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Check the <code class="docutils literal notranslate"><span class="pre">_ACCESS_TOKEN_KEY</span></code> field of each provider for the mapping key of their access tokens.</p></li>
+</ul>
+</section>
+</section>
+<section id="docstring-parsing">
+<h2>Docstring Parsing<a class="headerlink" href="#docstring-parsing" title="Link to this heading"></a></h2>
+<p>Parse docstrings to understand the meanings of arguments.</p>
+<p>The following docstring styles are supported:</p>
+<ul class="simple">
+<li><p>Google Style</p></li>
+<li><p>Sphinx</p></li>
+<li><p>Javadoc</p></li>
+<li><p>Plain</p></li>
+</ul>
+<section id="google-style">
+<h3>Google Style<a class="headerlink" href="#google-style" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    My Function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a (int): First argument</span>
+<span class="sd">        b (int): Second argument</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="sphinx-style">
+<h3>Sphinx Style<a class="headerlink" href="#sphinx-style" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    My Function</span>
+
+<span class="sd">    :param a: First argument</span>
+<span class="sd">    :param b: Second argument</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="javadoc-style">
+<h3>Javadoc Style<a class="headerlink" href="#javadoc-style" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    My Function</span>
+
+<span class="sd">    @param a: First argument</span>
+<span class="sd">    @param b: Second argument</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="other-style">
+<h3>Other Style<a class="headerlink" href="#other-style" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    My Function</span>
+
+<span class="sd">    @arg a: First argument</span>
+<span class="sd">    @arg b: Second argument</span>
+
+<span class="sd">    or</span>
+
+<span class="sd">    :arg a: First argument</span>
+<span class="sd">    :arg b: Second argument</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="plain">
+<h3>Plain<a class="headerlink" href="#plain" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    My Function</span>
+
+<span class="sd">    a(int): First argument</span>
+<span class="sd">    b(int): Second argument</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Link to this heading"></a></h2>
+<p>Input types are limited to Python built-in types and Pydantic.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, vessl-ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

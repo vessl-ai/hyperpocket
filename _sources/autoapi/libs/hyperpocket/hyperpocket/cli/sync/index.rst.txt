@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.cli.sync
+=====================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.sync
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.cli.sync.sync
+
+
+Module Contents
+---------------
+
+.. py:function:: sync(lockfile: Optional[pathlib.Path], force_update: bool)
+

@@ -1,0 +1,175 @@
+libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema
+=====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Request
+   libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response
+
+
+Module Contents
+---------------
+
+.. py:class:: SlackOAuth2Request(/, **data: Any)
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+   This class is used to define the interface of the authentication request.
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
+.. py:class:: SlackOAuth2Response(/, **data: Any)
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   This class is used to define the interface of the authentication response.
+
+
+   .. py:class:: Team(/, **data: Any)
+
+      Bases: :py:obj:`pydantic.BaseModel`
+
+
+      .. py:attribute:: name
+         :type:  str
+
+
+      .. py:attribute:: id
+         :type:  str
+
+
+
+   .. py:class:: Enterprise(/, **data: Any)
+
+      Bases: :py:obj:`pydantic.BaseModel`
+
+
+      .. py:attribute:: name
+         :type:  str
+
+
+      .. py:attribute:: id
+         :type:  str
+
+
+
+   .. py:class:: AuthedUser(/, **data: Any)
+
+      Bases: :py:obj:`pydantic.BaseModel`
+
+
+      .. py:attribute:: id
+         :type:  str
+
+
+      .. py:attribute:: access_token
+         :type:  Optional[str]
+         :value: None
+
+
+
+      .. py:attribute:: refresh_token
+         :type:  Optional[str]
+         :value: None
+
+
+
+      .. py:attribute:: expires_in
+         :type:  Optional[int]
+         :value: None
+
+
+
+      .. py:attribute:: scope
+         :type:  Optional[str]
+         :value: None
+
+
+
+      .. py:attribute:: token_type
+         :type:  Optional[str]
+         :value: None
+
+
+
+
+   .. py:attribute:: ok
+      :type:  bool
+
+
+   .. py:attribute:: access_token
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: expires_in
+      :type:  Optional[int]
+      :value: None
+
+
+
+   .. py:attribute:: token_type
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: scope
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: bot_user_id
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: app_id
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: team
+      :type:  Optional[SlackOAuth2Response.Team]
+      :value: None
+
+
+
+   .. py:attribute:: enterprise
+      :type:  Optional[SlackOAuth2Response.Enterprise]
+      :value: None
+
+
+
+   .. py:attribute:: authed_user
+      :type:  Optional[SlackOAuth2Response.AuthedUser]
+      :value: None
+
+
+

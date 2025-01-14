@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.auth.slack.oauth2_context
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.slack.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.slack.oauth2_context.SlackOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: SlackOAuth2AuthContext(/, **data: Any)
+
+   Bases: :py:obj:`hyperpocket.auth.slack.context.SlackAuthContext`
+
+
+   This class is used to define the interface of the authentication model.
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:method:: from_slack_oauth2_response(response: hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response)
+      :classmethod:
+
+
+

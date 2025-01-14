@@ -1,0 +1,53 @@
+libs.hyperpocket.hyperpocket.auth.provider
+==========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.provider
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.provider.AuthProvider
+
+
+Module Contents
+---------------
+
+.. py:class:: AuthProvider(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   .. py:attribute:: SLACK
+      :value: 'slack'
+
+
+
+   .. py:attribute:: LINEAR
+      :value: 'linear'
+
+
+
+   .. py:attribute:: GITHUB
+      :value: 'github'
+
+
+
+   .. py:attribute:: GOOGLE
+      :value: 'google'
+
+
+
+   .. py:attribute:: CALENDLY
+      :value: 'calendly'
+
+
+
+   .. py:method:: get_auth_provider(auth_provider_name: str) -> AuthProvider
+      :classmethod:
+
+
+

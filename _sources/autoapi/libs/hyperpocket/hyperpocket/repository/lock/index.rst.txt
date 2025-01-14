@@ -1,0 +1,119 @@
+libs.hyperpocket.hyperpocket.repository.lock
+============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.repository.lock
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.repository.lock.Lock
+   libs.hyperpocket.hyperpocket.repository.lock.LocalLock
+   libs.hyperpocket.hyperpocket.repository.lock.GitLock
+
+
+Module Contents
+---------------
+
+.. py:class:: Lock(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`, :py:obj:`abc.ABC`
+
+
+   .. py:attribute:: tool_source
+      :type:  str
+      :value: None
+
+
+
+   .. py:method:: key() -> tuple[str, Ellipsis]
+      :abstractmethod:
+
+
+
+   .. py:method:: sync(**kwargs)
+      :abstractmethod:
+
+
+
+   .. py:method:: toolpkg_path() -> pathlib.Path
+      :abstractmethod:
+
+
+
+   .. py:method:: eject_to_path(dest_path: pathlib.Path, src_sub_path: str = None)
+      :abstractmethod:
+
+
+
+.. py:class:: LocalLock(tool_path: str)
+
+   Bases: :py:obj:`Lock`
+
+
+   .. py:attribute:: tool_source
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: tool_path
+      :type:  str
+
+
+   .. py:method:: key()
+
+
+   .. py:method:: sync(**kwargs)
+
+
+   .. py:method:: toolpkg_path() -> pathlib.Path
+
+
+.. py:class:: GitLock(/, **data: Any)
+
+   Bases: :py:obj:`Lock`
+
+
+   .. py:attribute:: tool_source
+      :type:  str
+      :value: 'git'
+
+
+
+   .. py:attribute:: repository_url
+      :type:  str
+
+
+   .. py:attribute:: git_ref
+      :type:  str
+
+
+   .. py:attribute:: ref_sha
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:method:: key()
+
+
+   .. py:method:: toolpkg_path() -> pathlib.Path
+
+
+   .. py:method:: sync(force_update: bool = False, **kwargs)
+
+      Synchronize the local git repository with the target remote branch.
+
+      1. Check if the SHA of the target ref in the remote repository matches the current local SHA.
+      2. If they do not match, fetch the target ref from the remote repository and do a hard reset
+         to align the local repository with the remote version.
+
+
+
+   .. py:method:: eject_to_path(dest_path: pathlib.Path, src_sub_path: str = None)
+
+

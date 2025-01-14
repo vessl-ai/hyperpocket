@@ -1,0 +1,117 @@
+libs.hyperpocket.hyperpocket.tool.tool
+======================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.tool.tool
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.tool.tool.ToolAuth
+   libs.hyperpocket.hyperpocket.tool.tool.ToolRequest
+   libs.hyperpocket.hyperpocket.tool.tool.Tool
+
+
+Module Contents
+---------------
+
+.. py:class:: ToolAuth(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   ToolAuth is an object that represents the authentication information required to invoke a tool
+
+
+   .. py:attribute:: scopes
+      :type:  list[str]
+      :value: None
+
+
+
+   .. py:attribute:: auth_provider
+      :type:  Optional[hyperpocket.auth.provider.AuthProvider]
+      :value: None
+
+
+
+   .. py:attribute:: auth_handler
+      :type:  Optional[str]
+      :value: None
+
+
+
+.. py:class:: ToolRequest
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+.. py:class:: Tool(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`, :py:obj:`abc.ABC`
+
+
+   Pocket Tool Interface
+
+
+   .. py:attribute:: name
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: argument_json_schema
+      :type:  Optional[dict]
+      :value: None
+
+
+
+   .. py:attribute:: auth
+      :type:  Optional[ToolAuth]
+      :value: None
+
+
+
+   .. py:method:: invoke(**kwargs) -> str
+      :abstractmethod:
+
+
+      Invoke the tool
+
+
+
+   .. py:method:: ainvoke(**kwargs) -> str
+      :abstractmethod:
+
+      :async:
+
+
+      Asynchronously invoke the tool
+
+
+
+   .. py:method:: schema_model() -> Optional[Type[pydantic.BaseModel]]
+
+      Returns a schema_model that wraps the existing argument_json_schema
+      to include profile and thread_id as arguments when the tool is invoked
+
+
+
+   .. py:method:: from_tool_request(tool_req: ToolRequest, **kwargs) -> Tool
+      :classmethod:
+
+
+

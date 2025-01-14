@@ -1,0 +1,59 @@
+libs.hyperpocket.hyperpocket.server.tool.dto.script
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.tool.dto.script
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.tool.dto.script.Script
+   libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptStdout
+   libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileTree
+
+
+Module Contents
+---------------
+
+.. py:class:: Script(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: id
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: tool_id
+      :type:  str
+      :value: None
+
+
+
+.. py:class:: ScriptStdout(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: stdout
+      :type:  str
+      :value: None
+
+
+
+.. py:class:: ScriptFileTree(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: tree
+      :type:  dict[str, hyperpocket.tool.wasm.script.ScriptFileNode]
+      :value: None
+
+
+

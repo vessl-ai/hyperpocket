@@ -1,0 +1,109 @@
+libs.hyperpocket.hyperpocket.config.settings
+============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.config.settings
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.config.settings.pocket_root
+   libs.hyperpocket.hyperpocket.config.settings.settings_path
+   libs.hyperpocket.hyperpocket.config.settings.secret_path
+   libs.hyperpocket.hyperpocket.config.settings.toolpkg_path
+   libs.hyperpocket.hyperpocket.config.settings.settings
+   libs.hyperpocket.hyperpocket.config.settings.config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.config.settings.Config
+
+
+Module Contents
+---------------
+
+.. py:data:: pocket_root
+
+.. py:data:: settings_path
+
+.. py:data:: secret_path
+
+.. py:data:: toolpkg_path
+
+.. py:data:: settings
+
+.. py:class:: Config(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: internal_server_port
+      :type:  int
+      :value: 8000
+
+
+
+   .. py:attribute:: enable_local_callback_proxy
+      :type:  bool
+      :value: True
+
+
+
+   .. py:attribute:: public_hostname
+      :type:  str
+      :value: 'localhost'
+
+
+
+   .. py:attribute:: public_server_protocol
+      :type:  str
+      :value: 'https'
+
+
+
+   .. py:attribute:: public_server_port
+      :type:  int
+      :value: 8001
+
+
+
+   .. py:attribute:: callback_url_rewrite_prefix
+      :type:  str
+      :value: 'proxy'
+
+
+
+   .. py:attribute:: log_level
+      :type:  str
+      :value: 'INFO'
+
+
+
+   .. py:attribute:: auth
+      :type:  hyperpocket.config.auth.AuthConfig
+
+
+   .. py:attribute:: git
+      :type:  hyperpocket.config.git.GitConfig
+
+
+   .. py:attribute:: session
+      :type:  hyperpocket.config.session.SessionConfig
+
+
+   .. py:property:: internal_base_url
+
+
+   .. py:property:: public_base_url
+
+
+.. py:data:: config
+   :type:  Config
+

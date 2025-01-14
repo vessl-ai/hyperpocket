@@ -1,0 +1,103 @@
+libs.hyperpocket.hyperpocket.config.session
+===========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.config.session
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.config.session.DefaultSessionConfig
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.config.session.SessionType
+   libs.hyperpocket.hyperpocket.config.session.SessionConfigInMemory
+   libs.hyperpocket.hyperpocket.config.session.SessionConfigRedis
+   libs.hyperpocket.hyperpocket.config.session.SessionConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: SessionType(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   .. py:attribute:: IN_MEMORY
+      :value: 'in_memory'
+
+
+
+   .. py:attribute:: REDIS
+      :value: 'redis'
+
+
+
+.. py:class:: SessionConfigInMemory(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+.. py:class:: SessionConfigRedis(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:class:: Config
+
+      .. py:attribute:: extra
+         :value: 'allow'
+
+
+
+
+   .. py:attribute:: host
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: port
+      :type:  int
+      :value: None
+
+
+
+   .. py:attribute:: db
+      :type:  int
+      :value: None
+
+
+
+.. py:class:: SessionConfig(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: session_type
+      :type:  SessionType
+
+
+   .. py:attribute:: in_memory
+      :type:  Optional[SessionConfigInMemory]
+      :value: None
+
+
+
+   .. py:attribute:: redis
+      :type:  Optional[SessionConfigRedis]
+      :value: None
+
+
+
+.. py:data:: DefaultSessionConfig
+

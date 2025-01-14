@@ -1,0 +1,191 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tool &mdash; hyperpocket  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            hyperpocket
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../managed/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../managed/conceptual_guide.html">Conceptual Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../managed/quick_start.html">Quick Start</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">hyperpocket</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tool</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/hyperpocket/tool/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tool">
+<h1>Tool<a class="headerlink" href="#tool" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+<section id="toolrequest">
+<h2>ToolRequest<a class="headerlink" href="#toolrequest" title="Link to this heading"></a></h2>
+<p>The interface that contains information to initiate each tool</p>
+</section>
+<section id="toolauth">
+<h2>ToolAuth<a class="headerlink" href="#toolauth" title="Link to this heading"></a></h2>
+<p>The class that contains authentication information to invoke tool</p>
+<p>authentication information fields are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">auth_provider</span></code>: Indicates which authentication provider’s credentials are required to invoke the tool.</p>
+<ul>
+<li><p>If auth_provider is not specified, the tool is considered to require no authentication.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">auth_handler</span></code>: Specifies which authentication handler should be used when invoking the tool.</p>
+<ul>
+<li><p>If auth_handler is not specified, the default handler of the authentication provider will be used.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scopes</span></code>: Indicates the authentication scopes required to invoke the tool.</p>
+<ul>
+<li><p>If authentication is not performed or the authentication handler is non-scoped, the value should be None.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id1">
+<h2>Tool<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>The interface to execute tool actually</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Tool</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;tool name&quot;</span><span class="p">)</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;tool description&quot;</span><span class="p">)</span>
+    <span class="n">argument_json_schema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;tool argument json schema&quot;</span><span class="p">)</span>
+    <span class="n">auth</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ToolAuth</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;authentication information to invoke tool&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="schema-model">
+<h3>schema_model<a class="headerlink" href="#schema-model" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Tool.schema_model</span></code> returns a model that wraps the existing <code class="docutils literal notranslate"><span class="pre">argument_json_schema</span></code> to include <code class="docutils literal notranslate"><span class="pre">profile</span></code> and <code class="docutils literal notranslate"><span class="pre">thread_id</span></code> as
+arguments when the tool is invoked.</p>
+<p>In this process, the original <code class="docutils literal notranslate"><span class="pre">argument_json_schema</span></code> is moved under the <code class="docutils literal notranslate"><span class="pre">body</span></code> field.</p>
+</section>
+</section>
+<section id="how-to-implement">
+<h2>How to implement<a class="headerlink" href="#how-to-implement" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Create a class that inherits from Tool</p>
+<ul class="simple">
+<li><p>Define the tasks to be performed when invoking the tool in invoke or ainvoke.</p></li>
+<li><p>Define a factory method to initialize the tool.(Optional)</p></li>
+<li><p>Inject values for the required fields during initialization.</p></li>
+</ul>
+</li>
+<li><p>Add the class to <code class="docutils literal notranslate"><span class="pre">ToolLike</span></code> in Pocket (Optional)</p>
+<ul class="simple">
+<li><p>For <code class="docutils literal notranslate"><span class="pre">WasmTool</span></code>, the input can be a ToolRequest or a str.</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">FunctionTool</span></code>, the input can be a Callable.</p></li>
+</ul>
+</li>
+<li><p>Perform tool initialization in <code class="docutils literal notranslate"><span class="pre">Pocket.__init__</span></code> or <code class="docutils literal notranslate"><span class="pre">Pocket._load_tool</span></code></p>
+<ul class="simple">
+<li><p>The initialization is based on the provided ToolLike value.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="invoke-flow">
+<h2>Invoke Flow<a class="headerlink" href="#invoke-flow" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>The initial tool invocation occurs via <code class="docutils literal notranslate"><span class="pre">Pocket.invoke</span></code>.</p></li>
+<li><p>If authentication is required for tool invocation, authentication is performed using <code class="docutils literal notranslate"><span class="pre">PocketAuth.invoke</span></code>.</p></li>
+<li><p>After successful authentication, the authentication information obtained from PocketAuth is included when invoking
+the tool.</p></li>
+</ol>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>flowchart TD
+    Z[&quot;Agent&quot;] --&gt;|&quot;Invoke tool&quot;| A[&quot;Pocket&quot;]
+    A[&quot;Pocket&quot;] --&gt;|Requires Authentication?| B{&quot;Yes&quot;}
+    B --&gt; D[&quot;PocketAuth: Provide Authentication Info&quot;]
+    D --&gt; E[&quot;Pocket: Invoke Tool with Auth Info&quot;]
+    B --&gt;|No| F
+    E --&gt; F[&quot;Tool: Perform Operations&quot;]
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, vessl-ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

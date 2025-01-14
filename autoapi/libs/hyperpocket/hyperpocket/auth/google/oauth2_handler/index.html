@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>libs.hyperpocket.hyperpocket.auth.google.oauth2_handler &mdash; hyperpocket  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../../index.html" class="icon icon-home">
+            hyperpocket
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/conceptual_guide.html">Conceptual Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/quick_start.html">Quick Start</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../../index.html">hyperpocket</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">libs.hyperpocket.hyperpocket.auth.google.oauth2_handler</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../../_sources/autoapi/libs/hyperpocket/hyperpocket/auth/google/oauth2_handler/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-libs.hyperpocket.hyperpocket.auth.google.oauth2_handler">
+<span id="libs-hyperpocket-hyperpocket-auth-google-oauth2-handler"></span><h1>libs.hyperpocket.hyperpocket.auth.google.oauth2_handler<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.auth.google.oauth2_handler" title="Link to this heading"></a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler" title="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GoogleOAuth2AuthHandler</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.</span></span><span class="sig-name descname"><span class="pre">GoogleOAuth2AuthHandler</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperpocket.auth.handler.AuthHandlerInterface</span></code></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'google-oauth2'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'This</span> <span class="pre">handler</span> <span class="pre">is</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">authenticate</span> <span class="pre">users</span> <span class="pre">using</span> <span class="pre">Google</span> <span class="pre">OAuth.'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.scoped">
+<span class="sig-name descname"><span class="pre">scoped</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.scoped" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.provider">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">provider</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">hyperpocket.auth.handler.AuthProvider</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.provider" title="Link to this definition"></a></dt>
+<dd><p>Returns the authentication provider enum.</p>
+<p>This method is used to determine the appropriate authentication handler</p>
+<p>based on the authentication provider.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.provider_default">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">provider_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.provider_default" title="Link to this definition"></a></dt>
+<dd><p>Indicates whether this authentication handler is the default handler.</p>
+<p>If no specific handler is designated, the default handler will be used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if this handler is the default, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.recommended_scopes">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">recommended_scopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.recommended_scopes" title="Link to this definition"></a></dt>
+<dd><p>Returns the recommended authentication scopes.</p>
+<p>If <cite>use_recommended_scope</cite> is set to True in the <cite>AuthConfig</cite>,</p>
+<p>this method should return the proper recommended scopes. Otherwise,</p>
+<p>it should return an empty set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A set of recommended scopes, or an empty set if not applicable.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>set[str]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Slack OAuth2 recommended_scopes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">recommended_scopes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">slack</span><span class="o">.</span><span class="n">use_recommended_scope</span><span class="p">:</span>
+        <span class="n">recommended_scopes</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;channels:history&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;channels:read&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;chat:write&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;groups:history&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;groups:read&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;im:history&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mpim:history&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;reactions:read&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;reactions:write&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">recommended_scopes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">return</span> <span class="n">recommended_scopes</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.prepare">
+<span class="sig-name descname"><span class="pre">prepare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request" title="libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request"><span class="pre">hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">thread_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">future_uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.prepare" title="Link to this definition"></a></dt>
+<dd><p>Performs preliminary tasks required for authentication.</p>
+<p>This method typically performs the following actions:</p>
+<ul class="simple">
+<li><p>Creates a future to wait for user authentication completion during the authentication process.</p></li>
+<li><p>Issues an authentication URI that the user can access.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>auth_req</strong> (<a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest"><em>AuthenticateRequest</em></a>) – The authentication request object.</p></li>
+<li><p><strong>thread_id</strong> (<em>str</em>) – The thread ID.</p></li>
+<li><p><strong>profile</strong> (<em>str</em>) – The profile name.</p></li>
+<li><p><strong>future_uid</strong> (<em>str</em>) – A unique identifier for each future.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The authentication URI that the user can access.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.authenticate">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request" title="libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request"><span class="pre">hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">future_uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext" title="libs.hyperpocket.hyperpocket.auth.context.AuthContext"><span class="pre">hyperpocket.auth.context.AuthContext</span></a></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.authenticate" title="Link to this definition"></a></dt>
+<dd><p>Performs the actual authentication process.</p>
+<p>This function assumes that the user has completed the authentication during the <cite>prepare</cite> step,
+and the associated future has been resolved. At this point, the result contains the required
+values for authentication (e.g., an auth code).</p>
+<p>Typically, this process involves:</p>
+<ul class="simple">
+<li><p>Accessing the resolved future to retrieve the necessary values for authentication.</p></li>
+<li><p>Performing the actual authentication using these values.</p></li>
+<li><p>Converting the returned response into an appropriate <cite>AuthContext</cite> object and returning it.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>auth_req</strong> (<a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest"><em>AuthenticateRequest</em></a>) – The authentication request object.</p></li>
+<li><p><strong>future_uid</strong> (<em>str</em>) – A unique identifier for the future, used to retrieve the correct
+result issued during the <cite>prepare</cite> step.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The authentication context object containing the authentication result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext" title="libs.hyperpocket.hyperpocket.auth.context.AuthContext">AuthContext</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.refresh">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request" title="libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request"><span class="pre">hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext" title="libs.hyperpocket.hyperpocket.auth.context.AuthContext"><span class="pre">hyperpocket.auth.context.AuthContext</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext" title="libs.hyperpocket.hyperpocket.auth.context.AuthContext"><span class="pre">hyperpocket.auth.context.AuthContext</span></a></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.refresh" title="Link to this definition"></a></dt>
+<dd><p>Performs re-authentication for an expired session.</p>
+<p>This method is optional and does not need to be implemented for handlers that do not require re-authentication.</p>
+<p>Typically, the information needed for re-authentication (e.g., a refresh token) should be stored
+within the <cite>AuthContext</cite> during the previous authentication step.</p>
+<p>In the <cite>refresh</cite> step, this method accesses the necessary re-authentication details from the provided <cite>context</cite>,
+performs the re-authentication, and returns an updated <cite>AuthContext</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>auth_req</strong> (<a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest"><em>AuthenticateRequest</em></a>) – The authentication request object.</p></li>
+<li><p><strong>context</strong> (<a class="reference internal" href="../../context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext" title="libs.hyperpocket.hyperpocket.auth.context.AuthContext"><em>AuthContext</em></a>) – The current authentication context that it should contain data required for re-authentication.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An updated authentication context object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext" title="libs.hyperpocket.hyperpocket.auth.context.AuthContext">AuthContext</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.make_request">
+<span class="sig-name descname"><span class="pre">make_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_scopes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request" title="libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request"><span class="pre">hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request</span></a></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.make_request" title="Link to this definition"></a></dt>
+<dd><p>Make an AuthenticationRequest.</p>
+<p>Usually, this method only requires <cite>auth_scopes</cite>.</p>
+<p>If additional static information is needed (e.g., clientID, secretID),</p>
+<p>retrieve it from the configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>auth_scopes</strong> (<em>Optional</em><em>[</em><em>list</em><em>[</em><em>str</em><em>]</em><em>]</em>) – list of auth scopes</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A authentication request object with the necessary details.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest">AuthenticateRequest</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Create a Slack OAuth2 request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth_scopes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SlackOAuth2Request</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">SlackOAuth2Request</span><span class="p">(</span>
+        <span class="n">auth_scopes</span><span class="o">=</span><span class="n">auth_scopes</span><span class="p">,</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">slack</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+        <span class="n">client_secret</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">slack</span><span class="o">.</span><span class="n">client_secret</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, vessl-ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

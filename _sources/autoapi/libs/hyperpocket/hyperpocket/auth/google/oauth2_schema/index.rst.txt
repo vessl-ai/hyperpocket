@@ -1,0 +1,65 @@
+libs.hyperpocket.hyperpocket.auth.google.oauth2_schema
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.google.oauth2_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request
+   libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Response
+
+
+Module Contents
+---------------
+
+.. py:class:: GoogleOAuth2Request(/, **data: Any)
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+   This class is used to define the interface of the authentication request.
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
+.. py:class:: GoogleOAuth2Response(/, **data: Any)
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   This class is used to define the interface of the authentication response.
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+
+   .. py:attribute:: expires_in
+      :type:  int
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: scope
+      :type:  str
+
+
+   .. py:attribute:: token_type
+      :type:  str
+
+

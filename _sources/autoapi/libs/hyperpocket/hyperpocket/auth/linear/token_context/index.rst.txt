@@ -1,0 +1,31 @@
+libs.hyperpocket.hyperpocket.auth.linear.token_context
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.linear.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.linear.token_context.LinearTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: LinearTokenAuthContext(/, **data: Any)
+
+   Bases: :py:obj:`hyperpocket.auth.linear.context.LinearAuthContext`
+
+
+   This class is used to define the interface of the authentication model.
+
+
+   .. py:method:: from_linear_token_response(response: hyperpocket.auth.linear.token_schema.LinearTokenResponse)
+      :classmethod:
+
+
+

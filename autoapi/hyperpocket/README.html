@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pocket 👛 &mdash; hyperpocket  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            hyperpocket
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../managed/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../managed/conceptual_guide.html">Conceptual Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../managed/quick_start.html">Quick Start</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">hyperpocket</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Pocket 👛</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/autoapi/hyperpocket/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pocket">
+<h1>Pocket 👛<a class="headerlink" href="#pocket" title="Link to this heading"></a></h1>
+<p>Pocket is where tools belong. Power your agent up with a pocket of tools. 👛</p>
+<figure>
+<img src="image.png" alt="4d-pocket" width="200"/>
+<figcaption>© Doraemon</figcaption>
+</figure><section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>Pocket is a tool that allows you to easily use tool and auth for agents on your machine.</p>
+<p><strong>*Start fast.*</strong> Just install Pocket and use it. We know you don’t have time to authenticate to our server.</p>
+<p><strong>*Go securely.*</strong> Not like others, you are the only one who knows your secret tokens. We do NOT. All of your secret
+tokens belong to your infrastructure, not ours.</p>
+<p><strong>*Power up with public tools.*</strong> Without worries for tool integration, use others’ tools just with copy-and-paste the
+link to the tool. Your tool will run on isolated environment based on WebAssembly technology, and you don’t have to deal
+with the dependency spaghetti.</p>
+<p><strong>*Battery Included*</strong> You can use popular tools and authentication providers out-of-the-box.</p>
+<figure>
+<img src="pocket1.png" alt="pocket-flow" width="400"/>
+<figcaption></figcaption>
+</figure></section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>install hyperpocket</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>hyperpocket
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>install playwright</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>playwright<span class="w"> </span>install
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<p>Supported agent frameworks</p>
+<ul class="simple">
+<li><p>[x] Langgraph <a class="reference external" href="https://www.langchain.com/langgraph">link</a></p></li>
+<li><p>[x] Langchain <a class="reference external" href="https://www.langchain.com/">link</a></p></li>
+<li><p>[x] Llamaindex <a class="reference external" href="https://www.llamaindex.ai/">link</a></p></li>
+</ul>
+<p>Or just use LLM API Clients out of the box.</p>
+<ul class="simple">
+<li><p>[x] OpenAI <a class="reference external" href="https://openai.com/">link</a></p></li>
+<li><p>[x] Anthropic <a class="reference external" href="https://www.anthropic.com/">link</a></p></li>
+</ul>
+<section id="using-out-of-the-box-tools">
+<h3>Using out-of-the-box tools<a class="headerlink" href="#using-out-of-the-box-tools" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLangchain</span>
+
+<span class="n">pklc</span> <span class="o">=</span> <span class="n">PocketLangchain</span><span class="p">(</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperawesometools&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;managed-tools/slack/get-message&quot;</span><span class="p">),</span>
+        <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperawesometools&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;managed-tools/slack/post-message&quot;</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">tools</span> <span class="o">=</span> <span class="n">pklc</span><span class="o">.</span><span class="n">get_tools</span><span class="p">()</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">()</span>
+<span class="n">llm_tool_binding</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">bind_tools</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span>
+<span class="n">llm_tool_binding</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="using-out-of-the-box-auth-for-various-tools">
+<h3>Using out-of-the-box auth for various tools<a class="headerlink" href="#using-out-of-the-box-auth-for-various-tools" title="Link to this heading"></a></h3>
+<p>There are two kinds of auth process, one is using system auth(developer api key) and the other is using end user auth.</p>
+<p>Pocket provides way to use end user auth easily.
+(Of course, you can also just set your STRIPE_API_KEY when using Stripe API related tools)</p>
+<ul class="simple">
+<li><p>Supported methods</p>
+<ul>
+<li><p>[x] OAuth</p></li>
+<li><p>[x] Token</p></li>
+<li><p>[ ] Basic Auth (Username, Password)</p></li>
+</ul>
+</li>
+<li><p>Supported OAuth Providers</p>
+<ul>
+<li><p>[x] Google</p></li>
+<li><p>[x] GitHub</p></li>
+<li><p>[x] Slack</p></li>
+<li><p>[x] Linear</p></li>
+<li><p>[ ] Facebook</p></li>
+<li><p>[ ] X (Previously Twitter)</p></li>
+<li><p>[ ] LinkedIn</p></li>
+<li><p>[ ] Discord</p></li>
+<li><p>[ ] Zoom</p></li>
+<li><p>[ ] Microsoft</p></li>
+<li><p>[ ] Spotify</p></li>
+<li><p>[ ] Twitch</p></li>
+</ul>
+</li>
+</ul>
+<p>You can manage your auths in request-wise level. (e.g. you can use different auths for different requests)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">StateGraph</span><span class="p">,</span> <span class="n">START</span><span class="p">,</span> <span class="n">MessagesState</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.prebuilt</span><span class="w"> </span><span class="kn">import</span> <span class="n">tools_condition</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_langgraph</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLanggraph</span>
+
+<span class="n">pklg</span> <span class="o">=</span> <span class="n">PocketLanggraph</span><span class="p">(</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperawesometools&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;managed-tools/slack/get-message&quot;</span><span class="p">),</span>
+        <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperawesometools&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;managed-tools/slack/post-message&quot;</span><span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">()</span>
+
+<span class="c1"># Langgraph</span>
+<span class="n">pk_tool_node</span> <span class="o">=</span> <span class="n">pklg</span><span class="o">.</span><span class="n">get_tool_node</span><span class="p">()</span>
+<span class="n">llm_tool_binding</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">bind_tools</span><span class="p">(</span><span class="n">pklg</span><span class="o">.</span><span class="n">get_tools</span><span class="p">())</span>
+
+<span class="c1"># ...</span>
+
+<span class="n">graph_builder</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">MessagesState</span><span class="p">)</span>
+
+<span class="n">graph_builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;llm&#39;</span><span class="p">,</span> <span class="n">llm</span><span class="p">)</span>
+<span class="n">graph_builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;tools&#39;</span><span class="p">,</span> <span class="n">pk_tool_node</span><span class="p">)</span>
+<span class="n">graph_builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">START</span><span class="p">,</span> <span class="n">llm</span><span class="p">)</span>
+<span class="n">graph_builder</span><span class="o">.</span><span class="n">add_conditional_edges</span><span class="p">(</span><span class="s2">&quot;llm&quot;</span><span class="p">,</span> <span class="n">tools_condition</span><span class="p">)</span>
+<span class="n">graph_builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">pk_tool_node</span><span class="p">,</span> <span class="n">llm</span><span class="p">)</span>
+
+<span class="c1"># ...</span>
+
+<span class="n">graph_builder</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">secret</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">llama_index.core.agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">FunctionCallingAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">llama_index.llms.openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_llamaindex</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLlamaindex</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">secret</span><span class="p">[</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">])</span>
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketLlamaindex</span><span class="p">(</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperawesometools&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;managed-tools/slack/get-message&quot;</span><span class="p">),</span>
+        <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperawesometools&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;managed-tools/slack/post-message&quot;</span><span class="p">),</span>
+        <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperawesometools&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;managed-tools/linear/get-issues&quot;</span><span class="p">),</span>
+        <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperawesometools&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;managed-tools/google/get-calendar-events&quot;</span><span class="p">),</span>
+        <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperawesometools&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;managed-tools/google/get-calendar-list&quot;</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">tools</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">get_tools</span><span class="p">()</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">FunctionCallingAgent</span><span class="o">.</span><span class="n">from_tools</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span> <span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="specifying-auth-methods-for-tool-type">
+<h3>Specifying auth methods for tool type<a class="headerlink" href="#specifying-auth-methods-for-tool-type" title="Link to this heading"></a></h3>
+<p>Some resources support multiple auth methods. Your end user should be able to select between those methods.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Human: List my slack messages in &#39;general&#39; channel
+
+Assistance: To access your slack messages, you need authentication. Slack api provides 1) bot token auth 2) OAuth auth. Which do you want to proceed?
+
+Human: I&#39;ll go with OAuth
+
+Assistance: You need chat:read, channel:history scopes to list messages. Do you confirm?
+
+Human: OK.
+
+Assistance: Please proceed to the following url and finish authentication. After that, let me know.
+&gt; https://slack.com/authorize?clientId=xxx&amp;scope=chat:read,channel:history&amp;redirect_url=xxx
+
+Human: I&#39;m done. (if necessary)
+
+Assistance: I&#39;ve checked you finished your auth. Let me search messages in slack channel &#39;general&#39;.
+
+Assistance: Here are the recent 10 messages.
+(...)
+</pre></div>
+</div>
+</section>
+<section id="config">
+<h3>Config<a class="headerlink" href="#config" title="Link to this heading"></a></h3>
+<p>Running <code class="docutils literal notranslate"><span class="pre">pocket</span> <span class="pre">config</span> <span class="pre">init</span></code> will create your config file in <code class="docutils literal notranslate"><span class="pre">$HOME/.pocket/settings.toml</span></code></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">settings.toml</span></code> looks as follows.</p>
+<p>TODO: Add <code class="docutils literal notranslate"><span class="pre">secrets.toml</span></code>.</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">log_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span>
+<span class="n">internal_server_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;8000&quot;</span><span class="w"> </span><span class="c1"># optional, default is 8000</span>
+<span class="n">public_hostname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;localhost&quot;</span><span class="w"> </span><span class="c1"># optional, default is localhost</span>
+<span class="n">public_server_protocol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https&quot;</span><span class="w"> </span><span class="c1"># optional, default is https</span>
+<span class="n">public_server_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;8001&quot;</span><span class="w"> </span><span class="c1"># optional, default is 8001</span>
+<span class="n">enable_local_callback_proxy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="c1"># optional, default is true, can be turned off when running in production behind TLS termination</span>
+<span class="n">callback_url_rewrite_prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;proxy&quot;</span><span class="w"> </span><span class="c1"># optional, default is proxy, auth callback url prefix</span>
+
+<span class="k">[session]</span>
+<span class="n">session_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;redis&quot;</span><span class="w"> </span><span class="c1"># optional, default is in-memory</span>
+<span class="k">[session.redis]</span>
+<span class="n">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;localhost&quot;</span>
+<span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6379</span>
+<span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="k">[git]</span>
+<span class="k">[git.github]</span>
+<span class="n">github_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;Your github PAT&gt;&quot;</span><span class="w"> </span><span class="c1"># optional, your github personal access token</span>
+<span class="n">app_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;Your github app id&gt;&quot;</span><span class="w"> </span><span class="c1"># optional, your github app id</span>
+<span class="n">app_installation_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;Your github app installation id&gt;&quot;</span><span class="w"> </span><span class="c1"># optional, your github app installation id</span>
+<span class="n">app_private_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;Your github app private key&gt;&quot;</span><span class="w"> </span><span class="c1"># optional, your github app private key</span>
+
+<span class="k">[auth]</span>
+<span class="k">[auth.slack]</span><span class="w"> </span><span class="c1"># add your slack app&#39;s client id and secret for slack auth</span>
+<span class="n">client_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="c1"># your slack client id</span>
+<span class="n">client_secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="c1"># your slack client secret</span>
+
+<span class="k">[auth.github]</span><span class="w"> </span><span class="c1"># add your github app&#39;s client id and secret for github auth</span>
+<span class="n">client_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="c1"># your github client id</span>
+<span class="n">client_secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w">  </span><span class="c1"># your github client secret</span>
+</pre></div>
+</div>
+<section id="how-to-integrate-github-oauth-app">
+<h4>How to integrate github OAuth app<a class="headerlink" href="#how-to-integrate-github-oauth-app" title="Link to this heading"></a></h4>
+<ol class="arabic simple">
+<li><p>Follow the github documentation to create a new OAuth
+app. <a class="reference external" href="https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app">https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app</a></p></li>
+</ol>
+<ul class="simple">
+<li><p>While creating your github OAuth app, configuring your app’s <code class="docutils literal notranslate"><span class="pre">Authorization</span> <span class="pre">callback</span> <span class="pre">URL</span></code> is different for your
+development environment and production environment.</p>
+<ul>
+<li><p>For development environment, you can use <code class="docutils literal notranslate"><span class="pre">http://localhost:8000/auth/github/callback</span></code></p>
+<ul>
+<li><p><strong>Note</strong>: Default port for pocket dev server is <code class="docutils literal notranslate"><span class="pre">8000</span></code>. If you are using a different port, make sure to
+replace <code class="docutils literal notranslate"><span class="pre">8000</span></code> with your actual port number.</p></li>
+</ul>
+</li>
+<li><p>For production environment, you can use <code class="docutils literal notranslate"><span class="pre">https://yourdomain.com/auth/github/callback</span></code></p>
+<ul>
+<li><p><strong>Note</strong>: Make sure to replace <code class="docutils literal notranslate"><span class="pre">yourdomain.com</span></code> with your actual domain name that this app will be hosted on.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="how-to-integrate-slack-oauth-app">
+<h4>How to integrate SLACK OAuth app<a class="headerlink" href="#how-to-integrate-slack-oauth-app" title="Link to this heading"></a></h4>
+<ol class="arabic simple">
+<li><p>Follow the slack documentation to create a new Oauth APP. <a class="reference external" href="https://api.slack.com/quickstart">https://api.slack.com/quickstart</a></p></li>
+<li><p>Setting Redirect URLs, Scopes at OAuth &amp; Permissions tap in slack APP page</p></li>
+</ol>
+<ul class="simple">
+<li><p>Redirect URLs :
+<code class="docutils literal notranslate"><span class="pre">{public_server_protocol}://{public_hostname}:[{public_server_port}]/{callback_url_rewrite_prefix}/auth/slack/oauth2/callback</span></code></p></li>
+<li><p>Scopes : What you want to request to user.</p>
+<ul>
+<li><p>Recommended scopes :</p>
+<ul>
+<li><p>channels:history,</p></li>
+<li><p>channels:read,</p></li>
+<li><p>chat:write,</p></li>
+<li><p>groups:history,</p></li>
+<li><p>groups:read,</p></li>
+<li><p><a class="reference external" href="im:history">im:history</a>,</p></li>
+<li><p>mpim:history,</p></li>
+<li><p>reactions:read,</p></li>
+<li><p>reactions:write,</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol class="arabic simple">
+<li><p>Set your Slack APP Client ID / Client Secret in <code class="docutils literal notranslate"><span class="pre">$HOME/.pocket/settings.toml</span></code></p></li>
+</ol>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, vessl-ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

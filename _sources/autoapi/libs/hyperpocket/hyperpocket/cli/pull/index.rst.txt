@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.cli.pull
+=====================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.pull
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.cli.pull.pull
+
+
+Module Contents
+---------------
+
+.. py:function:: pull(url: str, lockfile: Optional[pathlib.Path], git_ref: str)
+

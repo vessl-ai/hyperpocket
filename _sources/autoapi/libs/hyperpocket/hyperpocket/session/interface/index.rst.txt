@@ -1,0 +1,167 @@
+libs.hyperpocket.hyperpocket.session.interface
+==============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.session.interface
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.session.interface.SESSION_NEAR_EXPIRE_SECONDS
+   libs.hyperpocket.hyperpocket.session.interface.SESSION_KEY_DELIMITER
+   libs.hyperpocket.hyperpocket.session.interface.K
+   libs.hyperpocket.hyperpocket.session.interface.V
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.session.interface.BaseSessionValue
+   libs.hyperpocket.hyperpocket.session.interface.SessionStorageInterface
+
+
+Module Contents
+---------------
+
+.. py:data:: SESSION_NEAR_EXPIRE_SECONDS
+   :value: 300
+
+
+.. py:data:: SESSION_KEY_DELIMITER
+   :value: '__'
+
+
+.. py:class:: BaseSessionValue(/, **data: Any)
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: auth_provider_name
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: auth_context
+      :type:  Optional[hyperpocket.auth.context.AuthContext]
+      :value: None
+
+
+
+   .. py:attribute:: scoped
+      :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: auth_scopes
+      :type:  Optional[Set[str]]
+      :value: None
+
+
+
+   .. py:attribute:: auth_resolve_uid
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:method:: make_superset_auth_scope(other_scopes: Optional[Iterable[str]] = None) -> set[str]
+
+
+   .. py:method:: is_auth_applicable(auth_provider_name: str, auth_req: hyperpocket.auth.schema.AuthenticateRequest) -> bool
+
+
+   .. py:method:: is_near_expires() -> bool
+
+
+.. py:data:: K
+
+.. py:data:: V
+
+.. py:class:: SessionStorageInterface
+
+   Bases: :py:obj:`abc.ABC`, :py:obj:`Generic`\ [\ :py:obj:`K`\ , :py:obj:`V`\ ]
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:method:: get(auth_provider: hyperpocket.auth.AuthProvider, thread_id: str, profile: str, **kwargs) -> V
+      :abstractmethod:
+
+
+      Get session
+
+      :param auth_provider: auth provider
+      :type auth_provider: AuthProvider
+      :param thread_id: thread id
+      :type thread_id: str
+      :param profile: profile name
+      :type profile: str
+
+      :returns: Session
+      :rtype: V(BaseSessionValue)
+
+
+
+   .. py:method:: set(auth_provider: hyperpocket.auth.AuthProvider, thread_id: str, profile: str, auth_scopes: List[str], auth_resolve_uid: Optional[str], auth_context: Optional[hyperpocket.auth.context.AuthContext], is_auth_scope_universal: bool, **kwargs) -> V
+      :abstractmethod:
+
+
+      Set session, if a session doesn't exist, create new session
+      If set auth_resolve_uid is None and auth_context is not None, created session is regarded as active session.
+
+      :param auth_provider: auth provider
+      :type auth_provider: AuthProvider
+      :param thread_id: thread id
+      :type thread_id: str
+      :param profile: profile name
+      :type profile: str
+      :param auth_scopes: auth scopes
+      :type auth_scopes: List[str]
+      :param auth_resolve_uid: a UID used to verify whether the user has completed the authentication process.
+                               if set this value as None, it's regarded as active session
+      :type auth_resolve_uid: str
+      :param auth_context: authentication context.
+                           in pending session, this value is None. in active session this value shouldn't be None
+      :type auth_context: Optional[AuthContext]
+      :param is_auth_scope_universal: a flag to determine whether the session is scoped or not
+      :type is_auth_scope_universal: bool
+
+      :returns: Updated session
+      :rtype: V(BaseSessionValue)
+
+
+
+   .. py:method:: delete(auth_provider: hyperpocket.auth.AuthProvider, thread_id: str, profile: str, **kwargs) -> bool
+      :abstractmethod:
+
+
+      Delete session
+
+      :param auth_provider: auth provider
+      :type auth_provider: AuthProvider
+      :param thread_id: thread id
+      :type thread_id: str
+      :param profile: profile name
+      :type profile: str
+
+      :returns: True if the session was deleted, False otherwise
+      :rtype: bool
+
+
+
+   .. py:method:: session_storage_type() -> hyperpocket.config.session.SessionType
+      :classmethod:
+
+      :abstractmethod:
+
+
+

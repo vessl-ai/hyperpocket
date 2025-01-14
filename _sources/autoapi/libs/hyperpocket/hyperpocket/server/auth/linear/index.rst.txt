@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.linear
+===============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.linear
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.linear.linear_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.linear.slack_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: linear_auth_router
+
+.. py:function:: slack_token_callback(state: str, token: str)
+   :async:
+
+
