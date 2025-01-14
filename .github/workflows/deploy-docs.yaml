@@ -46,7 +46,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
           git checkout gh-pages
-          cp -r docs/hyperpocket/_build/html/* .
+          mv docs/hyperpocket/_build/html/* .
+          rm -rf docs/hyperpocket/_build/html/
           
           git add .
           if ! git diff-index --quiet HEAD --; then
