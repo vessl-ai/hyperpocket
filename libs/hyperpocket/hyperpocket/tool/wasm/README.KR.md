@@ -52,7 +52,6 @@ WasmToolRequest는 다음 build 함수를 제공
 
 - `from_local`
 - `from_git`
-- `from_github`
 
 WasmToolRequest는 각각 request에 대한 `lock` 객체를 가지고 있다.
 
