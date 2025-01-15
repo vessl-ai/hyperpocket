@@ -4,7 +4,7 @@ from urllib.parse import urljoin, urlencode
 
 from hyperpocket.auth import AuthProvider
 from hyperpocket.auth.context import AuthContext
-from hyperpocket.auth.handler import AuthHandlerInterface, AuthenticateRequest
+from hyperpocket.auth.handler import AuthHandlerInterface
 from hyperpocket.auth.notion.token_context import NotionTokenAuthContext
 from hyperpocket.auth.notion.token_schema import NotionTokenResponse, NotionTokenRequest
 from hyperpocket.config import config

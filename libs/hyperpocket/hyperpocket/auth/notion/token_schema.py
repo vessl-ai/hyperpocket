@@ -1,6 +1,4 @@
 
-from typing import List, Optional
-
 from hyperpocket.auth.schema import AuthenticateRequest, AuthenticateResponse
 
 
