@@ -21,7 +21,6 @@ Functions
 
    libs.hyperpocket.hyperpocket.tool.wasm.tool.from_local
    libs.hyperpocket.hyperpocket.tool.wasm.tool.from_git
-   libs.hyperpocket.hyperpocket.tool.wasm.tool.from_github
 
 
 Module Contents
@@ -47,8 +46,6 @@ Module Contents
 .. py:function:: from_local(path: str) -> WasmToolRequest
 
 .. py:function:: from_git(repository: str, ref: str, rel_path: str) -> WasmToolRequest
-
-.. py:function:: from_github(owner: str, repo: str, ref: str, rel_path: str) -> WasmToolRequest
 
 .. py:class:: WasmTool
 

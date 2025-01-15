@@ -90,10 +90,6 @@ Module Contents
       :type:  hyperpocket.config.auth.AuthConfig
 
 
-   .. py:attribute:: git
-      :type:  hyperpocket.config.git.GitConfig
-
-
    .. py:attribute:: session
       :type:  hyperpocket.config.session.SessionConfig
 
