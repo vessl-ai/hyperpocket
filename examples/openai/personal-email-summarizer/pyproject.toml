@@ -1,0 +1,18 @@
+[project]
+name = "personal-email-summarizer"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiohttp>=3.11.11",
+    "openai>=1.59.3",
+    "pocket",
+    "pocket-openai",
+    "slack-bolt>=1.22.0",
+    "slack-sdk>=3.34.0",
+]
+
+[tool.uv.sources]
+pocket = { path = "../../libs/pocket", editable = true }
+pocket-openai = { path = "../../libs/pocket_openai", editable = true }
