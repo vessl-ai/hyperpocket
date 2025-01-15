@@ -1,7 +1,7 @@
 
 from typing import List, Optional
 
-from pocket.auth.schema import AuthenticateRequest, AuthenticateResponse
+from hyperpocket.auth.schema import AuthenticateRequest, AuthenticateResponse
 
 
 class NotionTokenRequest(AuthenticateRequest):

@@ -2,7 +2,7 @@
 from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 
-from pocket.futures import FutureStore
+from hyperpocket.futures import FutureStore
 
 notion_auth_router = APIRouter(
     prefix="/notion"

@@ -1,5 +1,5 @@
 
-from pocket.auth.context import AuthContext
+from hyperpocket.auth.context import AuthContext
 
 class NotionAuthContext(AuthContext):
     _ACCESS_TOKEN_KEY: str = "NOTION_TOKEN"

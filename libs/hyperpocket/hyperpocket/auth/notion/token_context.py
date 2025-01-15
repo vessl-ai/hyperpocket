@@ -1,5 +1,5 @@
-from pocket.auth.notion.context import NotionAuthContext
-from pocket.auth.notion.token_schema import NotionTokenResponse
+from hyperpocket.auth.notion.context import NotionAuthContext
+from hyperpocket.auth.notion.token_schema import NotionTokenResponse
 
 
 class NotionTokenAuthContext(NotionAuthContext):

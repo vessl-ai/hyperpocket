@@ -2,13 +2,13 @@
 from typing import Optional
 from urllib.parse import urljoin, urlencode
 
-from pocket.auth import AuthProvider
-from pocket.auth.context import AuthContext
-from pocket.auth.handler import AuthHandlerInterface, AuthenticateRequest
-from pocket.auth.notion.token_context import NotionTokenAuthContext
-from pocket.auth.notion.token_schema import NotionTokenResponse, NotionTokenRequest
-from pocket.config import config
-from pocket.futures import FutureStore
+from hyperpocket.auth import AuthProvider
+from hyperpocket.auth.context import AuthContext
+from hyperpocket.auth.handler import AuthHandlerInterface, AuthenticateRequest
+from hyperpocket.auth.notion.token_context import NotionTokenAuthContext
+from hyperpocket.auth.notion.token_schema import NotionTokenResponse, NotionTokenRequest
+from hyperpocket.config import config
+from hyperpocket.futures import FutureStore
 
 
 class NotionTokenAuthHandler(AuthHandlerInterface):
