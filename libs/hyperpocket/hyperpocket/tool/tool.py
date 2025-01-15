@@ -125,7 +125,7 @@ class Tool(BaseModel, abc.ABC):
             pocket_logger.warning(f"failed to get tool({name}) schema model. error : {e}")
             pass
 
-    def add_postprocessing(self, postprocessing: Callable):
+    def with_postprocessing(self, postprocessing: Callable):
         """
         Add a postprocessing function to the tool
         """
@@ -133,9 +133,10 @@ class Tool(BaseModel, abc.ABC):
             self.postprocessings = [postprocessing]
         else:
             self.postprocessings.append(postprocessing)
+        return self
 
     def __or__(self, other: Callable):
-        self.add_postprocessing(other)
+        self.with_postprocessing(other)
         return self
 
     def with_postprocessings(self, postprocessings: list[Callable]):
