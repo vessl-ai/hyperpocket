@@ -1,5 +1,4 @@
 import os
-import re
 import click
 from pathlib import Path
 from hyperpocket.cli.codegen.auth import get_server_auth_token_template, get_auth_context_template, get_auth_token_context_template, get_auth_token_handler_template, get_auth_token_schema_template 
