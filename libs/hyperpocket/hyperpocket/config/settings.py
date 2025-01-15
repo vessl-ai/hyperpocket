@@ -42,7 +42,6 @@ class Config(BaseModel):
     callback_url_rewrite_prefix: str = "proxy"  # should not start with a slash
     log_level: str = "INFO"
     auth: AuthConfig = DefaultAuthConfig
-    git: GitConfig = DefaultGitConfig
     session: SessionConfig = DefaultSessionConfig
 
     @property
