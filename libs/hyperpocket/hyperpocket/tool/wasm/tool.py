@@ -109,6 +109,7 @@ class WasmTool(Tool):
             readme=readme,
             pkg_lock=tool_req.lock,
             rel_path=tool_req.rel_path,
+            postprocessings=tool_req.postprocessings,
         )
 
     @classmethod

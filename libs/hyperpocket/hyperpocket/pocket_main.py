@@ -329,10 +329,23 @@ class Pocket(object):
         """
         tool = self._tool_instance(tool_name)
         try:
-            return await asyncio.wait_for(tool.ainvoke(**kwargs), timeout=180)
+            result = await asyncio.wait_for(tool.ainvoke(**kwargs), timeout=180)
         except asyncio.TimeoutError:
             pocket_logger.warning("Timeout tool call.")
             return "timeout tool call"
+
+        if tool.postprocessings is not None:
+            for postprocessing in tool.postprocessings:
+                try:
+                    result = postprocessing(result)
+                except Exception as e:
+                    exception_str = (
+                        f"Error in postprocessing `{postprocessing.__name__}`: {e}"
+                    )
+                    pocket_logger.error(exception_str)
+                    return exception_str
+
+        return result
 
     def _tool_instance(self, tool_name: str) -> Tool:
         return self.tools[tool_name]
