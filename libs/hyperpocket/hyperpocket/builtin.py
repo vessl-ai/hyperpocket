@@ -1,7 +1,7 @@
 from typing import List
 
-from hyperpocket import PocketAuth
 from hyperpocket.auth import AuthProvider
+from hyperpocket.pocket_auth import PocketAuth
 from hyperpocket.session.interface import BaseSessionValue
 from hyperpocket.tool import from_func, Tool
 
