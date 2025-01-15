@@ -47,6 +47,18 @@ Module Contents
    inheritance.
 
 
+   .. py:attribute:: postprocessings
+      :type:  Optional[list[Callable]]
+      :value: None
+
+
+
+   .. py:method:: add_postprocessing(postprocessing: Callable)
+
+
+   .. py:method:: with_postprocessings(postprocessings: list[Callable])
+
+
 .. py:class:: Tool
 
    Bases: :py:obj:`pydantic.BaseModel`, :py:obj:`abc.ABC`
@@ -69,6 +81,10 @@ Module Contents
 
    .. py:attribute:: auth
       :type:  Optional[ToolAuth]
+
+
+   .. py:attribute:: postprocessings
+      :type:  Optional[list[Callable]]
 
 
    .. py:method:: invoke(**kwargs) -> str
@@ -98,6 +114,19 @@ Module Contents
 
    .. py:method:: from_tool_request(tool_req: ToolRequest, **kwargs) -> Tool
       :classmethod:
+
+
+
+   .. py:method:: with_postprocessing(postprocessing: Callable)
+
+      Add a postprocessing function to the tool
+
+
+
+   .. py:method:: with_postprocessings(postprocessings: list[Callable])
+
+      Add a list of postprocessing functions to the tool
+      Returns the tool itself
 
 
 

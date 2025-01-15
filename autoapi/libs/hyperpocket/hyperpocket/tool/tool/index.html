@@ -119,6 +119,21 @@
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <p>Helper class that provides a standard way to create an ABC using
 inheritance.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.postprocessings">
+<span class="sig-name descname"><span class="pre">postprocessings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.postprocessings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.add_postprocessing">
+<span class="sig-name descname"><span class="pre">add_postprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">postprocessing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.add_postprocessing" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.with_postprocessings">
+<span class="sig-name descname"><span class="pre">with_postprocessings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">postprocessings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.with_postprocessings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -144,6 +159,11 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.Tool.auth">
 <span class="sig-name descname"><span class="pre">auth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolAuth" title="libs.hyperpocket.hyperpocket.tool.tool.ToolAuth"><span class="pre">ToolAuth</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.Tool.auth" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.Tool.postprocessings">
+<span class="sig-name descname"><span class="pre">postprocessings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.Tool.postprocessings" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -173,6 +193,19 @@ to include profile and thread_id as arguments when the tool is invoked</p>
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.Tool.from_tool_request">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_tool_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool_req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest" title="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest"><span class="pre">ToolRequest</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.Tool" title="libs.hyperpocket.hyperpocket.tool.tool.Tool"><span class="pre">Tool</span></a></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.Tool.from_tool_request" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.Tool.with_postprocessing">
+<span class="sig-name descname"><span class="pre">with_postprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">postprocessing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.Tool.with_postprocessing" title="Link to this definition"></a></dt>
+<dd><p>Add a postprocessing function to the tool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.Tool.with_postprocessings">
+<span class="sig-name descname"><span class="pre">with_postprocessings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">postprocessings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.Tool.with_postprocessings" title="Link to this definition"></a></dt>
+<dd><p>Add a list of postprocessing functions to the tool
+Returns the tool itself</p>
+</dd></dl>
 
 </dd></dl>
 
