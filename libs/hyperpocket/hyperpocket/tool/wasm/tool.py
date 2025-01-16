@@ -102,28 +102,24 @@ class WasmTool(Tool):
             readme = None
 
         if envvars:
-            found_envvars = []
             not_found_envvars = []
+            
             # invoke from agent code
-            for k, v in tool_req.envvars.items():
-                if k in envvars:
-                    envvars[k] = v
-                    found_envvars.append(k)
+            for k in envvars.keys():
+                if k in tool_req.envvars:
+                    envvars[k] = tool_req.envvars[k]
                 else:
                     not_found_envvars.append(k)
             
             # invoke from settings envvars
             settings_path = pathlib.Path(os.getcwd()) / "settings.toml"
-            print(settings_path)
             if settings_path.exists():
                 current_envvars = cls._get_current_settings_envvars(settings_path)
                 if current_envvars:
-                    for k, v in envvars.items():
+                    for k in not_found_envvars:
                         if k in current_envvars:
                             envvars[k] = current_envvars[k]
-                        else:
-                            if k not in found_envvars:
-                                not_found_envvars.append(k)
+                            not_found_envvars.remove(k)
                                 
             # invoke from user prompt
             for k in not_found_envvars:
@@ -137,7 +133,7 @@ class WasmTool(Tool):
             config['envvar'] = envvars
             with config_path.open("w") as f:
                 toml.dump(config, f)
-            
+
         return cls(
             name=name,
             description=description,
