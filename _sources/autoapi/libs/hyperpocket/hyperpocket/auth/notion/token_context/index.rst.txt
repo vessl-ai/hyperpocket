@@ -1,0 +1,31 @@
+libs.hyperpocket.hyperpocket.auth.notion.token_context
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.notion.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.notion.token_context.NotionTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: NotionTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.notion.context.NotionAuthContext`
+
+
+   This class is used to define the interface of the authentication model.
+
+
+   .. py:method:: from_notion_token_response(response: hyperpocket.auth.notion.token_schema.NotionTokenResponse)
+      :classmethod:
+
+
+
