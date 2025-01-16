@@ -7,6 +7,7 @@ class AuthProvider(Enum):
     GITHUB = 'github'
     GOOGLE = 'google'
     CALENDLY = 'calendly'
+    NOTION = 'notion'
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":
