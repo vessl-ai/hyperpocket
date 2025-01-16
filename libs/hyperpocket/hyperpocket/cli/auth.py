@@ -5,7 +5,7 @@ from hyperpocket.cli.codegen.auth import get_server_auth_token_template, get_aut
     
 @click.command()
 @click.argument('service_name', type=str)
-def start_token_auth(service_name):
+def create_token_auth_template(service_name):
     ## Validate service_name
     if not service_name.islower() or not service_name.replace('_', '').isalpha():
         raise ValueError("service_name must be lowercase and contain only letters and underscores")

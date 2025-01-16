@@ -273,7 +273,7 @@ client_secret = ""  # your github client secret
 
 ```
 # service_name should be lowercase including underscore
-poetry run hyperpocket auth start-token-auth {service_name}
+poetry run hyperpocket devtool create-token-auth-template {service_name}
 ```
 
 It will generate boilerplate code for new token auth for tool
