@@ -1,7 +1,6 @@
 import os
 import json
 import pathlib
-from dotenv import dotenv_values
 from typing import Any, Optional
 
 import toml
@@ -22,10 +21,14 @@ class WasmToolRequest(ToolRequest):
     def __init__(self, lock: Lock, rel_path: str):
         self.lock = lock
         self.rel_path = rel_path
+        self.envvars: dict[str, str] = {}
 
     def __str__(self):
         return f"ToolRequest(lock={self.lock}, rel_path={self.rel_path})"
-
+    
+    def invoke_envvar(self, key: str, value: str) -> 'WasmToolRequest':
+        self.envvars[key] = value
+        return self
 
 def from_local(path: str) -> WasmToolRequest:
     return WasmToolRequest(LocalLock(path), "")
@@ -64,7 +67,6 @@ class WasmTool(Tool):
         schema_path = rootpath / "schema.json"
         config_path = rootpath / "config.toml"
         readme_path = rootpath / "README.md"
-        envvar_path = rootpath / ".env"
 
         try:
             with schema_path.open("r") as f:
@@ -89,6 +91,7 @@ class WasmTool(Tool):
                 else:
                     raise ValueError("`language` field is required in config.toml")
                 auth = cls._get_auth(config)
+                envvars = cls._get_envvars(config)
         except Exception as e:
             raise ValueError(f"Failed to load config.toml: {e}")
 
@@ -97,9 +100,43 @@ class WasmTool(Tool):
                 readme = f.read()
         else:
             readme = None
-        
-        if envvar_path.exists():
-            cls._inject_envvar(envvar_path)
+
+        if envvars:
+            found_envvars = []
+            not_found_envvars = []
+            # invoke from agent code
+            for k, v in tool_req.envvars.items():
+                if k in envvars:
+                    envvars[k] = v
+                    found_envvars.append(k)
+                else:
+                    not_found_envvars.append(k)
+            
+            # invoke from settings envvars
+            settings_path = pathlib.Path(os.getcwd()) / "settings.toml"
+            print(settings_path)
+            if settings_path.exists():
+                current_envvars = cls._get_current_settings_envvars(settings_path)
+                if current_envvars:
+                    for k, v in envvars.items():
+                        if k in current_envvars:
+                            envvars[k] = current_envvars[k]
+                        else:
+                            if k not in found_envvars:
+                                not_found_envvars.append(k)
+                                
+            # invoke from user prompt
+            for k in not_found_envvars:
+                print(f"The following environment variables {k} are not found in the current environment:")
+                print(f"Please add the following environment variables to the current environment:")
+                user_input = input(f"{k}: ")
+                if user_input:
+                    envvars[k] = user_input
+
+            # write envvars to config.toml envvar
+            config['envvar'] = envvars
+            with config_path.open("w") as f:
+                toml.dump(config, f)
             
         return cls(
             name=name,
@@ -128,28 +165,26 @@ class WasmTool(Tool):
         )
     
     @classmethod
-    def _inject_envvar(cls, envvar_path: pathlib.Path) -> None:
-        current_env_path = pathlib.Path(os.getcwd()) / ".env"
-        current_env = dotenv_values(current_env_path)
-        tool_env = dotenv_values(envvar_path)
-        not_found_envvars = []
-
-        for k, v in tool_env.items():
-            if k in current_env:
-                tool_env[k] = current_env[k]
-            else:
-                not_found_envvars.append(k)
-
-        for k in not_found_envvars:
-            print(f"The following environment variables {k} are not found in the current environment:")
-            print(f"Please add the following environment variables to the current environment:")
-            user_input = input(f"{k}: ")
-            if user_input:
-                tool_env[k] = user_input
-
-        with open(envvar_path, "w") as f:
-            for k, v in tool_env.items():
-                f.write(f"{k}={v}\n")
+    def _get_envvars(cls, config: dict) -> dict:
+        envvars = config.get("envvar")
+        if not envvars:
+            return 
+        envvars_dict = {}
+        for key, value in envvars.items():
+            envvars_dict[key] = value
+        return envvars_dict
+    
+    @classmethod
+    def _get_current_settings_envvars(cls, settings_path: pathlib.Path)-> dict:
+        with settings_path.open("r") as f:
+            settings = toml.load(f)
+            current_envvars = settings.get("envvar")
+            if not current_envvars:
+                return
+            envvars_dict = {}
+            for key, value in current_envvars.items():
+                envvars_dict[key] = value
+            return envvars_dict
     
     def template_arguments(self) -> dict[str, str]:
         return {}
