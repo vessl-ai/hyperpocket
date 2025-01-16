@@ -42,7 +42,7 @@ class NotionTokenAuthHandler(AuthHandlerInterface):
         return f'User needs to authenticate using the following URL: {url}'
 
     async def authenticate(self, auth_req: NotionTokenRequest, future_uid: str, *args, **kwargs) -> AuthContext:
-        future_data = FutureStore.get_future(self.future_kind, future_uid)
+        future_data = FutureStore.get_future(future_uid)
         access_token = await future_data.future
 
         response = NotionTokenResponse(access_token=access_token)
