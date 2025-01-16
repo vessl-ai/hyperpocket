@@ -84,23 +84,23 @@ Pocket provides way to use end user auth easily.
 
 - Supported methods
 
-    - [x] OAuth
-    - [x] Token
-    - [ ] Basic Auth (Username, Password)
+  - [x] OAuth
+  - [x] Token
+  - [ ] Basic Auth (Username, Password)
 
 - Supported OAuth Providers
-    - [x] Google
-    - [x] GitHub
-    - [x] Slack
-    - [x] Linear
-    - [ ] Facebook
-    - [ ] X (Previously Twitter)
-    - [ ] LinkedIn
-    - [ ] Discord
-    - [ ] Zoom
-    - [ ] Microsoft
-    - [ ] Spotify
-    - [ ] Twitch
+  - [x] Google
+  - [x] GitHub
+  - [x] Slack
+  - [x] Linear
+  - [ ] Facebook
+  - [ ] X (Previously Twitter)
+  - [ ] LinkedIn
+  - [ ] Discord
+  - [ ] Zoom
+  - [ ] Microsoft
+  - [ ] Spotify
+  - [ ] Twitch
 
 You can manage your auths in request-wise level. (e.g. you can use different auths for different requests)
 
@@ -239,11 +239,11 @@ client_secret = ""  # your github client secret
 
 - While creating your github OAuth app, configuring your app's `Authorization callback URL` is different for your
   development environment and production environment.
-    - For development environment, you can use `http://localhost:8000/auth/github/callback`
-        - **Note**: Default port for pocket dev server is `8000`. If you are using a different port, make sure to
-          replace `8000` with your actual port number.
-    - For production environment, you can use `https://yourdomain.com/auth/github/callback`
-        - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.
+  - For development environment, you can use `http://localhost:8000/auth/github/callback`
+    - **Note**: Default port for pocket dev server is `8000`. If you are using a different port, make sure to
+      replace `8000` with your actual port number.
+  - For production environment, you can use `https://yourdomain.com/auth/github/callback`
+    - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.
 
 #### How to integrate SLACK OAuth app
 
@@ -254,15 +254,24 @@ client_secret = ""  # your github client secret
 - Redirect URLs :
   `{public_server_protocol}://{public_hostname}:[{public_server_port}]/{callback_url_rewrite_prefix}/auth/slack/oauth2/callback`
 - Scopes : What you want to request to user.
-    - Recommended scopes :
-        - channels:history,
-        - channels:read,
-        - chat:write,
-        - groups:history,
-        - groups:read,
-        - im:history,
-        - mpim:history,
-        - reactions:read,
-        - reactions:write,
+  - Recommended scopes :
+    - channels:history,
+    - channels:read,
+    - chat:write,
+    - groups:history,
+    - groups:read,
+    - im:history,
+    - mpim:history,
+    - reactions:read,
+    - reactions:write,
 
 3. Set your Slack APP Client ID / Client Secret in `$HOME/.pocket/settings.toml`
+
+#### How to start adding new token auth
+
+```
+# service_name should be lowercase including underscore
+poetry run hyperpocket auth start-token-auth {service_name}
+```
+
+It will generate boilerplate code for new token auth for tool
