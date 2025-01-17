@@ -217,6 +217,19 @@ class PocketCore:
             pocket_logger.warning("Timeout tool call.")
             return "timeout tool call"
 
+    def grouping_tool_by_auth_provider(self) -> dict[str, List[Tool]]:
+        tool_by_provider = {}
+        for tool_name, tool in self.tools.items():
+            if tool.auth is None:
+                continue
+
+            auth_provider_name = tool.auth.auth_provider.name
+            if tool_by_provider.get(auth_provider_name):
+                tool_by_provider[auth_provider_name].append(tool)
+            else:
+                tool_by_provider[auth_provider_name] = [tool]
+        return tool_by_provider
+
     def _tool_instance(self, tool_name: str) -> Tool:
         return self.tools[tool_name]
 
