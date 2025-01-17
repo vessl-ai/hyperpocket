@@ -1,6 +1,6 @@
 import asyncio
 import pathlib
-from typing import Any, Optional, Callable
+from typing import Any, Optional, Callable, List, Union
 
 from hyperpocket.builtin import get_builtin_tools
 from hyperpocket.config import pocket_logger
@@ -104,7 +104,7 @@ class PocketCore:
         return result, False
 
     def prepare_auth(self,
-                     tool_name: str,
+                     tool_name: Union[str, List[str]],
                      thread_id: str = 'default',
                      profile: str = 'default',
                      **kwargs) -> Optional[str]:
@@ -113,26 +113,53 @@ class PocketCore:
         Returns callback URL and whether the tool requires authentication.
 
         Args:
-            tool_name(str): tool name to invoke
+            tool_name(Union[str,List[str]]): tool name to invoke
             thread_id(str): thread id
             profile(str): profile name
 
         Returns:
             Optional[str]: callback URI if necessary
         """
-        tool = self._tool_instance(tool_name)
-        if tool.auth is None:
+
+        if isinstance(tool_name, str):
+            tool_name = [tool_name]
+
+        tools: List[Tool] = []
+        for name in tool_name:
+            tool = self._tool_instance(name)
+            if tool.auth is not None:
+                tools.append(tool)
+
+        if len(tools) == 0:
             return None
 
+        auth_handler_name = tools[0].auth.auth_handler
+        auth_provider = tools[0].auth.auth_provider
+        auth_scopes = set()
+
+        for tool in tools:
+            if tool.auth.auth_handler != auth_handler_name:
+                pocket_logger.error(
+                    f"All Tools should have same auth handler. but it's different {tool.auth.auth_handler}, {auth_handler_name}")
+
+                return f"All Tools should have same auth handler. but it's different {tool.auth.auth_handler}, {auth_handler_name}"
+            if tool.auth.auth_provider != auth_provider:
+                pocket_logger.error(
+                    f"All Tools should have same auth provider. but it's different {tool.auth.auth_provider}, {auth_provider}")
+                return f"All Tools should have same auth provider. but it's different {tool.auth.auth_provider}, {auth_provider}"
+
+            if tool.auth.scopes is not None:
+                auth_scopes |= set(tool.auth.scopes)
+
         auth_req = self.auth.make_request(
-            auth_handler_name=tool.auth.auth_handler,
-            auth_provider=tool.auth.auth_provider,
-            auth_scopes=tool.auth.scopes)
+            auth_handler_name=auth_handler_name,
+            auth_provider=auth_provider,
+            auth_scopes=list(auth_scopes))
 
         return self.auth.prepare(
             auth_req=auth_req,
-            auth_handler_name=tool.auth.auth_handler,
-            auth_provider=tool.auth.auth_provider,
+            auth_handler_name=auth_handler_name,
+            auth_provider=auth_provider,
             thread_id=thread_id,
             profile=profile,
             **kwargs
@@ -207,4 +234,3 @@ class PocketCore:
 
         pocket_logger.info(f"Complete Loading Tool {tool.name}")
         return tool
-
