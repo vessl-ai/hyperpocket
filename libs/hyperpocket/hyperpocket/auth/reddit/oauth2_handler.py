@@ -5,13 +5,16 @@ from urllib.parse import urljoin, urlencode
 
 import httpx
 
-from pocket.auth import AuthProvider
-from pocket.auth.context import AuthContext
-from pocket.auth.handler import AuthHandlerInterface
-from pocket.auth.reddit.oauth2_context import RedditOAuth2AuthContext
-from pocket.auth.reddit.oauth2_schema import RedditOAuth2Response, RedditOAuth2Request
-from pocket.config import config as config
-from pocket.futures import FutureStore
+from hyperpocket.auth import AuthProvider
+from hyperpocket.auth.context import AuthContext
+from hyperpocket.auth.handler import AuthHandlerInterface
+from hyperpocket.auth.reddit.oauth2_context import RedditOAuth2AuthContext
+from hyperpocket.auth.reddit.oauth2_schema import (
+    RedditOAuth2Response,
+    RedditOAuth2Request,
+)
+from hyperpocket.config import config as config
+from hyperpocket.futures import FutureStore
 
 
 class RedditOAuth2AuthHandler(AuthHandlerInterface):
@@ -19,9 +22,7 @@ class RedditOAuth2AuthHandler(AuthHandlerInterface):
     _REDDIT_TOKEN_URL: str = "https://www.reddit.com/api/v1/access_token"
 
     name: str = "reddit-oauth2"
-    description: str = (
-        "This handler is used to authenticate users using the Reddit OAuth2 authentication method."
-    )
+    description: str = "This handler is used to authenticate users using the Reddit OAuth2 authentication method."
     scoped: bool = True
 
     @staticmethod

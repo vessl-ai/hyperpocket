@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from pocket.auth.schema import AuthenticateRequest, AuthenticateResponse
+from hyperpocket.auth.schema import AuthenticateRequest, AuthenticateResponse
 
 
 class RedditOAuth2Request(AuthenticateRequest):

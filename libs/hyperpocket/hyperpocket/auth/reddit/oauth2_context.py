@@ -3,8 +3,8 @@ from typing import Optional
 
 from pydantic import Field
 
-from pocket.auth.reddit.context import RedditAuthContext
-from pocket.auth.reddit.oauth2_schema import RedditOAuth2Response
+from hyperpocket.auth.reddit.context import RedditAuthContext
+from hyperpocket.auth.reddit.oauth2_schema import RedditOAuth2Response
 
 
 class RedditOAuth2AuthContext(RedditAuthContext):

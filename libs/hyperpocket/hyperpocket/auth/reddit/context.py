@@ -1,4 +1,4 @@
-from pocket.auth.context import AuthContext
+from hyperpocket.auth.context import AuthContext
 
 
 class RedditAuthContext(AuthContext):
