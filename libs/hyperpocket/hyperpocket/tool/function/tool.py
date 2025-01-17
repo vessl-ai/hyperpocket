@@ -69,10 +69,10 @@ class FunctionTool(Tool):
 
     @classmethod
     def from_func(
-            cls,
-            func: Callable,
-            afunc: Callable[..., Awaitable[str]] = None,
-            auth: Optional[ToolAuth] = None
+        cls,
+        func: Callable,
+        afunc: Callable[..., Awaitable[str]] = None,
+        auth: Optional[ToolAuth] = None
     ) -> "FunctionTool":
         model = function_to_model(func)
         argument_json_schema = flatten_json_schema(model.model_json_schema())
@@ -85,3 +85,26 @@ class FunctionTool(Tool):
             argument_json_schema=argument_json_schema,
             auth=auth
         )
+    
+    @classmethod
+    def from_dock(
+        cls,
+        dock: list[Callable[..., str]],
+    ) -> "FunctionTool":
+        for func in dock:
+            model = function_to_model(func)
+            argument_json_schema = flatten_json_schema(model.model_json_schema())
+            if not callable(func):
+                raise ValueError(f"Dock element should be a list of functions, but found {func}")
+            is_coro = inspect.iscoroutinefunction(func)
+            auth = None,
+            if func.__dict__.get("__auth__"):
+                auth = ToolAuth(**func.__dict__["__auth__"])
+            if is_coro:
+                return cls(
+                    afunc=func,
+                    name=func.__name__,
+                    description=func.__doc__,
+                    argument_json_schema=argument_json_schema,
+                    auth=auth,
+                )
