@@ -1,16 +1,13 @@
-[tool.poetry]
+
+[project]
 name = "hyperpocket-llamaindex"
 version = "0.0.1"
 description = ""
-authors = ["moon <moon@vessl.ai>"]
+authors = [{ name = "moon", email = "moon@vessl.ai" }]
+requires-python = ">=3.10"
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.11"
-llama-index = "^0.12.5"
-hyperpocket = {path = "../../hyperpocket"}
-
+dependencies = ["llama-index>=0.12.5", "hyperpocket>=0.0.3"]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

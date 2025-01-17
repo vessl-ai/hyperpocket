@@ -1,17 +1,24 @@
-[tool.poetry]
+[project]
 name = "hyperpocket-root"
 version = "0.0.1"
 description = ""
-authors = ["moon <moon@vessl.ai>"]
+authors = [{ name = "moon", email = "moon@vessl.ai" }]
+requires-python = ">=3.10"
 readme = "README.md"
 
-[tool.poetry.dependencies]
-python = "^3.11"
+[dependency-groups]
+dev = [
+    "ruff>=0.8.6",
+    "pytest>=8.3.4",
+    "hyperpocket-langchain",
+    "hyperpocket-langgraph",
+    "hyperpocket-openai",
+    "hyperpocket-anthropic",
+    "hyperpocket-llamaindex",
+    "hyperpocket",
+]
 
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.8.6"
-pytest = "^8.3.4"
+[tool.uv.sources]
 hyperpocket-langchain = { path = "libs/extensions/langchain" }
 hyperpocket-langgraph = { path = "libs/extensions/langgraph" }
 hyperpocket-openai = { path = "libs/extensions/openai" }
@@ -20,8 +27,8 @@ hyperpocket-llamaindex = { path = "libs/extensions/llamaindex" }
 hyperpocket = { path = "libs/hyperpocket" }
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.ruff.lint]
 select = [
