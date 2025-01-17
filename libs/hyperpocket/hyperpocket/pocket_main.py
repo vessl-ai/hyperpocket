@@ -1,5 +1,5 @@
 import asyncio
-from typing import Any, Optional, List
+from typing import Any, Optional, List, Union
 
 from hyperpocket.config import pocket_logger
 from hyperpocket.pocket_auth import PocketAuth
@@ -153,7 +153,7 @@ class Pocket(object):
     async def initialize_tool_auth(self,
                                    thread_id: str = 'default',
                                    profile: str = 'default',
-                                   ) -> List[str]:
+                                   ) -> dict[str, str]:
         """
         Initialize authentication for all tools.
 
@@ -169,15 +169,18 @@ class Pocket(object):
         Returns:
             List[str]: A list of authentication URIs for the tools that require authentication.
         """
+        tool_by_provider = self.core.grouping_tool_by_auth_provider()
 
-        prepare_list = []
-        for tool_name in self.core.tools:
+        prepare_list = {}
+        for provider, tools in tool_by_provider.items():
+            tool_name_list = [tool.name for tool in tools]
             prepare = await self.prepare_in_subprocess(
-                tool_name=tool_name,
+                tool_name=tool_name_list,
                 thread_id=thread_id,
                 profile=profile)
-            if prepare:
-                prepare_list.append(prepare)
+
+            if prepare is not None:
+                prepare_list[provider] = prepare
 
         return prepare_list
 
@@ -200,11 +203,21 @@ class Pocket(object):
             or `False` if the process was interrupted or failed.
         """
         try:
-            await asyncio.gather(*[self.authenticate_in_subprocess(
-                tool_name=name,
-                thread_id=thread_id,
-                profile=profile
-            ) for name in self.core.tools])
+            tool_by_provider = self.core.grouping_tool_by_auth_provider()
+
+            waiting_futures = []
+            for provider, tools in tool_by_provider.items():
+                if len(tools) == 0:
+                    continue
+
+                waiting_futures.append(
+                    self.authenticate_in_subprocess(
+                        tool_name=tools[0].name,
+                        thread_id=thread_id,
+                        profile=profile
+                    ))
+
+            await asyncio.gather(*waiting_futures)
 
             return True
 
@@ -213,7 +226,7 @@ class Pocket(object):
             raise e
 
     async def prepare_in_subprocess(self,
-                                    tool_name: str,
+                                    tool_name: Union[str, List[str]],
                                     thread_id: str = 'default',
                                     profile: str = 'default',
                                     *args, **kwargs):
