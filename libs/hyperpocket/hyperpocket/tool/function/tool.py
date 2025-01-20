@@ -27,7 +27,7 @@ class FunctionTool(Tool):
             except Exception as e:
                 return "There was an error while executing the tool: " + str(e)
         try:
-            return self.func(**binding_args)
+            return str(self.func(**binding_args))
         except Exception as e:
             return "There was an error while executing the tool: " + str(e)
 
@@ -36,7 +36,7 @@ class FunctionTool(Tool):
             return str(self.invoke(**kwargs))
         try:
             binding_args = self._get_binding_args(kwargs)
-            return await self.afunc(**binding_args)
+            return str(await self.afunc(**binding_args))
         except Exception as e:
             return "There was an error while executing the tool: " + str(e)
 
