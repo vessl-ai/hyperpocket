@@ -6,7 +6,6 @@ from hyperpocket.tool import from_git, from_dock
 from hyperpocket_llamaindex import PocketLlamaindex
 from hyperdock_fileio import dock as fileio_dock
 
-
 def build():
     llm = OpenAI(api_key=secret["OPENAI_API_KEY"])
     pocket = PocketLlamaindex(

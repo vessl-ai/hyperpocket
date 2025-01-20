@@ -16,8 +16,11 @@ def read_text_file(file_path: str, encoding: Optional[str] = None) -> str:
     if not encoding:
         with open(file_path, 'rb') as file:
             encoding = detect(file.read(1024)).get('encoding')
-    with open(file_path, 'r', encoding=encoding) as file:
-        return file.read()
+    try:
+        with open(file_path, 'r', encoding=encoding) as file:
+            return file.read()
+    except UnicodeDecodeError:
+        raise ValueError('Failed to decode the file. Maybe the file is binary.')
 
 def head(file_path: str, n: int, encoding: Optional[str] = None) -> str:
     """
@@ -32,8 +35,11 @@ def head(file_path: str, n: int, encoding: Optional[str] = None) -> str:
     if not encoding:
         with open(file_path, 'rb') as file:
             encoding = detect(file.read(1024)).get('encoding')
-    with open(file_path, 'r', encoding=encoding) as file:
-        return ''.join(file.readline() for _ in range(n))
+    try:
+        with open(file_path, 'r', encoding=encoding) as file:
+            return ''.join(file.readline() for _ in range(n))
+    except UnicodeDecodeError:
+        raise ValueError('Failed to decode the file. Maybe the file is binary.')
 
 def tail(file_path: str, n: int, encoding: Optional[str] = None) -> str:
     """
@@ -48,22 +54,26 @@ def tail(file_path: str, n: int, encoding: Optional[str] = None) -> str:
     if not encoding:
         with open(file_path, 'rb') as file:
             encoding = detect(file.read(1024)).get('encoding')
-    with open(file_path, 'rb') as file:
-        # Seek to the end of the file
-        file.seek(0, 2)
-        file_size = file.tell()
-        block_size = 1024
-        lines = []
-        buffer = b""
+    
+    try:
+        with open(file_path, 'rb') as file:
+            # Seek to the end of the file
+            file.seek(0, 2)
+            file_size = file.tell()
+            block_size = 1024
+            lines = []
+            buffer = b""
 
-        # Read the file backwards in chunks
-        while len(lines) <= n and file_size > 0:
-            to_read = min(block_size, file_size)
-            file.seek(file_size - to_read, 0)
-            buffer = file.read(to_read) + buffer
-            file_size -= to_read
-            lines = buffer.splitlines()
-        return '\n'.join(line.decode(encoding, errors='replace') for line in lines[-n:])
+            # Read the file backwards in chunks
+            while len(lines) <= n and file_size > 0:
+                to_read = min(block_size, file_size)
+                file.seek(file_size - to_read, 0)
+                buffer = file.read(to_read) + buffer
+                file_size -= to_read
+                lines = buffer.splitlines()
+            return '\n'.join(line.decode(encoding, errors='replace') for line in lines[-n:])
+    except UnicodeDecodeError:
+        raise ValueError('Failed to decode the file. Maybe the file is binary.')
 
 def read_binary_file_and_encode_base64(file_path: str, offset: int = 0, length: Optional[int] = None) -> str:
     """

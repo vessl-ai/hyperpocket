@@ -390,7 +390,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "hyperdock-fileio", virtual = "../../../libs/docks/hyperdock-fileio" },
+    { name = "hyperdock-fileio", editable = "../../../libs/docks/hyperdock-fileio" },
     { name = "hyperpocket-llamaindex", directory = "../../../libs/extensions/llamaindex" },
 ]
 
@@ -573,7 +573,7 @@ wheels = [
 [[package]]
 name = "hyperdock-fileio"
 version = "0.1.0"
-source = { virtual = "../../../libs/docks/hyperdock-fileio" }
+source = { editable = "../../../libs/docks/hyperdock-fileio" }
 dependencies = [
     { name = "chardet" },
     { name = "pytest" },

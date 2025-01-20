@@ -11,4 +11,4 @@ dependencies = [
 
 [tool.uv.sources]
 hyperpocket-llamaindex = { path = "../../../libs/extensions/llamaindex" }
-hyperdock-fileio = { path = "../../../libs/docks/hyperdock-fileio" }
+hyperdock-fileio = { path = "../../../libs/docks/hyperdock-fileio", editable = true }

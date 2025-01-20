@@ -22,14 +22,26 @@ class FunctionTool(Tool):
         if self.func is None:
             if self.afunc is None:
                 raise ValueError("Both func and afunc are None")
-            return str(asyncio.run(self.afunc(**binding_args)))
-        return str(self.func(**binding_args))
+            try:
+                result = str(asyncio.run(self.afunc(**binding_args)))
+                return "Tool executed successfully. Result: \n" + result
+            except Exception as e:
+                return "There was an error while executing the tool: " + str(e)
+        try:
+            result = self.func(**binding_args)
+            return "Tool executed successfully. Result: \n" + str(result)
+        except Exception as e:
+            return "There was an error while executing the tool: " + str(e)
 
     async def ainvoke(self, **kwargs) -> str:
         if self.afunc is None:
             return str(self.invoke(**kwargs))
-        binding_args = self._get_binding_args(kwargs)
-        return str(await self.afunc(**binding_args))
+        try:
+            binding_args = self._get_binding_args(kwargs)
+            result = await self.afunc(**binding_args)
+            return "Tool executed successfully. Result: \n" + str(result)
+        except Exception as e:
+            return "There was an error while executing the tool: " + str(e)
 
     def _get_binding_args(self, kwargs):
         _kwargs = copy.deepcopy(kwargs)

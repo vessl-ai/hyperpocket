@@ -91,8 +91,11 @@ def grep_recursive_in_directory(
             file_path = pathlib.Path(root) / file
             with open(str(file_path), mode="rb") as fp:
                 encoding = detect(fp.read(1024)).get('encoding')
-            with open(str(file_path), encoding=encoding, mode="r") as fp:
-                for line_num, line in enumerate(fp, 1):
-                    if regex_pattern in line:
-                        matches.append(f"{file_path}:{line_num}:{line.strip()}")
+            try:
+                with open(str(file_path), encoding=encoding, mode="r") as fp:
+                    for line_num, line in enumerate(fp, 1):
+                        if regex_pattern in line:
+                            matches.append(f"{file_path}:{line_num}:{line.strip()}")
+            except UnicodeDecodeError:
+                pass
     return '\n'.join(matches) if matches else ''

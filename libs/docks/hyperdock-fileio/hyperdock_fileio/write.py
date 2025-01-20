@@ -30,12 +30,18 @@ def write_text_to_file(
         path.parent.mkdir(parents=True, exist_ok=True)
     flag = 'w'
     if append:
-        with open(path, 'rb') as file:
-            encoding = detect(file.read(1024)).get('encoding')
-        flag = 'a'
-    with open(path, mode=flag, encoding=encoding) as file:
-        file.write(content)
-    return f'{len(content)} letters written to {file_path}'
+        if path.exists():
+            with open(path, 'rb') as file:
+                encoding = detect(file.read(1024)).get('encoding')
+            flag = 'a'
+        else:
+            flag = 'w'
+    try:
+        with open(path, mode=flag, encoding=encoding) as file:
+            file.write(content)
+        return f'{len(content)} letters written to {file_path}'
+    except UnicodeEncodeError:
+        raise ValueError('Failed to encode the content.')
 
 def write_base64_bytes_to_file(
     file_path: str,
