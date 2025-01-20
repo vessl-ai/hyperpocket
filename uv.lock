@@ -703,7 +703,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "anthropic", specifier = ">=0.40.0" },
-    { name = "hyperpocket", specifier = ">=0.0.3" },
+    { name = "hyperpocket", directory = "libs/hyperpocket" },
 ]
 
 [[package]]
@@ -719,7 +719,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "hyperpocket", specifier = ">=0.0.3" },
+    { name = "hyperpocket", directory = "libs/hyperpocket" },
     { name = "langchain", specifier = ">=0.3.12" },
     { name = "langchain-core", specifier = ">=0.3.22" },
     { name = "pydantic", specifier = ">=2.10.3" },
@@ -736,7 +736,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "hyperpocket", specifier = ">=0.0.3" },
+    { name = "hyperpocket", directory = "libs/hyperpocket" },
     { name = "langgraph", specifier = ">=0.2.59" },
 ]
 
@@ -754,7 +754,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "hyperpocket", specifier = ">=0.0.3" },
+    { name = "hyperpocket", directory = "libs/hyperpocket" },
     { name = "llama-index", specifier = ">=0.12.5" },
 ]
 
@@ -769,7 +769,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "hyperpocket", specifier = ">=0.0.3" },
+    { name = "hyperpocket", directory = "libs/hyperpocket" },
     { name = "openai", specifier = ">=1.57.3" },
 ]
 
