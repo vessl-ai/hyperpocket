@@ -97,6 +97,30 @@ classDiagram
     Lockfile o-- Pocket : 1..1
 ```
 
+### Inject Envvar
+
+If the user specifies [envvar] in the `config.toml` of the tool's repository, which is allowed to be injected dynamically when the user develops an agent, it can be injected through the following three steps.
+
+```toml
+# config.toml of a tool
+
+[envvar]
+config1 = "config1"
+config2 = "config2"
+```
+
+1. Injecting envvars when importing tool in code.
+
+```python
+from_git('https://github.com/your-organization/your-repository/tree/main').inject_envvar("config1", "modified_from_code")
+```
+
+2. Injecting envvars by settings.toml
+   If there are remaining envvars, Hyperpocket checks the `settings.toml` from the agent code directory.
+
+3. Injecting envvars by prompt
+   Users can manually type the value of the envvars not supplied by code or settings.toml.
+
 ## WasmTool
 
 ```python
@@ -111,11 +135,11 @@ class WasmTool(Tool):
 
 - `_invoker`: A class for executing WASM.
 - `pkg_lock`: The lock class for the tool.
-    - Used to determine the package path where the current WASM code is stored.
+- Used for determining the package path where the current WASM code is stored.
 - `rel_path`: The relative path to the location of the WASM code within the package.
 - `runtime`: The runtime language of the WASM code.
 - `json_schema`: The JSON schema for the WASM tool.
-    - Information read from schema.json.
+- Information read from schema.json.
 - `readme`: The README information.
 
 ## WasmInvoker
@@ -133,7 +157,7 @@ sequenceDiagram
     participant WasmTool as WasmTool (Includes Server)
     participant Browser as Browser (Executes WASM Runtime)
 
-    
+
     WasmTool->>WasmTool: Render HTML and Store in Memory
     WasmTool->>Browser: Launch Browser
     Browser->>WasmTool: Request Rendered HTML
