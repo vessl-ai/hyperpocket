@@ -26,9 +26,9 @@ class FunctionTool(Tool):
         return str(self.func(**binding_args))
 
     async def ainvoke(self, **kwargs) -> str:
-        binding_args = self._get_binding_args(kwargs)
         if self.afunc is None:
-            return self.invoke(**binding_args)
+            return str(self.invoke(**kwargs))
+        binding_args = self._get_binding_args(kwargs)
         return str(await self.afunc(**binding_args))
 
     def _get_binding_args(self, kwargs):
@@ -102,11 +102,11 @@ class FunctionTool(Tool):
             argument_json_schema = flatten_json_schema(model.model_json_schema())
             if not callable(func):
                 raise ValueError(f"Dock element should be a list of functions, but found {func}")
-            is_coro = inspect.iscoroutinefunction(func)
-            auth = None,
-            if func.__dict__.get("__auth__"):
+            is_coroutine = inspect.iscoroutinefunction(func)
+            auth = None
+            if func.__dict__.get("__auth__") is not None:
                 auth = ToolAuth(**func.__dict__["__auth__"])
-            if is_coro:
+            if is_coroutine:
                 tools.append(cls(
                     func=None,
                     afunc=func,

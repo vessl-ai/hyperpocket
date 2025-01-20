@@ -1,0 +1,14 @@
+[project]
+name = "file-explorer-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "hyperdock-fileio",
+    "hyperpocket-llamaindex",
+]
+
+[tool.uv.sources]
+hyperpocket-llamaindex = { path = "../../../libs/extensions/llamaindex" }
+hyperdock-fileio = { path = "../../../libs/docks/hyperdock-fileio" }
