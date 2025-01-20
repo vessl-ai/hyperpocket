@@ -5,7 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
 from hyperpocket.config import secret
-from hyperpocket.tool import from_local
+from hyperpocket.tool import from_git
 
 
 def agent(pocket: PocketLangchain):
@@ -52,9 +52,12 @@ def agent(pocket: PocketLangchain):
 if __name__ == "__main__":
     with PocketLangchain(
             tools=[
-                from_local("/Users/moon/repos/hyperawesometools/managed-tools/gumloop/start-flow-run"),
-                from_local("/Users/moon/repos/hyperawesometools/managed-tools/gumloop/retrieve-input-schema"),
-                from_local("/Users/moon/repos/hyperawesometools/managed-tools/gumloop/list-saved-flows")
+                from_git("https://github.com/vessl-ai/hyperawesometools", ref="main",
+                         rel_path="managed-tools/gumloop/start-flow-run"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", ref="main",
+                         rel_path="managed-tools/gumloop/list-saved-flows"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", ref="main",
+                         rel_path="managed-tools/gumloop/retrieve-input-schema"),
             ],
     ) as pocket:
         agent(pocket)
