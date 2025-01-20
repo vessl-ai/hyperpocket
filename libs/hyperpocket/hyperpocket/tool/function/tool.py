@@ -1,6 +1,7 @@
+import asyncio
 import copy
 import inspect
-from typing import Callable, Awaitable, Optional
+from typing import Callable, Optional, Any, Coroutine
 
 from pydantic import BaseModel
 
@@ -13,17 +14,21 @@ class FunctionTool(Tool):
     """
     FunctionTool is Tool executing local python method.
     """
-    func: Callable
-    afunc: Optional[Callable[..., Awaitable[str]]]
+    func: Optional[Callable[..., str]]
+    afunc: Optional[Callable[..., Coroutine[Any, Any, str]]]
 
     def invoke(self, **kwargs) -> str:
         binding_args = self._get_binding_args(kwargs)
+        if self.func is None:
+            if self.afunc is None:
+                raise ValueError("Both func and afunc are None")
+            return str(asyncio.run(self.afunc(**binding_args)))
         return str(self.func(**binding_args))
 
     async def ainvoke(self, **kwargs) -> str:
         binding_args = self._get_binding_args(kwargs)
         if self.afunc is None:
-            return str(self.func(**binding_args))
+            return self.invoke(**binding_args)
         return str(await self.afunc(**binding_args))
 
     def _get_binding_args(self, kwargs):
@@ -71,7 +76,7 @@ class FunctionTool(Tool):
     def from_func(
         cls,
         func: Callable,
-        afunc: Callable[..., Awaitable[str]] = None,
+        afunc: Callable[..., Coroutine[Any, Any, str]] = None,
         auth: Optional[ToolAuth] = None
     ) -> "FunctionTool":
         model = function_to_model(func)
@@ -90,7 +95,8 @@ class FunctionTool(Tool):
     def from_dock(
         cls,
         dock: list[Callable[..., str]],
-    ) -> "FunctionTool":
+    ) -> list["FunctionTool"]:
+        tools = []
         for func in dock:
             model = function_to_model(func)
             argument_json_schema = flatten_json_schema(model.model_json_schema())
@@ -101,10 +107,21 @@ class FunctionTool(Tool):
             if func.__dict__.get("__auth__"):
                 auth = ToolAuth(**func.__dict__["__auth__"])
             if is_coro:
-                return cls(
+                tools.append(cls(
+                    func=None,
                     afunc=func,
                     name=func.__name__,
                     description=func.__doc__,
                     argument_json_schema=argument_json_schema,
                     auth=auth,
-                )
+                ))
+            else:
+                tools.append(cls(
+                    func=func,
+                    afunc=None,
+                    name=func.__name__,
+                    description=func.__doc__,
+                    argument_json_schema=argument_json_schema,
+                    auth=auth,
+                ))
+        return tools
