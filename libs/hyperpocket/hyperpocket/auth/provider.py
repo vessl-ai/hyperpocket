@@ -7,6 +7,7 @@ class AuthProvider(Enum):
     GITHUB = 'github'
     GOOGLE = 'google'
     CALENDLY = 'calendly'
+    GUMLOOP = "gumloop"
     NOTION = 'notion'
 
     @classmethod
