@@ -267,21 +267,23 @@ client_secret = ""  # your github client secret
 
 3. Set your Slack APP Client ID / Client Secret in `$HOME/.pocket/settings.toml`
 
-#### How to start adding new token auth
+#### How to start adding a new token auth
 
-1. Generate token auth boilerplate code for service
+1. Generate boilerplate codes for token-based auth services ?
 
 ```
 # service_name should be lowercase including underscore
 poetry run hyperpocket devtool create-token-auth-template {service_name}
 ```
 
-It will generate boilerplate code for new token auth for tool
+It will generate boilerplate code lines for a new token-based auth service
 
-2. Add auth at AuthProvider field.
-   class AuthProvider(Enum):
-   ...
-   SERVICE = 'service'
+2. Extend AuthProvider enum to add your new auth provider.
+
+```python
+class AuthProvider(Enum):
+SERVICE = 'service'
+```
 
 3. Specify auth provider for tools
 
@@ -301,5 +303,4 @@ scopes = []
     auth_provider=AuthProvider.SERVICE
 )
 def my_function(**kwargs):
-    ...
 ```
