@@ -23,13 +23,11 @@ class FunctionTool(Tool):
             if self.afunc is None:
                 raise ValueError("Both func and afunc are None")
             try:
-                result = str(asyncio.run(self.afunc(**binding_args)))
-                return "Tool executed successfully. Result: \n" + result
+                return str(asyncio.run(self.afunc(**binding_args)))
             except Exception as e:
                 return "There was an error while executing the tool: " + str(e)
         try:
-            result = self.func(**binding_args)
-            return "Tool executed successfully. Result: \n" + str(result)
+            return self.func(**binding_args)
         except Exception as e:
             return "There was an error while executing the tool: " + str(e)
 
@@ -38,8 +36,7 @@ class FunctionTool(Tool):
             return str(self.invoke(**kwargs))
         try:
             binding_args = self._get_binding_args(kwargs)
-            result = await self.afunc(**binding_args)
-            return "Tool executed successfully. Result: \n" + str(result)
+            return await self.afunc(**binding_args)
         except Exception as e:
             return "There was an error while executing the tool: " + str(e)
 
