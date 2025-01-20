@@ -1,0 +1,31 @@
+libs.hyperpocket.hyperpocket.auth.gumloop.token_context
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.gumloop.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.gumloop.token_context.GumLoopTokenContext
+
+
+Module Contents
+---------------
+
+.. py:class:: GumLoopTokenContext
+
+   Bases: :py:obj:`hyperpocket.auth.gumloop.context.GumLoopContext`
+
+
+   This class is used to define the interface of the authentication model.
+
+
+   .. py:method:: from_gumloop_token_response(response: hyperpocket.auth.gumloop.token_schema.GumloopTokenResponse)
+      :classmethod:
+
+
+

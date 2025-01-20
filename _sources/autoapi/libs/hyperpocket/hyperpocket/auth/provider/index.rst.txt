@@ -46,6 +46,11 @@ Module Contents
 
 
 
+   .. py:attribute:: GUMLOOP
+      :value: 'gumloop'
+
+
+
    .. py:attribute:: NOTION
       :value: 'notion'
 

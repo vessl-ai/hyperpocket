@@ -14,6 +14,7 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/calendly/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/github/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/google/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/gumloop/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/linear/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/notion/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/slack/index

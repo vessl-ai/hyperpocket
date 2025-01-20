@@ -15,6 +15,7 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/auth/context/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/github/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/google/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/gumloop/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/handler/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/linear/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/notion/index

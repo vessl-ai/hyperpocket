@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.gumloop
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.gumloop
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.gumloop.gumloop_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.gumloop.gumloop_oauth2_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: gumloop_auth_router
+
+.. py:function:: gumloop_oauth2_callback(request: fastapi.Request, state: str, token: str)
+   :async:
+
+
