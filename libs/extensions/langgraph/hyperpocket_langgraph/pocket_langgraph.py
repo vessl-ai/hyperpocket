@@ -1,13 +1,13 @@
 import copy
 from typing import List, Any
 
-from hyperpocket.config import pocket_logger
-from hyperpocket.pocket_main import ToolLike
-from hyperpocket.prompts import pocket_extended_tool_description
-from hyperpocket.server.server import PocketServerOperations
 from langchain_core.runnables import RunnableConfig
 from langgraph.errors import NodeInterrupt
 from pydantic import BaseModel
+
+from hyperpocket.config import pocket_logger
+from hyperpocket.pocket_main import ToolLike
+from hyperpocket.prompts import pocket_extended_tool_description
 
 try:
     from langchain_core.messages import ToolMessage
@@ -40,7 +40,7 @@ class PocketLanggraph(Pocket):
                  auth: PocketAuth = None):
         super().__init__(tools, auth)
         self.langgraph_tools = {}
-        for tool_name, tool_impl in self.tools.items():
+        for tool_name, tool_impl in self.core.tools.items():
             self.langgraph_tools[tool_name] = self._get_langgraph_tool(tool_impl)
 
     def get_tools(self):
@@ -129,66 +129,6 @@ class PocketLanggraph(Pocket):
             return {"messages": tool_messages}
 
         return _tool_node
-
-    async def prepare_in_subprocess(self,
-                                    tool_name: str,
-                                    body: Any,
-                                    thread_id: str = 'default',
-                                    profile: str = 'default',
-                                    *args, **kwargs):
-        prepare = await self.server.call_in_subprocess(
-            PocketServerOperations.PREPARE_AUTH,
-            args,
-            {
-                'tool_name': tool_name,
-                'body': body,
-                'thread_id': thread_id,
-                'profile': profile,
-                **kwargs,
-            },
-        )
-
-        return prepare
-
-    async def authenticate_in_subprocess(self,
-                                         tool_name: str,
-                                         body: Any,
-                                         thread_id: str = 'default',
-                                         profile: str = 'default',
-                                         *args, **kwargs):
-        credentials = await self.server.call_in_subprocess(
-            PocketServerOperations.AUTHENTICATE,
-            args,
-            {
-                'tool_name': tool_name,
-                'body': body,
-                'thread_id': thread_id,
-                'profile': profile,
-                **kwargs,
-            },
-        )
-
-        return credentials
-
-    async def tool_call_in_subprocess(self,
-                                      tool_name: str,
-                                      body: Any,
-                                      thread_id: str = 'default',
-                                      profile: str = 'default',
-                                      *args, **kwargs):
-        result = await self.server.call_in_subprocess(
-            PocketServerOperations.TOOL_CALL,
-            args,
-            {
-                'tool_name': tool_name,
-                'body': body,
-                'thread_id': thread_id,
-                'profile': profile,
-                **kwargs,
-            },
-        )
-
-        return result
 
     def _get_langgraph_tool(self, pocket_tool: PocketTool) -> BaseTool:
         def _invoke(body: Any, thread_id: str = 'default', profile: str = 'default', **kwargs) -> str:

@@ -66,7 +66,7 @@ class PocketAnthropic(Pocket):
 
     def get_anthropic_tool_specs(self) -> List[dict]:
         specs = []
-        for tool in self.tools.values():
+        for tool in self.core.tools.values():
             spec = self.get_anthropic_tool_spec(tool)
             specs.append(spec)
         return specs
