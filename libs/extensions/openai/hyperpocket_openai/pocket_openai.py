@@ -12,6 +12,7 @@ except ImportError:
 
 from hyperpocket import Pocket
 from hyperpocket.tool import Tool
+from hyperpocket.config import pocket_logger
 
 
 class PocketOpenAI(Pocket):
@@ -61,7 +62,7 @@ async def handle_tool_call_async(
         elif choice.finish_reason == "tool_calls":
             tool_calls = choice.message.tool_calls
             for tool_call in tool_calls:
-                print("[TOOL CALL] ", tool_call)
+                pocket_logger.debug("[TOOL CALL] ", tool_call)
                 tool_message = await pocket.ainvoke(tool_call)
                 messages.append(tool_message)
 
@@ -89,7 +90,7 @@ def handle_tool_call(
         elif choice.finish_reason == "tool_calls":
             tool_calls = choice.message.tool_calls
             for tool_call in tool_calls:
-                print("[TOOL CALL] ", tool_call)
+                pocket_logger.debug("[TOOL CALL] ", tool_call)
                 tool_message = pocket.invoke(tool_call)
                 messages.append(tool_message)
 
