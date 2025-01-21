@@ -21,10 +21,13 @@ Attributes
 .. autoapisummary::
 
    libs.hyperpocket.hyperpocket.tool.function.from_func
+   libs.hyperpocket.hyperpocket.tool.function.from_dock
 
 
 Package Contents
 ----------------
 
 .. py:data:: from_func
+
+.. py:data:: from_dock
 

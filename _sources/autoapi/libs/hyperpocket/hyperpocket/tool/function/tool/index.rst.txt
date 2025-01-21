@@ -25,11 +25,11 @@ Module Contents
 
 
    .. py:attribute:: func
-      :type:  Callable
+      :type:  Optional[Callable[Ellipsis, str]]
 
 
    .. py:attribute:: afunc
-      :type:  Optional[Callable[Ellipsis, Awaitable[str]]]
+      :type:  Optional[Callable[Ellipsis, Coroutine[Any, Any, str]]]
 
 
    .. py:method:: invoke(**kwargs) -> str
@@ -51,7 +51,12 @@ Module Contents
 
 
 
-   .. py:method:: from_func(func: Callable, afunc: Callable[Ellipsis, Awaitable[str]] = None, auth: Optional[hyperpocket.tool.tool.ToolAuth] = None) -> FunctionTool
+   .. py:method:: from_func(func: Callable, afunc: Callable[Ellipsis, Coroutine[Any, Any, str]] = None, auth: Optional[hyperpocket.tool.tool.ToolAuth] = None) -> FunctionTool
+      :classmethod:
+
+
+
+   .. py:method:: from_dock(dock: list[Callable[Ellipsis, str]]) -> list[FunctionTool]
       :classmethod:
 
 
