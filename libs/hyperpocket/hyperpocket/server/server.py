@@ -62,23 +62,46 @@ class PocketServer(object):
         async def _acall(_conn, _op, _uid, a, kw):
             try:
                 result = await self.pocket_core.acall(*a, **kw)
+                error = None
             except Exception as e:
                 pocket_logger.error(f"failed to acall in pocket subprocess. error: {e}")
-                result = (str(e), False)
+                result = None
+                error = e
 
-            _conn.send((_op, _uid, result))
+            _conn.send((_op, _uid, result, error))
 
         async def _prepare(_conn, _op, _uid, a, kw):
-            result = self.pocket_core.prepare_auth(*a, **kw)
-            _conn.send((_op, _uid, result))
+            try:
+                result = self.pocket_core.prepare_auth(*a, **kw)
+                error = None
+            except Exception as e:
+                pocket_logger.error(f"failed to prepare in pocket subprocess. error: {e}")
+                result = None
+                error = e
+
+            _conn.send((_op, _uid, result, error))
 
         async def _authenticate(_conn, _op, _uid, a, kw):
-            result = await self.pocket_core.authenticate(*a, **kw)
-            _conn.send((_op, _uid, result))
+            try:
+                result = await self.pocket_core.authenticate(*a, **kw)
+                error = None
+            except Exception as e:
+                pocket_logger.error(f"failed to authenticate in pocket subprocess. error: {e}")
+                result = None
+                error = e
+
+            _conn.send((_op, _uid, result, error))
 
         async def _tool_call(_conn, _op, _uid, a, kw):
-            result = await self.pocket_core.tool_call(*a, **kw)
-            _conn.send((_op, _uid, result))
+            try:
+                result = await self.pocket_core.tool_call(*a, **kw)
+                error = None
+            except Exception as e:
+                pocket_logger.error(f"failed to tool_call in pocket subprocess. error: {e}")
+                result = None
+                error = e
+
+            _conn.send((_op, _uid, result, error))
 
         while True:
             if conn.poll():
@@ -112,7 +135,10 @@ class PocketServer(object):
         conn, _ = self.pipe
         while True:
             if conn.poll():
-                op, uid, result = conn.recv()
+                op, uid, result, error = conn.recv()
+                if error:
+                    raise error
+
                 future = self.future_store[uid]
                 future.set_result(result)
                 break
