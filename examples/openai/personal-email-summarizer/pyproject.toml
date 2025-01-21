@@ -1,0 +1,18 @@
+[project]
+name = "personal-email-summarizer"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiohttp>=3.11.11",
+    "hyperpocket",
+    "hyperpocket-openai",
+    "openai>=1.59.3",
+    "slack-bolt>=1.22.0",
+    "slack-sdk>=3.34.0",
+]
+
+[tool.uv.sources]
+hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
+hyperpocket-openai = { path = "../../../libs/extensions/openai", editable = true }
