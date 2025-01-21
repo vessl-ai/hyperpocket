@@ -397,7 +397,7 @@ wheels = [
 [[package]]
 name = "hyperpocket"
 version = "0.0.3"
-source = { directory = "../../hyperpocket" }
+source = { editable = "../../hyperpocket" }
 dependencies = [
     { name = "click" },
     { name = "dynaconf" },
@@ -449,7 +449,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "hyperpocket", directory = "../../hyperpocket" },
+    { name = "hyperpocket", editable = "../../hyperpocket" },
     { name = "openai", specifier = ">=1.57.3" },
 ]
 

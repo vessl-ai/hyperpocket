@@ -9,7 +9,7 @@ readme = "README.md"
 dependencies = ["llama-index>=0.12.5", "hyperpocket>=0.0.3"]
 
 [tool.uv.sources]
-hyperpocket = { path = "../../hyperpocket" }
+hyperpocket = { path = "../../hyperpocket", editable = true }
 
 [build-system]
 requires = ["hatchling"]

@@ -8,7 +8,7 @@ readme = "README.md"
 dependencies = ["openai>=1.57.3", "hyperpocket>=0.0.3"]
 
 [tool.uv.sources]
-hyperpocket = { path = "../../hyperpocket" }
+hyperpocket = { path = "../../hyperpocket", editable = true }
 
 [build-system]
 requires = ["hatchling"]

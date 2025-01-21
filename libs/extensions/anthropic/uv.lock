@@ -415,7 +415,7 @@ wheels = [
 [[package]]
 name = "hyperpocket"
 version = "0.0.3"
-source = { directory = "../../hyperpocket" }
+source = { editable = "../../hyperpocket" }
 dependencies = [
     { name = "click" },
     { name = "dynaconf" },
@@ -468,7 +468,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "anthropic", specifier = ">=0.40.0" },
-    { name = "hyperpocket", directory = "../../hyperpocket" },
+    { name = "hyperpocket", editable = "../../hyperpocket" },
 ]
 
 [[package]]
