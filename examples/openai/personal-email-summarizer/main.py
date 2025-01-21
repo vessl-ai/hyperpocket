@@ -1,11 +1,11 @@
 import datetime
 import json
 import openai
-from pocket.auth.provider import AuthProvider
-from pocket.config import secret
-from pocket.tool.function.annotation import function_tool
-from pocket.tool.wasm.tool import from_git
-from pocket_openai import PocketOpenAI
+from hyperpocket.auth.provider import AuthProvider
+from hyperpocket.config import secret
+from hyperpocket.tool.function.annotation import function_tool
+from hyperpocket.tool.wasm.tool import from_git
+from hyperpocket_openai import PocketOpenAI
 import requests
 
 
