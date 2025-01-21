@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_handler_template
+=========================================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_handler_template
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_handler_template.get_auth_token_handler_template
+
+
+Module Contents
+---------------
+
+.. py:function:: get_auth_token_handler_template() -> jinja2.Template
+

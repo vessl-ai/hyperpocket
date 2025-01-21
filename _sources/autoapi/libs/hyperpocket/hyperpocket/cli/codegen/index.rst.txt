@@ -1,0 +1,16 @@
+libs.hyperpocket.hyperpocket.cli.codegen
+========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.codegen
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/index
+
+
