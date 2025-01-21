@@ -2,13 +2,14 @@ from enum import Enum
 
 
 class AuthProvider(Enum):
-    SLACK = 'slack'
-    LINEAR = 'linear'
-    GITHUB = 'github'
-    GOOGLE = 'google'
-    CALENDLY = 'calendly'
+    SLACK = "slack"
+    LINEAR = "linear"
+    GITHUB = "github"
+    GOOGLE = "google"
+    CALENDLY = "calendly"
+    NOTION = "notion"
+    REDDIT = "reddit"
     GUMLOOP = "gumloop"
-    NOTION = 'notion'
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":
