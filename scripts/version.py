@@ -1,41 +1,25 @@
 import argparse
 import os
 
+import toml
+
 
 def dump_pyproject_version(version, project_dir=None):
     try:
         file_path = os.path.join(project_dir, "pyproject.toml")
 
         with open(file_path, "r") as f:
-            lines = f.readlines()
+            pyproject_toml = toml.load(f)
 
-        old_version = None
-        in_project_section = False
-        updated_lines = []
-        for line in lines:
-            stripped_line = line.strip()
-
-            # check current section is project.
-            if stripped_line == "[project]":
-                in_project_section = True
-            elif stripped_line.startswith("[") and stripped_line != "[project]":
-                in_project_section = False
-
-            # get old version
-            if in_project_section and stripped_line.startswith("version"):
-                old_version = stripped_line.split("=")[1].strip()
-                version_line = f'version = "{version}"\n'
-                updated_lines.append(version_line)
-                continue
-
-            updated_lines.append(line)
+        old_version = pyproject_toml.get("project", {}).get("version")
 
         if old_version is None:
             print("Version not found in pyproject.toml.")
             return
 
+        pyproject_toml["project"]["version"] = version
         with open(file_path, "w") as f:
-            f.writelines(updated_lines)
+            toml.dump(pyproject_toml, f)
 
         print(f"Updated version: {old_version} -> {version}")
         print(f"Version information has been dumped into {file_path}")
