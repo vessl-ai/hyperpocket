@@ -52,7 +52,6 @@ WasmToolRequest offer those build method:
 
 - `from_local`
 - `from_git`
-- `from_github`
 
 Each `WasmToolRequest` has it's own `Lock` object
 

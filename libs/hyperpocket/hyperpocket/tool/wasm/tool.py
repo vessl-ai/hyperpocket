@@ -3,7 +3,6 @@ import pathlib
 from typing import Any, Optional
 
 import toml
-
 from hyperpocket.auth import AuthProvider
 from hyperpocket.config import pocket_logger
 from hyperpocket.repository import Lock, Lockfile
@@ -32,11 +31,6 @@ def from_local(path: str) -> WasmToolRequest:
 
 def from_git(repository: str, ref: str, rel_path: str) -> WasmToolRequest:
     return WasmToolRequest(GitLock(repository_url=repository, git_ref=ref), rel_path)
-
-
-def from_github(owner: str, repo: str, ref: str, rel_path: str) -> WasmToolRequest:
-    repository = f"https://github.com/{owner}/{repo}"
-    return from_git(repository, ref, rel_path)
 
 
 class WasmTool(Tool):
@@ -109,6 +103,7 @@ class WasmTool(Tool):
             readme=readme,
             pkg_lock=tool_req.lock,
             rel_path=tool_req.rel_path,
+            postprocessings=tool_req.postprocessings,
         )
 
     @classmethod
