@@ -33,7 +33,10 @@ def function_to_model(func: callable) -> Type[BaseModel]:
         if param.annotation is Parameter.empty:
             raise Exception(f"Should all arguments be annotated but {param_name} is not annotated")
 
-        if param.annotation.__module__ != "builtins" and not issubclass(param.annotation, BaseModel):
+        if param.annotation.__module__ == "typing" and param.annotation.__name__ == "Optional":
+            fields[param_name] = (
+                param.annotation.__args__[0], FieldInfo(default=param.default, description=param_desc_map.get(param_name, "")))
+        elif param.annotation.__module__ != "builtins" and not issubclass(param.annotation, BaseModel):
             raise Exception(
                 f"currently only support builtin types and pydantic BaseModel but {param_name} is not builtin type")
 
