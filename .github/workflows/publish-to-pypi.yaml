@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version to deploy"
+        description: "Version to deploy."
         required: true
-        default: "0.1.0"
+        default: "0.0.1"
 
 jobs:
   deploy:
@@ -39,63 +39,83 @@ jobs:
             fi
           done
 
-      # 3. Setup Python
+      # 3. Setup uv
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v5
+
+      # 4. Setup Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
-
-      # 4. Install Poetry
-      - name: Install Poetry
-        run: |
-          python -m pip install --upgrade pip
-          pip install poetry
-          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+          python-version: '3.10'
 
       # 5. Update Version
       - name: Update version in all packages
         run: |
           export VERSION=${{ github.event.inputs.version }}
           echo "Updating version to $VERSION"
+
+          PATHS=(
+            "libs/hyperpocket"
+            "libs/extension/anthropic"
+            "libs/extension/langchain"
+            "libs/extension/langgraph"
+            "libs/extension/llamaindex"
+            "libs/extension/opneai"
+          )
           
-          poetry version $VERSION
-          cd libs/hyperpocket && poetry version $VERSION
-          cd libs/extensions/anthropic && poetry version $VERSION
-          cd libs/extensions/langchain && poetry version $VERSION
-          cd libs/extensions/langgraph && poetry version $VERSION
-          cd libs/extensions/llamaindex && poetry version $VERSION
-          cd libs/extensions/openai && poetry version $VERSION
+          for PATH in "${PATHS[@]}"; do
+            echo "Running: uv run scripts/version.py $VERSION --path $PATH"
+            uv run scripts/version.py "$VERSION" --path "$PATH"
+          
+            if [ $? -ne 0 ]; then
+              echo "Error: Command failed for path $PATH"
+              exit 1
+            fi
+          done
+          
+          echo "All version dumped successfully"
 
       # 6. Publish
       - name: Publish hyperpocket anthropic package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
         working-directory: libs/hyperpocket
         run: |
-          poetry build
-          poetry publish
+          uv build
+          uv publish
 
       - name: Publish hyperpocket langchain package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
         working-directory: libs/extension/langchain
         run: |
-          poetry build
-          poetry publish
+          uv build
+          uv publish
 
       - name: Publish hyperpocket langgraph package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
         working-directory: libs/extension/langgraph
         run: |
-          poetry build
-          poetry publish
+          uv build
+          uv publish
 
       - name: Publish hyperpocket llamaindex package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
         working-directory: libs/extension/llamaindex
         run: |
-          poetry build
-          poetry publish
+          uv build
+          uv publish
 
       - name: Publish hyperpocket openai package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
         working-directory: libs/extension/openai
         run: |
-          poetry build
-          poetry publish
+          uv build
+          uv publish
 
       # Check if publishing succeeded
       - name: Check if version already exists
