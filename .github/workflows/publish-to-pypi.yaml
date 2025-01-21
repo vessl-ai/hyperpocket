@@ -1,0 +1,150 @@
+name: Publish to PyPI
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to deploy."
+        required: true
+        default: "0.0.1"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Repository Checkout
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Check if Version already exists
+      - name: Check if version already exists
+        run: |
+          VERSION=${{ github.event.inputs.version }}
+          echo "Checking if version $VERSION already exists for all packages..."
+          
+          # Define package names
+          PACKAGES=("hyperpocket" "hyperpocket_anthropic" "hyperpocket_langchain" "hyperpocket_langgraph" "hyperpocket_openai" "hyperpocket_llamaindex")
+          
+          for PACKAGE in "${PACKAGES[@]}"; do
+            echo "Checking package: $PACKAGE"
+            URL=https://pypi.org/pypi/${PACKAGE}/${VERSION}/json
+          
+            responses=$(curl -s $URL)
+            if echo "$responses" | grep -q "Not Found"; then
+              echo "Version $VERSION for package $PACKAGE does not exist. Continuing..."
+            else
+              echo "Version $VERSION for package $PACKAGE already exists on PyPI. Stopping workflow."
+              exit 1
+            fi
+          done
+
+      # 3. Setup uv
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v5
+
+      # 4. Setup Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # 5. Update Version
+      - name: Update version in all packages
+        run: |
+          export VERSION=${{ github.event.inputs.version }}
+          echo "Updating version to $VERSION"
+
+          PATHS=(
+            "libs/hyperpocket"
+            "libs/extension/anthropic"
+            "libs/extension/langchain"
+            "libs/extension/langgraph"
+            "libs/extension/llamaindex"
+            "libs/extension/opneai"
+          )
+          
+          for PATH in "${PATHS[@]}"; do
+            echo "Running: uv run scripts/version.py $VERSION --path $PATH"
+            uv run scripts/version.py "$VERSION" --path "$PATH"
+          
+            if [ $? -ne 0 ]; then
+              echo "Error: Command failed for path $PATH"
+              exit 1
+            fi
+          done
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          if ! git diff-index --quiet HEAD --; then
+            git commit -m "uv version up"
+            git push origin main
+          else
+            echo "No changes to commit. Skipping push."
+          fi
+          
+          echo "All version dumped successfully"
+
+      # 6. Publish
+      - name: Publish hyperpocket anthropic package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        working-directory: libs/hyperpocket
+        run: |
+          uv build
+          uv publish
+
+      - name: Publish hyperpocket langchain package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        working-directory: libs/extension/langchain
+        run: |
+          uv build
+          uv publish
+
+      - name: Publish hyperpocket langgraph package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        working-directory: libs/extension/langgraph
+        run: |
+          uv build
+          uv publish
+
+      - name: Publish hyperpocket llamaindex package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        working-directory: libs/extension/llamaindex
+        run: |
+          uv build
+          uv publish
+
+      - name: Publish hyperpocket openai package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        working-directory: libs/extension/openai
+        run: |
+          uv build
+          uv publish
+
+      # Check if publishing succeeded
+      - name: Check if version already exists
+        run: |
+          VERSION=${{ github.event.inputs.version }}
+          echo "Checking if version $VERSION already exists for all packages..."
+
+          # Define package names
+          PACKAGES=("hyperpocket" "hyperpocket_anthropic" "hyperpocket_langchain" "hyperpocket_langgraph" "hyperpocket_openai" "hyperpocket_llamaindex")
+
+          for PACKAGE in "${PACKAGES[@]}"; do
+            echo "Checking package: $PACKAGE"
+            URL=https://pypi.org/pypi/${PACKAGE}/${VERSION}/json
+
+            responses=$(curl -s $URL)
+            if echo "$responses" | grep -q "Not Found"; then
+              echo "Version $VERSION for package $PACKAGE does not exist. failed to publish"
+              exit 1
+            else
+              echo "Success to publish Version $VERSION for package $PACKAGE.
+            fi
+          done
