@@ -18,19 +18,23 @@ class WasmToolRequest(ToolRequest):
     lock: Lock
     rel_path: str
 
-    def __init__(self, lock: Lock, rel_path: str, tool_var: dict):
+    def __init__(self, lock: Lock, rel_path: str, tool_vars: dict):
         self.lock = lock
         self.rel_path = rel_path
-        self.add_tool_var(tool_var)
+        self.overridden_tool_vars = tool_vars
 
     def __str__(self):
         return f"ToolRequest(lock={self.lock}, rel_path={self.rel_path})"
 
-def from_local(path: str, tool_var: dict) -> WasmToolRequest:
-    return WasmToolRequest(LocalLock(path), "", tool_var)
+def from_local(path: str, tool_vars: Optional[dict[str, str]] = None) -> WasmToolRequest:
+    if tool_vars is None:
+        tool_vars = dict()
+    return WasmToolRequest(LocalLock(path), "", tool_vars)
 
-def from_git(repository: str, ref: str, rel_path: str, tool_var: dict) -> WasmToolRequest:
-    return WasmToolRequest(GitLock(repository_url=repository, git_ref=ref), rel_path, tool_var)
+def from_git(repository: str, ref: str, rel_path: str, tool_vars: Optional[dict[str, str]] = None) -> WasmToolRequest:
+    if not tool_vars:
+        tool_vars = dict()
+    return WasmToolRequest(GitLock(repository_url=repository, git_ref=ref), rel_path, tool_vars)
 
 class WasmTool(Tool):
     """
@@ -61,8 +65,6 @@ class WasmTool(Tool):
         schema_path = rootpath / "schema.json"
         config_path = rootpath / "config.toml"
         readme_path = rootpath / "README.md"
-        
-        app_settings_path = pathlib.Path(os.getcwd()) / "settings.toml" #TODO: settings will be used from hyperpocket.config settings
 
         try:
             with schema_path.open("r") as f:
@@ -71,6 +73,7 @@ class WasmTool(Tool):
             pocket_logger.warning(f"{toolpkg_path} failed to load json schema. error : {e}")
             json_schema = None
 
+        default_tool_vars = dict()
         try:
             with config_path.open("r") as f:
                 config = toml.load(f)
@@ -87,6 +90,7 @@ class WasmTool(Tool):
                 else:
                     raise ValueError("`language` field is required in config.toml")
                 auth = cls._get_auth(config)
+                default_tool_vars = config.get("tool_vars", {})
         except Exception as e:
             raise ValueError(f"Failed to load config.toml: {e}")
 
@@ -95,16 +99,8 @@ class WasmTool(Tool):
                 readme = f.read()
         else:
             readme = None
-            
-        tool_vars = cls._get_tool_vars_from_config(config)
-        if tool_vars:
-            tool_vars = cls.inject_tool_var(app_settings_path, tool_vars, tool_req.tool_var)
-
-            # write tool_vars to config.toml tool_var
-            config['tool_var'] = tool_vars
-            with config_path.open("w") as f:
-                toml.dump(config, f)
         
+        print(tool_req.overridden_tool_vars)
         return cls(
             name=name,
             description=description,
@@ -115,6 +111,8 @@ class WasmTool(Tool):
             pkg_lock=tool_req.lock,
             rel_path=tool_req.rel_path,
             postprocessings=tool_req.postprocessings,
+            default_tool_vars=default_tool_vars,
+            overridden_tool_vars=tool_req.overridden_tool_vars,
         )
 
     @classmethod
@@ -131,16 +129,6 @@ class WasmTool(Tool):
             scopes=scopes,
         )
     
-    @classmethod
-    def _get_tool_vars_from_config(cls, config: dict) -> dict:
-        tool_vars = config.get("tool_var")
-        if not tool_vars:
-            return 
-        tool_vars_dict = {}
-        for key, value in tool_vars.items():
-            tool_vars_dict[key] = value
-        return tool_vars_dict
-    
     def template_arguments(self) -> dict[str, str]:
         return {}
 
@@ -149,7 +137,7 @@ class WasmTool(Tool):
             str(self.pkg_lock.toolpkg_path() / self.rel_path),
             self.runtime,
             body,
-            envs,
+            envs | self.tool_vars,
             **kwargs,
         )
 
@@ -158,6 +146,6 @@ class WasmTool(Tool):
             str(self.pkg_lock.toolpkg_path() / self.rel_path),
             self.runtime,
             body,
-            envs,
+            envs | self.tool_vars,
             **kwargs,
         )
