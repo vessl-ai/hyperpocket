@@ -1,0 +1,73 @@
+libs.hyperpocket.hyperpocket.auth.reddit.oauth2_schema
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.reddit.oauth2_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.reddit.oauth2_schema.RedditOAuth2Request
+   libs.hyperpocket.hyperpocket.auth.reddit.oauth2_schema.RedditOAuth2Response
+
+
+Module Contents
+---------------
+
+.. py:class:: RedditOAuth2Request
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+   This class is used to define the interface of the authentication request.
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
+.. py:class:: RedditOAuth2Response
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   This class is used to define the interface of the authentication response.
+
+
+   .. py:attribute:: access_token
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: token_type
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: expires_in
+      :type:  Optional[int]
+      :value: None
+
+
+
+   .. py:attribute:: scope
+      :type:  Optional[str]
+      :value: None
+
+
+

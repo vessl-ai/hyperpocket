@@ -46,13 +46,18 @@ Module Contents
 
 
 
-   .. py:attribute:: GUMLOOP
-      :value: 'gumloop'
-
-
-
    .. py:attribute:: NOTION
       :value: 'notion'
+
+
+
+   .. py:attribute:: REDDIT
+      :value: 'reddit'
+
+
+
+   .. py:attribute:: GUMLOOP
+      :value: 'gumloop'
 
 
 

@@ -1,0 +1,35 @@
+libs.hyperpocket.hyperpocket.auth.reddit.oauth2_context
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.reddit.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.reddit.oauth2_context.RedditOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: RedditOAuth2AuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.reddit.context.RedditAuthContext`
+
+
+   This class is used to define the interface of the authentication model.
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+
+   .. py:method:: from_reddit_oauth2_response(response: hyperpocket.auth.reddit.oauth2_schema.RedditOAuth2Response)
+      :classmethod:
+
+
+
