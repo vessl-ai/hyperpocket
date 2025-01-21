@@ -162,5 +162,9 @@ def server_example(graph):
     uvicorn.run(app, host="0.0.0.0", port=8008)
 
 
-if __name__ == "__main__":
+def main():
     server_example(build())
+
+
+if __name__ == "__main__":
+    main()
