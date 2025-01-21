@@ -1,41 +1,32 @@
-
 [project]
 name = "hyperpocket-langchain"
 version = "0.0.2"
 description = ""
-authors = [{ name = "VESSL AI Devs", email = "dev@vessl.ai" }]
 requires-python = ">=3.10"
 readme = "README.md"
-dependencies = [
-    "langchain-core>=0.3.22",
-    "pydantic>=2.10.3",
-    "langchain>=0.3.12",
-    "hyperpocket>=0.0.3",
-]
-
-[tool.uv.sources]
-hyperpocket = { path = "../../hyperpocket", editable = true }
+dependencies = [ "langchain-core>=0.3.22", "pydantic>=2.10.3", "langchain>=0.3.12", "hyperpocket>=0.0.3",]
+[[project.authors]]
+name = "VESSL AI Devs"
+email = "dev@vessl.ai"
 
 [dependency-groups]
-dev = ["pytest>=8.3.4", "ruff>=0.8.6"]
+dev = [ "pytest>=8.3.4", "ruff>=0.8.6",]
 
 [build-system]
-requires = ["hatchling"]
+requires = [ "hatchling",]
 build-backend = "hatchling.build"
-
-[tool.ruff.lint]
-select = [
-    "E", # pycodestyle errors, 
-    "F", # pyflakes errors, 
-    "I", # isort errors,
-]
-ignore = [
-    "E501", # line too long, handled by formatting
-]
 
 [tool.ruff]
 line-length = 88
 target-version = "py310"
 
+[tool.ruff.lint]
+select = [ "E", "F", "I",]
+ignore = [ "E501",]
+
 [tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F401"]
+"__init__.py" = [ "F401",]
+
+[tool.uv.sources.hyperpocket]
+path = "../../hyperpocket"
+editable = true
