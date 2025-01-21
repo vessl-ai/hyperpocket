@@ -212,10 +212,23 @@ class PocketCore:
         """
         tool = self._tool_instance(tool_name)
         try:
-            return await asyncio.wait_for(tool.ainvoke(**kwargs), timeout=180)
+            result = await asyncio.wait_for(tool.ainvoke(**kwargs), timeout=180)
         except asyncio.TimeoutError:
             pocket_logger.warning("Timeout tool call.")
             return "timeout tool call"
+
+        if tool.postprocessings is not None:
+            for postprocessing in tool.postprocessings:
+                try:
+                    result = postprocessing(result)
+                except Exception as e:
+                    exception_str = (
+                        f"Error in postprocessing `{postprocessing.__name__}`: {e}"
+                    )
+                    pocket_logger.error(exception_str)
+                    return exception_str
+
+        return result
 
     def grouping_tool_by_auth_provider(self) -> dict[str, List[Tool]]:
         tool_by_provider = {}
