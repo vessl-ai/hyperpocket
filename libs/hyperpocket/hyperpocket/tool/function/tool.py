@@ -2,6 +2,12 @@ import asyncio
 import copy
 import inspect
 from typing import Callable, Optional, Any, Coroutine
+import os
+import copy
+import inspect
+import pathlib
+import toml
+from typing import Callable, Awaitable, Optional
 
 from pydantic import BaseModel
 
@@ -16,6 +22,7 @@ class FunctionTool(Tool):
     """
     func: Optional[Callable[..., str]]
     afunc: Optional[Callable[..., Coroutine[Any, Any, str]]]
+    tool_var: dict[str, str]
 
     def invoke(self, **kwargs) -> str:
         binding_args = self._get_binding_args(kwargs)
@@ -86,10 +93,19 @@ class FunctionTool(Tool):
         cls,
         func: Callable,
         afunc: Callable[..., Coroutine[Any, Any, str]] = None,
-        auth: Optional[ToolAuth] = None
+        auth: Optional[ToolAuth] = None,
+        app_tool_var: dict[str, str] = None,
     ) -> "FunctionTool":
+        if len(app_tool_var) != 0:
+            cls.add_tool_var(app_tool_var)
+        
         model = function_to_model(func)
         argument_json_schema = flatten_json_schema(model.model_json_schema())
+        
+        app_settings_path = pathlib.Path(os.getcwd()) / "settings.toml" #TODO: settings will be used from hyperpocket.config settings
+        tool_vars  = cls._get_tool_vars_from_config(func)
+        if tool_vars:
+            tool_vars = cls.inject_tool_var(app_settings_path, tool_vars, app_tool_var)
 
         return cls(
             func=func,
@@ -97,7 +113,7 @@ class FunctionTool(Tool):
             name=func.__name__,
             description=model.__doc__,
             argument_json_schema=argument_json_schema,
-            auth=auth
+            auth=auth,
         )
     
     @classmethod
@@ -134,3 +150,20 @@ class FunctionTool(Tool):
                     auth=auth,
                 ))
         return tools
+        
+    @classmethod
+    def _get_tool_vars_from_config(cls, func: Callable) -> dict:
+        print(func.__name__)
+        tool_path = inspect.getfile(func)
+        print(tool_path)
+        tool_parent = "/".join(tool_path.split("/")[:-1])
+        tool_config_path = pathlib.Path(tool_parent) / "config.toml"
+        with tool_config_path.open("r") as f:
+            tool_config = toml.load(f)
+            tool_vars = tool_config.get("tool_var")
+            if not tool_vars:
+                return 
+            tool_vars_dict = {}
+            for key, value in tool_vars.items():
+                tool_vars_dict[key] = value
+            return tool_vars_dict

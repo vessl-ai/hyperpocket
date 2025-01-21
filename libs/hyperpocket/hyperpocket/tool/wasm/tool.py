@@ -5,7 +5,7 @@ from typing import Any, Optional
 
 import toml
 from hyperpocket.auth import AuthProvider
-from hyperpocket.config import pocket_logger
+from hyperpocket.config import settings, pocket_logger
 from hyperpocket.repository import Lock, Lockfile
 from hyperpocket.repository.lock import GitLock, LocalLock
 from hyperpocket.tool import Tool, ToolRequest
@@ -18,25 +18,19 @@ class WasmToolRequest(ToolRequest):
     lock: Lock
     rel_path: str
 
-    def __init__(self, lock: Lock, rel_path: str):
+    def __init__(self, lock: Lock, rel_path: str, tool_var: dict):
         self.lock = lock
         self.rel_path = rel_path
-        self.envvars: dict[str, str] = {}
+        self.add_tool_var(tool_var)
 
     def __str__(self):
         return f"ToolRequest(lock={self.lock}, rel_path={self.rel_path})"
-    
-    def inject_envvar(self, key: str, value: str) -> 'WasmToolRequest':
-        self.envvars[key] = value
-        return self
 
-def from_local(path: str) -> WasmToolRequest:
-    return WasmToolRequest(LocalLock(path), "")
+def from_local(path: str, tool_var: dict) -> WasmToolRequest:
+    return WasmToolRequest(LocalLock(path), "", tool_var)
 
-
-def from_git(repository: str, ref: str, rel_path: str) -> WasmToolRequest:
-    return WasmToolRequest(GitLock(repository_url=repository, git_ref=ref), rel_path)
-
+def from_git(repository: str, ref: str, rel_path: str, tool_var: dict) -> WasmToolRequest:
+    return WasmToolRequest(GitLock(repository_url=repository, git_ref=ref), rel_path, tool_var)
 
 class WasmTool(Tool):
     """
@@ -68,7 +62,7 @@ class WasmTool(Tool):
         config_path = rootpath / "config.toml"
         readme_path = rootpath / "README.md"
         
-        app_settings_path = pathlib.Path(os.getcwd()) / "settings.toml"
+        app_settings_path = pathlib.Path(os.getcwd()) / "settings.toml" #TODO: settings will be used from hyperpocket.config settings
 
         try:
             with schema_path.open("r") as f:
@@ -102,15 +96,15 @@ class WasmTool(Tool):
         else:
             readme = None
             
-        tool_envvars = cls._get_envvars_from_config(config)
-        if tool_envvars:
-            tool_envvars = cls._inject_envvar(app_settings_path, tool_envvars, tool_req)
+        tool_vars = cls._get_tool_vars_from_config(config)
+        if tool_vars:
+            tool_vars = cls.inject_tool_var(app_settings_path, tool_vars, tool_req.tool_var)
 
-            # write tool_envvars to config.toml envvar
-            config['envvar'] = tool_envvars
+            # write tool_vars to config.toml tool_var
+            config['tool_var'] = tool_vars
             with config_path.open("w") as f:
                 toml.dump(config, f)
-
+        
         return cls(
             name=name,
             description=description,
@@ -138,56 +132,14 @@ class WasmTool(Tool):
         )
     
     @classmethod
-    def _get_envvars_from_config(cls, config: dict) -> dict:
-        tool_envvars = config.get("envvar")
-        if not tool_envvars:
+    def _get_tool_vars_from_config(cls, config: dict) -> dict:
+        tool_vars = config.get("tool_var")
+        if not tool_vars:
             return 
-        tool_envvars_dict = {}
-        for key, value in tool_envvars.items():
-            tool_envvars_dict[key] = value
-        return tool_envvars_dict
-    
-    @classmethod
-    def _get_envvars_from_settings(cls, settings_path: pathlib.Path) -> dict:
-        with settings_path.open("r") as f:
-            settings = toml.load(f)
-            app_envvars = settings.get("envvar")
-            if not app_envvars:
-                return
-            app_envvars_dict = {}
-            for key, value in app_envvars.items():
-                app_envvars_dict[key] = value
-            return app_envvars_dict
-    
-    @classmethod
-    def _inject_envvar(cls, settings_path:pathlib.Path, tool_envvars: dict, tool_req: WasmToolRequest) -> dict:
-        not_found_envvars = []
-            
-        # envvars set from application code
-        for k in tool_envvars.keys():
-            if k in tool_req.envvars:
-                tool_envvars[k] = tool_req.envvars[k]
-            else:
-                not_found_envvars.append(k)
-        
-        # envvars set from settings.toml in application code
-        if settings_path.exists():
-            app_envvars = cls._get_envvars_from_settings(settings_path)
-            if app_envvars:
-                for k in not_found_envvars:
-                    if k in app_envvars:
-                        tool_envvars[k] = app_envvars[k]
-                        not_found_envvars.remove(k)
-                            
-        # require users to provide not_found_envvars from prompt
-        for k in not_found_envvars:
-            print(f"The following environment variables {k} are not found in the current environment:")
-            print("Please add the following environment variables to the current environment:")
-            user_input = input(f"{k}: ")
-            if user_input:
-                tool_envvars[k] = user_input
-
-        return tool_envvars
+        tool_vars_dict = {}
+        for key, value in tool_vars.items():
+            tool_vars_dict[key] = value
+        return tool_vars_dict
     
     def template_arguments(self) -> dict[str, str]:
         return {}
