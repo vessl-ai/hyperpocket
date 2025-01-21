@@ -37,4 +37,4 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.poetry.scripts]
-pocket = "pocket.cli.__main__:cli"
+hyperpocket = "hyperpocket.cli.__main__:cli"
