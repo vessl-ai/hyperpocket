@@ -9,6 +9,7 @@ class AuthProvider(Enum):
     CALENDLY = "calendly"
     NOTION = "notion"
     REDDIT = "reddit"
+    GUMLOOP = "gumloop"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":

@@ -385,18 +385,15 @@ def get_builtin_tools(pocket_auth: PocketAuth) -> List[Tool]:
         """
         Get current authentication session list in the thread.
 
+        This method don't return any sensitive data.
+
+        THIS TOOL IS ONLY USED IN CASE THAT "the user requests current session state"
+
         The output format should be like this
 
         - [AUTH PROVIDER] [state] [scopes, ...] : some explanation ..
         - [AUTH PROVIDER] [state] [scopes, ...] : some explanation ..
-        - [AUTH PROVIDER] [state] [scopes, ...] : some explanation ..
         ...
-
-        Args:
-            thread_id(str): thread id
-
-        Returns:
-
         """
         session_list = pocket_auth.list_session_state(thread_id)
         return session_list
