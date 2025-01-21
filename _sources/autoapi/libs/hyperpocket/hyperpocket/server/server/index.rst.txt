@@ -102,6 +102,6 @@ Module Contents
 
 
 
-   .. py:method:: run(child_pocket)
+   .. py:method:: run(pocket_core: hyperpocket.pocket_core.PocketCore)
 
 

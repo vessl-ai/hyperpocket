@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.tool_like
+======================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.tool_like
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.tool_like.ToolLike
+
+
+Module Contents
+---------------
+
+.. py:data:: ToolLike
+

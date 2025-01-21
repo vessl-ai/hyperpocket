@@ -73,16 +73,6 @@
              
   <section id="module-libs.hyperpocket.hyperpocket.pocket_main">
 <span id="libs-hyperpocket-hyperpocket-pocket-main"></span><h1>libs.hyperpocket.hyperpocket.pocket_main<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.pocket_main" title="Link to this heading"></a></h1>
-<section id="attributes">
-<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.pocket_main.ToolLike" title="libs.hyperpocket.hyperpocket.pocket_main.ToolLike"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolLike</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
@@ -93,40 +83,20 @@
 </tbody>
 </table>
 </section>
-<section id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.pocket_main.get_builtin_tools" title="libs.hyperpocket.hyperpocket.pocket_main.get_builtin_tools"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_builtin_tools</span></code></a>(→ List[hyperpocket.tool.Tool])</p></td>
-<td><p>Get Builtin Tools</p></td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
-<dl class="py data">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.ToolLike">
-<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.pocket_main.</span></span><span class="sig-name descname"><span class="pre">ToolLike</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.ToolLike" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py class">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.pocket_main.</span></span><span class="sig-name descname"><span class="pre">Pocket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">ToolLike</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pocket_auth/index.html#libs.hyperpocket.hyperpocket.pocket_auth.PocketAuth" title="libs.hyperpocket.hyperpocket.pocket_auth.PocketAuth"><span class="pre">hyperpocket.pocket_auth.PocketAuth</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lockfile_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.pocket_main.</span></span><span class="sig-name descname"><span class="pre">Pocket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">hyperpocket.tool_like.ToolLike</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pocket_auth/index.html#libs.hyperpocket.hyperpocket.pocket_auth.PocketAuth" title="libs.hyperpocket.hyperpocket.pocket_auth.PocketAuth"><span class="pre">hyperpocket.pocket_auth.PocketAuth</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lockfile_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.auth">
-<span class="sig-name descname"><span class="pre">auth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../pocket_auth/index.html#libs.hyperpocket.hyperpocket.pocket_auth.PocketAuth" title="libs.hyperpocket.hyperpocket.pocket_auth.PocketAuth"><span class="pre">hyperpocket.pocket_auth.PocketAuth</span></a></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.auth" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py attribute">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.server">
 <span class="sig-name descname"><span class="pre">server</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../server/server/index.html#libs.hyperpocket.hyperpocket.server.server.PocketServer" title="libs.hyperpocket.hyperpocket.server.server.PocketServer"><span class="pre">hyperpocket.server.server.PocketServer</span></a></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.server" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.tools">
-<span class="sig-name descname"><span class="pre">tools</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">hyperpocket.tool.Tool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.tools" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.core">
+<span class="sig-name descname"><span class="pre">core</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../pocket_core/index.html#libs.hyperpocket.hyperpocket.pocket_core.PocketCore" title="libs.hyperpocket.hyperpocket.pocket_core.PocketCore"><span class="pre">hyperpocket.pocket_core.PocketCore</span></a></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.core" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -222,106 +192,66 @@ If the tool needs user’s interaction or waiting for some process, this tool is
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.acall">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">acall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thread_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.acall" title="Link to this definition"></a></dt>
-<dd><p>Invoke tool asynchronously, not that different from <cite>Pocket.invoke</cite>
-But this method is called only in subprocess.</p>
-<dl class="simple">
-<dt>This function performs the following steps:</dt><dd><ol class="arabic simple">
-<li><p><cite>prepare_auth</cite> : preparing the authentication process for the tool if necessary.</p></li>
-<li><p><cite>authenticate</cite> : performing authentication that needs to invoke tool.</p></li>
-<li><p><cite>tool_call</cite> : Executing tool actually with authentication information.</p></li>
-</ol>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.initialize_tool_auth">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">initialize_tool_auth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thread_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.initialize_tool_auth" title="Link to this definition"></a></dt>
+<dd><p>Initialize authentication for all tools.</p>
+<p>This method prepares all tools that require authentication by retrieving
+their respective authentication URIs.</p>
+<p>If no tool requires authentication, an empty list is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tool_name</strong> (<em>str</em>) – tool name to invoke</p></li>
-<li><p><strong>body</strong> (<em>Any</em>) – tool arguments. should be json format</p></li>
-<li><p><strong>thread_id</strong> (<em>str</em>) – thread id</p></li>
-<li><p><strong>profile</strong> (<em>str</em>) – profile name</p></li>
+<li><p><strong>thread_id</strong> (<em>str</em>) – The thread id. Defaults to ‘default’.</p></li>
+<li><p><strong>profile</strong> (<em>str</em>) – The profile to be used for authentication. Defaults to ‘default’.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>tool result and state.</p>
+<dd class="field-even"><p>A list of authentication URIs for the tools that require authentication.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[str, bool]</p>
+<dd class="field-odd"><p>List[str]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.prepare_auth">
-<span class="sig-name descname"><span class="pre">prepare_auth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thread_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.prepare_auth" title="Link to this definition"></a></dt>
-<dd><p>Prepares the authentication process for the tool if necessary.
-Returns callback URL and whether the tool requires authentication.</p>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.wait_tool_auth">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wait_tool_auth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thread_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.wait_tool_auth" title="Link to this definition"></a></dt>
+<dd><p>Wait until all tool authentications are completed.</p>
+<p>This method waits until all tools associated with the given
+<cite>thread_id</cite> and <cite>profile</cite> have completed their authentication process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tool_name</strong> (<em>str</em>) – tool name to invoke</p></li>
-<li><p><strong>thread_id</strong> (<em>str</em>) – thread id</p></li>
-<li><p><strong>profile</strong> (<em>str</em>) – profile name</p></li>
+<li><p><strong>thread_id</strong> (<em>str</em>) – The thread id. Defaults to ‘default’.</p></li>
+<li><p><strong>profile</strong> (<em>str</em>) – The profile to be used for authentication. Defaults to ‘default’.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>callback URI if necessary</p>
+<dd class="field-even"><p>Returns <cite>True</cite> if all tool authentications are successfully completed,
+or <cite>False</cite> if the process was interrupted or failed.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.authenticate">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thread_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.authenticate" title="Link to this definition"></a></dt>
-<dd><p>Authenticates the handler included in the tool and returns credentials.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>tool_name</strong> (<em>str</em>) – tool name to invoke</p></li>
-<li><p><strong>thread_id</strong> (<em>str</em>) – thread id</p></li>
-<li><p><strong>profile</strong> (<em>str</em>) – profile name</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>credentials</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict[str, str]</p>
-</dd>
-</dl>
-</dd></dl>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.prepare_in_subprocess">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prepare_in_subprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thread_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.prepare_in_subprocess" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.tool_call">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tool_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.tool_call" title="Link to this definition"></a></dt>
-<dd><p>Executing tool actually</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>tool_name</strong> (<em>str</em>) – tool name to invoke</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – keyword arguments. authentication information is passed through this.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>tool result</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.authenticate_in_subprocess">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">authenticate_in_subprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thread_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.authenticate_in_subprocess" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
-</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.Pocket.tool_call_in_subprocess">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tool_call_in_subprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thread_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.Pocket.tool_call_in_subprocess" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.pocket_main.get_builtin_tools">
-<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.pocket_main.</span></span><span class="sig-name descname"><span class="pre">get_builtin_tools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pocket_auth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pocket_auth/index.html#libs.hyperpocket.hyperpocket.pocket_auth.PocketAuth" title="libs.hyperpocket.hyperpocket.pocket_auth.PocketAuth"><span class="pre">hyperpocket.pocket_auth.PocketAuth</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">hyperpocket.tool.Tool</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.pocket_main.get_builtin_tools" title="Link to this definition"></a></dt>
-<dd><p>Get Builtin Tools</p>
-<p>Builtin Tool can access to Pocket Core.</p>
 </dd></dl>
 
 </section>

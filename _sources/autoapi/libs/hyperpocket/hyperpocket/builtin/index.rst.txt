@@ -1,0 +1,25 @@
+libs.hyperpocket.hyperpocket.builtin
+====================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.builtin
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.builtin.get_builtin_tools
+
+
+Module Contents
+---------------
+
+.. py:function:: get_builtin_tools(pocket_auth: hyperpocket.pocket_auth.PocketAuth) -> List[hyperpocket.tool.Tool]
+
+   Get Builtin Tools
+
+   Builtin Tool can access to Pocket Core.
+
+

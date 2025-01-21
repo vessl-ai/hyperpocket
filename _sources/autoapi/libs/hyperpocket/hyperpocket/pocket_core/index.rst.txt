@@ -1,0 +1,108 @@
+libs.hyperpocket.hyperpocket.pocket_core
+========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.pocket_core
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.pocket_core.PocketCore
+
+
+Module Contents
+---------------
+
+.. py:class:: PocketCore(tools: list[hyperpocket.tool_like.ToolLike], auth: hyperpocket.pocket_auth.PocketAuth = None, lockfile_path: Optional[str] = None, force_update: bool = False)
+
+   .. py:attribute:: auth
+      :type:  hyperpocket.pocket_auth.PocketAuth
+
+
+   .. py:attribute:: tools
+      :type:  dict[str, hyperpocket.tool.Tool]
+
+
+   .. py:method:: acall(tool_name: str, body: Any, thread_id: str = 'default', profile: str = 'default', *args, **kwargs) -> tuple[str, bool]
+      :async:
+
+
+      Invoke tool asynchronously, not that different from `Pocket.invoke`
+      But this method is called only in subprocess.
+
+      This function performs the following steps:
+          1. `prepare_auth` : preparing the authentication process for the tool if necessary.
+          2. `authenticate` : performing authentication that needs to invoke tool.
+          3. `tool_call` : Executing tool actually with authentication information.
+
+      :param tool_name: tool name to invoke
+      :type tool_name: str
+      :param body: tool arguments. should be json format
+      :type body: Any
+      :param thread_id: thread id
+      :type thread_id: str
+      :param profile: profile name
+      :type profile: str
+
+      :returns: tool result and state.
+      :rtype: tuple[str, bool]
+
+
+
+   .. py:method:: prepare_auth(tool_name: Union[str, List[str]], thread_id: str = 'default', profile: str = 'default', **kwargs) -> Optional[str]
+
+      Prepares the authentication process for the tool if necessary.
+      Returns callback URL and whether the tool requires authentication.
+
+      :param tool_name: tool name to invoke
+      :type tool_name: Union[str,List[str]]
+      :param thread_id: thread id
+      :type thread_id: str
+      :param profile: profile name
+      :type profile: str
+
+      :returns: callback URI if necessary
+      :rtype: Optional[str]
+
+
+
+   .. py:method:: authenticate(tool_name: str, thread_id: str = 'default', profile: str = 'default', **kwargs) -> dict[str, str]
+      :async:
+
+
+      Authenticates the handler included in the tool and returns credentials.
+
+      :param tool_name: tool name to invoke
+      :type tool_name: str
+      :param thread_id: thread id
+      :type thread_id: str
+      :param profile: profile name
+      :type profile: str
+
+      :returns: credentials
+      :rtype: dict[str, str]
+
+
+
+   .. py:method:: tool_call(tool_name: str, **kwargs) -> str
+      :async:
+
+
+      Executing tool actually
+
+      :param tool_name: tool name to invoke
+      :type tool_name: str
+      :param kwargs: keyword arguments. authentication information is passed through this.
+      :type kwargs: dict
+
+      :returns: tool result
+      :rtype: str
+
+
+
+   .. py:method:: grouping_tool_by_auth_provider() -> dict[str, List[hyperpocket.tool.Tool]]
+
+

@@ -5,14 +5,6 @@ libs.hyperpocket.hyperpocket.pocket_main
 
 
 
-Attributes
-----------
-
-.. autoapisummary::
-
-   libs.hyperpocket.hyperpocket.pocket_main.ToolLike
-
-
 Classes
 -------
 
@@ -21,34 +13,20 @@ Classes
    libs.hyperpocket.hyperpocket.pocket_main.Pocket
 
 
-Functions
----------
-
-.. autoapisummary::
-
-   libs.hyperpocket.hyperpocket.pocket_main.get_builtin_tools
-
-
 Module Contents
 ---------------
 
-.. py:data:: ToolLike
-
-.. py:class:: Pocket(tools: list[ToolLike], auth: hyperpocket.pocket_auth.PocketAuth = None, lockfile_path: Optional[str] = None, force_update: bool = False)
+.. py:class:: Pocket(tools: list[hyperpocket.tool_like.ToolLike], auth: hyperpocket.pocket_auth.PocketAuth = None, lockfile_path: Optional[str] = None, force_update: bool = False)
 
    Bases: :py:obj:`object`
-
-
-   .. py:attribute:: auth
-      :type:  hyperpocket.pocket_auth.PocketAuth
 
 
    .. py:attribute:: server
       :type:  hyperpocket.server.server.PocketServer
 
 
-   .. py:attribute:: tools
-      :type:  dict[str, hyperpocket.tool.Tool]
+   .. py:attribute:: core
+      :type:  hyperpocket.pocket_core.PocketCore
 
 
    .. py:method:: invoke(tool_name: str, body: Any, thread_id: str = 'default', profile: str = 'default', *args, **kwargs) -> str
@@ -131,87 +109,59 @@ Module Contents
 
 
 
-   .. py:method:: acall(tool_name: str, body: Any, thread_id: str = 'default', profile: str = 'default', *args, **kwargs) -> tuple[str, bool]
+   .. py:method:: initialize_tool_auth(thread_id: str = 'default', profile: str = 'default') -> dict[str, str]
       :async:
 
 
-      Invoke tool asynchronously, not that different from `Pocket.invoke`
-      But this method is called only in subprocess.
+      Initialize authentication for all tools.
 
-      This function performs the following steps:
-          1. `prepare_auth` : preparing the authentication process for the tool if necessary.
-          2. `authenticate` : performing authentication that needs to invoke tool.
-          3. `tool_call` : Executing tool actually with authentication information.
+      This method prepares all tools that require authentication by retrieving
+      their respective authentication URIs.
 
-      :param tool_name: tool name to invoke
-      :type tool_name: str
-      :param body: tool arguments. should be json format
-      :type body: Any
-      :param thread_id: thread id
+      If no tool requires authentication, an empty list is returned.
+
+      :param thread_id: The thread id. Defaults to 'default'.
       :type thread_id: str
-      :param profile: profile name
+      :param profile: The profile to be used for authentication. Defaults to 'default'.
       :type profile: str
 
-      :returns: tool result and state.
-      :rtype: tuple[str, bool]
+      :returns: A list of authentication URIs for the tools that require authentication.
+      :rtype: List[str]
 
 
 
-   .. py:method:: prepare_auth(tool_name: str, thread_id: str = 'default', profile: str = 'default', **kwargs) -> Optional[str]
-
-      Prepares the authentication process for the tool if necessary.
-      Returns callback URL and whether the tool requires authentication.
-
-      :param tool_name: tool name to invoke
-      :type tool_name: str
-      :param thread_id: thread id
-      :type thread_id: str
-      :param profile: profile name
-      :type profile: str
-
-      :returns: callback URI if necessary
-      :rtype: Optional[str]
-
-
-
-   .. py:method:: authenticate(tool_name: str, thread_id: str = 'default', profile: str = 'default', **kwargs) -> dict[str, str]
+   .. py:method:: wait_tool_auth(thread_id: str = 'default', profile: str = 'default') -> bool
       :async:
 
 
-      Authenticates the handler included in the tool and returns credentials.
+      Wait until all tool authentications are completed.
 
-      :param tool_name: tool name to invoke
-      :type tool_name: str
-      :param thread_id: thread id
+      This method waits until all tools associated with the given
+      `thread_id` and `profile` have completed their authentication process.
+
+      :param thread_id: The thread id. Defaults to 'default'.
       :type thread_id: str
-      :param profile: profile name
+      :param profile: The profile to be used for authentication. Defaults to 'default'.
       :type profile: str
 
-      :returns: credentials
-      :rtype: dict[str, str]
+      :returns: Returns `True` if all tool authentications are successfully completed,
+                or `False` if the process was interrupted or failed.
+      :rtype: bool
 
 
 
-   .. py:method:: tool_call(tool_name: str, **kwargs) -> str
+   .. py:method:: prepare_in_subprocess(tool_name: Union[str, List[str]], thread_id: str = 'default', profile: str = 'default', *args, **kwargs)
       :async:
 
 
-      Executing tool actually
 
-      :param tool_name: tool name to invoke
-      :type tool_name: str
-      :param kwargs: keyword arguments. authentication information is passed through this.
-      :type kwargs: dict
-
-      :returns: tool result
-      :rtype: str
+   .. py:method:: authenticate_in_subprocess(tool_name: str, thread_id: str = 'default', profile: str = 'default', *args, **kwargs)
+      :async:
 
 
 
-.. py:function:: get_builtin_tools(pocket_auth: hyperpocket.pocket_auth.PocketAuth) -> List[hyperpocket.tool.Tool]
+   .. py:method:: tool_call_in_subprocess(tool_name: str, body: Any, thread_id: str = 'default', profile: str = 'default', *args, **kwargs)
+      :async:
 
-   Get Builtin Tools
-
-   Builtin Tool can access to Pocket Core.
 
 
