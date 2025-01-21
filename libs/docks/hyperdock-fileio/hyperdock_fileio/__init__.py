@@ -3,7 +3,7 @@ import hyperdock_fileio.write as write_functions
 import hyperdock_fileio.operations as operation_functions
 import hyperdock_fileio.directory as directory_functions
 
-def dock(
+def initialize_dock(
     *_, **__,
 ) -> list[callable]:
     return [

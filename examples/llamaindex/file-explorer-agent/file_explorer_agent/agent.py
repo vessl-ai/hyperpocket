@@ -4,7 +4,7 @@ from llama_index.llms.openai import OpenAI
 from hyperpocket.config import secret
 from hyperpocket.tool import from_git, from_dock
 from hyperpocket_llamaindex import PocketLlamaindex
-from hyperdock_fileio import dock as fileio_dock
+from hyperdock_fileio import initialize_dock as fileio_dock
 
 def build():
     llm = OpenAI(api_key=secret["OPENAI_API_KEY"])
