@@ -7,18 +7,31 @@ from pydantic import BaseModel, Field
 from hyperpocket.config.auth import AuthConfig, DefaultAuthConfig
 from hyperpocket.config.session import DefaultSessionConfig, SessionConfig
 
-pocket_root = Path.home() / ".pocket"
-if not pocket_root.exists():
-    os.makedirs(pocket_root)
-settings_path = pocket_root / "settings.toml"
-if not settings_path.exists():
-    with open(settings_path, "w"):
+POCKET_ROOT = Path.home() / ".pocket"
+
+
+def find_settings_path(filename: str) -> Path:
+    # check workdir first
+    workdir_settings_path = Path.cwd() / filename
+    if workdir_settings_path.exists():
+        return workdir_settings_path
+
+    # check home directory
+    pocket_root_settings_path = POCKET_ROOT / filename
+    if pocket_root_settings_path.exists():
+        return pocket_root_settings_path
+
+    # if both of them do not exist, create the path in workdir and return it
+    workdir_settings_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(workdir_settings_path, "w"):
         pass
-secret_path = pocket_root / ".secrets.toml"
-if not secret_path.exists():
-    with open(secret_path, "w"):
-        pass
-toolpkg_path = pocket_root / "toolpkg"
+    return workdir_settings_path
+
+
+settings_path = find_settings_path("settings.toml")
+secret_path = find_settings_path(".secrets.toml")
+
+toolpkg_path = POCKET_ROOT / "toolpkg"
 if not toolpkg_path.exists():
     os.makedirs(toolpkg_path)
 
@@ -50,9 +63,9 @@ class Config(BaseModel):
 
     @property
     def public_base_url(self):
-        if self.public_server_protocol == 'https' and self.public_server_port == 443:
+        if self.public_server_protocol == "https" and self.public_server_port == 443:
             return f"{self.public_server_protocol}://{self.public_hostname}"
-        elif self.public_server_protocol == 'http' and self.public_server_port == 80:
+        elif self.public_server_protocol == "http" and self.public_server_port == 80:
             return f"{self.public_server_protocol}://{self.public_hostname}"
         return f"{self.public_server_protocol}://{self.public_hostname}:{self.public_server_port}"
 
