@@ -57,7 +57,7 @@ jobs:
       # 4. Install Dependencies
       - name: Install Dependencies
         run: |
-          pip install toml
+          pip install tomlkit
 
       # 5. Update Version
       - name: Update version in all packages

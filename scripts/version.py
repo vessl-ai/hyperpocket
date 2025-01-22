@@ -1,7 +1,7 @@
 import argparse
 import os
 
-import toml
+import tomlkit
 
 
 def dump_pyproject_version(version, project_dir=None):
@@ -9,8 +9,7 @@ def dump_pyproject_version(version, project_dir=None):
         file_path = os.path.join(project_dir, "pyproject.toml")
 
         with open(file_path, "r") as f:
-            pyproject_toml = toml.load(f)
-
+            pyproject_toml = tomlkit.load(f)
         old_version = pyproject_toml.get("project", {}).get("version")
 
         if old_version is None:
@@ -19,7 +18,7 @@ def dump_pyproject_version(version, project_dir=None):
 
         pyproject_toml["project"]["version"] = version
         with open(file_path, "w") as f:
-            toml.dump(pyproject_toml, f)
+            tomlkit.dump(pyproject_toml, f)
 
         print(f"Updated version: {old_version} -> {version}")
         print(f"Version information has been dumped into {file_path}")
