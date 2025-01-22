@@ -16,5 +16,5 @@ Functions
 Module Contents
 ---------------
 
-.. py:function:: function_tool(func: Optional[Callable] = None, *, auth_provider: hyperpocket.auth.AuthProvider = None, scopes: List[str] = None, auth_handler: str = None)
+.. py:function:: function_tool(func: Optional[Callable] = None, *, auth_provider: hyperpocket.auth.AuthProvider = None, scopes: List[str] = None, auth_handler: str = None, tool_vars: dict[str, str] = None)
 

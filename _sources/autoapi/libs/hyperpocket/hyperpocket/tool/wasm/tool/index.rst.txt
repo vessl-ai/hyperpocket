@@ -26,7 +26,7 @@ Functions
 Module Contents
 ---------------
 
-.. py:class:: WasmToolRequest(lock: hyperpocket.repository.Lock, rel_path: str)
+.. py:class:: WasmToolRequest(lock: hyperpocket.repository.Lock, rel_path: str, tool_vars: dict)
 
    Bases: :py:obj:`hyperpocket.tool.ToolRequest`
 
@@ -43,9 +43,12 @@ Module Contents
       :type:  str
 
 
-.. py:function:: from_local(path: str) -> WasmToolRequest
+   .. py:attribute:: overridden_tool_vars
 
-.. py:function:: from_git(repository: str, ref: str, rel_path: str) -> WasmToolRequest
+
+.. py:function:: from_local(path: str, tool_vars: Optional[dict[str, str]] = None) -> WasmToolRequest
+
+.. py:function:: from_git(repository: str, ref: str, rel_path: str, tool_vars: Optional[dict[str, str]] = None) -> WasmToolRequest
 
 .. py:class:: WasmTool
 

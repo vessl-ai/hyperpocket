@@ -53,10 +53,17 @@ Module Contents
 
 
 
+   .. py:attribute:: overridden_tool_vars
+      :type:  dict[str, str]
+
+
    .. py:method:: add_postprocessing(postprocessing: Callable)
 
 
    .. py:method:: with_postprocessings(postprocessings: list[Callable])
+
+
+   .. py:method:: override_tool_variables(override_vars: dict[str, str]) -> ToolRequest
 
 
 .. py:class:: Tool
@@ -87,6 +94,14 @@ Module Contents
       :type:  Optional[list[Callable]]
 
 
+   .. py:attribute:: default_tool_vars
+      :type:  dict[str, str]
+
+
+   .. py:attribute:: overridden_tool_vars
+      :type:  dict[str, str]
+
+
    .. py:method:: invoke(**kwargs) -> str
       :abstractmethod:
 
@@ -109,6 +124,14 @@ Module Contents
 
       Returns a schema_model that wraps the existing argument_json_schema
       to include profile and thread_id as arguments when the tool is invoked
+
+
+
+   .. py:method:: override_tool_variables(override_vars: dict[str, str]) -> Tool
+
+
+   .. py:property:: tool_vars
+      :type: dict[str, str]
 
 
 

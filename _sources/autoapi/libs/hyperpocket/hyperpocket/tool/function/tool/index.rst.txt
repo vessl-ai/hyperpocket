@@ -51,7 +51,7 @@ Module Contents
 
 
 
-   .. py:method:: from_func(func: Callable, afunc: Callable[Ellipsis, Coroutine[Any, Any, str]] = None, auth: Optional[hyperpocket.tool.tool.ToolAuth] = None) -> FunctionTool
+   .. py:method:: from_func(func: Callable | FunctionTool, afunc: Callable[Ellipsis, Coroutine[Any, Any, str]] | FunctionTool = None, auth: Optional[hyperpocket.tool.tool.ToolAuth] = None, tool_vars: dict[str, str] = None) -> FunctionTool
       :classmethod:
 
 
