@@ -1,0 +1,11 @@
+[project]
+name = "tool-calling-agent"
+version = "0.0.1"
+description = "Tool calling agent with hyperpocket and OpenAI API"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["hyperpocket>=0.0.3", "hyperpocket_openai>=0.0.3"]
+
+[tool.uv.sources]
+hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
+hyperpocket_openai = { path = "../../../libs/extensions/openai", editable = true }

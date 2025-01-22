@@ -21,7 +21,7 @@ from hyperpocket.server import add_callback_proxy
 from hyperpocket.tool import from_git
 
 from hyperpocket_langgraph import PocketLanggraph
-from local_tools import fetch_user_prs_from_organization, get_user_slack_threads
+from .local_tools import fetch_user_prs_from_organization, get_user_slack_threads
 
 slack_client = WebClient(secret["SLACK_BOT_TOKEN"])
 verifier = SignatureVerifier(signing_secret=secret["SLACK_SIGNING_SECRET"])
