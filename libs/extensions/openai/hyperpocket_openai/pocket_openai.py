@@ -1,8 +1,10 @@
 import asyncio
 import json
-from typing import List
+from typing import List, Optional
 
 from openai import OpenAI
+from pydantic import BaseModel
+
 from hyperpocket_openai.util import tool_to_open_ai_spec
 
 try:
@@ -11,6 +13,7 @@ except ImportError:
     raise ImportError("You need to install openai to use pocket PocketOpenAI.")
 
 from hyperpocket import Pocket
+
 from hyperpocket.tool import Tool
 from hyperpocket.config import pocket_logger
 
@@ -23,30 +26,45 @@ class PocketOpenAI(Pocket):
 
     async def ainvoke(self, tool_call: ChatCompletionMessageToolCall, **kwargs):
         arg_json = json.loads(tool_call.function.arguments)
-        result = await super().ainvoke(tool_call.function.name, **arg_json, **kwargs)
+
+        if self.use_profile:
+            body = arg_json["body"]
+            thread_id = arg_json.pop("thread_id", "default")
+            profile = arg_json.pop("profile", "default")
+        else:
+            body = arg_json
+            thread_id = "default"
+            profile = "default"
+
+        if isinstance(body, BaseModel):
+            body = body.model_dump()
+
+        result = await super().ainvoke(tool_call.function.name, body=body, thread_id=thread_id, profile=profile,
+                                       **kwargs)
         tool_message = {"role": "tool", "content": result, "tool_call_id": tool_call.id}
 
         return tool_message
 
-    def get_open_ai_tool_specs(self) -> List[dict]:
+    def get_open_ai_tool_specs(self, use_profile: Optional[bool] = None) -> List[dict]:
+        if use_profile is not None:
+            self.use_profile = use_profile
         specs = []
         for tool in self.core.tools.values():
             spec = self.get_open_ai_tool_spec(tool)
             specs.append(spec)
         return specs
 
-    @staticmethod
-    def get_open_ai_tool_spec(tool: Tool) -> dict:
-        open_ai_spec = tool_to_open_ai_spec(tool)
+    def get_open_ai_tool_spec(self, tool: Tool) -> dict:
+        open_ai_spec = tool_to_open_ai_spec(tool, use_profile=self.use_profile)
         return open_ai_spec
 
 
 async def handle_tool_call_async(
-    llm: OpenAI,
-    pocket: PocketOpenAI,
-    model: str,
-    tool_specs: List[dict],
-    messages: List[dict],
+        llm: OpenAI,
+        pocket: PocketOpenAI,
+        model: str,
+        tool_specs: List[dict],
+        messages: List[dict],
 ):
     while True:
         response = llm.chat.completions.create(
@@ -70,11 +88,11 @@ async def handle_tool_call_async(
 
 
 def handle_tool_call(
-    llm: OpenAI,
-    pocket: PocketOpenAI,
-    model: str,
-    tool_specs: List[dict],
-    messages: List[dict],
+        llm: OpenAI,
+        pocket: PocketOpenAI,
+        model: str,
+        tool_specs: List[dict],
+        messages: List[dict],
 ):
     while True:
         response = llm.chat.completions.create(

@@ -1,13 +1,11 @@
 import copy
-from typing import List, Any
+from typing import Optional
 
 from langchain_core.runnables import RunnableConfig
 from langgraph.errors import NodeInterrupt
 from pydantic import BaseModel
 
 from hyperpocket.config import pocket_logger
-from hyperpocket.pocket_main import ToolLike
-from hyperpocket.prompts import pocket_extended_tool_description
 
 try:
     from langchain_core.messages import ToolMessage
@@ -24,7 +22,7 @@ except ImportError:
         "You need to install langgraph to use pocket langgraph"
     )
 
-from hyperpocket import Pocket, PocketAuth
+from hyperpocket import Pocket
 from hyperpocket.tool import Tool as PocketTool
 
 
@@ -33,20 +31,16 @@ class PocketLanggraphBaseState(MessagesState):
 
 
 class PocketLanggraph(Pocket):
-    langgraph_tools: dict[str, BaseTool]
+    def get_tools(self, use_profile: Optional[bool] = None):
+        if use_profile is not None:
+            self.use_profile = use_profile
+        return [self._get_langgraph_tool(tool_impl) for tool_impl in
+                self.core.tools.values()]
 
-    def __init__(self,
-                 tools: List[ToolLike],
-                 auth: PocketAuth = None):
-        super().__init__(tools, auth)
-        self.langgraph_tools = {}
-        for tool_name, tool_impl in self.core.tools.items():
-            self.langgraph_tools[tool_name] = self._get_langgraph_tool(tool_impl)
+    def get_tool_node(self, should_interrupt: bool = False, use_profile: Optional[bool] = None):
+        if use_profile is not None:
+            self.use_profile = use_profile
 
-    def get_tools(self):
-        return [v for v in self.langgraph_tools.values()]
-
-    def get_tool_node(self, should_interrupt: bool = False):
         async def _tool_node(state: PocketLanggraphBaseState, config: RunnableConfig) -> dict:
             thread_id = config.get("configurable", {}).get("thread_id", "default")
             last_message = state['messages'][-1]
@@ -63,12 +57,19 @@ class PocketLanggraph(Pocket):
                 tool_call_id = _tool_call['id']
                 tool_name = _tool_call['name']
                 tool_args = _tool_call['args']
-                body = tool_args.pop('body')
+
+                if self.use_profile:
+                    body = tool_args.pop("body")
+                    profile = tool_args.pop("profile", "default")
+                else:
+                    body = tool_args
+                    profile = "default"
+
                 if isinstance(body, BaseModel):
                     body = body.model_dump()
 
                 prepare = await self.prepare_in_subprocess(tool_name, body=body, thread_id=thread_id,
-                                                           profile=tool_args.get("profile", "default"))
+                                                           profile=profile)
                 need_prepare |= True if prepare else False
 
                 if prepare is None:
@@ -98,13 +99,19 @@ class PocketLanggraph(Pocket):
                 tool_call_id = _tool_call['id']
                 tool_name = _tool_call['name']
                 tool_args = _tool_call['args']
-                body = tool_args.pop('body')
+                if self.use_profile:
+                    body = tool_args.pop("body")
+                    profile = tool_args.pop("profile", "default")
+                else:
+                    body = tool_args
+                    profile = "default"
+
                 if isinstance(body, BaseModel):
                     body = body.model_dump()
 
                 try:
                     auth = await self.authenticate_in_subprocess(
-                        tool_name, body=body, thread_id=thread_id, profile=tool_args.get("profile", "default"))
+                        tool_name, body=body, thread_id=thread_id, profile=profile)
                 except Exception as e:
                     pocket_logger.error(f"occur exception during authenticate. error : {e}")
                     tool_messages.append(
@@ -131,18 +138,38 @@ class PocketLanggraph(Pocket):
         return _tool_node
 
     def _get_langgraph_tool(self, pocket_tool: PocketTool) -> BaseTool:
-        def _invoke(body: Any, thread_id: str = 'default', profile: str = 'default', **kwargs) -> str:
+        def _invoke(**kwargs) -> str:
+            if self.use_profile:
+                body = kwargs["body"]
+                thread_id = kwargs.pop("thread_id", "default")
+                profile = kwargs.pop("profile", "default")
+            else:
+                body = kwargs
+                thread_id = "default"
+                profile = "default"
+
             if isinstance(body, BaseModel):
                 body = body.model_dump()
+
             result, interrupted = self.invoke_with_state(pocket_tool.name, body, thread_id, profile, **kwargs)
             say = result
             if interrupted:
                 say = f'{say}\n\nThe tool execution interrupted. Please talk to me to resume.'
             return say
 
-        async def _ainvoke(body: Any, thread_id: str = 'default', profile: str = 'default', **kwargs) -> str:
+        async def _ainvoke(**kwargs) -> str:
+            if self.use_profile:
+                body = kwargs["body"]
+                thread_id = kwargs.pop("thread_id", "default")
+                profile = kwargs.pop("profile", "default")
+            else:
+                body = kwargs
+                thread_id = "default"
+                profile = "default"
+
             if isinstance(body, BaseModel):
                 body = body.model_dump()
+
             result, interrupted = await self.ainvoke_with_state(pocket_tool.name, body, thread_id, profile, **kwargs)
             say = result
             if interrupted:
@@ -153,6 +180,6 @@ class PocketLanggraph(Pocket):
             func=_invoke,
             coroutine=_ainvoke,
             name=pocket_tool.name,
-            description=pocket_extended_tool_description(pocket_tool.description),
-            args_schema=pocket_tool.schema_model(),
+            description=pocket_tool.get_description(use_profile=self.use_profile),
+            args_schema=pocket_tool.schema_model(use_profile=self.use_profile),
         )

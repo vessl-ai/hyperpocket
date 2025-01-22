@@ -1,13 +1,11 @@
 import abc
-import pathlib
-
-import toml
 from typing import Optional, Type, Callable
 
 from pydantic import BaseModel, Field
 
 from hyperpocket.auth.provider import AuthProvider
 from hyperpocket.config.logger import pocket_logger
+from hyperpocket.prompts import pocket_extended_tool_description
 from hyperpocket.util.json_schema_to_model import json_schema_to_model
 
 
@@ -36,7 +34,7 @@ class ToolRequest(abc.ABC):
     @abc.abstractmethod
     def __str__(self):
         raise NotImplementedError
-    
+
     def add_postprocessing(self, postprocessing: Callable):
         if self.postprocessings is None:
             self.postprocessings = [postprocessing]
@@ -67,9 +65,11 @@ class Tool(BaseModel, abc.ABC):
     description: str = Field(description="tool description")
     argument_json_schema: Optional[dict] = Field(default=None, description="tool argument json schema")
     auth: Optional[ToolAuth] = Field(default=None, description="authentication information to invoke tool")
-    postprocessings: Optional[list[Callable]] = Field(default=None, description="postprocessing functions after tool is invoked")
+    postprocessings: Optional[list[Callable]] = Field(default=None,
+                                                      description="postprocessing functions after tool is invoked")
     default_tool_vars: dict[str, str] = Field(default_factory=dict, description="default tool variables")
     overridden_tool_vars: dict[str, str] = Field(default_factory=dict, description="overridden tool variables")
+    use_profile: bool = False
 
     @abc.abstractmethod
     def invoke(self, **kwargs) -> str:
@@ -84,17 +84,23 @@ class Tool(BaseModel, abc.ABC):
         """
         raise NotImplementedError()
 
-    def schema_model(self) -> Optional[Type[BaseModel]]:
+    def schema_model(self, use_profile: bool = False) -> Optional[Type[BaseModel]]:
         """
         Returns a schema_model that wraps the existing argument_json_schema
         to include profile and thread_id as arguments when the tool is invoked
         """
-        return self._get_schema_model(self.name, self.argument_json_schema)
-    
+        return self._get_schema_model(self.name, self.argument_json_schema, use_profile=use_profile)
+
+    def get_description(self, use_profile: bool = False) -> str:
+        if use_profile:
+            return pocket_extended_tool_description(self.description)
+        else:
+            return self.description
+
     def override_tool_variables(self, override_vars: dict[str, str]) -> 'Tool':
         self.overridden_tool_vars = override_vars
         return self
-    
+
     @property
     def tool_vars(self) -> dict[str, str]:
         return self.default_tool_vars | self.overridden_tool_vars
@@ -107,37 +113,40 @@ class Tool(BaseModel, abc.ABC):
         raise ValueError('Unknown tool request type')
 
     @classmethod
-    def _get_schema_model(cls, name: str, json_schema: Optional[dict]) -> Optional[Type[BaseModel]]:
+    def _get_schema_model(cls, name: str, json_schema: Optional[dict], use_profile: bool) -> Optional[Type[BaseModel]]:
         try:
             if not json_schema:
                 pocket_logger.info(f"{name} tool's json_schema is none.")
                 return None
             if 'description' not in json_schema:
                 json_schema['description'] = 'The argument of the tool.'
-            extended_schema = {
-                'title': name,
-                'type': 'object',
-                'properties': {
-                    'thread_id': {
-                        'type': 'string',
-                        'default': 'default',
-                        'description': 'The ID of the chat thread where the tool is invoked. Omitted when unknown.',
+
+            if use_profile:
+                json_schema = {
+                    'title': name,
+                    'type': 'object',
+                    'properties': {
+                        'thread_id': {
+                            'type': 'string',
+                            'default': 'default',
+                            'description': 'The ID of the chat thread where the tool is invoked. Omitted when unknown.',
+                        },
+                        'profile': {
+                            'type': 'string',
+                            'default': 'default',
+                            'description': '''The profile of the user invoking the tool. Inferred from user's messages.
+                            Users can request tools to be invoked in specific personas, which is called a profile.
+                            If the user's profile name can be inferred from the query, pass it as a string in the 'profile'
+                            JSON property. Omitted when unknown.''',
+                        },
+                        'body': json_schema
                     },
-                    'profile': {
-                        'type': 'string',
-                        'default': 'default',
-                        'description': '''The profile of the user invoking the tool. Inferred from user's messages.
-                        Users can request tools to be invoked in specific personas, which is called a profile.
-                        If the user's profile name can be inferred from the query, pass it as a string in the 'profile'
-                        JSON property. Omitted when unknown.''',
-                    },
-                    'body': json_schema
-                },
-                'required': [
-                    'body',
-                ]
-            }
-            model = json_schema_to_model(extended_schema, name)
+                    'required': [
+                        'body',
+                    ]
+                }
+
+            model = json_schema_to_model(json_schema, name)
             return model
         except Exception as e:
             pocket_logger.warning(f"failed to get tool({name}) schema model. error : {e}")

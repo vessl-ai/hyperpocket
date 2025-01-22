@@ -16,7 +16,9 @@ class Pocket(object):
                  tools: list[ToolLike],
                  auth: PocketAuth = None,
                  lockfile_path: Optional[str] = None,
-                 force_update: bool = False):
+                 force_update: bool = False,
+                 use_profile: bool = False):
+        self.use_profile = use_profile
 
         self.core = PocketCore(
             tools=tools,

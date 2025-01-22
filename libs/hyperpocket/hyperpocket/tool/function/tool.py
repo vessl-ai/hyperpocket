@@ -47,12 +47,12 @@ class FunctionTool(Tool):
         _kwargs = copy.deepcopy(kwargs)
 
         # make body args to model
-        schema_model = self.schema_model()
-        model = schema_model(body=_kwargs["body"])
+        schema_model = self.schema_model(use_profile=False)
+        model = schema_model(**_kwargs["body"])
         _kwargs.pop("body")
 
         # body model to dict
-        args = self.model_to_kwargs(model.body)
+        args = self.model_to_kwargs(model)
 
         # binding args
         binding_args = {}
