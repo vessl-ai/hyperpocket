@@ -14,8 +14,10 @@ def create_token_auth_template(service_name):
     if '_' in service_name:
         capitliazed_service_name = ''.join([word.capitalize() for word in service_name.split('_')])
     
-    ## Get the current working directory
+    ## Get and check the current working directory
     cwd = Path.cwd()
+    if cwd.name != 'hyperpocket' or cwd.parent.name != 'libs' or cwd.parent.parent.name != 'hyperpocket':
+        raise ValueError("Current working directory must be /hyperpocket/libs/hyperpocket")
     parent_path = cwd.parent
     
     generate_server_auth(service_name, parent_path)
