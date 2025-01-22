@@ -38,5 +38,9 @@ b = "2"
             lockfile.sync(False)
             tool = WasmTool.from_tool_request(req, lockfile=lockfile)
             tool._invoker = self.MockInvoker()
-            self.assertEqual(tool.invoke(body={}, envs={}), "3")
+            tool.override_tool_variables({
+                "a": "1",
+                "b": "1"
+            })
+            self.assertEqual(tool.invoke(body={}, envs={}), "2")
                 

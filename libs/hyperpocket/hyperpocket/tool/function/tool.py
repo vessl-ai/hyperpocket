@@ -92,6 +92,9 @@ class FunctionTool(Tool):
         auth: Optional[ToolAuth] = None,
         tool_vars: dict[str, str] = None,
     ) -> "FunctionTool":
+        if tool_vars is None:
+            tool_vars = {}
+            
         if isinstance(func, FunctionTool):
             if tool_vars is not None:
                 func.override_tool_variables(tool_vars)
