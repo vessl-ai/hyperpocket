@@ -1,6 +1,6 @@
 [project]
 name = "hyperpocket-openai"
-version = "0.0.21"
+version = "0.1.8"
 description = ""
 authors = [{ name = "moon", email = "moon@vessl.ai" }]
 requires-python = ">=3.10"
