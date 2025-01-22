@@ -1,8 +1,11 @@
 import asyncio
 import copy
 import inspect
-from typing import Callable, Optional, Any, Coroutine
+import pathlib
+from typing import Any, Coroutine
+from typing import Callable, Optional
 
+import toml
 from pydantic import BaseModel
 
 from hyperpocket.tool.tool import Tool, ToolAuth
@@ -61,7 +64,7 @@ class FunctionTool(Tool):
             if param.kind == param.VAR_KEYWORD:
                 # var keyword args should be passed by plain dict
                 binding_args |= args[param_name]
-                binding_args |= _kwargs.get("envs", {})
+                binding_args |= _kwargs.get("envs", {}) | self.tool_vars
 
                 if "envs" in _kwargs:
                     _kwargs.pop("envs")
@@ -84,10 +87,25 @@ class FunctionTool(Tool):
     @classmethod
     def from_func(
         cls,
-        func: Callable,
-        afunc: Callable[..., Coroutine[Any, Any, str]] = None,
-        auth: Optional[ToolAuth] = None
+        func: Callable | 'FunctionTool',
+        afunc: Callable[..., Coroutine[Any, Any, str]] | 'FunctionTool' = None,
+        auth: Optional[ToolAuth] = None,
+        tool_vars: dict[str, str] = None,
     ) -> "FunctionTool":
+        if tool_vars is None:
+            tool_vars = dict()
+            
+        if isinstance(func, FunctionTool):
+            if tool_vars is not None:
+                func.override_tool_variables(tool_vars)
+            return func
+        elif isinstance(afunc, FunctionTool):
+            if tool_vars is not None:
+                afunc.override_tool_variables(tool_vars)
+            return afunc
+        elif not callable(func) and not callable(afunc):
+            raise ValueError("FunctionTool can only be created from a callable")
+        
         model = function_to_model(func)
         argument_json_schema = flatten_json_schema(model.model_json_schema())
 
@@ -97,7 +115,8 @@ class FunctionTool(Tool):
             name=func.__name__,
             description=model.__doc__,
             argument_json_schema=argument_json_schema,
-            auth=auth
+            auth=auth,
+            default_tool_vars=tool_vars
         )
     
     @classmethod
@@ -134,3 +153,20 @@ class FunctionTool(Tool):
                     auth=auth,
                 ))
         return tools
+        
+    @classmethod
+    def _get_tool_vars_from_config(cls, func: Callable) -> dict:
+        print(func.__name__)
+        tool_path = inspect.getfile(func)
+        print(tool_path)
+        tool_parent = "/".join(tool_path.split("/")[:-1])
+        tool_config_path = pathlib.Path(tool_parent) / "config.toml"
+        with tool_config_path.open("r") as f:
+            tool_config = toml.load(f)
+            tool_vars = tool_config.get("tool_var")
+            if not tool_vars:
+                return 
+            tool_vars_dict = {}
+            for key, value in tool_vars.items():
+                tool_vars_dict[key] = value
+            return tool_vars_dict

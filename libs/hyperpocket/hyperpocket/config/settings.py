@@ -2,10 +2,9 @@ import os
 from pathlib import Path
 
 from dynaconf import Dynaconf
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from hyperpocket.config.auth import AuthConfig, DefaultAuthConfig
-from hyperpocket.config.git import DefaultGitConfig, GitConfig
 from hyperpocket.config.session import DefaultSessionConfig, SessionConfig
 
 pocket_root = Path.home() / ".pocket"
@@ -43,6 +42,7 @@ class Config(BaseModel):
     log_level: str = "INFO"
     auth: AuthConfig = DefaultAuthConfig
     session: SessionConfig = DefaultSessionConfig
+    tool_vars: dict[str, str] = Field(default_factory=dict)
 
     @property
     def internal_base_url(self):

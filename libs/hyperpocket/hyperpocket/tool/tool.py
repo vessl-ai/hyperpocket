@@ -1,4 +1,7 @@
 import abc
+import pathlib
+
+import toml
 from typing import Optional, Type, Callable
 
 from pydantic import BaseModel, Field
@@ -28,6 +31,7 @@ class ToolAuth(BaseModel):
 
 class ToolRequest(abc.ABC):
     postprocessings: Optional[list[Callable]] = None
+    overridden_tool_vars: dict[str, str] = Field(default_factory=dict, description="overridden tool variables")
 
     @abc.abstractmethod
     def __str__(self):
@@ -50,6 +54,10 @@ class ToolRequest(abc.ABC):
             self.postprocessings.extend(postprocessings)
         return self
 
+    def override_tool_variables(self, override_vars: dict[str, str]) -> 'ToolRequest':
+        self.overridden_tool_vars = override_vars
+        return self
+
 
 class Tool(BaseModel, abc.ABC):
     """
@@ -60,6 +68,8 @@ class Tool(BaseModel, abc.ABC):
     argument_json_schema: Optional[dict] = Field(default=None, description="tool argument json schema")
     auth: Optional[ToolAuth] = Field(default=None, description="authentication information to invoke tool")
     postprocessings: Optional[list[Callable]] = Field(default=None, description="postprocessing functions after tool is invoked")
+    default_tool_vars: dict[str, str] = Field(default_factory=dict, description="default tool variables")
+    overridden_tool_vars: dict[str, str] = Field(default_factory=dict, description="overridden tool variables")
 
     @abc.abstractmethod
     def invoke(self, **kwargs) -> str:
@@ -80,6 +90,14 @@ class Tool(BaseModel, abc.ABC):
         to include profile and thread_id as arguments when the tool is invoked
         """
         return self._get_schema_model(self.name, self.argument_json_schema)
+    
+    def override_tool_variables(self, override_vars: dict[str, str]) -> 'Tool':
+        self.overridden_tool_vars = override_vars
+        return self
+    
+    @property
+    def tool_vars(self) -> dict[str, str]:
+        return self.default_tool_vars | self.overridden_tool_vars
 
     @classmethod
     def from_tool_request(cls, tool_req: ToolRequest, **kwargs) -> 'Tool':

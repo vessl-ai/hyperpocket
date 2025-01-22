@@ -6,7 +6,7 @@ from hyperpocket.tool.tool import ToolAuth
 
 
 def function_tool(func: Optional[Callable] = None, *, auth_provider: AuthProvider = None, scopes: List[str] = None,
-                  auth_handler: str = None):
+                  auth_handler: str = None, tool_vars: dict[str, str] = None):
     def decorator(inner_func: Callable):
         if not callable(inner_func):
             raise ValueError("FunctionTool can only be created from a callable")
@@ -21,6 +21,7 @@ def function_tool(func: Optional[Callable] = None, *, auth_provider: AuthProvide
         return FunctionTool.from_func(
             func=inner_func,
             auth=auth,
+            tool_vars=tool_vars
         )
 
     if func is not None:
