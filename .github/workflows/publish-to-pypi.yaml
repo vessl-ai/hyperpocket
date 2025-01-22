@@ -43,6 +43,8 @@ jobs:
       # 1. Repository Checkout
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
 
       # 2. Setup uv
       - name: Set up UV
