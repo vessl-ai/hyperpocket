@@ -4,34 +4,30 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version to deploy."
+        description: "Version to Publish"
         required: true
         default: "0.0.1"
 
 jobs:
-  deploy:
+  check-version-before:
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Repository Checkout
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # 2. Check if Version already exists
       - name: Check if version already exists
+        env:
+          VERSION: ${{ github.event.inputs.version }}
         run: |
-          VERSION=${{ github.event.inputs.version }}
           echo "Checking if version $VERSION already exists for all packages..."
-          
+
           # Define package names
-          PACKAGES=("hyperpocket" "hyperpocket_anthropic" "hyperpocket_langchain" "hyperpocket_langgraph" "hyperpocket_openai" "hyperpocket_llamaindex")
-          
+          PACKAGES=("hyperpocket" "hyperpocket-anthropic" "hyperpocket-langchain" "hyperpocket-langgraph" "hyperpocket-openai" "hyperpocket-llamaindex")
+
           for PACKAGE in "${PACKAGES[@]}"; do
             echo "Checking package: $PACKAGE"
             URL=https://pypi.org/pypi/${PACKAGE}/${VERSION}/json
-          
-            responses=$(curl -s $URL)
-            if echo "$responses" | grep -q "Not Found"; then
+            echo "Request URL: $URL"
+
+            responses=$( curl -s -o /dev/null -w "%{http_code}" $URL)
+            if [ "$responses" -ne "200" ]; then
               echo "Version $VERSION for package $PACKAGE does not exist. Continuing..."
             else
               echo "Version $VERSION for package $PACKAGE already exists on PyPI. Stopping workflow."
@@ -39,55 +35,79 @@ jobs:
             fi
           done
 
-      # 3. Setup uv
+  publish:
+    runs-on: ubuntu-latest
+    needs: check-version-before
+
+    steps:
+      # 1. Repository Checkout
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Setup uv
       - name: Set up UV
         uses: astral-sh/setup-uv@v5
 
-      # 4. Setup Python
+      # 3. Setup Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
+      # 4. Install Dependencies
+      - name: Install Dependencies
+        run: |
+          pip install tomlkit
+
       # 5. Update Version
       - name: Update version in all packages
+        env:
+          VERSION: ${{ github.event.inputs.version }}
         run: |
-          export VERSION=${{ github.event.inputs.version }}
           echo "Updating version to $VERSION"
-
+          
+          PYTHON_COMMAND=$(which python)
           PATHS=(
             "libs/hyperpocket"
-            "libs/extension/anthropic"
-            "libs/extension/langchain"
-            "libs/extension/langgraph"
-            "libs/extension/llamaindex"
-            "libs/extension/opneai"
+            "libs/extensions/anthropic"
+            "libs/extensions/langchain"
+            "libs/extensions/langgraph"
+            "libs/extensions/llamaindex"
+            "libs/extensions/openai"
           )
           
           for PATH in "${PATHS[@]}"; do
-            echo "Running: uv run scripts/version.py $VERSION --path $PATH"
-            uv run scripts/version.py "$VERSION" --path "$PATH"
+            echo "Running: python scripts/version.py $VERSION --path $PATH"
+            $PYTHON_COMMAND scripts/version.py "$VERSION" --path "$PATH"
           
             if [ $? -ne 0 ]; then
               echo "Error: Command failed for path $PATH"
               exit 1
             fi
           done
-          
+
+          echo "All version dumped successfully"
+
+      # 6. Git Push
+      - name: Git Push
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          echo "Git Branch name : $BRANCH_NAME"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          
           git add .
+          
           if ! git diff-index --quiet HEAD --; then
             git commit -m "uv version up"
-            git push origin main
+            git push origin $BRANCH_NAME
           else
             echo "No changes to commit. Skipping push."
           fi
-          
-          echo "All version dumped successfully"
 
-      # 6. Publish
-      - name: Publish hyperpocket anthropic package
+      # 7. Publish
+      - name: Publish hyperpocket package
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
         working-directory: libs/hyperpocket
@@ -95,10 +115,18 @@ jobs:
           uv build
           uv publish
 
+      - name: Publish hyperpocket anthropic package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        working-directory: libs/extensions/anthropic
+        run: |
+          uv build
+          uv publish
+
       - name: Publish hyperpocket langchain package
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        working-directory: libs/extension/langchain
+        working-directory: libs/extensions/langchain
         run: |
           uv build
           uv publish
@@ -106,7 +134,7 @@ jobs:
       - name: Publish hyperpocket langgraph package
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        working-directory: libs/extension/langgraph
+        working-directory: libs/extensions/langgraph
         run: |
           uv build
           uv publish
@@ -114,7 +142,7 @@ jobs:
       - name: Publish hyperpocket llamaindex package
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        working-directory: libs/extension/llamaindex
+        working-directory: libs/extensions/llamaindex
         run: |
           uv build
           uv publish
@@ -122,29 +150,49 @@ jobs:
       - name: Publish hyperpocket openai package
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        working-directory: libs/extension/openai
+        working-directory: libs/extensions/openai
         run: |
           uv build
           uv publish
 
+
+  check-version-after:
+    runs-on: ubuntu-latest
+    needs: publish
+    steps:
       # Check if publishing succeeded
-      - name: Check if version already exists
+      - name: Check if version uploaded successfully
+        env:
+          VERSION: ${{ github.event.inputs.version }}
         run: |
-          VERSION=${{ github.event.inputs.version }}
-          echo "Checking if version $VERSION already exists for all packages..."
-
-          # Define package names
-          PACKAGES=("hyperpocket" "hyperpocket_anthropic" "hyperpocket_langchain" "hyperpocket_langgraph" "hyperpocket_openai" "hyperpocket_llamaindex")
-
+          echo "Checking if version $VERSION uploaded successfully for all packages..."
+          
+          PACKAGES=("hyperpocket" "hyperpocket-anthropic" "hyperpocket-langchain" "hyperpocket-langgraph" "hyperpocket-openai" "hyperpocket-llamaindex")
+          
           for PACKAGE in "${PACKAGES[@]}"; do
             echo "Checking package: $PACKAGE"
             URL=https://pypi.org/pypi/${PACKAGE}/${VERSION}/json
-
-            responses=$(curl -s $URL)
-            if echo "$responses" | grep -q "Not Found"; then
-              echo "Version $VERSION for package $PACKAGE does not exist. failed to publish"
-              exit 1
-            else
-              echo "Success to publish Version $VERSION for package $PACKAGE.
-            fi
+            echo "Request URL: $URL"
+          
+            ATTEMPTS=0
+            MAX_ATTEMPTS=10
+          
+            while [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; do
+          
+              responses=$( curl -s -o /dev/null -w "%{http_code}" $URL)
+              if [ "$responses" -eq "200" ]; then
+                echo "Version $VERSION for package $PACKAGE uploaded on PyPI successfully. Continuing..."
+                break
+              else
+                echo "Attempt $((ATTEMPTS + 1)) failed for package $PACKAGE. HTTP status: $responses"
+                ATTEMPTS=$((ATTEMPTS + 1))
+                if [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; then
+                  echo "Retrying in 10 seconds..."
+                  sleep 10
+                else
+                  echo "Version $VERSION for package $PACKAGE does not appear to be uploaded on PyPI after $MAX_ATTEMPTS attempts."
+                  exit 1
+                fi
+              fi
+            done
           done

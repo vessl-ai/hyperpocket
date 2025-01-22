@@ -39,8 +39,8 @@ build-backend = "hatchling.build"
 
 [tool.ruff.lint]
 select = [
-    "E", # pycodestyle errors, 
-    "F", # pyflakes errors, 
+    "E", # pycodestyle errors,
+    "F", # pyflakes errors,
     "I", # isort errors,
 ]
 ignore = [
