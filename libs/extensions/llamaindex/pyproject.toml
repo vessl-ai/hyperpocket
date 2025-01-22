@@ -1,7 +1,7 @@
 
 [project]
 name = "hyperpocket-llamaindex"
-version = "0.0.1"
+version = "0.0.21"
 description = ""
 authors = [{ name = "moon", email = "moon@vessl.ai" }]
 requires-python = ">=3.10"

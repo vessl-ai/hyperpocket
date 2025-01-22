@@ -1,7 +1,7 @@
 
 [project]
 name = "hyperpocket-langchain"
-version = "0.0.2"
+version = "0.0.21"
 description = ""
 authors = [{ name = "VESSL AI Devs", email = "dev@vessl.ai" }]
 requires-python = ">=3.10"
