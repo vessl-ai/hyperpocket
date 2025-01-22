@@ -93,7 +93,7 @@ class FunctionTool(Tool):
         tool_vars: dict[str, str] = None,
     ) -> "FunctionTool":
         if tool_vars is None:
-            tool_vars = {}
+            tool_vars = dict()
             
         if isinstance(func, FunctionTool):
             if tool_vars is not None:

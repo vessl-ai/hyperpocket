@@ -97,29 +97,28 @@ classDiagram
     Lockfile o-- Pocket : 1..1
 ```
 
-### Inject Envvar
+### Inject tool variables
 
-If the user specifies [envvar] in the `config.toml` of the tool's repository, which is allowed to be injected dynamically when the user develops an agent, it can be injected through the following three steps.
+If the user specifies [tool_vars] in the `config.toml` of the tool's repository, which is allowed to be injected dynamically when the user develops an agent, it can be injected through the following steps.
 
 ```toml
 # config.toml of a tool
 
-[envvar]
+[tool_vars]
 config1 = "config1"
 config2 = "config2"
 ```
 
-1. Injecting envvars when importing tool in code.
+1. Injecting tool_vars when importing tool in code.
 
 ```python
-from_git('https://github.com/your-organization/your-repository/tree/main').inject_envvar("config1", "modified_from_code")
+from_git('https://github.com/your-organization/your-repository/tree/main',tool_vars = {
+    "config1": "modified_config1"
+})
 ```
 
 2. Injecting envvars by settings.toml
    If there are remaining envvars, Hyperpocket checks the `settings.toml` from the agent code directory.
-
-3. Injecting envvars by prompt
-   Users can manually type the value of the envvars not supplied by code or settings.toml.
 
 ## WasmTool
 

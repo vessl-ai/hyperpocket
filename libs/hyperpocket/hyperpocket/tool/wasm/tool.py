@@ -100,7 +100,6 @@ class WasmTool(Tool):
         else:
             readme = None
         
-        print(tool_req.overridden_tool_vars)
         return cls(
             name=name,
             description=description,
