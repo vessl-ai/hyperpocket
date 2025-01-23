@@ -90,7 +90,9 @@ def connect(
             if conn.poll():
                 return conn.recv()
     
-    wrapper.__doc__ = tool_req.tool_type.__doc__
+    wrapper.__name__ = tool_req.tool_type.__name__
+    default_doc = tool_req.tool_type.__pydantic_fields__['description'].get_default()
+    wrapper.__doc__ = default_doc if default_doc is not None else tool_req.tool_type.__doc__
     wrapper.__model__ = tool_req.tool_type.__pydantic_fields__['args_schema'].get_default()
     wrapper.__auth__ = tool_req.auth
     wrapper.__vars__ = tool_req.tool_vars

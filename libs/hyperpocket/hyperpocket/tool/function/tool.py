@@ -113,7 +113,7 @@ class FunctionTool(Tool):
             func=func,
             afunc=afunc,
             name=func.__name__,
-            description=model.__doc__,
+            description=func.__doc__,
             argument_json_schema=argument_json_schema,
             auth=auth,
             default_tool_vars=tool_vars
