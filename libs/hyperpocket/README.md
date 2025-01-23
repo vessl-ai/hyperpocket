@@ -3,7 +3,7 @@
 Hyperpocket is where tools belong. Power your agent up with a pocket of tools. 👛
 
 <figure>
-<img src="logo.png" alt="hyperpocket" width="200"/>
+<img src="../../logo.png" alt="hyperpocket" width="200"/>
 </figure>
 
 ## Introduction
