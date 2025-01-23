@@ -56,23 +56,28 @@ class FunctionTool(Tool):
 
         # binding args
         binding_args = {}
-        sig = inspect.signature(self.func)
-        for param_name, param in sig.parameters.items():
-            if param_name not in args:
-                continue
+        if self.func.__dict__.get("__model__") is not None:
+            # when a function signature is not inferrable from the function itself
+            binding_args = args.copy()
+            binding_args |= _kwargs.get("envs", {}) | self.tool_vars
+        else:
+            sig = inspect.signature(self.func)
+            for param_name, param in sig.parameters.items():
+                if param_name not in args:
+                    continue
 
-            if param.kind == param.VAR_KEYWORD:
-                # var keyword args should be passed by plain dict
-                binding_args |= args[param_name]
-                binding_args |= _kwargs.get("envs", {}) | self.tool_vars
+                if param.kind == param.VAR_KEYWORD:
+                    # var keyword args should be passed by plain dict
+                    binding_args |= args[param_name]
+                    binding_args |= _kwargs.get("envs", {}) | self.tool_vars
 
-                if "envs" in _kwargs:
-                    _kwargs.pop("envs")
+                    if "envs" in _kwargs:
+                        _kwargs.pop("envs")
 
-                binding_args |= _kwargs  # add other kwargs
-                continue
+                    binding_args |= _kwargs  # add other kwargs
+                    continue
 
-            binding_args[param_name] = args[param_name]
+                binding_args[param_name] = args[param_name]
 
         return binding_args
 
@@ -126,7 +131,10 @@ class FunctionTool(Tool):
     ) -> list["FunctionTool"]:
         tools = []
         for func in dock:
-            model = function_to_model(func)
+            if (_model := func.__dict__.get("__model__")) is not None:
+                model = _model
+            else:
+                model = function_to_model(func)
             argument_json_schema = flatten_json_schema(model.model_json_schema())
             if not callable(func):
                 raise ValueError(f"Dock element should be a list of functions, but found {func}")
@@ -142,6 +150,7 @@ class FunctionTool(Tool):
                     description=func.__doc__,
                     argument_json_schema=argument_json_schema,
                     auth=auth,
+                    default_tool_vars=func.__dict__.get("__vars__", {}),
                 ))
             else:
                 tools.append(cls(
@@ -156,9 +165,7 @@ class FunctionTool(Tool):
         
     @classmethod
     def _get_tool_vars_from_config(cls, func: Callable) -> dict:
-        print(func.__name__)
         tool_path = inspect.getfile(func)
-        print(tool_path)
         tool_parent = "/".join(tool_path.split("/")[:-1])
         tool_config_path = pathlib.Path(tool_parent) / "config.toml"
         with tool_config_path.open("r") as f:

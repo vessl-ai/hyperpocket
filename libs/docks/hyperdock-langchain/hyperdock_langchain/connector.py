@@ -1,4 +1,5 @@
 import os
+import traceback
 from typing import Any, Callable, Type, Optional, Tuple
 
 import multiprocess
@@ -38,13 +39,13 @@ def modify_environment(
     env_dict_extends: dict[str, Callable[[str, str], Tuple[str, str]]],
 ) -> dict[str, str]:
     default_rules = EnvDict.default().rules
-    for key, value in kwargs:
+    for key, value in kwargs.items():
         if key in env_dict_extends:
-            if replacer := env_dict_extends.get(key) is not None:
+            if (replacer := env_dict_extends.get(key)) is not None:
                 k, v = replacer(key, value)
                 environ[k] = v
         elif key in default_rules:
-            if replacer := env_dict_extends.get(key) is not None:
+            if (replacer := default_rules.get(key)) is not None:
                 k, v = replacer(key, value)
                 environ[k] = v
     return environ
@@ -54,41 +55,50 @@ def _run(
     envs: dict[str, str],
     tool_kwargs: dict[str, Any],
     pipe: multiprocess.Pipe,
-    *args, **kwargs
+    **kwargs,
 ) -> None:
     # must be called in a child process
-    for key, value in envs:
+    for key, value in envs.items():
         os.environ[key] = value
     tool = tool_type(**tool_kwargs)
-    result = tool.invoke(*args, **kwargs)
+    config = {}
+    if 'config' in kwargs:
+        config = kwargs.pop('config')
+    result = tool.invoke(input=kwargs, config=config)
     _, conn = pipe
     conn.send(result)
 
 def connect(
     tool_type: ToolType,
 ) -> Callable[[...], str]:
-    kwargs = {}
     tool_req = tool_type
     if isinstance(tool_type, type):
         tool_req = LangchainToolRequest(tool_type)
     
-    def wrapper(*args, **kwargs) -> str:
-        # replacement only happens when user uses pocket native auth
-        if tool_req.auth is not None:
-            child_env = modify_environment(os.environ.copy(), kwargs, tool_req.env_dict_extends)
-        else:
-            child_env = os.environ.copy()
-        pipe = multiprocess.Pipe()
-        process = multiprocess.Process(
-            target=_run,
-            args=(tool_type, child_env, tool_req.tool_args, pipe, *args),
-            kwargs=kwargs
-        )
-        process.start()
-        conn, _ = pipe
-        while True:
-            if conn.poll():
-                return conn.recv()
+    def wrapper(**kwargs) -> str:
+        try:
+            # replacement only happens when user uses pocket native auth
+            if tool_req.auth is not None:
+                child_env = modify_environment(os.environ.copy(), kwargs, tool_req.env_dict_extends)
+            else:
+                child_env = os.environ.copy()
+            pipe = multiprocess.Pipe()
+            process = multiprocess.Process(
+                target=_run,
+                args=(tool_req.tool_type, child_env, tool_req.tool_args, pipe),
+                kwargs=kwargs
+            )
+            process.start()
+            conn, _ = pipe
+            while True:
+                if conn.poll():
+                    result = conn.recv()
+                    break
+            process.terminate()
+            process.join()
+            return result
+        except Exception as e:
+            return '\n'.join(traceback.format_exception(e))
     
     wrapper.__name__ = tool_req.tool_type.__name__
     default_doc = tool_req.tool_type.__pydantic_fields__['description'].get_default()

@@ -3,7 +3,7 @@ from typing import Tuple
 
 
 def slack_bot_token(_env_key: str, env_value: str) -> Tuple[str, str]:
-    if env_value.startswith("xoxp-"):
+    if env_value.startswith("xoxp-") or env_value.startswith("xoxe.xoxp-"):
         return "SLACK_USER_TOKEN", env_value
     return "SLACK_BOT_TOKEN", env_value
 

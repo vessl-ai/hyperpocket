@@ -55,7 +55,7 @@ if __name__ == "__main__":
         tools=[
             *from_dock(
                 langchain_dock(
-                    LangchainToolRequest(SlackGetMessage),
+                    LangchainToolRequest(SlackGetMessage, auth={"auth_provider": "slack"}),
                     LangchainToolRequest(DuckDuckGoSearchRun),
                 )
             )

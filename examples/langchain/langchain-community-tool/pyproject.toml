@@ -10,6 +10,7 @@ dependencies = [
     "hyperpocket-langchain",
     "langchain-community>=0.3.15",
     "langchain-openai>=0.3.1",
+    "slack-sdk>=3.34.0",
 ]
 
 [tool.uv.sources]
