@@ -1,11 +1,9 @@
 import asyncio
 import copy
 import inspect
-import pathlib
 from typing import Any, Coroutine
 from typing import Callable, Optional
 
-import toml
 from pydantic import BaseModel
 
 from hyperpocket.tool.tool import Tool, ToolAuth
@@ -128,7 +126,10 @@ class FunctionTool(Tool):
     def from_dock(
         cls,
         dock: list[Callable[..., str]],
+        tool_vars: Optional[dict[str, str]] = None,
     ) -> list["FunctionTool"]:
+        if tool_vars is None:
+            tool_vars = dict()
         tools = []
         for func in dock:
             if (_model := func.__dict__.get("__model__")) is not None:
@@ -150,7 +151,7 @@ class FunctionTool(Tool):
                     description=func.__doc__,
                     argument_json_schema=argument_json_schema,
                     auth=auth,
-                    default_tool_vars=func.__dict__.get("__vars__", {}),
+                    default_tool_vars=(tool_vars | func.__dict__.get("__vars__", {})),
                 ))
             else:
                 tools.append(cls(
@@ -160,20 +161,6 @@ class FunctionTool(Tool):
                     description=func.__doc__,
                     argument_json_schema=argument_json_schema,
                     auth=auth,
+                    default_tool_vars=(tool_vars | func.__dict__.get("__vars__", {})),
                 ))
         return tools
-        
-    @classmethod
-    def _get_tool_vars_from_config(cls, func: Callable) -> dict:
-        tool_path = inspect.getfile(func)
-        tool_parent = "/".join(tool_path.split("/")[:-1])
-        tool_config_path = pathlib.Path(tool_parent) / "config.toml"
-        with tool_config_path.open("r") as f:
-            tool_config = toml.load(f)
-            tool_vars = tool_config.get("tool_var")
-            if not tool_vars:
-                return 
-            tool_vars_dict = {}
-            for key, value in tool_vars.items():
-                tool_vars_dict[key] = value
-            return tool_vars_dict
