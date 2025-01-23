@@ -47,31 +47,31 @@ Follow these steps to set up your development environment:
 2. Fork the repository on GitHub.
 3. Install [uv](https://docs.astral.sh/uv/getting-started/installation/) (our dependency management tool).
 4. Clone your forked repository:
- "`bash
+```bash
    git clone https://github.com/<your-username>/hyperpocket.git
    cd hyperpocket
- ```
+```
 5. Install the required dependencies for the package you want to work on:
- "`bash
+```bash
    uv sync --frozen --dev
- ```
+```
 
 ### Workflow guidelines
 
 1. Create a new branch from main with a descriptive name, such as `feature/add-auth-provider` or `bugfix/fix-error-handling`:
- "`bash
+```bash
    git checkout -b my-new-branch
- ```
+```
 2. Make your changes, ensuring your code is well-documented and follows our standards.
 3. Run tests to ensure everything works as expected:
- "`bash
+```bash
    uv run pytest
- ```
+```
 4. Lint and format your code:
- "`bash
+```bash
    uv run ruff check .
    uv run ruff format .
- ```
+```
 5. Commit your changes with a clear message that explains what you did.
 6. Push your branch and open a pull request to the `main` branch.
 7. Discuss and revise as needed based on feedback from maintainers or the community.
@@ -82,7 +82,7 @@ Follow these steps to set up your development environment:
 We adhere to strict coding standards to maintain consistency and quality across the codebase. We use [ruff](https://astral.sh/ruff) for linting and formatting, configured in `pyproject.toml`.
 
 To keep your contributions consistent with our style, we recommend installing pre-commit hooks:
-"`bash
+```bash
 pre-commit install
 ```
 
