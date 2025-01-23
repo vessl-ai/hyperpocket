@@ -68,11 +68,11 @@ if __name__ == '__main__':
     llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"])
     prompt = ChatPromptTemplate.from_messages(
         [
-            ("placeholder", "{chat_history}"),
             (
                 "system",
                 "You are a tool calling assistant. You can help the user by calling proper tools",
             ),
+            ("placeholder", "{chat_history}"),
             ("user", "{input}"),
             MessagesPlaceholder(variable_name="agent_scratchpad"),
         ]
