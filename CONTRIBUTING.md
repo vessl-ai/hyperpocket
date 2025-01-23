@@ -85,8 +85,7 @@ To keep your contributions consistent with our style, we recommend installing pr
 ```bash
 pre-commit install
 ```
-
-These hooks automatically run checks whenever you commit, helping you quickly catch formatting or style issues.
+These hooks automatically run checks whenever you commit, helping you quickly catch formatting or style issues. To manage the pre-commit hooks, we recommend to use [pre-commit](https://pre-commit.com/).
 
 
 ## Documentation
