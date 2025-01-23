@@ -187,11 +187,7 @@ Assistance: Here are the recent 10 messages.
 
 ### Config
 
-Running `hyperpocket config init` will create your config file in `$HOME/.pocket/settings.toml`
-
 The `settings.toml` looks as follows.
-
-TODO: Add `secrets.toml`.
 
 ```toml
 log_level = "debug"

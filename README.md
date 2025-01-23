@@ -42,9 +42,9 @@ playwright install
 
 ### 2. Configuration
 
-setting hyperpocket config in `~/.pocket/`
+setting hyperpocket config in your current working directory
 
-`~/.pocket/settings.toml`
+`${WORKDIR}/settings.toml`
 
 ```toml
 log_level = "debug"
@@ -58,7 +58,7 @@ client_id = "<SLACK_CLIENT_ID>"
 client_secret = "<SLACK_CLIENT_SECRET>"
 ```
 
-`~/.pocket/.secret.toml`
+`${WORKDIR}/.secret.toml`
 
 ```toml
 OPENAI_API_KEY = "<OPENAI_API_KEY>"
