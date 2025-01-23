@@ -173,12 +173,12 @@ class GitLock(Lock):
         return branches
 
     @classmethod
-    def parsing_repo_url(cls, repo_url: str) -> Tuple[str, str, str]:
+    def parse_repo_url(cls, repo_url: str) -> Tuple[str, str, str]:
         """
         Parses a GitHub repository URL with optional branch and path information.
 
         Returns:
-            Tuple[str, str, str]: base_repo, branch_name, branch_sha
+            Tuple[str, str, str]: base_repo, branch_name, directory_path
         """
         if not repo_url.startswith("https://github.com/"):
             raise AttributeError("Only GitHub URLs are supported")
@@ -190,7 +190,7 @@ class GitLock(Lock):
         # Check if the URL contains 'tree' (indicating branch and sub-path information)
         if "tree" not in repo_path_list:
             # If no 'tree', return the full repository URL
-            return None, None, None
+            return repo_url, "HEAD", ""
 
         # Parse base repo URL and remaining path
         tree_index = repo_path_list.index("tree")
