@@ -51,16 +51,16 @@ Or just use LLM API Clients out of the box.
 ### Using out-of-the-box tools
 
 ```python
-from hyperpocket.tool import from_git
+
 from langchain_openai import ChatOpenAI
 
 from hyperpocket_langchain import PocketLangchain
 
 pklc = PocketLangchain(
-    tools=[
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-    ]
+  tools=[
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+  ]
 )
 tools = pklc.get_tools()
 
@@ -99,7 +99,7 @@ Hyperpocket provides way to use end user auth easily.
 You can manage your auths in request-wise level. (e.g. you can use different auths for different requests)
 
 ```python
-from hyperpocket.tool import from_git
+
 from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, START, MessagesState
 from langgraph.prebuilt import tools_condition
@@ -107,10 +107,10 @@ from langgraph.prebuilt import tools_condition
 from hyperpocket_langgraph import PocketLanggraph
 
 pklg = PocketLanggraph(
-    tools=[
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-    ],
+  tools=[
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+  ],
 )
 llm = ChatOpenAI()
 
@@ -135,22 +135,21 @@ graph_builder.compile()
 ```
 
 ```python
-from hyperpocket.config import secret
-from hyperpocket.tool import from_git
 from llama_index.core.agent import FunctionCallingAgent
 from llama_index.llms.openai import OpenAI
 
+from hyperpocket.config import secret
 from hyperpocket_llamaindex import PocketLlamaindex
 
 llm = OpenAI(api_key=secret["OPENAI_API_KEY"])
 pocket = PocketLlamaindex(
-    tools=[
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-events"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-list"),
-    ]
+  tools=[
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+  ]
 )
 tools = pocket.get_tools()
 

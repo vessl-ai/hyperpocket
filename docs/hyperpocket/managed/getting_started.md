@@ -48,20 +48,19 @@ OPENAI_API_KEY = "<OPENAI_API_KEY>"
 `langchain_example.py`
 
 ```python
-from hyperpocket.config import secret
-from hyperpocket.tool import from_git
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.memory import ConversationBufferMemory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
+from hyperpocket.config import secret
 from hyperpocket_langchain import PocketLangchain
 
 if __name__ == '__main__':
     pocket = PocketLangchain(
         tools=[
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
         ],
     )
     tools = pocket.get_tools()
