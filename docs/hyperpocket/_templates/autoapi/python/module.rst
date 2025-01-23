@@ -11,7 +11,7 @@
 .. toctree::
    :maxdepth: 1
 
-   Documents<README.md>
+   Documents<readme.md>
     {% endif %}
 
       {% if obj.docstring %}
