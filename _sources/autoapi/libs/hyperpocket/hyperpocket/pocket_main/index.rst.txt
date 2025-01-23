@@ -16,7 +16,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Pocket(tools: list[hyperpocket.tool_like.ToolLike], auth: hyperpocket.pocket_auth.PocketAuth = None, lockfile_path: Optional[str] = None, force_update: bool = False)
+.. py:class:: Pocket(tools: list[hyperpocket.tool_like.ToolLike], auth: hyperpocket.pocket_auth.PocketAuth = None, lockfile_path: Optional[str] = None, force_update: bool = False, use_profile: bool = False)
 
    Bases: :py:obj:`object`
 
@@ -27,6 +27,11 @@ Module Contents
 
    .. py:attribute:: core
       :type:  hyperpocket.pocket_core.PocketCore
+
+
+   .. py:attribute:: use_profile
+      :value: False
+
 
 
    .. py:method:: invoke(tool_name: str, body: Any, thread_id: str = 'default', profile: str = 'default', *args, **kwargs) -> str

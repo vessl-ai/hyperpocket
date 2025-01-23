@@ -22,18 +22,14 @@ Module Contents
    Bases: :py:obj:`langgraph.graph.MessagesState`
 
 
-.. py:class:: PocketLanggraph(tools: List[hyperpocket.pocket_main.ToolLike], auth: hyperpocket.PocketAuth = None)
+.. py:class:: PocketLanggraph
 
    Bases: :py:obj:`hyperpocket.Pocket`
 
 
-   .. py:attribute:: langgraph_tools
-      :type:  dict[str, langchain_core.tools.BaseTool]
+   .. py:method:: get_tools(use_profile: Optional[bool] = None)
 
 
-   .. py:method:: get_tools()
-
-
-   .. py:method:: get_tool_node(should_interrupt: bool = False)
+   .. py:method:: get_tool_node(should_interrupt: bool = False, use_profile: Optional[bool] = None)
 
 

@@ -21,7 +21,7 @@ Module Contents
    Bases: :py:obj:`hyperpocket.Pocket`
 
 
-   .. py:method:: get_tools() -> List[langchain_core.tools.BaseTool]
+   .. py:method:: get_tools(use_profile: Optional[bool] = None) -> List[langchain_core.tools.BaseTool]
 
 
    .. py:method:: get_tool(pocket_tool: hyperpocket.tool.Tool) -> langchain_core.tools.BaseTool

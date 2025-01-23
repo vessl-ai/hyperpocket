@@ -102,6 +102,12 @@ Module Contents
       :type:  dict[str, str]
 
 
+   .. py:attribute:: use_profile
+      :type:  bool
+      :value: False
+
+
+
    .. py:method:: invoke(**kwargs) -> str
       :abstractmethod:
 
@@ -120,11 +126,14 @@ Module Contents
 
 
 
-   .. py:method:: schema_model() -> Optional[Type[pydantic.BaseModel]]
+   .. py:method:: schema_model(use_profile: bool = False) -> Optional[Type[pydantic.BaseModel]]
 
       Returns a schema_model that wraps the existing argument_json_schema
       to include profile and thread_id as arguments when the tool is invoked
 
+
+
+   .. py:method:: get_description(use_profile: bool = False) -> str
 
 
    .. py:method:: override_tool_variables(override_vars: dict[str, str]) -> Tool

@@ -39,11 +39,9 @@ Package Contents
 
 
 
-   .. py:method:: get_open_ai_tool_specs() -> List[dict]
+   .. py:method:: get_open_ai_tool_specs(use_profile: Optional[bool] = None) -> List[dict]
 
 
    .. py:method:: get_open_ai_tool_spec(tool: hyperpocket.tool.Tool) -> dict
-      :staticmethod:
-
 
 

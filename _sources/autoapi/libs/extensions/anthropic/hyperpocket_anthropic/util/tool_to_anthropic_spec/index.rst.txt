@@ -16,5 +16,5 @@ Functions
 Module Contents
 ---------------
 
-.. py:function:: tool_to_anthropic_spec(tool: hyperpocket.tool.Tool) -> dict
+.. py:function:: tool_to_anthropic_spec(tool: hyperpocket.tool.Tool, use_profile: bool) -> dict
 

@@ -29,16 +29,9 @@ Module Contents
 
 
 
-   .. py:method:: parse_input(tool_use_block)
-      :staticmethod:
-
-
-
-   .. py:method:: get_anthropic_tool_specs() -> List[dict]
+   .. py:method:: get_anthropic_tool_specs(use_profile: Optional[bool] = None) -> List[dict]
 
 
    .. py:method:: get_anthropic_tool_spec(tool: hyperpocket.tool.Tool) -> dict
-      :staticmethod:
-
 
 
