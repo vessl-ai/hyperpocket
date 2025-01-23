@@ -1,0 +1,58 @@
+{
+  "properties": {
+    "saved_item_id": {
+      "description": "The ID for the saved flow.",
+      "title": "Saved Item Id",
+      "type": "string"
+    },
+    "user_id": {
+      "description": "The ID for the user initiating the flow.",
+      "title": "User Id",
+      "type": "string"
+    },
+    "pipeline_inputs": {
+      "anyOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A dict of inputs for the flow. you can get the pipeline_inputs schema of this run in `retrieve-input-schema`",
+      "title": "Pipeline Inputs"
+    },
+    "project_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The ID of the project within which the flow is executed. This is optional.",
+      "title": "Project Id"
+    },
+    "timeout": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Maximum time to wait for flow completion (seconds)",
+      "title": "Timeout"
+    }
+  },
+  "required": [
+    "saved_item_id",
+    "user_id"
+  ],
+  "title": "StartFlowRunRequest",
+  "type": "object"
+}

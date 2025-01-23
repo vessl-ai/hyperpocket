@@ -1,0 +1,7 @@
+[project]
+name = "read-issue"
+version = "0.1.0"
+description = "Read an issue of the given repository"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [ "pydantic", "pygithub==2.5.0",]

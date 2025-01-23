@@ -1,0 +1,18 @@
+{
+  "properties": {
+    "user_id": {
+      "default": null,
+      "description": "The user ID to for which to list items. Required if project_id is not provided.",
+      "title": "User Id",
+      "type": "string"
+    },
+    "project_id": {
+      "default": null,
+      "description": "The project ID for which to list items. Required if user_id is not provided.",
+      "title": "Project Id",
+      "type": "string"
+    }
+  },
+  "title": "GumLoopListSavedFlows",
+  "type": "object"
+}

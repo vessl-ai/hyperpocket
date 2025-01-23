@@ -1,0 +1,7 @@
+name = "github_merge_pull_request"
+description = "Merge a GitHub pull request"
+language = "python"
+
+[auth]
+auth_provider = "github"
+scopes = ["repo"]

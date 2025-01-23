@@ -1,0 +1,7 @@
+name = "github_create_pull_request"
+description = "Create a GitHub pull request"
+language = "python"
+
+[auth]
+auth_provider = "github"
+scopes = ["repo"]

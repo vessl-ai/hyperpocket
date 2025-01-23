@@ -1,0 +1,47 @@
+{
+  "properties": {
+    "owner": {
+      "description": "The account owner of the repository. The name is not case sensitive.",
+      "type": "string"
+    },
+    "repo": {
+      "description": "The name of the repository. The name is not case sensitive.",
+      "type": "string"
+    },
+    "state": {
+      "description": "The state of the issues to return",
+      "type": "string"
+    },
+    "number_of_issues": {
+      "description": "The number of issues to return",
+      "type": "integer"
+    },
+    "sort": {
+      "description": "What to sort results by.",
+      "type": "string",
+      "enum": [
+        "created",
+        "updated",
+        "comments"
+      ]
+    },
+    "direction": {
+      "description": "The direction of the sort order",
+      "type": "string",
+      "enum": [
+        "asc",
+        "desc"
+      ]
+    },
+    "since": {
+      "description": "Only issues updated at or after this time are returned.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "owner",
+    "repo"
+  ],
+  "title": "GitHubListIssuesRequest",
+  "type": "object"
+}

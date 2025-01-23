@@ -1,0 +1,6 @@
+name = "gumloop_start_flow_run"
+description = "start a flow run in gumloop. If you’re unsure about the input schema for the flow, If the input data is also unknown, ask the user to fill it and ensure the required fields are properly filled before proceeding."
+language = "python"
+
+[auth]
+auth_provider = "gumloop"

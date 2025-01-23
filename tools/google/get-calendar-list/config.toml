@@ -1,0 +1,7 @@
+name = "google_get_calendar_list"
+description = "get google calendar list"
+language = "python"
+
+[auth]
+auth_provider = "google"
+scopes = ["https://www.googleapis.com/auth/calendar"]

@@ -1,0 +1,36 @@
+{
+  "properties": {
+    "calendar_id": {
+      "description": "Google Calendar ID. The format should follow {user_name}@{domain}.",
+      "title": "Calendar Id",
+      "type": "string"
+    },
+    "time_max": {
+      "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is current time + 30 days. Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but are ignored. If timeMin is set, timeMax must be greater than timeMin.",
+      "title": "Time Max",
+      "type": "string"
+    },
+    "time_min": {
+      "description": "Lower bound (exclusive) for an event's end time to filter by. Optional. The default is current time Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but are ignored. If timeMax is set, timeMin must be smaller than timeMax.",
+      "title": "Time Min",
+      "type": "string"
+    },
+    "event_types": {
+      "type": "string",
+      "default": "default",
+      "description": "Event types to return. Optional. This parameter can be repeated multiple times to return events of different types. If unset, returns all event types.\n\nAcceptable values are:\n- 'birthday': Special all-day events with an annual recurrence.\n- 'default': Regular events.\n- 'focusTime': Focus time events.\n- 'fromGmail': Events from Gmail.\n- 'outOfOffice': Out of office events.\n- 'workingLocation': Working location events.\n",
+      "title": "Event Types"
+    },
+    "max_results": {
+      "default": 100,
+      "description": "Maximum number of events returned on one result page.",
+      "title": "Max Results",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "calendar_id"
+  ],
+  "title": "GoogleGetCalendarEventsRequest",
+  "type": "object"
+}

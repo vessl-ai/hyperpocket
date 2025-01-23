@@ -1,0 +1,8 @@
+name = "calendly_create_one_off_event_type"
+description = "create calendly one off event type"
+language = "python"
+
+[auth]
+auth_provider = "calendly"
+auth_handler = "calendly-oauth2"
+scopes = []

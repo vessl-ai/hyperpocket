@@ -1,0 +1,23 @@
+{
+  "properties": {
+    "owner": {
+      "description": "The account owner of the repository. The name is not case sensitive.",
+      "type": "string"
+    },
+    "repo": {
+      "description": "The name of the repository. The name is not case sensitive.",
+      "type": "string"
+    },
+    "issue_number": {
+      "description": "The number of the issue",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "owner",
+    "repo",
+    "issue_number"
+  ],
+  "title": "GitHubReadIssueRequest",
+  "type": "object"
+}

@@ -1,0 +1,7 @@
+name = "slack_send_messages"
+description = "send slack messages"
+language = "python"
+
+[auth]
+auth_provider = "slack"
+scopes = ["channels:history", "chat:write"]
