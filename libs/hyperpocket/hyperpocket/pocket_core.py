@@ -38,8 +38,14 @@ class PocketCore:
                     lock = LocalLock(tool_like)
                     req = WasmToolRequest(lock, "")
                 else:
-                    lock = GitLock(repository_url=tool_like, git_ref='HEAD')
-                    req = WasmToolRequest(lock, "")
+                    base_repo_url, git_ref, rel_path = GitLock.parsing_repo_url(repo_url=tool_like)
+                    if base_repo_url is None:
+                        lock = GitLock(repository_url=tool_like, git_ref='HEAD')
+                        req = WasmToolRequest(lock, "", tool_vars={})
+                    else:
+                        lock = GitLock(repository_url=base_repo_url, git_ref=git_ref)
+                        req = WasmToolRequest(lock=lock, rel_path=rel_path, tool_vars={})
+
                 lockfile.add_lock(lock)
                 tool_likes.append(req)
             elif isinstance(tool_like, WasmToolRequest):
