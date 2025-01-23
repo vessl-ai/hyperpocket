@@ -29,6 +29,61 @@ class TestFunctionTool(TestCase):
 
         # then
         self.assertEqual(result, '3')
+    
+    def test_function_tool_variables(self):
+        @function_tool(
+            tool_vars={
+                'a': '1',
+                'b': '2',
+            },
+        )
+        def always_three(**kwargs):
+            a = int(kwargs['a'])
+            b = int(kwargs['b'])
+            return str(a+b)
+        
+        result = always_three.invoke(
+            body={}
+        )
+        self.assertEqual(result, '3')
+
+    def test_function_tool_overridden_variables(self):
+        @function_tool(
+            tool_vars={
+                'a': '1',
+                'b': '1',
+            },
+        )
+        def always_two(**kwargs):
+            a = int(kwargs['a'])
+            b = int(kwargs['b'])
+            return str(a+b)
+        
+        always_two.override_tool_variables({
+            'a': '1',
+            'b': '2',
+        })
+        result = always_two.invoke(body={})
+        self.assertEqual(result, '3')
+    
+    def test_function_tool_overridden_variables_from_func(self):
+        @function_tool(
+            tool_vars={
+                'a': '1',
+                'b': '1',
+            },
+        )
+        def always_two(**kwargs):
+            a = int(kwargs['a'])
+            b = int(kwargs['b'])
+            return str(a+b)
+        
+        tool = FunctionTool.from_func(always_two, tool_vars={
+            "a": "1",
+            "b": "2",
+        })
+        result = tool.invoke(body={})
+        self.assertEqual(result, '3')
 
     def test_pydantic_input_function_tool_call(self):
         # given
@@ -154,7 +209,7 @@ class TestFunctionTool(TestCase):
             return a + b
 
         # when
-        schema = add_numbers.schema_model()
+        schema = add_numbers.schema_model(use_profile=True)
         schema_json = schema.model_json_schema()
         flatten_schema_json = flatten_json_schema(schema_json)
         func_schema = flatten_schema_json["properties"]["body"]
@@ -186,7 +241,7 @@ class TestFunctionTool(TestCase):
             return a + b
 
         # when
-        schema = add_numbers.schema_model()
+        schema = add_numbers.schema_model(use_profile=True)
         schema_json = schema.model_json_schema()
         flatten_schema_json = flatten_json_schema(schema_json)
         func_schema = flatten_schema_json["properties"]["body"]
@@ -218,7 +273,7 @@ class TestFunctionTool(TestCase):
             return a + b
 
         # when
-        schema = add_numbers.schema_model()
+        schema = add_numbers.schema_model(use_profile=True)
         schema_json = schema.model_json_schema()
         flatten_schema_json = flatten_json_schema(schema_json)
         func_schema = flatten_schema_json["properties"]["body"]
@@ -250,7 +305,7 @@ class TestFunctionTool(TestCase):
             return a + b
 
         # when
-        schema = add_numbers.schema_model()
+        schema = add_numbers.schema_model(use_profile=True)
         schema_json = schema.model_json_schema()
         flatten_schema_json = flatten_json_schema(schema_json)
         func_schema = flatten_schema_json["properties"]["body"]
