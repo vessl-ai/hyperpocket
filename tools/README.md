@@ -1,13 +1,12 @@
 ## Tool Examples
 
-🚨 [TODO] tool add를 쉽게 해주는 명령어 제공 예정
-
 ### Config.toml
 
 - name(str) : tool name
 - description(str) : tool description
 - auth_handlers(list[str]) : auth_handlers name list
 - auth_scopes(dict[str, list[str]]) : auth_scopes per auth_handler
+- tool_vars(dict[str, str]) : tool variables to use in tool
 
 **example**
 
@@ -18,7 +17,15 @@ auth_handlers = ["slack-oauth2"]
 
 [auth_scopes]
 slack = ["channels:history"]
+
+[tool_vars]
+a = "1"
+b = "2"
 ```
+
+- you can access `tool_vars` values in your tool code
+    - in wasm tool, you can access this values via `environment variables`
+    - in function tool, you can access this values via `kwargs`
 
 ### schema.json
 
@@ -47,21 +54,23 @@ open ai spec schema json
 }
 ```
 
-### requirements.txt
+### dist
 
-requirements to execute your code
+requirements to execute your code in independent runtime
 
-**example**
+### Example using uv
 
-```text
-annotated-types==0.7.0
-pydantic==2.10.1
-pydantic_core==2.27.1
-slack_sdk==3.33.4
-typing_extensions==4.12.2
+```shell
+uv init <your-tool-name>
+uv add pydantic --raw-sources # if you need to install pydantic, should use this command.
+# ...
+
+uv build
 ```
 
-### main.py
+- When uploading your tool to github, make sure to remove `dist` from `.gitignore`.
+
+### `__main__.py`
 
 your own code to execute
 
@@ -127,4 +136,14 @@ def main():
 
 if __name__ == '__main__':
     main()
+```
+
+### `__init__.py`
+
+define your `main()` function to `__all__`
+
+```python
+from your_tool.__main__ import main
+
+__all__ = ['main']
 ```
