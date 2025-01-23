@@ -59,8 +59,5 @@ jobs:
 
       - name: Test with pytest
         working-directory: libs/hyperpocket
-        env:
-          POCKET_ENV: TEST
         run: |
-          echo "POCKET ENV : $POCKET_ENV"
           uv run pytest  -v --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html

@@ -1,4 +1,5 @@
 import asyncio
+import os
 
 from playwright.async_api import async_playwright, Page, Playwright, BrowserContext, Route
 
@@ -13,15 +14,9 @@ class InvokerBrowser(object):
         raise RuntimeError("Use InvokerBrowser.get_instance() instead")
 
     async def _async_init(self):
-        # false only in dev
-        # TODO(moon.dev) : load from config by environment
-        import os
-        pocket_env = os.getenv("POCKET_ENV", "DEVELOPMENT")
-        is_headless = False if pocket_env == "DEVELOPMENT" else True
-
         self.playwright = await async_playwright().start()
         self.browser_context = await self.playwright.chromium.launch_persistent_context(
-            headless=is_headless,
+            headless=True,
             args=[
                 '--disable-web-security=True',
             ],
