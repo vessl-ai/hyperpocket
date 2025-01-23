@@ -285,7 +285,7 @@ Assistance: Here are the recent 10 messages.
 
 ### Config
 
-Running `pocket config init` will create your config file in `$HOME/.pocket/settings.toml`
+Running `hyperpocket config init` will create your config file in `$HOME/.pocket/settings.toml`
 
 The `settings.toml` looks as follows.
 
