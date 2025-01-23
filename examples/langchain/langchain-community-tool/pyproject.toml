@@ -1,0 +1,18 @@
+[project]
+name = "langchain-community-tool"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "duckduckgo-search>=7.2.1",
+    "hyperdock-langchain",
+    "hyperpocket-langchain",
+    "langchain-community>=0.3.15",
+    "langchain-openai>=0.3.1",
+    "slack-sdk>=3.34.0",
+]
+
+[tool.uv.sources]
+hyperpocket-langchain = { path = "../../../libs/extensions/langchain", editable = true }
+hyperdock-langchain = { path = "../../../libs/docks/hyperdock-langchain", editable = true }
