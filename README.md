@@ -21,11 +21,6 @@ with the dependency spaghetti.
 
 **_Battery Included_** You can use popular tools and authentication providers out-of-the-box.
 
-<figure>
-<img src="pocket1.png" alt="pocket-flow" width="400"/>
-<figcaption></figcaption>
-</figure>
-
 ## Getting Started
 
 getting started langchain tool-calling-agent example with hyperpocket
