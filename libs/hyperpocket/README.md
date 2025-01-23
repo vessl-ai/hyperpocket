@@ -1,10 +1,11 @@
+<figure align="center">
+<img src="../../logo.png" alt="hyperpocket" width="570"/>
+</figure>
+
 # Hyperpocket 👛
 
 Hyperpocket is where tools belong. Power your agent up with a pocket of tools. 👛
 
-<figure>
-<img src="../../logo.png" alt="hyperpocket" width="200"/>
-</figure>
 
 ## Introduction
 
@@ -295,3 +296,6 @@ scopes = []
 )
 def my_function(**kwargs):
 ```
+
+## Special thanks
+- [tott](https://x.com/tott____) for drawing the cute possum in a pocket.
