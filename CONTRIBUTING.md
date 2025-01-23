@@ -23,7 +23,7 @@ We value any and all contributions, including:
 
 When reporting a bug, please include the following details:
 
-- Your **OS type and version**, and **Python version**.
+- Your running environment.
 - A code snippet or steps to reproduce the issue.
 - The **error message** and full stack trace.
 
