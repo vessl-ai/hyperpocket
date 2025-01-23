@@ -8,28 +8,19 @@ from hyperpocket.config.auth import AuthConfig, DefaultAuthConfig
 from hyperpocket.config.session import DefaultSessionConfig, SessionConfig
 
 POCKET_ROOT = Path.home() / ".pocket"
+SETTING_ROOT = Path.cwd()
 
 
-def find_settings_path(filename: str) -> Path:
-    # check workdir first
-    workdir_settings_path = Path.cwd() / filename
-    if workdir_settings_path.exists():
-        return workdir_settings_path
-
-    # check home directory
-    pocket_root_settings_path = POCKET_ROOT / filename
-    if pocket_root_settings_path.exists():
-        return pocket_root_settings_path
-
-    # if both of them do not exist, create the path in workdir and return it
-    workdir_settings_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(workdir_settings_path, "w"):
+settings_path = SETTING_ROOT / "settings.toml"
+if not settings_path.exists():
+    with open(settings_path, "w"):
         pass
-    return workdir_settings_path
 
+secret_path = SETTING_ROOT / ".secrets.toml"
+if not secret_path.exists():
+    with open(secret_path, "w"):
+        pass
 
-settings_path = find_settings_path("settings.toml")
-secret_path = find_settings_path(".secrets.toml")
 
 toolpkg_path = POCKET_ROOT / "toolpkg"
 if not toolpkg_path.exists():
