@@ -136,11 +136,11 @@ class PocketServer(object):
         while True:
             if conn.poll():
                 op, uid, result, error = conn.recv()
-                if error:
-                    raise error
-
                 future = self.future_store[uid]
-                future.set_result(result)
+                if error:
+                    future.set_exception(error)
+                else:
+                    future.set_result(result)
                 break
             else:
                 await asyncio.sleep(0)
