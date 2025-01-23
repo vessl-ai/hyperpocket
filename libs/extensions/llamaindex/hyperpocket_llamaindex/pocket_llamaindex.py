@@ -1,4 +1,6 @@
-from typing import List, Any
+from typing import List, Optional
+
+from pydantic import BaseModel
 
 try:
     from llama_index.core.tools import FunctionTool, BaseTool, ToolMetadata
@@ -12,12 +14,27 @@ from hyperpocket.tool import Tool
 
 
 class PocketLlamaindex(Pocket):
-    def get_tools(self) -> List[BaseTool]:
+    def get_tools(self, use_profile: Optional[bool] = None) -> List[BaseTool]:
+        if use_profile is not None:
+            self.use_profile = use_profile
+
         tools = [self.get_tool(pk) for pk in self.core.tools.values()]
         return tools
 
     def get_tool(self, pocket_tool: Tool) -> BaseTool:
-        def _invoke(body: Any, thread_id: str = 'default', profile: str = 'default', **kwargs) -> str:
+        def _invoke(**kwargs) -> str:
+            if self.use_profile:
+                body = kwargs["body"]
+                thread_id = kwargs.pop("thread_id", "default")
+                profile = kwargs.pop("profile", "default")
+            else:
+                body = kwargs
+                thread_id = "default"
+                profile = "default"
+
+            if isinstance(body, BaseModel):
+                body = body.model_dump()
+
             result, interrupted = self.invoke_with_state(pocket_tool.name, body=body, thread_id=thread_id,
                                                          profile=profile, **kwargs)
             say = result
@@ -25,7 +42,19 @@ class PocketLlamaindex(Pocket):
                 say = f'{say}\n\nThe tool execution interrupted. Please talk to me to resume.'
             return say
 
-        async def _ainvoke(body: Any, thread_id: str = 'default', profile: str = 'default', **kwargs) -> str:
+        async def _ainvoke(**kwargs) -> str:
+            if self.use_profile:
+                body = kwargs["body"]
+                thread_id = kwargs.pop("thread_id", "default")
+                profile = kwargs.pop("profile", "default")
+            else:
+                body = kwargs
+                thread_id = "default"
+                profile = "default"
+
+            if isinstance(body, BaseModel):
+                body = body.model_dump()
+
             result, interrupted = await self.ainvoke_with_state(pocket_tool.name, body=body,
                                                                 thread_id=thread_id, profile=profile, **kwargs)
             say = result
@@ -37,8 +66,8 @@ class PocketLlamaindex(Pocket):
             fn=_invoke,
             async_fn=_ainvoke,
             tool_metadata=ToolMetadata(
-                description=pocket_tool.description,
                 name=pocket_tool.name,
-                fn_schema=pocket_tool.schema_model(),
+                description=pocket_tool.get_description(use_profile=self.use_profile),
+                fn_schema=pocket_tool.schema_model(use_profile=self.use_profile),
             )
         )

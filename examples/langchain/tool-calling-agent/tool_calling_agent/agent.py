@@ -51,16 +51,20 @@ def agent(pocket: PocketLangchain):
 
 if __name__ == "__main__":
     with PocketLangchain(
-        tools=[
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-events"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-list"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/insert-calendar-events"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/github/pr-list"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/github/read-pull-request"),
-        ],
-        # force_update=True,
+            tools=[
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/google/get-calendar-events"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/google/get-calendar-list"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/google/insert-calendar-events"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/github/pr-list"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/github/read-pull-request"),
+            ],
+            # force_update=True,
     ) as pocket:
         agent(pocket)

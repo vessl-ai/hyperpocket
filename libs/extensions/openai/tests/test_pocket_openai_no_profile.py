@@ -1,3 +1,4 @@
+import ast
 import json
 from unittest.async_case import IsolatedAsyncioTestCase
 
@@ -9,7 +10,7 @@ from hyperpocket.tool import from_git
 from hyperpocket_openai import PocketOpenAI
 
 
-class TestPocketOpenAI(IsolatedAsyncioTestCase):
+class TestPocketOpenAINoProfile(IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         config.public_server_port = "https"
         config.public_hostname = "localhost"
@@ -19,10 +20,13 @@ class TestPocketOpenAI(IsolatedAsyncioTestCase):
 
         self.pocket = PocketOpenAI(
             tools=[
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/simple-echo-tool"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/none/simple-echo-tool"),
                 self.add,
                 self.sub_pydantic_args
             ],
+            use_profile=False
         )
         self.tool_specs = self.pocket.get_open_ai_tool_specs()
         self.client = OpenAI(api_key=secret["OPENAI_API_KEY"])
@@ -30,29 +34,23 @@ class TestPocketOpenAI(IsolatedAsyncioTestCase):
     async def asyncTearDown(self):
         self.pocket._teardown_server()
 
-    def test_get_tools_from_pocket(self):
-        # given
-        pocket = PocketOpenAI(tools=[
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-        ])
-
+    def test_get_tools_from_pocket_no_profile(self):
         # when
-        specs = pocket.get_open_ai_tool_specs()
+        specs = self.pocket.get_open_ai_tool_specs()
         get_tool, send_tool = specs[0], specs[1]
 
         # then
         self.assertIsInstance(get_tool, dict)
         self.assertEqual(get_tool["function"]["name"], 'slack_get_messages')
-        self.assertTrue("channel" in get_tool["function"]["parameters"]["properties"]["body"]["properties"])
-        self.assertTrue("limit" in get_tool["function"]["parameters"]["properties"]["body"]["properties"])
+        self.assertTrue("channel" in get_tool["function"]["parameters"]["properties"])
+        self.assertTrue("limit" in get_tool["function"]["parameters"]["properties"])
 
         self.assertIsInstance(send_tool, dict)
         self.assertEqual(send_tool["function"]["name"], 'slack_send_messages')
-        self.assertTrue("channel" in send_tool["function"]["parameters"]["properties"]["body"]["properties"])
-        self.assertTrue("text" in send_tool["function"]["parameters"]["properties"]["body"]["properties"])
+        self.assertTrue("channel" in send_tool["function"]["parameters"]["properties"])
+        self.assertTrue("text" in send_tool["function"]["parameters"]["properties"])
 
-    async def test_function_tool(self):
+    async def test_function_tool_no_profile(self):
         response = self.client.chat.completions.create(
             model="gpt-4o",
             messages=[{
@@ -72,13 +70,13 @@ class TestPocketOpenAI(IsolatedAsyncioTestCase):
         # then
         self.assertEqual(choice.finish_reason, "tool_calls")
         self.assertEqual(name, "add")
-        self.assertEqual(args["body"], {
+        self.assertEqual(args, {
             "a": 1,
             "b": 2
         })
         self.assertEqual(result["content"], "3")
 
-    async def test_pydantic_function_tool(self):
+    async def test_pydantic_function_tool_no_profile(self):
         response = self.client.chat.completions.create(
             model="gpt-4o",
             messages=[{
@@ -98,13 +96,13 @@ class TestPocketOpenAI(IsolatedAsyncioTestCase):
         # then
         self.assertEqual(choice.finish_reason, "tool_calls")
         self.assertEqual(name, "sub_pydantic_args")
-        self.assertEqual(args["body"], {
+        self.assertEqual(args, {
             "a": {"first": 1},
             "b": {"second": 2}
         })
         self.assertEqual(result["content"], "-1")
 
-    async def test_wasm_tool(self):
+    async def test_wasm_tool_no_profile(self):
         response = self.client.chat.completions.create(
             model="gpt-4o",
             messages=[{
@@ -120,14 +118,15 @@ class TestPocketOpenAI(IsolatedAsyncioTestCase):
         args = tool_call.function.arguments
         args = json.loads(args)
         result = await self.pocket.ainvoke(tool_call)
+        output = ast.literal_eval(result["content"])
 
         # then
         self.assertEqual(choice.finish_reason, "tool_calls")
         self.assertEqual(name, "simple_echo_text")
-        self.assertEqual(args["body"], {
+        self.assertEqual(args, {
             "text": "hello world"
         })
-        self.assertTrue(result["content"].startswith("echo message : hello world"))
+        self.assertTrue(output["stdout"].startswith("echo message : hello world"))
 
     @staticmethod
     def add(a: int, b: int) -> int:

@@ -1,3 +1,4 @@
+import ast
 import json
 from unittest.async_case import IsolatedAsyncioTestCase
 
@@ -10,7 +11,7 @@ from hyperpocket.tool import from_git
 from hyperpocket_llamaindex import PocketLlamaindex
 
 
-class TestPocketLlamaindex(IsolatedAsyncioTestCase):
+class TestPocketLlamaindexNoProfile(IsolatedAsyncioTestCase):
 
     async def asyncSetUp(self):
         config.public_server_port = "https"
@@ -21,16 +22,12 @@ class TestPocketLlamaindex(IsolatedAsyncioTestCase):
 
         self.pocket = PocketLlamaindex(
             tools=[
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/simple-echo-tool"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/none/simple-echo-tool"),
                 self.add,
                 self.sub_pydantic_args
             ],
-        )
-
-        self.agent = OpenAIAgent.from_tools(
-            tools=self.pocket.get_tools(),
-            llm=OpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"]),
-            verbose=True
+            use_profile=False
         )
 
         self.llm = OpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"])
@@ -38,7 +35,20 @@ class TestPocketLlamaindex(IsolatedAsyncioTestCase):
     async def asyncTearDown(self):
         self.pocket._teardown_server()
 
-    async def test_function_tool(self):
+    async def test_agent_no_profile(self):
+        # given
+        agent = OpenAIAgent.from_tools(
+            tools=self.pocket.get_tools(),
+            llm=OpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"]),
+            verbose=True
+        )
+
+        # when
+        agent.query("add 1, 2")
+        agent.query("sub 1, 2")
+        agent.query("echo 'hello world'")
+
+    async def test_function_tool_no_profile(self):
         # when
         response = self.llm.chat_with_tools(user_msg="add 1, 2", tools=self.pocket.get_tools(), verbose=True)
         message = response.message
@@ -48,17 +58,17 @@ class TestPocketLlamaindex(IsolatedAsyncioTestCase):
         args = tool_calls[0].function.arguments
         args = json.loads(args)
 
-        result = await self.pocket.ainvoke(tool_name=tool_name, **args)
+        result = await self.pocket.ainvoke(tool_name=tool_name, body=args)
 
         # then
         self.assertEqual(tool_name, "add")
-        self.assertEqual(args["body"], {
+        self.assertEqual(args, {
             "a": 1,
             "b": 2,
         })
         self.assertEqual(result, '3')
 
-    async def test_pydantic_function_tool(self):
+    async def test_pydantic_function_tool_no_profile(self):
         # when
         response = self.llm.chat_with_tools(user_msg="sub 1, 2", tools=self.pocket.get_tools(), verbose=True)
         tool_calls = response.message.additional_kwargs["tool_calls"]
@@ -67,17 +77,17 @@ class TestPocketLlamaindex(IsolatedAsyncioTestCase):
         args = tool_calls[0].function.arguments
         args = json.loads(args)
 
-        result = await self.pocket.ainvoke(tool_name=tool_name, **args)
+        result = await self.pocket.ainvoke(tool_name=tool_name, body=args)
 
         # then
         self.assertEqual(tool_name, "sub_pydantic_args")
-        self.assertEqual(args["body"], {
+        self.assertEqual(args, {
             "a": {"first": 1},
             "b": {"second": 2},
         })
         self.assertEqual(result, '-1')
 
-    async def test_wasm_tool(self):
+    async def test_wasm_tool_no_profile(self):
         # when
         response = self.llm.chat_with_tools(user_msg="echo 'hello world'", tools=self.pocket.get_tools(), verbose=True)
         tool_calls = response.message.additional_kwargs["tool_calls"]
@@ -86,14 +96,15 @@ class TestPocketLlamaindex(IsolatedAsyncioTestCase):
         args = tool_calls[0].function.arguments
         args = json.loads(args)
 
-        result = await self.pocket.ainvoke(tool_name=tool_name, **args)
+        result = await self.pocket.ainvoke(tool_name=tool_name, body=args)
+        output = ast.literal_eval(result)
 
         # then
         self.assertEqual(tool_name, "simple_echo_text")
-        self.assertEqual(args["body"], {
+        self.assertEqual(args, {
             "text": "hello world"
         })
-        self.assertTrue(result.startswith("echo message : hello world"))
+        self.assertTrue(output["stdout"].startswith("echo message : hello world"))
 
     @staticmethod
     def add(a: int, b: int) -> int:

@@ -18,6 +18,9 @@ hyperpocket = { path = "../../hyperpocket", editable = true }
 
 [dependency-groups]
 dev = ["pytest>=8.3.4", "ruff>=0.8.6"]
+test = [
+    "langchain-openai>=0.3.1",
+]
 
 [build-system]
 requires = ["hatchling"]
