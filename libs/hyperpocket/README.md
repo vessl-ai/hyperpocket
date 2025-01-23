@@ -168,32 +168,32 @@ Pocket provides way to use end user auth easily.
 
 - Supported methods
 
-    - [x] OAuth
-    - [x] Token
-    - [ ] Basic Auth (Username, Password)
+  - [x] OAuth
+  - [x] Token
+  - [ ] Basic Auth (Username, Password)
 
 - Supported OAuth Providers
 
-    - [x] Google
-    - [x] GitHub
-    - [x] Slack
-    - [x] Reddit
-    - [x] Calendly
-    - [ ] Facebook
-    - [ ] X (Previously Twitter)
-    - [ ] LinkedIn
-    - [ ] Discord
-    - [ ] Zoom
-    - [ ] Microsoft
-    - [ ] Spotify
-    - [ ] Twitch
+  - [x] Google
+  - [x] GitHub
+  - [x] Slack
+  - [x] Reddit
+  - [x] Calendly
+  - [ ] Facebook
+  - [ ] X (Previously Twitter)
+  - [ ] LinkedIn
+  - [ ] Discord
+  - [ ] Zoom
+  - [ ] Microsoft
+  - [ ] Spotify
+  - [ ] Twitch
 
 - Supported Token Providers
-    - [x] Notion
-    - [x] Slack
-    - [x] Linear
-    - [x] Gumloop
-    - [x] Github
+  - [x] Notion
+  - [x] Slack
+  - [x] Linear
+  - [x] Gumloop
+  - [x] Github
 
 You can manage your auths in request-wise level. (e.g. you can use different auths for different requests)
 
@@ -315,15 +315,15 @@ client_secret = "" # your slack client secret
 
 - While creating your github OAuth app, configuring your app's `Authorization callback URL` is different for your
   development environment and production environment.
-    - For local testing environment, you can use `https://localhost:8001/proxy/auth/<provider>/callback` for TLS enabled
-      redirect url. (ex. `https://localhost:8001/proxy/auth/github/callback`)
-        - **Note**: Default port for hyperpocket dev server is `8000`. If you are using a different port, make sure to
-          replace `8000` with your actual port number.
-        - **Note**: But for easy dev experience, you can use TLS proxy on port `8001` provided out-of-the-box.
-            - You can change the `proxy` prefix in settings.toml to your desired prefix with
-              `callback_url_rewrite_prefix` key.
-    - For production environment, you can use `https://yourdomain.com/auth/github/callback`
-        - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.
+  - For local testing environment, you can use `https://localhost:8001/proxy/auth/<provider>/callback` for TLS enabled
+    redirect url. (ex. `https://localhost:8001/proxy/auth/github/callback`)
+    - **Note**: Default port for hyperpocket dev server is `8000`. If you are using a different port, make sure to
+      replace `8000` with your actual port number.
+    - **Note**: But for easy dev experience, you can use TLS proxy on port `8001` provided out-of-the-box.
+      - You can change the `proxy` prefix in settings.toml to your desired prefix with
+        `callback_url_rewrite_prefix` key.
+  - For production environment, you can use `https://yourdomain.com/auth/github/callback`
+    - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.
 
 #### How to integrate SLACK OAuth app
 
@@ -334,19 +334,92 @@ client_secret = "" # your slack client secret
 - Redirect URLs :
   `{public_server_protocol}://{public_hostname}:[{public_server_port}]/{callback_url_rewrite_prefix}/auth/slack/oauth2/callback`
 - Scopes : What you want to request to user.
-    - Recommended scopes :
-        - channels:history,
-        - channels:read,
-        - chat:write,
-        - groups:history,
-        - groups:read,
-        - im:history,
-        - mpim:history,
-        - reactions:read,
-        - reactions:write,
+  - Recommended scopes :
+    - channels:history,
+    - channels:read,
+    - chat:write,
+    - groups:history,
+    - groups:read,
+    - im:history,
+    - mpim:history,
+    - reactions:read,
+    - reactions:write,
 
-3. Set your Slack APP Client ID / Client Secret in `{WORKDIR}/settings.toml`
+3. Set your Slack APP Client ID / Client Secret in `$HOME/.pocket/settings.toml`
 
-## Special thanks
+#### How to start adding a new token auth
 
-- [tott](https://x.com/tott____) for drawing the cute possum in a pocket.
+1. Generate boilerplate codes for token-based auth services ?
+
+```
+# service_name should be lowercase including underscore
+poetry run hyperpocket devtool create-token-auth-template {service_name}
+```
+
+It will generate boilerplate code lines for a new token-based auth service
+
+2. Extend AuthProvider enum to add your new auth provider.
+
+```python
+class AuthProvider(Enum):
+SERVICE = 'service'
+```
+
+3. Specify auth provider for tools
+
+1) github repo or local
+
+```toml
+[auth]
+auth_provider = "{service_name}"
+auth_handler = "{service_name}-token"
+scopes = []
+```
+
+2. function_tool
+
+```python
+@function_tool(
+    auth_provider=AuthProvider.SERVICE
+)
+def my_function(**kwargs):
+```
+
+#### How to Start Developing a New Tool
+
+1. Generate Boilerplate Template for the Tool
+
+```bash
+# tool_name must be lowercase and can include underscores
+poetry run hyperpocket devtool create-tool-template your_own_tool
+```
+
+This command will generate the boilerplate directory and files for a new tool.
+
+2. Configure the `config.toml`
+
+Define the language, `auth_provider`, scopes, and other required settings in the `config.toml` file.
+
+```toml
+# Example configuration
+name = "google_delete_calendar_events"
+description = "Delete Google Calendar events"
+language = "python"
+
+[auth]
+auth_provider = "google"
+scopes = ["https://www.googleapis.com/auth/calendar"]
+```
+
+3. Develop the Tool Logic
+
+Implement the `request_model` and the necessary functions for your tool's logic in the `__main__.py` file.
+
+4. Build Your Tool
+
+Use the Hyperpocket CLI to build your tool.
+
+```bash
+# Specify the tool_path or run the command inside the tool's directory
+poetry run hyperpocket devtool build-tool ./your-own-tool
+```
