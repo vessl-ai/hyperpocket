@@ -118,7 +118,7 @@ class FunctionTool(Tool):
             func=func,
             afunc=afunc,
             name=func.__name__,
-            description=func.__doc__,
+            description=func.__doc__ if func.__doc__ is not None else "",
             argument_json_schema=argument_json_schema,
             auth=auth,
             default_tool_vars=tool_vars
