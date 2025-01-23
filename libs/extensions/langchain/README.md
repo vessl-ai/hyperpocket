@@ -49,12 +49,11 @@ tools = pocket.get_tools()
 llm = ChatOpenAI()
 
 prompt = ChatPromptTemplate.from_messages(
-    [
-        ("placeholder", "{chat_history}"),
         (
             "system",
             "You are very powerful linear assistant. You can help the user do something like commenting, get some issues",
         ),
+        ("placeholder", "{chat_history}"),
         ("user", "{input}"),
         MessagesPlaceholder(variable_name="agent_scratchpad"),
     ]
