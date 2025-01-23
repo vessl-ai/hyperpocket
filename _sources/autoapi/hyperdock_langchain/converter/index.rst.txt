@@ -1,0 +1,23 @@
+hyperdock_langchain.converter
+=============================
+
+.. py:module:: hyperdock_langchain.converter
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   hyperdock_langchain.converter.slack_bot_token
+   hyperdock_langchain.converter.google_application_credentials
+
+
+Module Contents
+---------------
+
+.. py:function:: slack_bot_token(_env_key: str, env_value: str) -> Tuple[str, str]
+
+.. py:function:: google_application_credentials(_env_key: str, env_value: str) -> Tuple[str, str]
+

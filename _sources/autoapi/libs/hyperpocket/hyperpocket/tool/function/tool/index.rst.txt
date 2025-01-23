@@ -50,7 +50,7 @@ Module Contents
 
 
 
-   .. py:method:: from_dock(dock: list[Callable[Ellipsis, str]]) -> list[FunctionTool]
+   .. py:method:: from_dock(dock: list[Callable[Ellipsis, str]], tool_vars: Optional[dict[str, str]] = None) -> list[FunctionTool]
       :classmethod:
 
 

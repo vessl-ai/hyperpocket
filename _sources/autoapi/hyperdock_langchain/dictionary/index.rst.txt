@@ -1,0 +1,43 @@
+hyperdock_langchain.dictionary
+==============================
+
+.. py:module:: hyperdock_langchain.dictionary
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   hyperdock_langchain.dictionary.Converter
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_langchain.dictionary.EnvDict
+
+
+Module Contents
+---------------
+
+.. py:data:: Converter
+
+.. py:class:: EnvDict
+
+   Bases: :py:obj:`object`
+
+
+   .. py:property:: rules
+      :type: dict[str, Converter]
+
+
+
+   .. py:method:: default() -> EnvDict
+      :classmethod:
+
+
+

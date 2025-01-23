@@ -1,0 +1,93 @@
+hyperdock_langchain
+===================
+
+.. py:module:: hyperdock_langchain
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/hyperdock_langchain/connector/index
+   /autoapi/hyperdock_langchain/converter/index
+   /autoapi/hyperdock_langchain/dictionary/index
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   hyperdock_langchain.Converter
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_langchain.LangchainToolRequest
+   hyperdock_langchain.EnvDict
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   hyperdock_langchain.connect
+   hyperdock_langchain.dock
+
+
+Package Contents
+----------------
+
+.. py:function:: connect(tool_type: ToolType) -> Callable[[Ellipsis], str]
+
+.. py:class:: LangchainToolRequest(tool_type: Type[langchain.tools.BaseTool], tool_args: Optional[dict[str, Any]] = None, env_dict_extends: Optional[dict[str, str]] = None, auth: Optional[dict[str, Any]] = None, tool_vars: Optional[dict[str, str]] = None)
+
+   Bases: :py:obj:`object`
+
+
+   .. py:attribute:: tool_type
+      :type:  Type[langchain.tools.BaseTool]
+
+
+   .. py:attribute:: tool_args
+      :type:  dict[str, Any]
+
+
+   .. py:attribute:: env_dict_extends
+      :type:  dict[str, str]
+
+
+   .. py:attribute:: auth
+      :type:  Optional[dict[str, Any]]
+
+
+   .. py:attribute:: tool_vars
+      :type:  dict[str, str]
+
+
+.. py:data:: Converter
+
+.. py:class:: EnvDict
+
+   Bases: :py:obj:`object`
+
+
+   .. py:property:: rules
+      :type: dict[str, Converter]
+
+
+
+   .. py:method:: default() -> EnvDict
+      :classmethod:
+
+
+
+.. py:function:: dock(*requests: list[connector.LangchainToolRequest]) -> list[Callable[[Ellipsis], str]]
+

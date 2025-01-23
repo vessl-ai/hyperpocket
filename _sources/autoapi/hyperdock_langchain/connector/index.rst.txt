@@ -1,0 +1,66 @@
+hyperdock_langchain.connector
+=============================
+
+.. py:module:: hyperdock_langchain.connector
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   hyperdock_langchain.connector.ToolType
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_langchain.connector.LangchainToolRequest
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   hyperdock_langchain.connector.modify_environment
+   hyperdock_langchain.connector.connect
+
+
+Module Contents
+---------------
+
+.. py:class:: LangchainToolRequest(tool_type: Type[langchain.tools.BaseTool], tool_args: Optional[dict[str, Any]] = None, env_dict_extends: Optional[dict[str, str]] = None, auth: Optional[dict[str, Any]] = None, tool_vars: Optional[dict[str, str]] = None)
+
+   Bases: :py:obj:`object`
+
+
+   .. py:attribute:: tool_type
+      :type:  Type[langchain.tools.BaseTool]
+
+
+   .. py:attribute:: tool_args
+      :type:  dict[str, Any]
+
+
+   .. py:attribute:: env_dict_extends
+      :type:  dict[str, str]
+
+
+   .. py:attribute:: auth
+      :type:  Optional[dict[str, Any]]
+
+
+   .. py:attribute:: tool_vars
+      :type:  dict[str, str]
+
+
+.. py:data:: ToolType
+
+.. py:function:: modify_environment(environ: dict[str, str], kwargs: dict[str, Any], env_dict_extends: dict[str, Callable[[str, str], Tuple[str, str]]]) -> dict[str, str]
+
+.. py:function:: connect(tool_type: ToolType) -> Callable[[Ellipsis], str]
+
