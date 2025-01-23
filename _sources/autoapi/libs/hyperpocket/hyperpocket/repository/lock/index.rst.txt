@@ -124,6 +124,22 @@ Module Contents
 
 
 
+   .. py:method:: get_git_branches(repo_url)
+      :classmethod:
+
+
+
+   .. py:method:: parse_repo_url(repo_url: str) -> Tuple[str, str, str]
+      :classmethod:
+
+
+      Parses a GitHub repository URL with optional branch and path information.
+
+      :returns: base_repo, branch_name, directory_path
+      :rtype: Tuple[str, str, str]
+
+
+
    .. py:method:: eject_to_path(dest_path: pathlib.Path, src_sub_path: str = None)
 
 
