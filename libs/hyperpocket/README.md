@@ -294,3 +294,42 @@ scopes = []
 )
 def my_function(**kwargs):
 ```
+
+#### How to Start Developing a New Tool
+
+1. Generate Boilerplate Template for the Tool
+
+```bash
+# tool_name must be lowercase and can include underscores
+poetry run hyperpocket devtool create-tool-template your_own_tool
+```
+
+This command will generate the boilerplate directory and files for a new tool.
+
+2. Configure the `config.toml`
+
+Define the language, `auth_provider`, scopes, and other required settings in the `config.toml` file.
+
+```toml
+# Example configuration
+name = "google_delete_calendar_events"
+description = "Delete Google Calendar events"
+language = "python"
+
+[auth]
+auth_provider = "google"
+scopes = ["https://www.googleapis.com/auth/calendar"]
+```
+
+3. Develop the Tool Logic
+
+Implement the `request_model` and the necessary functions for your tool's logic in the `__main__.py` file.
+
+4. Build Your Tool
+
+Use the Hyperpocket CLI to build your tool.
+
+```bash
+# Specify the tool_path or run the command inside the tool's directory
+poetry run hyperpocket devtool build-tool ./your-own-tool
+```
