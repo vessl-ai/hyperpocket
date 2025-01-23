@@ -2,6 +2,7 @@
 name = "personal-email-summarizer"
 version = "0.0.1"
 description = "Personal email summarizer with hyperpocket and OpenAI API"
+authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
