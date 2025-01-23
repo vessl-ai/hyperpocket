@@ -573,7 +573,7 @@ wheels = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.0.3"
+version = "0.1.8"
 source = { editable = "../../../libs/hyperpocket" }
 dependencies = [
     { name = "click" },
@@ -615,12 +615,13 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "pytest", specifier = ">=8.3.4" },
+    { name = "pytest-cov", specifier = ">=6.0.0" },
     { name = "ruff", specifier = ">=0.8.6" },
 ]
 
 [[package]]
 name = "hyperpocket-openai"
-version = "0.0.1"
+version = "0.1.8"
 source = { editable = "../../../libs/extensions/openai" }
 dependencies = [
     { name = "hyperpocket" },
