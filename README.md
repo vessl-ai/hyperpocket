@@ -3,8 +3,7 @@
 Hyperpocket is where tools belong. Power your agent up with a pocket of tools. 👛
 
 <figure>
-<img src="image.png" alt="4d-pocket" width="200"/>
-<figcaption>© Doraemon</figcaption>
+<img src="logo.png" alt="hyperpocket" width="200"/>
 </figure>
 
 ## Introduction
@@ -182,23 +181,23 @@ Pocket provides way to use end user auth easily.
 
 - Supported methods
 
-    - [x] OAuth
-    - [x] Token
-    - [ ] Basic Auth (Username, Password)
+  - [x] OAuth
+  - [x] Token
+  - [ ] Basic Auth (Username, Password)
 
 - Supported OAuth Providers
-    - [x] Google
-    - [x] GitHub
-    - [x] Slack
-    - [x] Linear
-    - [ ] Facebook
-    - [ ] X (Previously Twitter)
-    - [ ] LinkedIn
-    - [ ] Discord
-    - [ ] Zoom
-    - [ ] Microsoft
-    - [ ] Spotify
-    - [ ] Twitch
+  - [x] Google
+  - [x] GitHub
+  - [x] Slack
+  - [x] Linear
+  - [ ] Facebook
+  - [ ] X (Previously Twitter)
+  - [ ] LinkedIn
+  - [ ] Discord
+  - [ ] Zoom
+  - [ ] Microsoft
+  - [ ] Spotify
+  - [ ] Twitch
 
 You can manage your auths in request-wise level. (e.g. you can use different auths for different requests)
 
@@ -352,15 +351,15 @@ client_secret = ""  # your github client secret
 - Redirect URLs :
   `{public_server_protocol}://{public_hostname}:[{public_server_port}]/{callback_url_rewrite_prefix}/auth/slack/oauth2/callback`
 - Scopes : What you want to request to user.
-    - Recommended scopes :
-        - channels:history,
-        - channels:read,
-        - chat:write,
-        - groups:history,
-        - groups:read,
-        - im:history,
-        - mpim:history,
-        - reactions:read,
-        - reactions:write,
+  - Recommended scopes :
+    - channels:history,
+    - channels:read,
+    - chat:write,
+    - groups:history,
+    - groups:read,
+    - im:history,
+    - mpim:history,
+    - reactions:read,
+    - reactions:write,
 
 3. Set your Slack APP Client ID / Client Secret in `$HOME/.pocket/settings.toml`
