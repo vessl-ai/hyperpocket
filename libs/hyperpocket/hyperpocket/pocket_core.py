@@ -38,7 +38,7 @@ class PocketCore:
                     lock = LocalLock(tool_like)
                     req = WasmToolRequest(lock, "")
                 else:
-                    base_repo_url, git_ref, rel_path = GitLock.parsing_repo_url(repo_url=tool_like)
+                    base_repo_url, git_ref, rel_path = GitLock.parse_repo_url(repo_url=tool_like)
                     lock = GitLock(repository_url=base_repo_url, git_ref=git_ref)
                     req = WasmToolRequest(lock=lock, rel_path=rel_path, tool_vars={})
 

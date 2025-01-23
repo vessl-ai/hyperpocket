@@ -11,13 +11,13 @@ def build():
     llm = OpenAI(api_key=secret["OPENAI_API_KEY"])
     pocket = PocketLlamaindex(
         tools=[
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-events"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-list"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/insert-calendar-events"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/github/pr-list"),
+            "https://github.com/vessl-ai/hyperpocket/tree/maintools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/maintools/slack/post-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/maintools/linear/get-issues",
+            "https://github.com/vessl-ai/hyperpocket/tree/maintools/google/get-calendar-events",
+            "https://github.com/vessl-ai/hyperpocket/tree/maintools/google/get-calendar-list",
+            "https://github.com/vessl-ai/hyperpocket/tree/maintools/google/insert-calendar-events",
+            "https://github.com/vessl-ai/hyperpocket/tree/maintools/github/list-pull-requests",
         ]
     )
     tools = pocket.get_tools()
