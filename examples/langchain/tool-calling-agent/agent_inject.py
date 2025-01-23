@@ -4,10 +4,8 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
 from hyperpocket.config import secret
-from hyperpocket.tool import from_local, from_func
+from hyperpocket.tool import from_git
 from hyperpocket_langchain import PocketLangchain
-
-from simple_function_tool import test_injecting_tool_var
 
 
 def agent(pocket: PocketLangchain):
@@ -52,15 +50,22 @@ def agent(pocket: PocketLangchain):
 
 
 if __name__ == "__main__":
-    tool_var = {
-        "config1" : "modified_config1",
-    }
     with PocketLangchain(
-        tools=[
-            from_local("/Users/namsangdae/hyperawesometools/managed-tools/calendly/create-one-off-event-type",
-                       tool_var),
-            from_func(func=test_injecting_tool_var, app_tool_var=tool_var),
-        ],
-        # force_update=True,
+            tools=[
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/google/get-calendar-events"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/google/get-calendar-list"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/google/insert-calendar-events"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/github/pr-list"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/github/read-pull-request"),
+
+            ],
+            # force_update=True,
     ) as pocket:
         agent(pocket)

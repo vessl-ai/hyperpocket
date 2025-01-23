@@ -578,7 +578,7 @@ wheels = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.0.3"
+version = "0.1.8"
 source = { editable = "../../../libs/hyperpocket" }
 dependencies = [
     { name = "click" },
@@ -625,7 +625,7 @@ dev = [
 
 [[package]]
 name = "hyperpocket-langchain"
-version = "0.0.2"
+version = "0.1.8"
 source = { editable = "../../../libs/extensions/langchain" }
 dependencies = [
     { name = "hyperpocket" },
@@ -647,6 +647,7 @@ dev = [
     { name = "pytest", specifier = ">=8.3.4" },
     { name = "ruff", specifier = ">=0.8.6" },
 ]
+test = [{ name = "langchain-openai", specifier = ">=0.3.1" }]
 
 [[package]]
 name = "idna"
