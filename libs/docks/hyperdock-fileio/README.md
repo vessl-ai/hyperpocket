@@ -7,6 +7,7 @@
 ## How to use it?
 - From your pocket instantiation, call from_dock. For example, Let's say you're using hyperpocket for langchain. You can do:
 ```python
+from hyperpocket.tool import from_dock
 from hyperpocket_langchain import PocketLangchain
 from hyperdock_fileio import initialize_dock as fileio_dock
 
