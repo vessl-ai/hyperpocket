@@ -1,0 +1,44 @@
+libs.extensions.anthropic.hyperpocket_anthropic.pocket_anthropic
+================================================================
+
+.. py:module:: libs.extensions.anthropic.hyperpocket_anthropic.pocket_anthropic
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.extensions.anthropic.hyperpocket_anthropic.pocket_anthropic.PocketAnthropic
+
+
+Module Contents
+---------------
+
+.. py:class:: PocketAnthropic
+
+   Bases: :py:obj:`hyperpocket.Pocket`
+
+
+   .. py:method:: invoke(tool_use_block: anthropic.types.ToolUseBlock, **kwargs) -> anthropic.types.ToolResultBlockParam
+
+
+   .. py:method:: ainvoke(tool_use_block: anthropic.types.ToolUseBlock, **kwargs) -> anthropic.types.ToolResultBlockParam
+      :async:
+
+
+
+   .. py:method:: parse_input(tool_use_block)
+      :staticmethod:
+
+
+
+   .. py:method:: get_anthropic_tool_specs() -> List[dict]
+
+
+   .. py:method:: get_anthropic_tool_spec(tool: hyperpocket.tool.Tool) -> dict
+      :staticmethod:
+
+
+

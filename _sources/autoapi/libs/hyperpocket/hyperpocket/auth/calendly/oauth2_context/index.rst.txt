@@ -21,9 +21,6 @@ Module Contents
    Bases: :py:obj:`hyperpocket.auth.calendly.context.CalendlyAuthContext`
 
 
-   This class is used to define the interface of the authentication model.
-
-
    .. py:method:: from_calendly_oauth2_response(response: hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response) -> CalendlyOAuth2AuthContext
       :classmethod:
 

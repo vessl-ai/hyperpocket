@@ -1,0 +1,18 @@
+libs
+====
+
+.. py:module:: libs
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/docks/index
+   /autoapi/libs/extensions/index
+   /autoapi/libs/hyperpocket/index
+
+

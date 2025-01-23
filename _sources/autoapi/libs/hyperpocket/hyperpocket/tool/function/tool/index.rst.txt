@@ -34,15 +34,9 @@ Module Contents
 
    .. py:method:: invoke(**kwargs) -> str
 
-      Invoke the tool
-
-
 
    .. py:method:: ainvoke(**kwargs) -> str
       :async:
-
-
-      Asynchronously invoke the tool
 
 
 

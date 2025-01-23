@@ -1,0 +1,32 @@
+libs.docks.hyperdock-fileio.hyperdock_fileio
+============================================
+
+.. py:module:: libs.docks.hyperdock-fileio.hyperdock_fileio
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/directory/index
+   /autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/operations/index
+   /autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/read/index
+   /autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/write/index
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.docks.hyperdock-fileio.hyperdock_fileio.initialize_dock
+
+
+Package Contents
+----------------
+
+.. py:function:: initialize_dock(*_, **__) -> list[callable]
+

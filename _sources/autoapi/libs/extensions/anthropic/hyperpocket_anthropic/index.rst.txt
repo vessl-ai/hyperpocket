@@ -1,0 +1,17 @@
+libs.extensions.anthropic.hyperpocket_anthropic
+===============================================
+
+.. py:module:: libs.extensions.anthropic.hyperpocket_anthropic
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/extensions/anthropic/hyperpocket_anthropic/pocket_anthropic/index
+   /autoapi/libs/extensions/anthropic/hyperpocket_anthropic/util/index
+
+

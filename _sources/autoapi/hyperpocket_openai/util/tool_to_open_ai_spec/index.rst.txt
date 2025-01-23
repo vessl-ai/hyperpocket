@@ -1,0 +1,20 @@
+hyperpocket_openai.util.tool_to_open_ai_spec
+============================================
+
+.. py:module:: hyperpocket_openai.util.tool_to_open_ai_spec
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   hyperpocket_openai.util.tool_to_open_ai_spec.tool_to_open_ai_spec
+
+
+Module Contents
+---------------
+
+.. py:function:: tool_to_open_ai_spec(tool: hyperpocket.tool.Tool) -> dict
+

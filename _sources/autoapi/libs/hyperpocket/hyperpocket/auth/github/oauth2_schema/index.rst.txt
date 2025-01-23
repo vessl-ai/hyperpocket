@@ -22,9 +22,6 @@ Module Contents
    Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
 
 
-   This class is used to define the interface of the authentication request.
-
-
    .. py:attribute:: client_id
       :type:  str
 
@@ -36,9 +33,6 @@ Module Contents
 .. py:class:: GitHubOAuth2Response
 
    Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
-
-
-   This class is used to define the interface of the authentication response.
 
 
    .. py:attribute:: access_token

@@ -1,0 +1,39 @@
+libs.extensions.langgraph.hyperpocket_langgraph.pocket_langgraph
+================================================================
+
+.. py:module:: libs.extensions.langgraph.hyperpocket_langgraph.pocket_langgraph
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.extensions.langgraph.hyperpocket_langgraph.pocket_langgraph.PocketLanggraphBaseState
+   libs.extensions.langgraph.hyperpocket_langgraph.pocket_langgraph.PocketLanggraph
+
+
+Module Contents
+---------------
+
+.. py:class:: PocketLanggraphBaseState
+
+   Bases: :py:obj:`langgraph.graph.MessagesState`
+
+
+.. py:class:: PocketLanggraph(tools: List[hyperpocket.pocket_main.ToolLike], auth: hyperpocket.PocketAuth = None)
+
+   Bases: :py:obj:`hyperpocket.Pocket`
+
+
+   .. py:attribute:: langgraph_tools
+      :type:  dict[str, langchain_core.tools.BaseTool]
+
+
+   .. py:method:: get_tools()
+
+
+   .. py:method:: get_tool_node(should_interrupt: bool = False)
+
+

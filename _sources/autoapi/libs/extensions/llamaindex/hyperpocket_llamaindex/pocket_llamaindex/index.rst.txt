@@ -1,0 +1,29 @@
+libs.extensions.llamaindex.hyperpocket_llamaindex.pocket_llamaindex
+===================================================================
+
+.. py:module:: libs.extensions.llamaindex.hyperpocket_llamaindex.pocket_llamaindex
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.extensions.llamaindex.hyperpocket_llamaindex.pocket_llamaindex.PocketLlamaindex
+
+
+Module Contents
+---------------
+
+.. py:class:: PocketLlamaindex
+
+   Bases: :py:obj:`hyperpocket.Pocket`
+
+
+   .. py:method:: get_tools() -> List[llama_index.core.tools.BaseTool]
+
+
+   .. py:method:: get_tool(pocket_tool: hyperpocket.tool.Tool) -> llama_index.core.tools.BaseTool
+
+

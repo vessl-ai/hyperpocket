@@ -19,7 +19,9 @@
       <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../../../../../search.html" />
+    <link rel="next" title="libs.hyperpocket.hyperpocket.tool_like" href="../../../tool_like/index.html" />
+    <link rel="prev" title="libs.hyperpocket.hyperpocket.tool.wasm.templates.python" href="../templates/python/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,10 +43,23 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/conceptual_guide.html">Conceptual Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/create_auth_provider.html">Create Auth Provider</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../docks/index.html">libs.docks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../extensions/index.html">libs.extensions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../index.html">libs.hyperpocket</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../../../../index.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -61,6 +76,11 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../../index.html">libs</a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">libs.hyperpocket</a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">libs.hyperpocket.hyperpocket</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">libs.hyperpocket.hyperpocket.tool</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">libs.hyperpocket.hyperpocket.tool.wasm</a></li>
       <li class="breadcrumb-item active">libs.hyperpocket.hyperpocket.tool.wasm.tool</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../../../../_sources/autoapi/libs/hyperpocket/hyperpocket/tool/wasm/tool/index.rst.txt" rel="nofollow"> View page source</a>
@@ -78,7 +98,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest" title="libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WasmToolRequest</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool" title="libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WasmTool</span></code></a></p></td>
 <td><p>WasmTool is Tool executing local python method.</p></td>
@@ -105,8 +125,6 @@
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.tool.wasm.tool.</span></span><span class="sig-name descname"><span class="pre">WasmToolRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lock</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">hyperpocket.repository.Lock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool_vars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperpocket.tool.ToolRequest</span></code></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest.lock">
 <span class="sig-name descname"><span class="pre">lock</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">hyperpocket.repository.Lock</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest.lock" title="Link to this definition"></a></dt>
@@ -182,14 +200,12 @@ inheritance.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool.invoke">
 <span class="sig-name descname"><span class="pre">invoke</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">envs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool.invoke" title="Link to this definition"></a></dt>
-<dd><p>Invoke the tool</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool.ainvoke">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ainvoke</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">envs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool.ainvoke" title="Link to this definition"></a></dt>
-<dd><p>Asynchronously invoke the tool</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -199,7 +215,10 @@ inheritance.</p>
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../templates/python/index.html" class="btn btn-neutral float-left" title="libs.hyperpocket.hyperpocket.tool.wasm.templates.python" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../../tool_like/index.html" class="btn btn-neutral float-right" title="libs.hyperpocket.hyperpocket.tool_like" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

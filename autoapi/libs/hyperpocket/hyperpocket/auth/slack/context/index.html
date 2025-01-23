@@ -19,7 +19,9 @@
       <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../../../../../search.html" />
+    <link rel="next" title="libs.hyperpocket.hyperpocket.auth.slack.oauth2_context" href="../oauth2_context/index.html" />
+    <link rel="prev" title="libs.hyperpocket.hyperpocket.auth.slack" href="../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,10 +43,23 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/conceptual_guide.html">Conceptual Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/create_auth_provider.html">Create Auth Provider</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../docks/index.html">libs.docks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../extensions/index.html">libs.extensions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../index.html">libs.hyperpocket</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../../../../index.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -61,6 +76,11 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../../index.html">libs</a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">libs.hyperpocket</a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">libs.hyperpocket.hyperpocket</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">libs.hyperpocket.hyperpocket.auth</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">libs.hyperpocket.hyperpocket.auth.slack</a></li>
       <li class="breadcrumb-item active">libs.hyperpocket.hyperpocket.auth.slack.context</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../../../../_sources/autoapi/libs/hyperpocket/hyperpocket/auth/slack/context/index.rst.txt" rel="nofollow"> View page source</a>
@@ -78,7 +98,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.slack.context.SlackAuthContext" title="libs.hyperpocket.hyperpocket.auth.slack.context.SlackAuthContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SlackAuthContext</span></code></a></p></td>
-<td><p>This class is used to define the interface of the authentication model.</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -89,37 +109,15 @@
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.slack.context.SlackAuthContext">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.auth.slack.context.</span></span><span class="sig-name descname"><span class="pre">SlackAuthContext</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.slack.context.SlackAuthContext" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperpocket.auth.context.AuthContext</span></code></p>
-<p>This class is used to define the interface of the authentication model.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.slack.context.SlackAuthContext.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.slack.context.SlackAuthContext.to_dict" title="Link to this definition"></a></dt>
-<dd><p>This method is used to convert the authentication context to a dictionary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The dictionary representation of the authentication context.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>dict[str, str]</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.slack.context.SlackAuthContext.to_profiled_dict">
 <span class="sig-name descname"><span class="pre">to_profiled_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.slack.context.SlackAuthContext.to_profiled_dict" title="Link to this definition"></a></dt>
-<dd><p>This method is used to convert the authentication context to a profiled dictionary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>profile</strong> (<em>str</em>) – The profile name.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The profiled dictionary representation of the authentication context.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict[str, str]</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -129,7 +127,10 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="libs.hyperpocket.hyperpocket.auth.slack" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../oauth2_context/index.html" class="btn btn-neutral float-right" title="libs.hyperpocket.hyperpocket.auth.slack.oauth2_context" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

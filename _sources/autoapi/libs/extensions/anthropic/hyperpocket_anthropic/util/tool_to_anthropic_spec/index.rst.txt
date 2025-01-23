@@ -1,0 +1,20 @@
+libs.extensions.anthropic.hyperpocket_anthropic.util.tool_to_anthropic_spec
+===========================================================================
+
+.. py:module:: libs.extensions.anthropic.hyperpocket_anthropic.util.tool_to_anthropic_spec
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.extensions.anthropic.hyperpocket_anthropic.util.tool_to_anthropic_spec.tool_to_anthropic_spec
+
+
+Module Contents
+---------------
+
+.. py:function:: tool_to_anthropic_spec(tool: hyperpocket.tool.Tool) -> dict
+

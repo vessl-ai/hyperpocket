@@ -37,6 +37,4 @@ Package Contents
 .. py:data:: auth_router
 
 .. py:data:: routers
-   :value: []
-
 

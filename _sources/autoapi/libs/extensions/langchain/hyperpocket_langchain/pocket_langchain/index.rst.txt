@@ -1,0 +1,29 @@
+libs.extensions.langchain.hyperpocket_langchain.pocket_langchain
+================================================================
+
+.. py:module:: libs.extensions.langchain.hyperpocket_langchain.pocket_langchain
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.extensions.langchain.hyperpocket_langchain.pocket_langchain.PocketLangchain
+
+
+Module Contents
+---------------
+
+.. py:class:: PocketLangchain
+
+   Bases: :py:obj:`hyperpocket.Pocket`
+
+
+   .. py:method:: get_tools() -> List[langchain_core.tools.BaseTool]
+
+
+   .. py:method:: get_tool(pocket_tool: hyperpocket.tool.Tool) -> langchain_core.tools.BaseTool
+
+

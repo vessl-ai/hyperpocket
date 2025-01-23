@@ -1,0 +1,63 @@
+libs.docks.hyperdock-fileio.hyperdock_fileio.directory
+======================================================
+
+.. py:module:: libs.docks.hyperdock-fileio.hyperdock_fileio.directory
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.docks.hyperdock-fileio.hyperdock_fileio.directory.current_working_directory
+   libs.docks.hyperdock-fileio.hyperdock_fileio.directory.make_directory
+   libs.docks.hyperdock-fileio.hyperdock_fileio.directory.list_directory
+   libs.docks.hyperdock-fileio.hyperdock_fileio.directory.find_file_in_directory
+   libs.docks.hyperdock-fileio.hyperdock_fileio.directory.grep_recursive_in_directory
+
+
+Module Contents
+---------------
+
+.. py:function:: current_working_directory() -> str
+
+   Get the current working directory.
+   :return: str, current working directory
+
+
+.. py:function:: make_directory(path: str) -> str
+
+   Make a directory.
+   Existing directories will not be affected.
+   This function will make parent directories if does not exist.
+   :param path: str, directory path
+   :return: a success message
+
+
+.. py:function:: list_directory(path: str, recursive: bool = False) -> str
+
+   List files and directories in a directory.
+   If recursive is True, it will list all files and directories in subdirectories.
+   :param path: str, directory path to list
+   :param recursive: bool, if true, list recursively
+   :return: list of files with info retrievable with "ls -l", delimited by newline
+
+
+.. py:function:: find_file_in_directory(path: str, glob_pattern: str) -> str
+
+   Find a file in a directory whose path matches the given glob pattern.
+   :param path: str, directory path
+   :param glob_pattern: str, glob pattern
+   :return: list of files, delimited by newline
+
+
+.. py:function:: grep_recursive_in_directory(path: str, regex_pattern: str) -> str
+
+   Recursively search for a string in all files within a directory.
+   :param path: str, The directory to search in.
+   :param regex_pattern: str, The pattern to search for.
+   :return: list of tuple consists with file path, matched line number, and line contents,
+   delimited by newline
+
+

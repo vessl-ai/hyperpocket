@@ -21,9 +21,6 @@ Module Contents
    Bases: :py:obj:`hyperpocket.auth.slack.context.SlackAuthContext`
 
 
-   This class is used to define the interface of the authentication model.
-
-
    .. py:method:: from_slack_token_response(response: hyperpocket.auth.slack.token_schema.SlackTokenResponse)
       :classmethod:
 

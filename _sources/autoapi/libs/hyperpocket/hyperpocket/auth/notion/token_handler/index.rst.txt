@@ -21,10 +21,6 @@ Module Contents
    Bases: :py:obj:`hyperpocket.auth.handler.AuthHandlerInterface`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: name
       :type:  str
       :value: 'notion-token'
@@ -47,99 +43,17 @@ Module Contents
       :staticmethod:
 
 
-      Returns the authentication provider enum.
-
-      This method is used to determine the appropriate authentication handler
-
-      based on the authentication provider.
-
-
 
    .. py:method:: recommended_scopes() -> set[str]
       :staticmethod:
 
 
-      Returns the recommended authentication scopes.
-
-      If `use_recommended_scope` is set to True in the `AuthConfig`,
-
-      this method should return the proper recommended scopes. Otherwise,
-
-      it should return an empty set.
-
-      :returns: A set of recommended scopes, or an empty set if not applicable.
-      :rtype: set[str]
-
-      .. rubric:: Examples
-
-      Slack OAuth2 recommended_scopes::
-
-          def recommended_scopes() -> set[str]:
-              if config.auth.slack.use_recommended_scope:
-                  recommended_scopes = {
-                      "channels:history",
-                      "channels:read",
-                      "chat:write",
-                      "groups:history",
-                      "groups:read",
-                      "im:history",
-                      "mpim:history",
-                      "reactions:read",
-                      "reactions:write",
-                  }
-              else:
-                  recommended_scopes = {}
-              return recommended_scopes
-
-
 
    .. py:method:: prepare(auth_req: hyperpocket.auth.notion.token_schema.NotionTokenRequest, thread_id: str, profile: str, future_uid: str, *args, **kwargs) -> str
-
-      Performs preliminary tasks required for authentication.
-
-      This method typically performs the following actions:
-
-      - Creates a future to wait for user authentication completion during the authentication process.
-      - Issues an authentication URI that the user can access.
-
-      :param auth_req: The authentication request object.
-      :type auth_req: AuthenticateRequest
-      :param thread_id: The thread ID.
-      :type thread_id: str
-      :param profile: The profile name.
-      :type profile: str
-      :param future_uid: A unique identifier for each future.
-      :type future_uid: str
-
-      :returns: The authentication URI that the user can access.
-      :rtype: str
-
 
 
    .. py:method:: authenticate(auth_req: hyperpocket.auth.notion.token_schema.NotionTokenRequest, future_uid: str, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
       :async:
-
-
-      Performs the actual authentication process.
-
-      This function assumes that the user has completed the authentication during the `prepare` step,
-      and the associated future has been resolved. At this point, the result contains the required
-      values for authentication (e.g., an auth code).
-
-      Typically, this process involves:
-
-      - Accessing the resolved future to retrieve the necessary values for authentication.
-      - Performing the actual authentication using these values.
-      - Converting the returned response into an appropriate `AuthContext` object and returning it.
-
-      :param auth_req: The authentication request object.
-      :type auth_req: AuthenticateRequest
-      :param future_uid: A unique identifier for the future, used to retrieve the correct
-                         result issued during the `prepare` step.
-      :type future_uid: str
-
-      :returns: The authentication context object containing the authentication result.
-      :rtype: AuthContext
 
 
 
@@ -147,52 +61,7 @@ Module Contents
       :async:
 
 
-      Performs re-authentication for an expired session.
-
-      This method is optional and does not need to be implemented for handlers that do not require re-authentication.
-
-      Typically, the information needed for re-authentication (e.g., a refresh token) should be stored
-      within the `AuthContext` during the previous authentication step.
-
-      In the `refresh` step, this method accesses the necessary re-authentication details from the provided `context`,
-      performs the re-authentication, and returns an updated `AuthContext`.
-
-      :param auth_req: The authentication request object.
-      :type auth_req: AuthenticateRequest
-      :param context: The current authentication context that it should contain data required for re-authentication.
-      :type context: AuthContext
-
-      :returns: An updated authentication context object.
-      :rtype: AuthContext
-
-
 
    .. py:method:: make_request(auth_scopes: Optional[list[str]] = None, **kwargs) -> hyperpocket.auth.notion.token_schema.NotionTokenRequest
-
-      Make an AuthenticationRequest.
-
-      Usually, this method only requires `auth_scopes`.
-
-      If additional static information is needed (e.g., clientID, secretID),
-
-      retrieve it from the configuration.
-
-      :param auth_scopes: list of auth scopes
-      :type auth_scopes: Optional[list[str]]
-
-      :returns: A authentication request object with the necessary details.
-      :rtype: AuthenticateRequest
-
-      .. rubric:: Examples
-
-      Create a Slack OAuth2 request::
-
-          def make_request(self, auth_scopes: Optional[list[str]] = None, **kwargs) -> SlackOAuth2Request:
-              return SlackOAuth2Request(
-                  auth_scopes=auth_scopes,
-                  client_id=config.auth.slack.client_id,
-                  client_secret=config.auth.slack.client_secret
-              )
-
 
 

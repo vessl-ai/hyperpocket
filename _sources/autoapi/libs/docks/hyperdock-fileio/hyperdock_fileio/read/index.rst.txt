@@ -1,0 +1,62 @@
+libs.docks.hyperdock-fileio.hyperdock_fileio.read
+=================================================
+
+.. py:module:: libs.docks.hyperdock-fileio.hyperdock_fileio.read
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.docks.hyperdock-fileio.hyperdock_fileio.read.read_text_file
+   libs.docks.hyperdock-fileio.hyperdock_fileio.read.head
+   libs.docks.hyperdock-fileio.hyperdock_fileio.read.tail
+   libs.docks.hyperdock-fileio.hyperdock_fileio.read.read_binary_file_and_encode_base64
+
+
+Module Contents
+---------------
+
+.. py:function:: read_text_file(file_path: str, encoding: Optional[str] = None) -> str
+
+   Read a file and return its whole content as a string.
+   If the encoding is not provided, the best guess will be used.
+   :param file_path: str, file path
+   :param encoding: Optional[str]
+   :return:
+   content: str
+
+
+.. py:function:: head(file_path: str, n: int, encoding: Optional[str] = None) -> str
+
+   Read the first n lines of a file and return them as a string.
+   If the encoding is not provided, the best guess will be used.
+   :param file_path: str, file path
+   :param n: int, number of lines to read
+   :param encoding: Optional[str], encoding of the file
+   :return:
+   content: str
+
+
+.. py:function:: tail(file_path: str, n: int, encoding: Optional[str] = None) -> str
+
+   Read the last n lines of a file and return them as a string.
+   If the encoding is not provided, the best guess will be used.
+   :param file_path: str, file path
+   :param n: int, number of lines to read
+   :param encoding: Optional[str], encoding of the file
+   :return:
+   content: str
+
+
+.. py:function:: read_binary_file_and_encode_base64(file_path: str, offset: int = 0, length: Optional[int] = None) -> str
+
+   Read a binary file and return its content as a base64 encoded string.
+   :param file_path: str, file path
+   :param offset: int, offset to start reading from. Default is 0
+   :param length: Optional[int], number of bytes to read. If None, the whole file will be read
+   :return:
+
+

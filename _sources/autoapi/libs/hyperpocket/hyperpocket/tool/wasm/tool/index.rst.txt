@@ -31,10 +31,6 @@ Module Contents
    Bases: :py:obj:`hyperpocket.tool.ToolRequest`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: lock
       :type:  hyperpocket.repository.Lock
 
@@ -101,15 +97,9 @@ Module Contents
 
    .. py:method:: invoke(body: Any, envs: dict, **kwargs) -> str
 
-      Invoke the tool
-
-
 
    .. py:method:: ainvoke(body: Any, envs: dict, **kwargs) -> str
       :async:
-
-
-      Asynchronously invoke the tool
 
 
 

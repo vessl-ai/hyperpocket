@@ -19,7 +19,9 @@
       <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../../../../../search.html" />
+    <link rel="next" title="libs.hyperpocket.hyperpocket.auth.gumloop.token_schema" href="../token_schema/index.html" />
+    <link rel="prev" title="libs.hyperpocket.hyperpocket.auth.gumloop.token_context" href="../token_context/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,10 +43,23 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/conceptual_guide.html">Conceptual Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../managed/create_auth_provider.html">Create Auth Provider</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../docks/index.html">libs.docks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../extensions/index.html">libs.extensions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../index.html">libs.hyperpocket</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../../../../index.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -61,6 +76,11 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../../index.html">libs</a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">libs.hyperpocket</a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">libs.hyperpocket.hyperpocket</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">libs.hyperpocket.hyperpocket.auth</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">libs.hyperpocket.hyperpocket.auth.gumloop</a></li>
       <li class="breadcrumb-item active">libs.hyperpocket.hyperpocket.auth.gumloop.token_handler</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../../../../_sources/autoapi/libs/hyperpocket/hyperpocket/auth/gumloop/token_handler/index.rst.txt" rel="nofollow"> View page source</a>
@@ -78,7 +98,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler" title="libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GumloopTokenAuthHandler</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -89,8 +109,6 @@
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.</span></span><span class="sig-name descname"><span class="pre">GumloopTokenAuthHandler</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperpocket.auth.AuthHandlerInterface</span></code></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gumloop-token'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.name" title="Link to this definition"></a></dt>
@@ -109,174 +127,37 @@ inheritance.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.provider">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">provider</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">hyperpocket.auth.AuthProvider</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.provider" title="Link to this definition"></a></dt>
-<dd><p>Returns the authentication provider enum.</p>
-<p>This method is used to determine the appropriate authentication handler</p>
-<p>based on the authentication provider.</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.provider_default">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">provider_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.provider_default" title="Link to this definition"></a></dt>
-<dd><p>Indicates whether this authentication handler is the default handler.</p>
-<p>If no specific handler is designated, the default handler will be used.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if this handler is the default, False otherwise.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.recommended_scopes">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">recommended_scopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.recommended_scopes" title="Link to this definition"></a></dt>
-<dd><p>Returns the recommended authentication scopes.</p>
-<p>If <cite>use_recommended_scope</cite> is set to True in the <cite>AuthConfig</cite>,</p>
-<p>this method should return the proper recommended scopes. Otherwise,</p>
-<p>it should return an empty set.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A set of recommended scopes, or an empty set if not applicable.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>set[str]</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<p>Slack OAuth2 recommended_scopes:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">recommended_scopes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">slack</span><span class="o">.</span><span class="n">use_recommended_scope</span><span class="p">:</span>
-        <span class="n">recommended_scopes</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;channels:history&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;channels:read&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;chat:write&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;groups:history&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;groups:read&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;im:history&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;mpim:history&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;reactions:read&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;reactions:write&quot;</span><span class="p">,</span>
-        <span class="p">}</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">recommended_scopes</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">return</span> <span class="n">recommended_scopes</span>
-</pre></div>
-</div>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.make_request">
 <span class="sig-name descname"><span class="pre">make_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_scopes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest"><span class="pre">hyperpocket.auth.schema.AuthenticateRequest</span></a></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.make_request" title="Link to this definition"></a></dt>
-<dd><p>Make an AuthenticationRequest.</p>
-<p>Usually, this method only requires <cite>auth_scopes</cite>.</p>
-<p>If additional static information is needed (e.g., clientID, secretID),</p>
-<p>retrieve it from the configuration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>auth_scopes</strong> (<em>Optional</em><em>[</em><em>list</em><em>[</em><em>str</em><em>]</em><em>]</em>) – list of auth scopes</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A authentication request object with the necessary details.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest">AuthenticateRequest</a></p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<p>Create a Slack OAuth2 request:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth_scopes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SlackOAuth2Request</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">SlackOAuth2Request</span><span class="p">(</span>
-        <span class="n">auth_scopes</span><span class="o">=</span><span class="n">auth_scopes</span><span class="p">,</span>
-        <span class="n">client_id</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">slack</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
-        <span class="n">client_secret</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">slack</span><span class="o">.</span><span class="n">client_secret</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.prepare">
 <span class="sig-name descname"><span class="pre">prepare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest"><span class="pre">hyperpocket.auth.schema.AuthenticateRequest</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">thread_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">future_uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.prepare" title="Link to this definition"></a></dt>
-<dd><p>Performs preliminary tasks required for authentication.</p>
-<p>This method typically performs the following actions:</p>
-<ul class="simple">
-<li><p>Creates a future to wait for user authentication completion during the authentication process.</p></li>
-<li><p>Issues an authentication URI that the user can access.</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>auth_req</strong> (<a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest"><em>AuthenticateRequest</em></a>) – The authentication request object.</p></li>
-<li><p><strong>thread_id</strong> (<em>str</em>) – The thread ID.</p></li>
-<li><p><strong>profile</strong> (<em>str</em>) – The profile name.</p></li>
-<li><p><strong>future_uid</strong> (<em>str</em>) – A unique identifier for each future.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The authentication URI that the user can access.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.authenticate">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest"><span class="pre">hyperpocket.auth.schema.AuthenticateRequest</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">future_uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">hyperpocket.auth.AuthContext</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.authenticate" title="Link to this definition"></a></dt>
-<dd><p>Performs the actual authentication process.</p>
-<p>This function assumes that the user has completed the authentication during the <cite>prepare</cite> step,
-and the associated future has been resolved. At this point, the result contains the required
-values for authentication (e.g., an auth code).</p>
-<p>Typically, this process involves:</p>
-<ul class="simple">
-<li><p>Accessing the resolved future to retrieve the necessary values for authentication.</p></li>
-<li><p>Performing the actual authentication using these values.</p></li>
-<li><p>Converting the returned response into an appropriate <cite>AuthContext</cite> object and returning it.</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>auth_req</strong> (<a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest"><em>AuthenticateRequest</em></a>) – The authentication request object.</p></li>
-<li><p><strong>future_uid</strong> (<em>str</em>) – A unique identifier for the future, used to retrieve the correct
-result issued during the <cite>prepare</cite> step.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The authentication context object containing the authentication result.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../../context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext" title="libs.hyperpocket.hyperpocket.auth.context.AuthContext">AuthContext</a></p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.refresh">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest"><span class="pre">hyperpocket.auth.schema.AuthenticateRequest</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">hyperpocket.auth.AuthContext</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">hyperpocket.auth.AuthContext</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.gumloop.token_handler.GumloopTokenAuthHandler.refresh" title="Link to this definition"></a></dt>
-<dd><p>Performs re-authentication for an expired session.</p>
-<p>This method is optional and does not need to be implemented for handlers that do not require re-authentication.</p>
-<p>Typically, the information needed for re-authentication (e.g., a refresh token) should be stored
-within the <cite>AuthContext</cite> during the previous authentication step.</p>
-<p>In the <cite>refresh</cite> step, this method accesses the necessary re-authentication details from the provided <cite>context</cite>,
-performs the re-authentication, and returns an updated <cite>AuthContext</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>auth_req</strong> (<a class="reference internal" href="../../schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest" title="libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest"><em>AuthenticateRequest</em></a>) – The authentication request object.</p></li>
-<li><p><strong>context</strong> (<a class="reference internal" href="../../context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext" title="libs.hyperpocket.hyperpocket.auth.context.AuthContext"><em>AuthContext</em></a>) – The current authentication context that it should contain data required for re-authentication.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An updated authentication context object.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../../context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext" title="libs.hyperpocket.hyperpocket.auth.context.AuthContext">AuthContext</a></p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -286,7 +167,10 @@ performs the re-authentication, and returns an updated <cite>AuthContext</cite>.
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../token_context/index.html" class="btn btn-neutral float-left" title="libs.hyperpocket.hyperpocket.auth.gumloop.token_context" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../token_schema/index.html" class="btn btn-neutral float-right" title="libs.hyperpocket.hyperpocket.auth.gumloop.token_schema" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

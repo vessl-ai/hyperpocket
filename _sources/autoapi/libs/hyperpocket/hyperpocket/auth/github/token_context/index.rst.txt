@@ -21,9 +21,6 @@ Module Contents
    Bases: :py:obj:`hyperpocket.auth.github.context.GitHubAuthContext`
 
 
-   This class is used to define the interface of the authentication model.
-
-
    .. py:method:: from_github_token_response(response: hyperpocket.auth.github.token_schema.GitHubTokenResponse)
       :classmethod:
 

@@ -1,0 +1,49 @@
+hyperpocket_openai
+==================
+
+.. py:module:: hyperpocket_openai
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/hyperpocket_openai/pocket_openai/index
+   /autoapi/hyperpocket_openai/util/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperpocket_openai.PocketOpenAI
+
+
+Package Contents
+----------------
+
+.. py:class:: PocketOpenAI
+
+   Bases: :py:obj:`hyperpocket.Pocket`
+
+
+   .. py:method:: invoke(tool_call: openai.types.chat.ChatCompletionMessageToolCall, *kwargs)
+
+
+   .. py:method:: ainvoke(tool_call: openai.types.chat.ChatCompletionMessageToolCall, **kwargs)
+      :async:
+
+
+
+   .. py:method:: get_open_ai_tool_specs() -> List[dict]
+
+
+   .. py:method:: get_open_ai_tool_spec(tool: hyperpocket.tool.Tool) -> dict
+      :staticmethod:
+
+
+

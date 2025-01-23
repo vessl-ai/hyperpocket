@@ -1,0 +1,48 @@
+libs.docks.hyperdock-fileio.hyperdock_fileio.write
+==================================================
+
+.. py:module:: libs.docks.hyperdock-fileio.hyperdock_fileio.write
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.docks.hyperdock-fileio.hyperdock_fileio.write.write_text_to_file
+   libs.docks.hyperdock-fileio.hyperdock_fileio.write.write_base64_bytes_to_file
+
+
+Module Contents
+---------------
+
+.. py:function:: write_text_to_file(file_path: str, content: str, make_dirs: bool = False, append: bool = False, encoding: Optional[str] = None) -> str
+
+   Write a string to a file.
+   If base directory does not exist and make_dirs is True, it will be created.
+   If the file exists and append is True, the content will be appended.
+   Encoding can be provided, but effective unless append is True.
+   On appending, the encoding of the file is detected and used.
+   :param file_path: str, file path
+   :param content: str, content to write
+   :param make_dirs: bool, if true, create the base directory if it does not exist
+   :param append: bool, if true, append the content to the file
+   :param encoding: Optional[str], encoding of the file
+   :return: a result message
+
+
+.. py:function:: write_base64_bytes_to_file(file_path: str, base64_content: str, make_dirs: bool = False, append: bool = False) -> str
+
+   Write base64 encoded bytes to a file.
+   If base directory does not exist and make_dirs is True, it will be created.
+   If the file exists and append is True, the content will be appended.
+   Encoding can be provided, but effective unless append is True.
+   On appending, the encoding of the file is detected and used.
+   :param file_path: str, file path
+   :param base64_content: bytes, content to write
+   :param make_dirs: bool, if true, create the base directory if it does not exist
+   :param append: bool, if true, append the content to the file
+   :return: a result message
+
+
