@@ -2,6 +2,7 @@ import ast
 from unittest.async_case import IsolatedAsyncioTestCase
 from urllib.parse import urlparse, parse_qs, unquote
 
+import pytest
 from pydantic import BaseModel
 
 from hyperpocket import Pocket
@@ -100,6 +101,7 @@ class TestPocket(IsolatedAsyncioTestCase):
         # then
         self.assertEqual(result, "4")
 
+    @pytest.mark.skip(reason="after open repo")
     async def test_wasm_tool(self):
         # given
         tool_name = "simple_echo_text"
