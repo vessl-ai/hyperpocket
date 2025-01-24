@@ -184,7 +184,7 @@ class PocketServer(object):
         except Exception as error:
             error_queue.put(error)
         finally:
-            if lock.acquire(block=False):
+            if not lock.acquire(block=False):
                 lock.release()
 
     def _create_main_server(self) -> Server:
