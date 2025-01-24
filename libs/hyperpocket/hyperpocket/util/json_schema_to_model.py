@@ -70,6 +70,8 @@ def _convert_to_python_type(json_type, model_name, property_schema):
         field_type = str
     elif json_type == "boolean":
         field_type = bool
+    elif json_type == "number":
+        field_type = float
     elif json_type == "none":
         field_type = type(None)
     elif json_type == "object":
