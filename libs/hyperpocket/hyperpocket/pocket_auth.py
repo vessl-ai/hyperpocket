@@ -30,7 +30,7 @@ class PocketAuth(object):
             handlers: Optional[list[Type[AuthHandlerInterface]]] = None,
             session_storage: Optional[SessionStorageInterface] = None,
             use_prebuilt_handlers: bool = None):
-        if config.auth.use_prebuilt_auth or use_prebuilt_handlers:
+        if config().auth.use_prebuilt_auth or use_prebuilt_handlers:
             handlers = PREBUILT_AUTH_HANDLERS + (handlers or [])
         handler_impls = [C() for C in handlers] if handlers else []
         self.handlers = {handler.name: handler for handler in handler_impls}
@@ -38,15 +38,15 @@ class PocketAuth(object):
             self.session_storage = session_storage
         else:
             for session_type in SESSION_STORAGE_LIST:
-                if session_type.session_storage_type() == config.session.session_type:
-                    session_config = getattr(config.session, config.session.session_type.value)
+                if session_type.session_storage_type() == config().session.session_type:
+                    session_config = getattr(config().session, config().session.session_type.value)
 
                     pocket_logger.info(f"init {session_type.session_storage_type()} session storage..")
                     self.session_storage = session_type(session_config)
 
             if self.session_storage is None:
-                pocket_logger.error(f"not supported session type({config.session.session_type})")
-                raise RuntimeError(f"Not Supported Session Type({config.session.session_type})")
+                pocket_logger.error(f"not supported session type({config().session.session_type})")
+                raise RuntimeError(f"Not Supported Session Type({config().session.session_type})")
 
     def make_request(self,
                      auth_scopes: list[str] = None,

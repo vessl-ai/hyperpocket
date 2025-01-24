@@ -30,7 +30,7 @@ class SlackOAuth2AuthHandler(AuthHandlerInterface):
 
     @staticmethod
     def recommended_scopes() -> set[str]:
-        if config.auth.slack.use_recommended_scope:
+        if config().auth.slack.use_recommended_scope:
             recommended_scopes = {
                 "channels:history",
                 "channels:read",
@@ -49,8 +49,8 @@ class SlackOAuth2AuthHandler(AuthHandlerInterface):
     def prepare(self, auth_req: SlackOAuth2Request, thread_id: str, profile: str,
                 future_uid: str, *args, **kwargs) -> str:
         redirect_uri = urljoin(
-            config.public_base_url + "/",
-            f"{config.callback_url_rewrite_prefix}/auth/slack/oauth2/callback",
+            config().public_base_url + "/",
+            f"{config().callback_url_rewrite_prefix}/auth/slack/oauth2/callback",
         )
         print(f"redirect_uri: {redirect_uri}")
         auth_url = self._make_auth_url(req=auth_req, redirect_uri=redirect_uri, state=future_uid)
@@ -96,8 +96,8 @@ class SlackOAuth2AuthHandler(AuthHandlerInterface):
             resp = await client.post(
                 url=self._SLACK_TOKEN_URL,
                 data={
-                    'client_id': config.auth.slack.client_id,
-                    'client_secret': config.auth.slack.client_secret,
+                    'client_id': config().auth.slack.client_id,
+                    'client_secret': config().auth.slack.client_secret,
                     'grant_type': 'refresh_token',
                     'refresh_token': refresh_token,
                 },
@@ -146,6 +146,6 @@ class SlackOAuth2AuthHandler(AuthHandlerInterface):
     def make_request(self, auth_scopes: Optional[list[str]] = None, **kwargs) -> SlackOAuth2Request:
         return SlackOAuth2Request(
             auth_scopes=auth_scopes,
-            client_id=config.auth.slack.client_id,
-            client_secret=config.auth.slack.client_secret,
+            client_id=config().auth.slack.client_id,
+            client_secret=config().auth.slack.client_secret,
         )

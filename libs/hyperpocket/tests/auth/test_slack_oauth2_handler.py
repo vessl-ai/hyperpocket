@@ -16,7 +16,7 @@ from hyperpocket.futures import FutureStore
 class TestSlackOAuth2AuthHandler(IsolatedAsyncioTestCase):
 
     async def asyncSetUp(self):
-        config.auth.slack = SlackAuthConfig(
+        config().auth.slack = SlackAuthConfig(
             client_id="test-client-id",
             client_secret="test-client-secret",
         )

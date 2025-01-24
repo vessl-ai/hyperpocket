@@ -39,17 +39,17 @@ def get_logger():
     # set log level
     log_level = logging.INFO
     logger = logging.getLogger("pocket_logger")
-    if config.log_level.lower() == "debug":
+    if config().log_level.lower() == "debug":
         log_level = logging.DEBUG
-    elif config.log_level.lower() == "info":
+    elif config().log_level.lower() == "info":
         log_level = logging.INFO
-    elif config.log_level.lower() == "warning":
+    elif config().log_level.lower() == "warning":
         log_level = logging.WARNING
-    elif config.log_level.lower() == "error":
+    elif config().log_level.lower() == "error":
         log_level = logging.ERROR
-    elif config.log_level.lower() == "critical":
+    elif config().log_level.lower() == "critical":
         log_level = logging.CRITICAL
-    elif config.log_level.lower() == "fatal":
+    elif config().log_level.lower() == "fatal":
         log_level = logging.FATAL
 
     # set formatter

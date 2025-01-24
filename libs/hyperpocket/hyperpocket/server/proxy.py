@@ -9,7 +9,7 @@ async def proxy(request: Request, path: str):
     async with httpx.AsyncClient() as client:
         resp = await client.request(
             method=request.method,
-            url=f"{config.internal_base_url}/{path}",
+            url=f"{config().internal_base_url}/{path}",
             headers=request.headers,
             content=await request.body(),
             params=request.query_params,
@@ -19,12 +19,12 @@ async def proxy(request: Request, path: str):
 
 
 def add_callback_proxy(app: FastAPI):
-    app.add_api_route(f"/{config.callback_url_rewrite_prefix}/{{path:path}}", proxy,
+    app.add_api_route(f"/{config().callback_url_rewrite_prefix}/{{path:path}}", proxy,
                       methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
 
 
 https_proxy_app = None
-if config.enable_local_callback_proxy:
+if config().enable_local_callback_proxy:
     https_proxy_app = FastAPI()
     add_callback_proxy(https_proxy_app)
 

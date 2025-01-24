@@ -25,12 +25,6 @@ class TestPocket(IsolatedAsyncioTestCase):
         self.thread_id = "test_thread_id"
         self.pocket: Pocket = None
 
-        config.public_server_port = "https"
-        config.public_hostname = "localhost"
-        config.public_server_port = 8001
-        config.internal_server_port = 8000
-        config.enable_local_callback_proxy = True
-
     async def asyncTearDown(self):
         if self.pocket:
             self.pocket._teardown_server()
@@ -167,7 +161,6 @@ class TestPocket(IsolatedAsyncioTestCase):
                 simple_function
             ],
         )
-
         # when
         prepare_url_dict = await self.pocket.initialize_tool_auth()
         google_auth_url = prepare_url_dict[AuthProvider.GOOGLE.name]
@@ -187,3 +180,23 @@ class TestPocket(IsolatedAsyncioTestCase):
         scope_list = scopes.split(delimiter)
         stripped_scopes = [s.strip() for s in scope_list]
         return stripped_scopes
+
+    def test_pocket_settings_env_inject(self):
+        import os, random, string
+        key = ''.join([random.choice(string.ascii_letters) for _ in range(16)])
+        os.environ['POCKET_AUTH__GOOGLE__CLIENT_ID'] = key
+        os.environ['POCKET_AUTH__GOOGLE__CLIENT_SECRET'] = key
+        
+        @function_tool
+        def inside_pocket():
+            from hyperpocket.config import config
+            return config().auth.google.client_id
+
+        self.pocket = Pocket(tools=[
+            inside_pocket,
+        ])
+        try:
+            result = self.pocket.invoke('inside_pocket', {})
+            self.assertEqual(result, key)
+        except Exception as e:
+            assert False

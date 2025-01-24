@@ -25,7 +25,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             session_storage=InMemorySessionStorage(SessionConfigInMemory())
         )
 
-        config.auth.google = GoogleAuthConfig(
+        config().auth.google = GoogleAuthConfig(
             client_id="test-client-id",
             client_secret="test-client-secret",
         )

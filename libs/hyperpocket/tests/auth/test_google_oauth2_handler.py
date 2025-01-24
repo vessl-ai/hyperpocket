@@ -16,7 +16,7 @@ from hyperpocket.futures import FutureStore
 class TestGoogleOAuth2AuthHandler(IsolatedAsyncioTestCase):
 
     async def asyncSetUp(self):
-        config.auth.google = GoogleAuthConfig(
+        config().auth.google = GoogleAuthConfig(
             client_id="test-client-id",
             client_secret="test-client-secret",
         )

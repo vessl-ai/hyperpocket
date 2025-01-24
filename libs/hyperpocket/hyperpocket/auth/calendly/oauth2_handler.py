@@ -41,8 +41,8 @@ class CalendlyOAuth2AuthHandler(AuthHandlerInterface):
             **kwargs,
     ) -> str:
         redirect_uri = urljoin(
-            config.public_base_url + "/",
-            f"{config.callback_url_rewrite_prefix}/auth/calendly/oauth2/callback",
+            config().public_base_url + "/",
+            f"{config().callback_url_rewrite_prefix}/auth/calendly/oauth2/callback",
         )
         auth_url = self._make_auth_url(auth_req, redirect_uri, future_uid)
 
@@ -141,6 +141,6 @@ class CalendlyOAuth2AuthHandler(AuthHandlerInterface):
     ) -> CalendlyOAuth2Request:
         return CalendlyOAuth2Request(
             auth_scopes=auth_scopes,
-            client_id=config.auth.calendly.client_id,
-            client_secret=config.auth.calendly.client_secret,
+            client_id=config().auth.calendly.client_id,
+            client_secret=config().auth.calendly.client_secret,
         )

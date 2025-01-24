@@ -41,8 +41,8 @@ class GoogleOAuth2AuthHandler(AuthHandlerInterface):
             **kwargs,
     ) -> str:
         redirect_uri = urljoin(
-            config.public_base_url + "/",
-            f"{config.callback_url_rewrite_prefix}/auth/google/oauth2/callback",
+            config().public_base_url + "/",
+            f"{config().callback_url_rewrite_prefix}/auth/google/oauth2/callback",
         )
         auth_url = self._make_auth_url(auth_req, redirect_uri, future_uid)
 
@@ -132,6 +132,6 @@ class GoogleOAuth2AuthHandler(AuthHandlerInterface):
     ) -> GoogleOAuth2Request:
         return GoogleOAuth2Request(
             auth_scopes=auth_scopes,
-            client_id=config.auth.google.client_id,
-            client_secret=config.auth.google.client_secret,
+            client_id=config().auth.google.client_id,
+            client_secret=config().auth.google.client_secret,
         )
