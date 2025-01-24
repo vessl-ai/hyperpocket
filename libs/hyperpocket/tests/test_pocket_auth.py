@@ -19,11 +19,10 @@ from hyperpocket.session.in_memory import InMemorySessionStorage
 
 
 class TestPocketAuth(IsolatedAsyncioTestCase):
-
     async def asyncSetUp(self):
         self.pocket_auth = PocketAuth(
             handlers=[GoogleOAuth2AuthHandler],
-            session_storage=InMemorySessionStorage(SessionConfigInMemory())
+            session_storage=InMemorySessionStorage(SessionConfigInMemory()),
         )
 
         config().auth.google = GoogleAuthConfig(
@@ -50,7 +49,9 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
     async def test_create_pending_session(self):
         # given
         future_uid = str(uuid.uuid4())
-        handler = self.pocket_auth.find_handler_instance(name=self.auth_handler_name, auth_provider=self.auth_provider)
+        handler = self.pocket_auth.find_handler_instance(
+            name=self.auth_handler_name, auth_provider=self.auth_provider
+        )
 
         # when
         prev_context = self.pocket_auth.get_auth_context(
@@ -64,7 +65,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             future_uid=future_uid,
             profile=self.profile,
             thread_id=self.thread_id,
-            scope=set(self.scope)
+            scope=set(self.scope),
         )
 
         after_context = self.pocket_auth.get_auth_context(
@@ -75,7 +76,9 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # then
         self.assertIsNone(prev_context)
-        self.assertIsNone(after_context)  # should be none even after creating session in pending session.
+        self.assertIsNone(
+            after_context
+        )  # should be none even after creating session in pending session.
         self.assertIsNotNone(session)
         self.assertIsNone(session.auth_context)
         self.assertIsNotNone(session.auth_resolve_uid)
@@ -86,7 +89,9 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
     async def test_set_session_active(self):
         # given
         future_uid = str(uuid.uuid4())
-        handler = self.pocket_auth.find_handler_instance(name=self.auth_handler_name, auth_provider=self.auth_provider)
+        handler = self.pocket_auth.find_handler_instance(
+            name=self.auth_handler_name, auth_provider=self.auth_provider
+        )
 
         # when
         before_session_pending = self.pocket_auth.get_auth_context(
@@ -100,7 +105,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             future_uid=future_uid,
             profile=self.profile,
             thread_id=self.thread_id,
-            scope=set(self.scope)
+            scope=set(self.scope),
         )
 
         after_session_pending = self.pocket_auth.get_auth_context(
@@ -114,24 +119,28 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
                 access_token="access-token",
                 refresh_token="refresh-token",
                 description="test-description",
-                expires_at=datetime.now(tz=timezone.utc)
+                expires_at=datetime.now(tz=timezone.utc),
             ),
             provider=self.auth_provider,
             profile=self.profile,
             thread_id=self.thread_id,
         )
 
-        after_session_active: GoogleOAuth2AuthContext = self.pocket_auth.get_auth_context(
-            AuthProvider.GOOGLE,
-            thread_id=self.thread_id,
-            profile=self.profile,
+        after_session_active: GoogleOAuth2AuthContext = (
+            self.pocket_auth.get_auth_context(
+                AuthProvider.GOOGLE,
+                thread_id=self.thread_id,
+                profile=self.profile,
+            )
         )
 
         # then
         self.assertIsNone(before_session_pending)
 
         self.assertIsNotNone(session)
-        self.assertIsNone(session.auth_context)  # should be none even after creating session in pending session.
+        self.assertIsNone(
+            session.auth_context
+        )  # should be none even after creating session in pending session.
         self.assertIsNotNone(session.auth_resolve_uid)
         self.assertEqual(session.auth_resolve_uid, future_uid)
 
@@ -153,7 +162,11 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # when
         auth_state = self.pocket_auth.check(
-            auth_req=auth_req, auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_req=auth_req,
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # then
         self.assertEqual(auth_state, AuthState.NO_SESSION)
@@ -161,7 +174,9 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
     async def test_auth_check_pending_resolve_case(self):
         # given
         future_uid = str(uuid.uuid4())
-        handler = self.pocket_auth.find_handler_instance(name=self.auth_handler_name, auth_provider=self.auth_provider)
+        handler = self.pocket_auth.find_handler_instance(
+            name=self.auth_handler_name, auth_provider=self.auth_provider
+        )
         auth_req: GoogleOAuth2Request = self.pocket_auth.make_request(
             auth_scopes=self.scope,
             auth_provider=self.auth_provider,
@@ -173,12 +188,16 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             future_uid=future_uid,
             profile=self.profile,
             thread_id=self.thread_id,
-            scope=set(self.scope)
+            scope=set(self.scope),
         )
 
         auth_state = self.pocket_auth.check(
-            auth_req=auth_req, auth_provider=self.auth_provider, auth_handler_name=handler.name,
-            thread_id=self.thread_id, profile=self.profile)
+            auth_req=auth_req,
+            auth_provider=self.auth_provider,
+            auth_handler_name=handler.name,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # then
         self.assertEqual(auth_state, AuthState.PENDING_RESOLVE)
@@ -189,7 +208,9 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         """
         # given
         future_uid = str(uuid.uuid4())
-        handler = self.pocket_auth.find_handler_instance(name=self.auth_handler_name, auth_provider=self.auth_provider)
+        handler = self.pocket_auth.find_handler_instance(
+            name=self.auth_handler_name, auth_provider=self.auth_provider
+        )
         auth_req: GoogleOAuth2Request = self.pocket_auth.make_request(
             auth_scopes=self.scope,
             auth_provider=self.auth_provider,
@@ -202,13 +223,17 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             future_uid=future_uid,
             profile=self.profile,
             thread_id=self.thread_id,
-            scope=set(self.scope)
+            scope=set(self.scope),
         )
 
         future_data.future.set_result("test-code")
         auth_state = self.pocket_auth.check(
-            auth_req=auth_req, auth_provider=self.auth_provider, auth_handler_name=handler.name,
-            thread_id=self.thread_id, profile=self.profile)
+            auth_req=auth_req,
+            auth_provider=self.auth_provider,
+            auth_handler_name=handler.name,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # then
         self.assertEqual(auth_state, AuthState.RESOLVED)
@@ -221,7 +246,9 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # given
         future_uid = str(uuid.uuid4())
-        handler = self.pocket_auth.find_handler_instance(name=self.auth_handler_name, auth_provider=self.auth_provider)
+        handler = self.pocket_auth.find_handler_instance(
+            name=self.auth_handler_name, auth_provider=self.auth_provider
+        )
         auth_req: GoogleOAuth2Request = self.pocket_auth.make_request(
             auth_scopes=self.scope,
             auth_provider=self.auth_provider,
@@ -234,7 +261,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             future_uid=future_uid,
             profile=self.profile,
             thread_id=self.thread_id,
-            scope=set(self.scope)
+            scope=set(self.scope),
         )
 
         # activate session
@@ -251,8 +278,11 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         )
 
         auth_state = self.pocket_auth.check(
-            auth_req=auth_req, auth_provider=self.auth_provider, auth_handler_name=handler.name,
-            thread_id=self.thread_id, profile=self.profile
+            auth_req=auth_req,
+            auth_provider=self.auth_provider,
+            auth_handler_name=handler.name,
+            thread_id=self.thread_id,
+            profile=self.profile,
         )
 
         # then
@@ -265,8 +295,9 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         """
         # given
         future_uid = str(uuid.uuid4())
-        handler = self.pocket_auth.find_handler_instance(name=self.auth_handler_name,
-                                                         auth_provider=self.auth_provider)
+        handler = self.pocket_auth.find_handler_instance(
+            name=self.auth_handler_name, auth_provider=self.auth_provider
+        )
         auth_req = self.pocket_auth.make_request(
             auth_scopes=self.scope,
             auth_provider=self.auth_provider,
@@ -283,7 +314,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             future_uid=future_uid,
             profile=self.profile,
             thread_id=self.thread_id,
-            scope=set(self.scope)
+            scope=set(self.scope),
         )
 
         # activate session
@@ -299,10 +330,18 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             thread_id=self.thread_id,
         )
 
-        auth_state = self.pocket_auth.check(auth_req=auth_req, auth_provider=self.auth_provider,
-                                            thread_id=self.thread_id, profile=self.profile)
-        updated_auth_state = self.pocket_auth.check(auth_req=updated_auth_req, auth_provider=self.auth_provider,
-                                                    thread_id=self.thread_id, profile=self.profile)
+        auth_state = self.pocket_auth.check(
+            auth_req=auth_req,
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
+        updated_auth_state = self.pocket_auth.check(
+            auth_req=updated_auth_req,
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # then
         self.assertEqual(auth_state, AuthState.SKIP_AUTH)
@@ -314,11 +353,14 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         The auth state Should be SKIP_AUTH even the checking scope is not a subset of existing session scope.
         """
         # given
-        auth_handler_name = 'slack-token'  # temporally use slack provider/handler for testing
+        auth_handler_name = (
+            "slack-token"  # temporally use slack provider/handler for testing
+        )
         auth_provider = AuthProvider.SLACK
         future_uid = str(uuid.uuid4())
-        handler = self.pocket_auth.find_handler_instance(name=auth_handler_name,
-                                                         auth_provider=auth_provider)
+        handler = self.pocket_auth.find_handler_instance(
+            name=auth_handler_name, auth_provider=auth_provider
+        )
         auth_req = self.pocket_auth.make_request(
             auth_scopes=self.scope,
             auth_provider=auth_provider,
@@ -337,7 +379,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             future_uid=future_uid,
             profile=self.profile,
             thread_id=self.thread_id,
-            scope=set(self.scope)
+            scope=set(self.scope),
         )
 
         # activate session
@@ -353,10 +395,18 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             thread_id=self.thread_id,
         )
 
-        auth_state = self.pocket_auth.check(auth_req=auth_req, auth_provider=auth_provider,
-                                            thread_id=self.thread_id, profile=self.profile)
-        updated_auth_state = self.pocket_auth.check(auth_req=updated_auth_req, auth_provider=auth_provider,
-                                                    thread_id=self.thread_id, profile=self.profile)
+        auth_state = self.pocket_auth.check(
+            auth_req=auth_req,
+            auth_provider=auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
+        updated_auth_state = self.pocket_auth.check(
+            auth_req=updated_auth_req,
+            auth_provider=auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # then
         self.assertEqual(auth_state, AuthState.SKIP_AUTH)
@@ -369,8 +419,9 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # given
         future_uid = str(uuid.uuid4())
-        handler = self.pocket_auth.find_handler_instance(name=self.auth_handler_name,
-                                                         auth_provider=self.auth_provider)
+        handler = self.pocket_auth.find_handler_instance(
+            name=self.auth_handler_name, auth_provider=self.auth_provider
+        )
         auth_req = self.pocket_auth.make_request(
             auth_scopes=self.scope,
             auth_provider=self.auth_provider,
@@ -383,7 +434,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             future_uid=future_uid,
             profile=self.profile,
             thread_id=self.thread_id,
-            scope=set(self.scope)
+            scope=set(self.scope),
         )
 
         # activate session
@@ -401,8 +452,10 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # check by other auth provider(SLACK)
         auth_state = self.pocket_auth.check(
-            auth_req=auth_req, auth_provider=AuthProvider.SLACK,
-            thread_id=self.thread_id, profile=self.profile
+            auth_req=auth_req,
+            auth_provider=AuthProvider.SLACK,
+            thread_id=self.thread_id,
+            profile=self.profile,
         )
 
         # then
@@ -415,8 +468,9 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         """
         # given
         future_uid = str(uuid.uuid4())
-        handler = self.pocket_auth.find_handler_instance(name=self.auth_handler_name,
-                                                         auth_provider=self.auth_provider)
+        handler = self.pocket_auth.find_handler_instance(
+            name=self.auth_handler_name, auth_provider=self.auth_provider
+        )
         auth_req = self.pocket_auth.make_request(
             auth_scopes=self.scope,
             auth_provider=self.auth_provider,
@@ -433,7 +487,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             future_uid=future_uid,
             profile=self.profile,
             thread_id=self.thread_id,
-            scope=set(self.scope)
+            scope=set(self.scope),
         )
 
         # activate session
@@ -449,10 +503,18 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             thread_id=self.thread_id,
         )
 
-        auth_state = self.pocket_auth.check(auth_req=auth_req, auth_provider=self.auth_provider,
-                                            thread_id=self.thread_id, profile=self.profile)
-        updated_auth_state = self.pocket_auth.check(auth_req=updated_auth_req, auth_provider=self.auth_provider,
-                                                    thread_id=self.thread_id, profile=self.profile)
+        auth_state = self.pocket_auth.check(
+            auth_req=auth_req,
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
+        updated_auth_state = self.pocket_auth.check(
+            auth_req=updated_auth_req,
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # then
         self.assertEqual(auth_state, AuthState.SKIP_AUTH)
@@ -465,8 +527,9 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         """
         # given
         future_uid = str(uuid.uuid4())
-        handler = self.pocket_auth.find_handler_instance(name=self.auth_handler_name,
-                                                         auth_provider=self.auth_provider)
+        handler = self.pocket_auth.find_handler_instance(
+            name=self.auth_handler_name, auth_provider=self.auth_provider
+        )
         auth_req = self.pocket_auth.make_request(
             auth_scopes=self.scope,
             auth_provider=self.auth_provider,
@@ -479,7 +542,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             future_uid=future_uid,
             profile=self.profile,
             thread_id=self.thread_id,
-            scope=set(self.scope)
+            scope=set(self.scope),
         )
 
         # activate session
@@ -488,15 +551,20 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
                 access_token="access-token",
                 refresh_token="refresh-token",
                 description="test-description",
-                expires_at=datetime.now(tz=timezone.utc) + timedelta(minutes=5),  # near expirations
+                expires_at=datetime.now(tz=timezone.utc)
+                + timedelta(minutes=5),  # near expirations
             ),
             provider=self.auth_provider,
             profile=self.profile,
             thread_id=self.thread_id,
         )
 
-        auth_state = self.pocket_auth.check(auth_req=auth_req, auth_provider=self.auth_provider,
-                                            thread_id=self.thread_id, profile=self.profile)
+        auth_state = self.pocket_auth.check(
+            auth_req=auth_req,
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # then
         self.assertEqual(auth_state, AuthState.DO_REFRESH)
@@ -513,12 +581,18 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # when
         prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
 
         session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # then
         self.assertIsNotNone(prepared_url)
@@ -545,12 +619,18 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # when
         prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
 
         session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # make session active
         future_data = FutureStore.get_future(session.auth_resolve_uid)
@@ -575,13 +655,18 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
             auth_handler_name=self.auth_handler_name,
         )
         new_scope_session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # then
         self.assertNotEqual(prepared_url, new_scope_prepared_url)
         self.assertIsNotNone(new_scope_session.auth_resolve_uid)
         # future uid is different, because it makes new session
-        self.assertNotEqual(new_scope_session.auth_resolve_uid, session.auth_resolve_uid)
+        self.assertNotEqual(
+            new_scope_session.auth_resolve_uid, session.auth_resolve_uid
+        )
 
     async def test_prepare_pending_resolve_case(self):
         """
@@ -596,19 +681,31 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # when
         first_prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
         first_session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
         first_future_uid = first_session.auth_resolve_uid
 
         second_prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
         second_session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
         second_future_uid = second_session.auth_resolve_uid
 
         # then
@@ -641,26 +738,39 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # when
         prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
         session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
         future_uid = session.auth_resolve_uid
 
         new_scope_prepared_url = self.pocket_auth.prepare(
-            auth_req=new_scope_auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=new_scope_auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
         new_scope_session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
         new_scope_future_uid = new_scope_session.auth_resolve_uid
 
         # then
         self.assertIsNotNone(prepared_url)
         self.assertIsNotNone(new_scope_prepared_url)
         self.assertNotEqual(
-            prepared_url, new_scope_prepared_url)  # it should be different because url includes auth scopes information
+            prepared_url, new_scope_prepared_url
+        )  # it should be different because url includes auth scopes information
 
         self.assertIsNotNone(session)
         self.assertIsNotNone(new_scope_session)
@@ -682,11 +792,17 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         # when
         # create session
         prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
         session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # set session resolved
         future_data = FutureStore.get_future(session.auth_resolve_uid)
@@ -694,13 +810,18 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # prepare while in resolved
         resolved_prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
 
         # then
         self.assertIsNotNone(prepared_url)
-        self.assertIsNone(resolved_prepared_url)  # should be none if auth state is RESOLVED
+        self.assertIsNone(
+            resolved_prepared_url
+        )  # should be none if auth state is RESOLVED
 
     async def test_prepare_skip_auth_case(self):
         """
@@ -716,11 +837,17 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         # when
         # create session
         prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
         session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # make session active
         future_data = FutureStore.get_future(session.auth_resolve_uid)
@@ -729,7 +856,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
                 access_token="access-token",
                 refresh_token="refresh-token",
                 description="test-description",
-                expires_at=datetime.now(tz=timezone.utc) + timedelta(minutes=60)
+                expires_at=datetime.now(tz=timezone.utc) + timedelta(minutes=60),
             ),
             provider=self.auth_provider,
             profile=self.profile,
@@ -739,13 +866,18 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # prepare while in skip_auth
         skip_auth_prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
 
         # then
         self.assertIsNotNone(prepared_url)
-        self.assertIsNone(skip_auth_prepared_url)  # should be none if auth state is RESOLVED
+        self.assertIsNone(
+            skip_auth_prepared_url
+        )  # should be none if auth state is RESOLVED
 
     async def test_prepare_do_refresh_case(self):
         """
@@ -761,11 +893,17 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         # when
         # create session
         prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
         session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # make session active
         future_data = FutureStore.get_future(session.auth_resolve_uid)
@@ -774,7 +912,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
                 access_token="access-token",
                 refresh_token="refresh-token",
                 description="test-description",
-                expires_at=datetime.now(tz=timezone.utc)  # near expiration
+                expires_at=datetime.now(tz=timezone.utc),  # near expiration
             ),
             provider=self.auth_provider,
             profile=self.profile,
@@ -784,13 +922,18 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # prepare while in skip_auth
         do_refresh_prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
 
         # then
         self.assertIsNotNone(prepared_url)
-        self.assertIsNone(do_refresh_prepared_url)  # should be none if auth state is RESOLVED
+        self.assertIsNone(
+            do_refresh_prepared_url
+        )  # should be none if auth state is RESOLVED
 
     async def test_delete_session(self):
         # given
@@ -801,17 +944,29 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
 
         # when
         self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name)
+            auth_handler_name=self.auth_handler_name,
+        )
         session_before_delete = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         deleted = self.pocket_auth.delete_session(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         session_after_delete = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile)
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
 
         # then
         self.assertIsNotNone(session_before_delete)
@@ -828,7 +983,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         auth_req = self.pocket_auth.make_request(
             auth_scopes=self.scope,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name
+            auth_handler_name=self.auth_handler_name,
         )
 
         mock_response = httpx.Response(
@@ -839,24 +994,33 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
                 "refresh_token": "refresh-token",
                 "scope": ",".join(self.scope),
                 "token_type": "Bearer",
-            }
+            },
         )
 
         # when
         prepared_url = self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
-            auth_provider=self.auth_provider, auth_handler_name=self.auth_handler_name
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
+            auth_provider=self.auth_provider,
+            auth_handler_name=self.auth_handler_name,
         )
         session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
         )
         future_data = FutureStore.get_future(session.auth_resolve_uid)
         future_data.future.set_result("test-code")
 
         with patch("httpx.AsyncClient.post", return_value=mock_response):
-            context: GoogleOAuth2AuthContext = await self.pocket_auth.authenticate_async(
-                auth_req=auth_req, auth_provider=self.auth_provider,
-                thread_id=self.thread_id, profile=self.profile
+            context: GoogleOAuth2AuthContext = (
+                await self.pocket_auth.authenticate_async(
+                    auth_req=auth_req,
+                    auth_provider=self.auth_provider,
+                    thread_id=self.thread_id,
+                    profile=self.profile,
+                )
             )
 
             # then
@@ -874,7 +1038,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         auth_req = self.pocket_auth.make_request(
             auth_scopes=self.scope,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name
+            auth_handler_name=self.auth_handler_name,
         )
 
         mock_response = httpx.Response(
@@ -885,30 +1049,43 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
                 "refresh_token": "refresh-token",
                 "scope": ",".join(self.scope),
                 "token_type": "Bearer",
-            }
+            },
         )
 
         # when
         self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
-            auth_provider=self.auth_provider, auth_handler_name=self.auth_handler_name
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
+            auth_provider=self.auth_provider,
+            auth_handler_name=self.auth_handler_name,
         )
         session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
         )
         future_data = FutureStore.get_future(session.auth_resolve_uid)
         future_data.future.set_result("test-code")
 
         with patch("httpx.AsyncClient.post", return_value=mock_response):
-            first_context: GoogleOAuth2AuthContext = await self.pocket_auth.authenticate_async(
-                auth_req=auth_req, auth_provider=self.auth_provider,
-                thread_id=self.thread_id, profile=self.profile
+            first_context: GoogleOAuth2AuthContext = (
+                await self.pocket_auth.authenticate_async(
+                    auth_req=auth_req,
+                    auth_provider=self.auth_provider,
+                    thread_id=self.thread_id,
+                    profile=self.profile,
+                )
             )
 
         # don't have to mocking response, because it just returns already existing session's context
-        second_context: GoogleOAuth2AuthContext = await self.pocket_auth.authenticate_async(
-            auth_req=auth_req, auth_provider=self.auth_provider,
-            thread_id=self.thread_id, profile=self.profile
+        second_context: GoogleOAuth2AuthContext = (
+            await self.pocket_auth.authenticate_async(
+                auth_req=auth_req,
+                auth_provider=self.auth_provider,
+                thread_id=self.thread_id,
+                profile=self.profile,
+            )
         )
 
         # then
@@ -925,7 +1102,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
         auth_req = self.pocket_auth.make_request(
             auth_scopes=self.scope,
             auth_provider=self.auth_provider,
-            auth_handler_name=self.auth_handler_name
+            auth_handler_name=self.auth_handler_name,
         )
 
         mock_response = httpx.Response(
@@ -936,7 +1113,7 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
                 "refresh_token": "refresh-token",
                 "scope": ",".join(self.scope),
                 "token_type": "Bearer",
-            }
+            },
         )
 
         mock_refresh_response = httpx.Response(
@@ -946,36 +1123,53 @@ class TestPocketAuth(IsolatedAsyncioTestCase):
                 "expires_in": 3600,
                 "scope": ",".join(self.scope),
                 "token_type": "Bearer",
-            }
+            },
         )
 
         # when
         self.pocket_auth.prepare(
-            auth_req=auth_req, profile=self.profile, thread_id=self.thread_id,
-            auth_provider=self.auth_provider, auth_handler_name=self.auth_handler_name
+            auth_req=auth_req,
+            profile=self.profile,
+            thread_id=self.thread_id,
+            auth_provider=self.auth_provider,
+            auth_handler_name=self.auth_handler_name,
         )
         session = self.pocket_auth.session_storage.get(
-            auth_provider=self.auth_provider, thread_id=self.thread_id, profile=self.profile
+            auth_provider=self.auth_provider,
+            thread_id=self.thread_id,
+            profile=self.profile,
         )
         future_data = FutureStore.get_future(session.auth_resolve_uid)
         future_data.future.set_result("test-code")
 
         # authenticate session at the first
         with patch("httpx.AsyncClient.post", return_value=mock_response):
-            first_context: GoogleOAuth2AuthContext = await self.pocket_auth.authenticate_async(
-                auth_req=auth_req, auth_provider=self.auth_provider,
-                thread_id=self.thread_id, profile=self.profile
+            first_context: GoogleOAuth2AuthContext = (
+                await self.pocket_auth.authenticate_async(
+                    auth_req=auth_req,
+                    auth_provider=self.auth_provider,
+                    thread_id=self.thread_id,
+                    profile=self.profile,
+                )
             )
 
         # refresh authentication
         with patch("httpx.AsyncClient.post", return_value=mock_refresh_response):
-            second_context: GoogleOAuth2AuthContext = await self.pocket_auth.authenticate_async(
-                auth_req=auth_req, auth_provider=self.auth_provider,
-                thread_id=self.thread_id, profile=self.profile
+            second_context: GoogleOAuth2AuthContext = (
+                await self.pocket_auth.authenticate_async(
+                    auth_req=auth_req,
+                    auth_provider=self.auth_provider,
+                    thread_id=self.thread_id,
+                    profile=self.profile,
+                )
             )
 
-        first_context_time_diff = (first_context.expires_at - datetime.now(tz=timezone.utc)).total_seconds()
-        second_context_time_diff = (second_context.expires_at - datetime.now(tz=timezone.utc)).total_seconds()
+        first_context_time_diff = (
+            first_context.expires_at - datetime.now(tz=timezone.utc)
+        ).total_seconds()
+        second_context_time_diff = (
+            second_context.expires_at - datetime.now(tz=timezone.utc)
+        ).total_seconds()
 
         # then
         self.assertEqual(first_context.access_token, "access-token")

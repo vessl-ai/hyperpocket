@@ -5,7 +5,9 @@ from hyperpocket.util.find_all_subclass_in_package import find_all_subclass_in_p
 T = TypeVar("T")
 
 
-def find_all_leaf_class_in_package(package_name: str, interface_type: Type[T]) -> List[T]:
+def find_all_leaf_class_in_package(
+    package_name: str, interface_type: Type[T]
+) -> List[T]:
     parent_class_set = set()
     subclasses = find_all_subclass_in_package(package_name, interface_type)
 

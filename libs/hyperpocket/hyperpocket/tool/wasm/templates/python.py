@@ -1,4 +1,4 @@
-python_template = '''
+python_template = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,4 +90,4 @@ ${packageName}.main()
 </script>
 </body>
 </html>
-'''
+"""

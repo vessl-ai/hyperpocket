@@ -14,6 +14,7 @@ class FunctionTool(Tool):
     """
     FunctionTool is Tool executing local python method.
     """
+
     func: Optional[Callable[..., str]]
     afunc: Optional[Callable[..., Coroutine[Any, Any, str]]]
 
@@ -89,14 +90,14 @@ class FunctionTool(Tool):
     @classmethod
     def from_func(
         cls,
-        func: Callable | 'FunctionTool',
-        afunc: Callable[..., Coroutine[Any, Any, str]] | 'FunctionTool' = None,
+        func: Callable | "FunctionTool",
+        afunc: Callable[..., Coroutine[Any, Any, str]] | "FunctionTool" = None,
         auth: Optional[ToolAuth] = None,
         tool_vars: dict[str, str] = None,
     ) -> "FunctionTool":
         if tool_vars is None:
             tool_vars = dict()
-            
+
         if isinstance(func, FunctionTool):
             if tool_vars is not None:
                 func.override_tool_variables(tool_vars)
@@ -107,7 +108,7 @@ class FunctionTool(Tool):
             return afunc
         elif not callable(func) and not callable(afunc):
             raise ValueError("FunctionTool can only be created from a callable")
-        
+
         model = function_to_model(func)
         argument_json_schema = flatten_json_schema(model.model_json_schema())
 
@@ -118,9 +119,9 @@ class FunctionTool(Tool):
             description=func.__doc__ if func.__doc__ is not None else "",
             argument_json_schema=argument_json_schema,
             auth=auth,
-            default_tool_vars=tool_vars
+            default_tool_vars=tool_vars,
         )
-    
+
     @classmethod
     def from_dock(
         cls,
@@ -137,29 +138,39 @@ class FunctionTool(Tool):
                 model = function_to_model(func)
             argument_json_schema = flatten_json_schema(model.model_json_schema())
             if not callable(func):
-                raise ValueError(f"Dock element should be a list of functions, but found {func}")
+                raise ValueError(
+                    f"Dock element should be a list of functions, but found {func}"
+                )
             is_coroutine = inspect.iscoroutinefunction(func)
             auth = None
             if func.__dict__.get("__auth__") is not None:
                 auth = ToolAuth(**func.__dict__["__auth__"])
             if is_coroutine:
-                tools.append(cls(
-                    func=None,
-                    afunc=func,
-                    name=func.__name__,
-                    description=func.__doc__,
-                    argument_json_schema=argument_json_schema,
-                    auth=auth,
-                    default_tool_vars=(tool_vars | func.__dict__.get("__vars__", {})),
-                ))
+                tools.append(
+                    cls(
+                        func=None,
+                        afunc=func,
+                        name=func.__name__,
+                        description=func.__doc__,
+                        argument_json_schema=argument_json_schema,
+                        auth=auth,
+                        default_tool_vars=(
+                            tool_vars | func.__dict__.get("__vars__", {})
+                        ),
+                    )
+                )
             else:
-                tools.append(cls(
-                    func=func,
-                    afunc=None,
-                    name=func.__name__,
-                    description=func.__doc__,
-                    argument_json_schema=argument_json_schema,
-                    auth=auth,
-                    default_tool_vars=(tool_vars | func.__dict__.get("__vars__", {})),
-                ))
+                tools.append(
+                    cls(
+                        func=func,
+                        afunc=None,
+                        name=func.__name__,
+                        description=func.__doc__,
+                        argument_json_schema=argument_json_schema,
+                        auth=auth,
+                        default_tool_vars=(
+                            tool_vars | func.__dict__.get("__vars__", {})
+                        ),
+                    )
+                )
         return tools

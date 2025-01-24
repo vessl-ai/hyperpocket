@@ -5,7 +5,8 @@ import hyperdock_fileio.write as write_functions
 
 
 def initialize_dock(
-    *_, **__,
+    *_,
+    **__,
 ) -> list[callable]:
     return [
         read_functions.read_text_file,

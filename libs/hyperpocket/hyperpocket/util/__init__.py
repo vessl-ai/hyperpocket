@@ -1,1 +1,1 @@
-__all__ = ['json_schema_to_model']
+__all__ = ["json_schema_to_model"]

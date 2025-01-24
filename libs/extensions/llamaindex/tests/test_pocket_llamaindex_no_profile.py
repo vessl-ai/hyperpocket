@@ -12,7 +12,6 @@ from hyperpocket_llamaindex import PocketLlamaindex
 
 
 class TestPocketLlamaindexNoProfile(IsolatedAsyncioTestCase):
-
     async def asyncSetUp(self):
         config.public_server_port = "https"
         config.public_hostname = "localhost"
@@ -22,12 +21,15 @@ class TestPocketLlamaindexNoProfile(IsolatedAsyncioTestCase):
 
         self.pocket = PocketLlamaindex(
             tools=[
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
-                         "managed-tools/none/simple-echo-tool"),
+                from_git(
+                    "https://github.com/vessl-ai/hyperawesometools",
+                    "main",
+                    "managed-tools/none/simple-echo-tool",
+                ),
                 self.add,
-                self.sub_pydantic_args
+                self.sub_pydantic_args,
             ],
-            use_profile=False
+            use_profile=False,
         )
 
         self.llm = OpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"])
@@ -40,7 +42,7 @@ class TestPocketLlamaindexNoProfile(IsolatedAsyncioTestCase):
         agent = OpenAIAgent.from_tools(
             tools=self.pocket.get_tools(),
             llm=OpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"]),
-            verbose=True
+            verbose=True,
         )
 
         # when
@@ -50,7 +52,9 @@ class TestPocketLlamaindexNoProfile(IsolatedAsyncioTestCase):
 
     async def test_function_tool_no_profile(self):
         # when
-        response = self.llm.chat_with_tools(user_msg="add 1, 2", tools=self.pocket.get_tools(), verbose=True)
+        response = self.llm.chat_with_tools(
+            user_msg="add 1, 2", tools=self.pocket.get_tools(), verbose=True
+        )
         message = response.message
         tool_calls = message.additional_kwargs["tool_calls"]
 
@@ -62,15 +66,20 @@ class TestPocketLlamaindexNoProfile(IsolatedAsyncioTestCase):
 
         # then
         self.assertEqual(tool_name, "add")
-        self.assertEqual(args, {
-            "a": 1,
-            "b": 2,
-        })
-        self.assertEqual(result, '3')
+        self.assertEqual(
+            args,
+            {
+                "a": 1,
+                "b": 2,
+            },
+        )
+        self.assertEqual(result, "3")
 
     async def test_pydantic_function_tool_no_profile(self):
         # when
-        response = self.llm.chat_with_tools(user_msg="sub 1, 2", tools=self.pocket.get_tools(), verbose=True)
+        response = self.llm.chat_with_tools(
+            user_msg="sub 1, 2", tools=self.pocket.get_tools(), verbose=True
+        )
         tool_calls = response.message.additional_kwargs["tool_calls"]
 
         tool_name = tool_calls[0].function.name
@@ -81,15 +90,20 @@ class TestPocketLlamaindexNoProfile(IsolatedAsyncioTestCase):
 
         # then
         self.assertEqual(tool_name, "sub_pydantic_args")
-        self.assertEqual(args, {
-            "a": {"first": 1},
-            "b": {"second": 2},
-        })
-        self.assertEqual(result, '-1')
+        self.assertEqual(
+            args,
+            {
+                "a": {"first": 1},
+                "b": {"second": 2},
+            },
+        )
+        self.assertEqual(result, "-1")
 
     async def test_wasm_tool_no_profile(self):
         # when
-        response = self.llm.chat_with_tools(user_msg="echo 'hello world'", tools=self.pocket.get_tools(), verbose=True)
+        response = self.llm.chat_with_tools(
+            user_msg="echo 'hello world'", tools=self.pocket.get_tools(), verbose=True
+        )
         tool_calls = response.message.additional_kwargs["tool_calls"]
 
         tool_name = tool_calls[0].function.name
@@ -101,9 +115,7 @@ class TestPocketLlamaindexNoProfile(IsolatedAsyncioTestCase):
 
         # then
         self.assertEqual(tool_name, "simple_echo_text")
-        self.assertEqual(args, {
-            "text": "hello world"
-        })
+        self.assertEqual(args, {"text": "hello world"})
         self.assertTrue(output["stdout"].startswith("echo message : hello world"))
 
     @staticmethod

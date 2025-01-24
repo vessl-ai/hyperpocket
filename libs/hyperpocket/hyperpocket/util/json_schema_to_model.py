@@ -4,7 +4,9 @@ from pydantic import BaseModel, Field, create_model
 
 
 # Convert JSON Schema to a Pydantic model
-def json_schema_to_model(schema: dict, model_name: str = "DynamicModel") -> Type[BaseModel]:
+def json_schema_to_model(
+    schema: dict, model_name: str = "DynamicModel"
+) -> Type[BaseModel]:
     """Recursively create a Pydantic model from a JSON Schema."""
     fields = {}
     config_extra = "forbid"
@@ -16,12 +18,16 @@ def json_schema_to_model(schema: dict, model_name: str = "DynamicModel") -> Type
         if "anyOf" in property_schema:
             types = []
             for item in property_schema["anyOf"]:
-                sub_type = _convert_to_python_type(item["type"], model_name, property_schema)
+                sub_type = _convert_to_python_type(
+                    item["type"], model_name, property_schema
+                )
                 types.append(sub_type)
 
             field_type = Union[tuple(types)]
         elif "type" in property_schema:
-            field_type = _convert_to_python_type(property_schema["type"], model_name, property_schema)
+            field_type = _convert_to_python_type(
+                property_schema["type"], model_name, property_schema
+            )
         else:
             raise RuntimeError("have no type in json schema.")
 
@@ -35,7 +41,10 @@ def json_schema_to_model(schema: dict, model_name: str = "DynamicModel") -> Type
         if required:
             fields[property_name] = (field_type, Field(description=field_description))
         else:
-            fields[property_name] = (field_type, Field(default=field_default, description=field_description))
+            fields[property_name] = (
+                field_type,
+                Field(default=field_default, description=field_description),
+            )
 
     # Handle additionalProperties
     if "additionalProperties" in schema:

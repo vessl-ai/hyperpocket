@@ -35,13 +35,13 @@ class GoogleOAuth2AuthHandler(AuthHandlerInterface):
         return set()
 
     def prepare(
-            self,
-            auth_req: GoogleOAuth2Request,
-            thread_id: str,
-            profile: str,
-            future_uid: str,
-            *args,
-            **kwargs,
+        self,
+        auth_req: GoogleOAuth2Request,
+        thread_id: str,
+        profile: str,
+        future_uid: str,
+        *args,
+        **kwargs,
     ) -> str:
         redirect_uri = urljoin(
             config().public_base_url + "/",
@@ -61,9 +61,9 @@ class GoogleOAuth2AuthHandler(AuthHandlerInterface):
         return f"User needs to authenticate using the following URL: {auth_url}"
 
     async def authenticate(
-            self, auth_req: GoogleOAuth2Request, future_uid: str, *args, **kwargs
+        self, auth_req: GoogleOAuth2Request, future_uid: str, *args, **kwargs
     ) -> AuthContext:
-        future_data = FutureStore.get_future( future_uid)
+        future_data = FutureStore.get_future(future_uid)
         auth_code = await future_data.future
 
         async with httpx.AsyncClient() as client:
@@ -86,7 +86,7 @@ class GoogleOAuth2AuthHandler(AuthHandlerInterface):
         return GoogleOAuth2AuthContext.from_google_oauth2_response(auth_response)
 
     async def refresh(
-            self, auth_req: GoogleOAuth2Request, context: AuthContext, *args, **kwargs
+        self, auth_req: GoogleOAuth2Request, context: AuthContext, *args, **kwargs
     ) -> AuthContext:
         google_context: GoogleOAuth2AuthContext = context
         last_oauth2_resp: GoogleOAuth2Response = google_context.detail
@@ -119,7 +119,9 @@ class GoogleOAuth2AuthHandler(AuthHandlerInterface):
             response = GoogleOAuth2Response(**resp_json)
             return GoogleOAuth2AuthContext.from_google_oauth2_response(response)
 
-    def _make_auth_url(self, auth_req: GoogleOAuth2Request, redirect_uri: str, state: str):
+    def _make_auth_url(
+        self, auth_req: GoogleOAuth2Request, redirect_uri: str, state: str
+    ):
         params = {
             "client_id": auth_req.client_id,
             "redirect_uri": redirect_uri,
@@ -131,7 +133,7 @@ class GoogleOAuth2AuthHandler(AuthHandlerInterface):
         return f"{self._GOOGLE_AUTH_URL}?{urlencode(params)}"
 
     def make_request(
-            self, auth_scopes: Optional[list[str]] = None, **kwargs
+        self, auth_scopes: Optional[list[str]] = None, **kwargs
     ) -> GoogleOAuth2Request:
         return GoogleOAuth2Request(
             auth_scopes=auth_scopes,

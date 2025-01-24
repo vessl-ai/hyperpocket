@@ -14,10 +14,8 @@ def tool_to_open_ai_spec(tool: Tool, use_profile: bool) -> dict:
         "function": {
             "name": name,
             "description": description.strip(),
-            "parameters": {
-                **json_schema
-            },
-        }
+            "parameters": {**json_schema},
+        },
     }
 
     return openai_spec

@@ -13,6 +13,7 @@ def current_working_directory() -> str:
     """
     return os.getcwd()
 
+
 def make_directory(
     path: str,
 ) -> str:
@@ -24,7 +25,8 @@ def make_directory(
     :return: a success message
     """
     os.makedirs(path, exist_ok=True)
-    return f'Directory {path} created.'
+    return f"Directory {path} created."
+
 
 def list_directory(
     path: str,
@@ -52,14 +54,17 @@ def list_directory(
         path = pathlib.Path(fpath)
         fstat = path.stat(follow_symlinks=False)
         mode = stat.filemode(fstat.st_mode)
-        ftype = 'directory' if path.is_dir() else 'file'
+        ftype = "directory" if path.is_dir() else "file"
         owner = fstat.st_uid
         group = fstat.st_gid
         size = fstat.st_size
         last_modification = datetime.fromtimestamp(fstat.st_mtime).isoformat()
-        file_list.append(f'{ftype}\t{mode}\t{owner}\t{group}\t{size}\t{last_modification}\t{fpath}')
-    header = 'Type\tMode\tOwner\tGroup\tSize\tLast Modification\tPath\n'
-    return header + ('\n'.join(file_list))
+        file_list.append(
+            f"{ftype}\t{mode}\t{owner}\t{group}\t{size}\t{last_modification}\t{fpath}"
+        )
+    header = "Type\tMode\tOwner\tGroup\tSize\tLast Modification\tPath\n"
+    return header + ("\n".join(file_list))
+
 
 def find_file_in_directory(
     path: str,
@@ -72,7 +77,8 @@ def find_file_in_directory(
     :return: list of files, delimited by newline
     """
     files = [str(file) for file in pathlib.Path(path).rglob(glob_pattern)]
-    return '\n'.join(files) if files else ''
+    return "\n".join(files) if files else ""
+
 
 def grep_recursive_in_directory(
     path: str,
@@ -81,7 +87,7 @@ def grep_recursive_in_directory(
     """
     Recursively search for a string in all files within a directory.
     :param path: str, The directory to search in.
-    :param regex_pattern: str, The pattern to search for.  
+    :param regex_pattern: str, The pattern to search for.
     :return: list of tuple consists with file path, matched line number, and line contents,
     delimited by newline
     """
@@ -90,7 +96,7 @@ def grep_recursive_in_directory(
         for file in files:
             file_path = pathlib.Path(root) / file
             with open(str(file_path), mode="rb") as fp:
-                encoding = detect(fp.read(1024)).get('encoding')
+                encoding = detect(fp.read(1024)).get("encoding")
             try:
                 with open(str(file_path), encoding=encoding, mode="r") as fp:
                     for line_num, line in enumerate(fp, 1):
@@ -98,4 +104,4 @@ def grep_recursive_in_directory(
                             matches.append(f"{file_path}:{line_num}:{line.strip()}")
             except UnicodeDecodeError:
                 pass
-    return '\n'.join(matches) if matches else ''
+    return "\n".join(matches) if matches else ""

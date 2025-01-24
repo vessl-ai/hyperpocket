@@ -1,4 +1,3 @@
-
 from hyperpocket.auth.context import AuthContext
 
 

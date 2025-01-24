@@ -12,7 +12,9 @@ def find_all_subclass_in_package(package_name: str, interface_type: Type[T]) -> 
     subclasses = set()
     package = importlib.import_module(package_name)
 
-    for _, module_name, is_pkg in pkgutil.walk_packages(package.__path__, package.__name__ + "."):
+    for _, module_name, is_pkg in pkgutil.walk_packages(
+        package.__path__, package.__name__ + "."
+    ):
         try:
             if "tests" in module_name or is_pkg:
                 continue

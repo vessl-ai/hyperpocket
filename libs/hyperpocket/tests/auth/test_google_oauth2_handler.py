@@ -18,7 +18,6 @@ from hyperpocket.futures import FutureStore
 
 
 class TestGoogleOAuth2AuthHandler(IsolatedAsyncioTestCase):
-
     async def asyncSetUp(self):
         config().auth.google = GoogleAuthConfig(
             client_id="test-client-id",
@@ -38,7 +37,7 @@ class TestGoogleOAuth2AuthHandler(IsolatedAsyncioTestCase):
         auth_url = self.handler._make_auth_url(
             auth_req=self.auth_req,
             redirect_uri="http://test-redirect-uri.com",
-            state=future_uid
+            state=future_uid,
         )
         parsed = urlparse(auth_url)
         query_params = parse_qs(parsed.query)
@@ -47,9 +46,13 @@ class TestGoogleOAuth2AuthHandler(IsolatedAsyncioTestCase):
         # then
         self.assertEqual(base_url, self.handler._GOOGLE_AUTH_URL)
         self.assertEqual(query_params["state"][0], future_uid)
-        self.assertEqual(query_params["redirect_uri"][0], "http://test-redirect-uri.com")
+        self.assertEqual(
+            query_params["redirect_uri"][0], "http://test-redirect-uri.com"
+        )
         self.assertEqual(query_params["client_id"][0], "test-client-id")
-        self.assertEqual(query_params["scope"][0], "https://www.googleapis.com/auth/calendar")
+        self.assertEqual(
+            query_params["scope"][0], "https://www.googleapis.com/auth/calendar"
+        )
 
     async def test_prepare(self):
         future_uid = str(uuid.uuid4())
@@ -61,8 +64,10 @@ class TestGoogleOAuth2AuthHandler(IsolatedAsyncioTestCase):
             profile="test-prepare-profile",
             future_uid=future_uid,
         )
-        auth_url = prepare.removeprefix("User needs to authenticate using the following URL:").strip()
-        future_data = FutureStore.get_future( uid=future_uid)
+        auth_url = prepare.removeprefix(
+            "User needs to authenticate using the following URL:"
+        ).strip()
+        future_data = FutureStore.get_future(uid=future_uid)
 
         # then
         self.assertTrue(auth_url.startswith(self.handler._GOOGLE_AUTH_URL))
@@ -80,8 +85,7 @@ class TestGoogleOAuth2AuthHandler(IsolatedAsyncioTestCase):
                 "expires_in": 3600,
                 "scope": "https://www.googleapis.com/auth/calendar",
                 "token_type": "Bearer",
-
-            }
+            },
         )
         future_uid = str(uuid.uuid4())
 
@@ -89,18 +93,19 @@ class TestGoogleOAuth2AuthHandler(IsolatedAsyncioTestCase):
             auth_req=self.auth_req,
             thread_id="test-thread-id",
             profile="test-profile",
-            future_uid=future_uid
+            future_uid=future_uid,
         )
-        future_data = FutureStore.get_future( uid=future_uid)
+        future_data = FutureStore.get_future(uid=future_uid)
         future_data.future.set_result("test-code")
 
         with patch("httpx.AsyncClient.post", return_value=mock_response):
             response: GoogleOAuth2AuthContext = await self.handler.authenticate(
-                auth_req=self.auth_req,
-                future_uid=future_uid
+                auth_req=self.auth_req, future_uid=future_uid
             )
 
-        time_diff = (response.expires_at - datetime.now(tz=timezone.utc)).total_seconds()
+        time_diff = (
+            response.expires_at - datetime.now(tz=timezone.utc)
+        ).total_seconds()
 
         self.assertIsInstance(response, GoogleOAuth2AuthContext)
         self.assertEqual(response.access_token, "test-token")
@@ -116,7 +121,7 @@ class TestGoogleOAuth2AuthHandler(IsolatedAsyncioTestCase):
                 "expires_in": 3600,
                 "scope": "https://www.googleapis.com/auth/calendar",
                 "token_type": "Bearer",
-            }
+            },
         )
         response = GoogleOAuth2Response(
             **{
@@ -132,12 +137,11 @@ class TestGoogleOAuth2AuthHandler(IsolatedAsyncioTestCase):
         # when
         with patch("httpx.AsyncClient.post", return_value=mock_response):
             new_context: GoogleOAuth2AuthContext = await self.handler.refresh(
-                auth_req=self.auth_req,
-                context=context
+                auth_req=self.auth_req, context=context
             )
 
-        old_time_diff = (context.expires_at - datetime.now(tz=timezone.utc))
-        new_time_diff = (new_context.expires_at - datetime.now(tz=timezone.utc))
+        old_time_diff = context.expires_at - datetime.now(tz=timezone.utc)
+        new_time_diff = new_context.expires_at - datetime.now(tz=timezone.utc)
 
         # then
         self.assertIsInstance(new_context, GoogleOAuth2AuthContext)

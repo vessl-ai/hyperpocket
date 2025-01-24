@@ -36,7 +36,11 @@ class PocketAnthropic(Pocket):
             body = json.loads(body)
 
         result, interrupted = self.invoke_with_state(
-            tool_use_block.name, body=body, thread_id=thread_id, profile=profile, **kwargs
+            tool_use_block.name,
+            body=body,
+            thread_id=thread_id,
+            profile=profile,
+            **kwargs,
         )
         say = result
         if interrupted:
@@ -51,7 +55,7 @@ class PocketAnthropic(Pocket):
         return tool_result_block
 
     async def ainvoke(
-            self, tool_use_block: ToolUseBlock, **kwargs
+        self, tool_use_block: ToolUseBlock, **kwargs
     ) -> ToolResultBlockParam:
         if isinstance(tool_use_block.input, str):
             arg = json.loads(tool_use_block.input)
@@ -73,7 +77,11 @@ class PocketAnthropic(Pocket):
             body = json.loads(body)
 
         result, interrupted = await self.ainvoke_with_state(
-            tool_use_block.name, body=body, thread_id=thread_id, profile=profile, **kwargs
+            tool_use_block.name,
+            body=body,
+            thread_id=thread_id,
+            profile=profile,
+            **kwargs,
         )
         say = result
 
@@ -88,7 +96,9 @@ class PocketAnthropic(Pocket):
 
         return tool_result_block
 
-    def get_anthropic_tool_specs(self, use_profile: Optional[bool] = None) -> List[dict]:
+    def get_anthropic_tool_specs(
+        self, use_profile: Optional[bool] = None
+    ) -> List[dict]:
         if use_profile is not None:
             self.use_profile = use_profile
 

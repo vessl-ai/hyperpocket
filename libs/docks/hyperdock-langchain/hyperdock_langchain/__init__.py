@@ -9,6 +9,5 @@ def dock(
 ) -> list[Callable[[...], str]]:
     return [connect(request) for request in requests]
 
-__all__ = [
-    'dock', 'connect', 'LangchainToolRequest', 'Converter', 'EnvDict'
-]
+
+__all__ = ["dock", "connect", "LangchainToolRequest", "Converter", "EnvDict"]

@@ -12,7 +12,6 @@ from hyperpocket_llamaindex import PocketLlamaindex
 
 
 class TestPocketLlamaindexUseProfile(IsolatedAsyncioTestCase):
-
     async def asyncSetUp(self):
         config.public_server_port = "https"
         config.public_hostname = "localhost"
@@ -22,12 +21,15 @@ class TestPocketLlamaindexUseProfile(IsolatedAsyncioTestCase):
 
         self.pocket = PocketLlamaindex(
             tools=[
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
-                         "managed-tools/none/simple-echo-tool"),
+                from_git(
+                    "https://github.com/vessl-ai/hyperawesometools",
+                    "main",
+                    "managed-tools/none/simple-echo-tool",
+                ),
                 self.add,
-                self.sub_pydantic_args
+                self.sub_pydantic_args,
             ],
-            use_profile=True
+            use_profile=True,
         )
 
         self.llm = OpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"])
@@ -40,7 +42,7 @@ class TestPocketLlamaindexUseProfile(IsolatedAsyncioTestCase):
         agent = OpenAIAgent.from_tools(
             tools=self.pocket.get_tools(),
             llm=OpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"]),
-            verbose=True
+            verbose=True,
         )
 
         # when
@@ -50,7 +52,9 @@ class TestPocketLlamaindexUseProfile(IsolatedAsyncioTestCase):
 
     async def test_function_tool(self):
         # when
-        response = self.llm.chat_with_tools(user_msg="add 1, 2", tools=self.pocket.get_tools(), verbose=True)
+        response = self.llm.chat_with_tools(
+            user_msg="add 1, 2", tools=self.pocket.get_tools(), verbose=True
+        )
         message = response.message
         tool_calls = message.additional_kwargs["tool_calls"]
 
@@ -62,15 +66,20 @@ class TestPocketLlamaindexUseProfile(IsolatedAsyncioTestCase):
 
         # then
         self.assertEqual(tool_name, "add")
-        self.assertEqual(args["body"], {
-            "a": 1,
-            "b": 2,
-        })
-        self.assertEqual(result, '3')
+        self.assertEqual(
+            args["body"],
+            {
+                "a": 1,
+                "b": 2,
+            },
+        )
+        self.assertEqual(result, "3")
 
     async def test_pydantic_function_tool(self):
         # when
-        response = self.llm.chat_with_tools(user_msg="sub 1, 2", tools=self.pocket.get_tools(), verbose=True)
+        response = self.llm.chat_with_tools(
+            user_msg="sub 1, 2", tools=self.pocket.get_tools(), verbose=True
+        )
         tool_calls = response.message.additional_kwargs["tool_calls"]
 
         tool_name = tool_calls[0].function.name
@@ -81,15 +90,20 @@ class TestPocketLlamaindexUseProfile(IsolatedAsyncioTestCase):
 
         # then
         self.assertEqual(tool_name, "sub_pydantic_args")
-        self.assertEqual(args["body"], {
-            "a": {"first": 1},
-            "b": {"second": 2},
-        })
-        self.assertEqual(result, '-1')
+        self.assertEqual(
+            args["body"],
+            {
+                "a": {"first": 1},
+                "b": {"second": 2},
+            },
+        )
+        self.assertEqual(result, "-1")
 
     async def test_wasm_tool(self):
         # when
-        response = self.llm.chat_with_tools(user_msg="echo 'hello world'", tools=self.pocket.get_tools(), verbose=True)
+        response = self.llm.chat_with_tools(
+            user_msg="echo 'hello world'", tools=self.pocket.get_tools(), verbose=True
+        )
         tool_calls = response.message.additional_kwargs["tool_calls"]
 
         tool_name = tool_calls[0].function.name
@@ -101,9 +115,7 @@ class TestPocketLlamaindexUseProfile(IsolatedAsyncioTestCase):
 
         # then
         self.assertEqual(tool_name, "simple_echo_text")
-        self.assertEqual(args["body"], {
-            "text": "hello world"
-        })
+        self.assertEqual(args["body"], {"text": "hello world"})
         self.assertTrue(output["stdout"].startswith("echo message : hello world"))
 
     @staticmethod

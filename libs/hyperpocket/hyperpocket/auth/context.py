@@ -9,6 +9,7 @@ class AuthContext(BaseModel, ABC):
     """
     This class is used to define the interface of the authentication model.
     """
+
     access_token: str = Field(description="user's access token")
     description: str = Field(description="description of this authentication context")
     expires_at: Optional[datetime] = Field(description="expiration datetime")

@@ -9,12 +9,13 @@ from hyperpocket.config.settings import config
 
 class ColorFormatter(logging.Formatter):
     """Custom formatter to add colors based on log level."""
+
     # ANSI escape codes for text colors
     LEVEL_COLORS = {
-        logging.DEBUG: "\033[36m",     # Cyan
-        logging.INFO: "\033[32m",      # Green
-        logging.WARNING: "\033[33m",   # Yellow
-        logging.ERROR: "\033[31m",     # Red
+        logging.DEBUG: "\033[36m",  # Cyan
+        logging.INFO: "\033[32m",  # Green
+        logging.WARNING: "\033[33m",  # Yellow
+        logging.ERROR: "\033[31m",  # Red
         logging.CRITICAL: "\033[35m",  # Magenta
     }
     RESET = "\033[0m"
@@ -23,7 +24,6 @@ class ColorFormatter(logging.Formatter):
         log_color = self.LEVEL_COLORS.get(record.levelno, self.RESET)
         message = super().format(record)
         return f"{log_color}{message}{self.RESET}"
-
 
 
 def get_logger():
@@ -55,11 +55,13 @@ def get_logger():
 
     # set formatter
     logger.setLevel(log_level)
-    color_formatter = ColorFormatter("[%(asctime)s] [%(levelname)s] [%(processName)s(%(process)d):%(threadName)s(%(thread)d)] [%(name)s] %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S")
+    color_formatter = ColorFormatter(
+        "[%(asctime)s] [%(levelname)s] [%(processName)s(%(process)d):%(threadName)s(%(thread)d)] [%(name)s] %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
     formatter = logging.Formatter(
         "[%(asctime)s] [%(levelname)s] [%(processName)s(%(process)d):%(threadName)s(%(thread)d)] [%(name)s] %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S"
+        datefmt="%Y-%m-%d %H:%M:%S",
     )
 
     # add console handler
@@ -70,7 +72,9 @@ def get_logger():
 
     # add rotating file handler
     file_handler = RotatingFileHandler(
-        log_file, maxBytes=5 * 1024 * 1024, backupCount=100  # 파일 크기 5MB, 백업 파일 3개
+        log_file,
+        maxBytes=5 * 1024 * 1024,
+        backupCount=100,  # 파일 크기 5MB, 백업 파일 3개
     )
     file_handler.setLevel(logging.DEBUG)  # 파일 출력 레벨 설정
     file_handler.setFormatter(formatter)

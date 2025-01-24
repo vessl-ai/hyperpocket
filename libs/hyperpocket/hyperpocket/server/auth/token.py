@@ -29,8 +29,12 @@ async def token_form(redirect_uri: str, state: str = ""):
 
 
 @token_router.post("/submit", response_class=RedirectResponse)
-async def submit_token(user_token: str = Form(...), redirect_uri: str = Form(...), state: str = Form(...)):
-    new_callback_url = add_query_params(redirect_uri, {"token": user_token, "state": state})
+async def submit_token(
+    user_token: str = Form(...), redirect_uri: str = Form(...), state: str = Form(...)
+):
+    new_callback_url = add_query_params(
+        redirect_uri, {"token": user_token, "state": state}
+    )
     return RedirectResponse(url=new_callback_url, status_code=HTTPStatus.SEE_OTHER)
 
 
@@ -40,12 +44,14 @@ def add_query_params(url: str, params: dict):
     query_params.update(params)
     new_query = urlencode(query_params, doseq=True)
 
-    new_url = urlunparse((
-        url_parts.scheme,
-        url_parts.netloc,
-        url_parts.path,
-        url_parts.params,
-        new_query,
-        url_parts.fragment
-    ))
+    new_url = urlunparse(
+        (
+            url_parts.scheme,
+            url_parts.netloc,
+            url_parts.path,
+            url_parts.params,
+            new_query,
+            url_parts.fragment,
+        )
+    )
     return new_url

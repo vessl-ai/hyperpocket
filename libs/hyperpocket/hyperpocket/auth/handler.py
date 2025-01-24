@@ -11,7 +11,9 @@ from hyperpocket.auth.schema import AuthenticateRequest
 class AuthHandlerInterface(ABC):
     name: str = Field(description="name of the authentication handler")
     description: str = Field(description="description of the authentication handler")
-    scoped: bool = Field(description="Indicates whether the handler requires an auth_scope for access control")
+    scoped: bool = Field(
+        description="Indicates whether the handler requires an auth_scope for access control"
+    )
 
     @staticmethod
     def provider() -> AuthProvider:
@@ -73,7 +75,9 @@ class AuthHandlerInterface(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def make_request(self, auth_scopes: Optional[list[str]] = None, **kwargs) -> AuthenticateRequest:
+    def make_request(
+        self, auth_scopes: Optional[list[str]] = None, **kwargs
+    ) -> AuthenticateRequest:
         """
         Make an AuthenticationRequest.
 
@@ -102,8 +106,15 @@ class AuthHandlerInterface(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def prepare(self, auth_req: AuthenticateRequest, thread_id: str, profile: str,
-                future_uid: str, *args, **kwargs) -> str:
+    def prepare(
+        self,
+        auth_req: AuthenticateRequest,
+        thread_id: str,
+        profile: str,
+        future_uid: str,
+        *args,
+        **kwargs,
+    ) -> str:
         """
         Performs preliminary tasks required for authentication.
 
@@ -124,7 +135,9 @@ class AuthHandlerInterface(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    async def authenticate(self, auth_req: AuthenticateRequest, future_uid: str, *args, **kwargs) -> AuthContext:
+    async def authenticate(
+        self, auth_req: AuthenticateRequest, future_uid: str, *args, **kwargs
+    ) -> AuthContext:
         """
         Performs the actual authentication process.
 
@@ -149,7 +162,9 @@ class AuthHandlerInterface(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    async def refresh(self, auth_req: AuthenticateRequest, context: AuthContext, *args, **kwargs) -> AuthContext:
+    async def refresh(
+        self, auth_req: AuthenticateRequest, context: AuthContext, *args, **kwargs
+    ) -> AuthContext:
         """
         Performs re-authentication for an expired session.
 

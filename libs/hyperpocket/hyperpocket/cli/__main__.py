@@ -10,9 +10,11 @@ from hyperpocket.cli.sync import sync
 def cli():
     pass
 
+
 @click.group()
 def devtool():
     pass
+
 
 cli.add_command(devtool)
 devtool.add_command(create_token_auth_template)

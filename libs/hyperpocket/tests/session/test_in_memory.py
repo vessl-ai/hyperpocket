@@ -27,7 +27,7 @@ class TestInMemorySessionStorage(unittest.TestCase):
         key = self.storage._make_session_key(
             auth_provider_name=AuthProvider.SLACK.name,
             thread_id="default_thread_id",
-            profile="default_profile"
+            profile="default_profile",
         )
 
         self.assertEqual(key, "SLACK__default_thread_id__default_profile")
@@ -38,7 +38,7 @@ class TestInMemorySessionStorage(unittest.TestCase):
             auth_scopes=["scope1", "scope2"],
             auth_context=self.auth_context,
             auth_resolve_uid="test-resolve-uid",
-            is_auth_scope_universal=True
+            is_auth_scope_universal=True,
         )
 
         # then
@@ -55,13 +55,17 @@ class TestInMemorySessionStorage(unittest.TestCase):
             auth_scopes=["scope1", "scope2"],
             auth_resolve_uid="test-resolve-uid",
             auth_context=self.auth_context,
-            is_auth_scope_universal=True
+            is_auth_scope_universal=True,
         )
 
         self.assertIsInstance(session, InMemorySessionValue)
         self.assertEqual(session.auth_provider_name, AuthProvider.SLACK.name)
-        self.assertEqual(session.auth_context.access_token, self.auth_context.access_token)
-        self.assertEqual(session.auth_context.description, self.auth_context.description)
+        self.assertEqual(
+            session.auth_context.access_token, self.auth_context.access_token
+        )
+        self.assertEqual(
+            session.auth_context.description, self.auth_context.description
+        )
 
     def test_get_existing_data(self):
         # given
@@ -72,7 +76,7 @@ class TestInMemorySessionStorage(unittest.TestCase):
             auth_scopes=["scope1", "scope2"],
             auth_resolve_uid="test-resolve-uid",
             auth_context=self.auth_context,
-            is_auth_scope_universal=True
+            is_auth_scope_universal=True,
         )
 
         # when
@@ -108,7 +112,7 @@ class TestInMemorySessionStorage(unittest.TestCase):
             auth_scopes=["scope1", "scope2"],
             auth_resolve_uid="test-resolve-uid",
             auth_context=self.auth_context,
-            is_auth_scope_universal=True
+            is_auth_scope_universal=True,
         )
 
         # when

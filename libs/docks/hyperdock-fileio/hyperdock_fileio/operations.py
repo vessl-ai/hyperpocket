@@ -18,10 +18,13 @@ def copy_file(
     """
     path_src = pathlib.Path(src_path)
     if path_src.is_dir():
-        shutil.copytree(src_path, dest_path, copy_function=shutil.copy2, dirs_exist_ok=True)
+        shutil.copytree(
+            src_path, dest_path, copy_function=shutil.copy2, dirs_exist_ok=True
+        )
     else:
         shutil.copy2(src_path, dest_path)
-    return f'{src_path} copied to {dest_path}'
+    return f"{src_path} copied to {dest_path}"
+
 
 def move_file(
     src_path: str,
@@ -34,7 +37,8 @@ def move_file(
     :return: a success message
     """
     shutil.move(src_path, dest_path)
-    return f'{src_path} moved to {dest_path}'
+    return f"{src_path} moved to {dest_path}"
+
 
 def remove_file(
     file_path: str,
@@ -49,4 +53,4 @@ def remove_file(
         shutil.rmtree(file_path)
     else:
         path.unlink()
-    return f'{file_path} removed'
+    return f"{file_path} removed"

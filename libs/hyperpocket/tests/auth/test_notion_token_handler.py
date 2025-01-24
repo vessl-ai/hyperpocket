@@ -8,7 +8,6 @@ from hyperpocket.futures import FutureStore
 
 
 class TestNotionTokenAuthHandler(IsolatedAsyncioTestCase):
-
     async def asyncSetUp(self):
         self.handler: NotionTokenAuthHandler = NotionTokenAuthHandler()
         self.auth_req = NotionTokenRequest()
@@ -17,7 +16,7 @@ class TestNotionTokenAuthHandler(IsolatedAsyncioTestCase):
         auth_url = self.handler._make_auth_url(
             auth_req=self.auth_req,
             redirect_uri="http://test-notion-redirect-uri.com",
-            state="test-notion-future-id"
+            state="test-notion-future-id",
         )
         parsed = urlparse(auth_url)
         query_params = parse_qs(parsed.query)
@@ -26,7 +25,9 @@ class TestNotionTokenAuthHandler(IsolatedAsyncioTestCase):
         # then
         self.assertEqual(base_url, self.handler._TOKEN_URL)
         self.assertEqual(query_params["state"][0], "test-notion-future-id")
-        self.assertEqual(query_params["redirect_uri"][0], "http://test-notion-redirect-uri.com")
+        self.assertEqual(
+            query_params["redirect_uri"][0], "http://test-notion-redirect-uri.com"
+        )
 
     async def test_prepare(self):
         # when
@@ -36,8 +37,10 @@ class TestNotionTokenAuthHandler(IsolatedAsyncioTestCase):
             profile="test-notion-prepare-profile",
             future_uid="test-notion-prepare-future-uid",
         )
-        auth_url = prepare.removeprefix("User needs to authenticate using the following URL:").strip()
-        future_data = FutureStore.get_future( uid="test-notion-prepare-future-uid")
+        auth_url = prepare.removeprefix(
+            "User needs to authenticate using the following URL:"
+        ).strip()
+        future_data = FutureStore.get_future(uid="test-notion-prepare-future-uid")
 
         # then
         self.assertTrue(auth_url.startswith(self.handler._TOKEN_URL))
@@ -51,14 +54,13 @@ class TestNotionTokenAuthHandler(IsolatedAsyncioTestCase):
             auth_req=self.auth_req,
             thread_id="test-notion-thread-id",
             profile="test-notion-profile",
-            future_uid="test-notion-future-uid"
+            future_uid="test-notion-future-uid",
         )
-        future_data = FutureStore.get_future( uid="test-notion-future-uid")
+        future_data = FutureStore.get_future(uid="test-notion-future-uid")
         future_data.future.set_result("test-notion-token")
 
         response: NotionTokenAuthContext = await self.handler.authenticate(
-            auth_req=self.auth_req,
-            future_uid="test-notion-future-uid"
+            auth_req=self.auth_req, future_uid="test-notion-future-uid"
         )
 
         self.assertIsInstance(response, NotionTokenAuthContext)

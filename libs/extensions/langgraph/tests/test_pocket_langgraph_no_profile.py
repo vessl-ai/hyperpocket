@@ -13,8 +13,6 @@ from hyperpocket_langgraph import PocketLanggraph
 
 
 class TestPocketLanggraphNoProfile(IsolatedAsyncioTestCase):
-
-
     async def asyncSetUp(self):
         config.public_server_port = "https"
         config.public_hostname = "localhost"
@@ -24,15 +22,21 @@ class TestPocketLanggraphNoProfile(IsolatedAsyncioTestCase):
 
         self.pocket = PocketLanggraph(
             tools=[
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/none/simple-echo-tool"),
+                from_git(
+                    "https://github.com/vessl-ai/hyperawesometools",
+                    "main",
+                    "managed-tools/none/simple-echo-tool",
+                ),
                 self.add,
-                self.sub_pydantic_args
+                self.sub_pydantic_args,
             ],
-            use_profile=False
+            use_profile=False,
         )
         tools = self.pocket.get_tools()
         tool_node = self.pocket.get_tool_node()
-        self.llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"]).bind_tools(tools=tools)
+        self.llm = ChatOpenAI(
+            model="gpt-4o", api_key=secret["OPENAI_API_KEY"]
+        ).bind_tools(tools=tools)
 
         def chatbot(state: MessagesState):
             return {"messages": [self.llm.invoke(state["messages"])]}
@@ -52,7 +56,6 @@ class TestPocketLanggraphNoProfile(IsolatedAsyncioTestCase):
     async def asyncTearDown(self):
         self.pocket._teardown_server()
 
-
     async def test_function_tool_no_profile(self):
         # when
         response = await self.graph.ainvoke({"messages": [("user", "add 1, 2")]})
@@ -62,10 +65,7 @@ class TestPocketLanggraphNoProfile(IsolatedAsyncioTestCase):
 
         # then
         self.assertEqual(tool_call.tool_calls[0]["name"], "add")
-        self.assertEqual(tool_call.tool_calls[0]["args"], {
-            'a': 1,
-            'b': 2
-        })
+        self.assertEqual(tool_call.tool_calls[0]["args"], {"a": 1, "b": 2})
         self.assertEqual(tool_result.content, "3")
 
     async def test_pydantic_function_tool_no_profile(self):
@@ -77,15 +77,16 @@ class TestPocketLanggraphNoProfile(IsolatedAsyncioTestCase):
 
         # then
         self.assertEqual(tool_call.tool_calls[0]["name"], "sub_pydantic_args")
-        self.assertEqual(tool_call.tool_calls[0]["args"], {
-            'a': {"first": 1},
-            'b': {"second": 2}
-        })
+        self.assertEqual(
+            tool_call.tool_calls[0]["args"], {"a": {"first": 1}, "b": {"second": 2}}
+        )
         self.assertEqual(tool_result.content, "-1")
 
     async def test_wasm_tool_no_profile(self):
         # when
-        response = await self.graph.ainvoke({"messages": [("user", "echo 'hello world'")]})
+        response = await self.graph.ainvoke(
+            {"messages": [("user", "echo 'hello world'")]}
+        )
 
         tool_call = response["messages"][1]
         tool_result = response["messages"][2]
@@ -94,9 +95,7 @@ class TestPocketLanggraphNoProfile(IsolatedAsyncioTestCase):
 
         # then
         self.assertEqual(tool_call.tool_calls[0]["name"], "simple_echo_text")
-        self.assertEqual(tool_call.tool_calls[0]["args"], {
-            'text': 'hello world'
-        })
+        self.assertEqual(tool_call.tool_calls[0]["args"], {"text": "hello world"})
         self.assertTrue(output["stdout"].startswith("echo message : hello world"))
 
     @staticmethod

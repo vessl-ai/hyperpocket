@@ -1,4 +1,4 @@
-node_template = '''
+node_template = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,4 +84,4 @@ node_template = '''
 </script>
 </body>
 </html>
-'''
+"""
