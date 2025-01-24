@@ -165,35 +165,41 @@ class PocketServer(object):
 
         error_queue = mp.Queue()
         self.pipe = mp.Pipe()
-        lock = mp.Lock()
         self.process = mp.Process(
-            target=self._run, args=(pocket_core, error_queue, lock)
+            target=self._run, args=(pocket_core, )
         )
-
-        lock.acquire()  # set lock
         self.process.start()  # process start
-        lock.acquire()  # wait for initializing process
 
         if not error_queue.empty():
             error_message = error_queue.get()
             raise error_message
+    
+    def _report_initialized(self, error: Optional[Exception] = None):
+        _, conn = self.pipe
+        conn.send(('server-initialization', error,))
+    
+    def wait_initialized(self):
+        conn, _ = self.pipe
+        while True:
+            if conn.poll():
+                _, error = conn.recv()
+                if error:
+                    raise error
+                return
 
-    def _run(self, pocket_core, error_queue, lock):
+    def _run(self, pocket_core):
         try:
             # init process
             self.pocket_core = pocket_core
             self.main_server = self._create_main_server()
             self.proxy_server = self._create_https_proxy_server()
-            lock.release()  # release lock
+            self._report_initialized()
 
             loop = asyncio.new_event_loop()
             loop.run_until_complete(self._run_async())
             loop.close()
         except Exception as error:
-            error_queue.put(error)
-        finally:
-            if not lock.acquire(block=False):
-                lock.release()
+            self._report_initialized(error)
 
     def _create_main_server(self) -> Server:
         app = FastAPI()

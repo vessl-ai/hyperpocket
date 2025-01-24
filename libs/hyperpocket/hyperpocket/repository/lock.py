@@ -1,10 +1,11 @@
 import abc
 import pathlib
 import shutil
-from typing import Optional, Tuple
+from typing import Optional, Tuple, ClassVar
 
 import git
 from pydantic import BaseModel, Field
+from pydantic.fields import ModelPrivateAttr
 
 from hyperpocket.config import pocket_logger, settings
 
@@ -61,6 +62,7 @@ class LocalLock(Lock):
 
 
 class GitLock(Lock):
+    _remote_cache: ClassVar[dict[str, dict[str, str]]]
     tool_source: str = "git"
     repository_url: str
     git_ref: str
@@ -169,16 +171,19 @@ class GitLock(Lock):
 
     @classmethod
     def get_git_branches(cls, repo_url):
-        ls_lists = git.cmd.Git().ls_remote(repo_url)
+        if not hasattr(cls, "_remote_cache"):
+            cls._remote_cache = {}
+        if cls._remote_cache.get(repo_url) is None:
+            ls_lists = git.cmd.Git().ls_remote(repo_url)
 
-        branches = {}
-        for line in ls_lists.split("\n"):
-            sha, ref = line.split("\t")
-            if ref.startswith("refs/heads/"):
-                branch_name = ref.replace("refs/heads/", "")
-                branches[branch_name] = sha
-
-        return branches
+            branches = {}
+            for line in ls_lists.split("\n"):
+                sha, ref = line.split("\t")
+                if ref.startswith("refs/heads/"):
+                    branch_name = ref.replace("refs/heads/", "")
+                    branches[branch_name] = sha
+            cls._remote_cache[repo_url] = branches
+        return cls._remote_cache[repo_url]
 
     @classmethod
     def parse_repo_url(cls, repo_url: str) -> Tuple[str, str, str]:
