@@ -68,7 +68,7 @@ def clean_bracket_content(content):
 def extract_param_desc_by_other_styles(docstring, func_params) -> dict[str, str]:
     param_descriptions = []
     # Pattern for Sphinx-style or Javadoc-style `:param`, `@param`, `:arg`, `@arg`
-    param_pattern = r"^\s*(?:@param|:param|:arg|@arg):?\s+(\w+)(?:\((.*?)\))?:\s*(.*)"
+    param_pattern = r"^\s*(?:@param|:param|:arg|@arg):?\s+(\w+)(?:\((.*?)\))?:?\s*(.*)"
     matches = re.findall(param_pattern, docstring, re.MULTILINE)
     for param, _, desc in matches:
         cleaned_param = clean_bracket_content(param)
