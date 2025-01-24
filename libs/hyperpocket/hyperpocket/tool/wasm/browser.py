@@ -1,7 +1,12 @@
 import asyncio
-import os
 
-from playwright.async_api import async_playwright, Page, Playwright, BrowserContext, Route
+from playwright.async_api import (
+    BrowserContext,
+    Page,
+    Playwright,
+    Route,
+    async_playwright,
+)
 
 
 class InvokerBrowser(object):

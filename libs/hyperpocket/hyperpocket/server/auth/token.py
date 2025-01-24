@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from urllib.parse import urlencode, urlunparse, urlparse, parse_qs
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from fastapi import APIRouter, Form
 from starlette.responses import HTMLResponse, RedirectResponse

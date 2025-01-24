@@ -1,7 +1,7 @@
 import pathlib
 from concurrent.futures.thread import ThreadPoolExecutor
 
-from hyperpocket.repository.lock import Lock, LocalLock, GitLock
+from hyperpocket.repository.lock import GitLock, LocalLock, Lock
 
 
 class Lockfile:

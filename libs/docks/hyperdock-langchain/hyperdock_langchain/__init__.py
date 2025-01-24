@@ -1,7 +1,8 @@
 from typing import Callable
 
-from hyperdock_langchain.connector import connect, LangchainToolRequest
+from hyperdock_langchain.connector import LangchainToolRequest, connect
 from hyperdock_langchain.dictionary import Converter, EnvDict
+
 
 def dock(
     *requests: list[LangchainToolRequest],

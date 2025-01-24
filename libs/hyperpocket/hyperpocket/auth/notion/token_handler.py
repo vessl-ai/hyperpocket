@@ -1,12 +1,12 @@
 
 from typing import Optional
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urlencode, urljoin
 
 from hyperpocket.auth import AuthProvider
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.handler import AuthHandlerInterface
 from hyperpocket.auth.notion.token_context import NotionTokenAuthContext
-from hyperpocket.auth.notion.token_schema import NotionTokenResponse, NotionTokenRequest
+from hyperpocket.auth.notion.token_schema import NotionTokenRequest, NotionTokenResponse
 from hyperpocket.config import config
 from hyperpocket.futures import FutureStore
 

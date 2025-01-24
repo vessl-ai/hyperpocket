@@ -1,12 +1,12 @@
 import asyncio
 import pathlib
-from typing import Any, Optional, Callable, List, Union
+from typing import Any, Callable, List, Optional, Union
 
 from hyperpocket.builtin import get_builtin_tools
 from hyperpocket.config import pocket_logger
 from hyperpocket.pocket_auth import PocketAuth
 from hyperpocket.repository import Lockfile
-from hyperpocket.repository.lock import LocalLock, GitLock
+from hyperpocket.repository.lock import GitLock, LocalLock
 from hyperpocket.tool import Tool, ToolRequest
 from hyperpocket.tool.function import from_func
 from hyperpocket.tool.wasm import WasmTool

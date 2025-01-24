@@ -3,7 +3,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 try:
-    from llama_index.core.tools import FunctionTool, BaseTool, ToolMetadata
+    from llama_index.core.tools import BaseTool, FunctionTool, ToolMetadata
 except ImportError:
     raise ImportError(
         "You need to install llama-index to use pocket llamaindex"

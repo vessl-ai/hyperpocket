@@ -3,13 +3,13 @@ import enum
 import uuid
 from typing import Optional, Type
 
-from hyperpocket.auth import AuthProvider, PREBUILT_AUTH_HANDLERS
+from hyperpocket.auth import PREBUILT_AUTH_HANDLERS, AuthProvider
 from hyperpocket.auth.context import AuthContext
-from hyperpocket.auth.handler import AuthHandlerInterface, AuthenticateRequest
+from hyperpocket.auth.handler import AuthenticateRequest, AuthHandlerInterface
 from hyperpocket.config import config, pocket_logger
 from hyperpocket.futures import FutureStore
 from hyperpocket.session import SESSION_STORAGE_LIST
-from hyperpocket.session.interface import SessionStorageInterface, BaseSessionValue
+from hyperpocket.session.interface import BaseSessionValue, SessionStorageInterface
 
 
 class AuthState(enum.Enum):

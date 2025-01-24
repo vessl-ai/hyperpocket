@@ -1,6 +1,8 @@
 import unittest
 
-from hyperpocket.util.extract_func_param_desc_from_docstring import extract_param_docstring_mapping
+from hyperpocket.util.extract_func_param_desc_from_docstring import (
+    extract_param_docstring_mapping,
+)
 
 
 class TestExtractFuncParamDescFromDocstring(unittest.TestCase):

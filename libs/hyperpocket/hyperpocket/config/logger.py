@@ -6,6 +6,7 @@ from pathlib import Path
 import hyperpocket
 from hyperpocket.config.settings import config
 
+
 class ColorFormatter(logging.Formatter):
     """Custom formatter to add colors based on log level."""
     # ANSI escape codes for text colors

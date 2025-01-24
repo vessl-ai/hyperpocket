@@ -1,6 +1,6 @@
 from typing import Type, Union
 
-from pydantic import BaseModel, create_model, Field
+from pydantic import BaseModel, Field, create_model
 
 
 # Convert JSON Schema to a Pydantic model

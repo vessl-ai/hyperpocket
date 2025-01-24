@@ -1,13 +1,17 @@
 import uuid
-from datetime import timezone, datetime
+from datetime import datetime, timezone
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import patch
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
 
 import httpx
+
 from hyperpocket.auth.google.oauth2_context import GoogleOAuth2AuthContext
 from hyperpocket.auth.google.oauth2_handler import GoogleOAuth2AuthHandler
-from hyperpocket.auth.google.oauth2_schema import GoogleOAuth2Request, GoogleOAuth2Response
+from hyperpocket.auth.google.oauth2_schema import (
+    GoogleOAuth2Request,
+    GoogleOAuth2Response,
+)
 from hyperpocket.config import config
 from hyperpocket.config.auth import GoogleAuthConfig
 from hyperpocket.futures import FutureStore

@@ -3,6 +3,7 @@ from base64 import b64encode
 
 import hyperdock_fileio.write as write_functions
 
+
 def test_write_text_to_file_create():
     with tempfile.TemporaryDirectory() as tmpdir:
         file_path = f"{tmpdir}/a/b/c/test.txt"

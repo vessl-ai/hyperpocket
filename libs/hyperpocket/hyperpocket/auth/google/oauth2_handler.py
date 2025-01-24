@@ -5,7 +5,10 @@ import httpx
 
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.google.oauth2_context import GoogleOAuth2AuthContext
-from hyperpocket.auth.google.oauth2_schema import GoogleOAuth2Request, GoogleOAuth2Response
+from hyperpocket.auth.google.oauth2_schema import (
+    GoogleOAuth2Request,
+    GoogleOAuth2Response,
+)
 from hyperpocket.auth.handler import AuthHandlerInterface, AuthProvider
 from hyperpocket.config import config
 from hyperpocket.futures import FutureStore

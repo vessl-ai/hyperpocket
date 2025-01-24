@@ -1,7 +1,7 @@
 import base64
 import json
 
-from jinja2 import Environment, DictLoader
+from jinja2 import DictLoader, Environment
 
 from hyperpocket.tool.wasm.templates.node import node_template
 from hyperpocket.tool.wasm.templates.python import python_template

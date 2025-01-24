@@ -2,11 +2,11 @@ import ast
 import json
 from unittest.async_case import IsolatedAsyncioTestCase
 
+from hyperpocket.config import config, secret
+from hyperpocket.tool import from_git
 from openai import OpenAI
 from pydantic import BaseModel
 
-from hyperpocket.config import config, secret
-from hyperpocket.tool import from_git
 from hyperpocket_openai import PocketOpenAI
 
 

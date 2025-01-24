@@ -1,12 +1,14 @@
 import inspect
-from inspect import signature, Parameter
-from typing import Any, Dict, Type, Tuple
+from inspect import Parameter, signature
+from typing import Any, Dict, Tuple, Type
 
 from pydantic import BaseModel, create_model
 from pydantic.fields import FieldInfo
 
 from hyperpocket.config import pocket_logger
-from hyperpocket.util.extract_func_param_desc_from_docstring import extract_param_docstring_mapping
+from hyperpocket.util.extract_func_param_desc_from_docstring import (
+    extract_param_docstring_mapping,
+)
 
 
 def function_to_model(func: callable) -> Type[BaseModel]:

@@ -1,9 +1,10 @@
 import uuid
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 from unittest.async_case import IsolatedAsyncioTestCase
 from unittest.mock import patch
 
 import httpx
+
 from hyperpocket.auth import AuthProvider
 from hyperpocket.auth.google.oauth2_context import GoogleOAuth2AuthContext
 from hyperpocket.auth.google.oauth2_handler import GoogleOAuth2AuthHandler
@@ -13,7 +14,7 @@ from hyperpocket.config import config
 from hyperpocket.config.auth import GoogleAuthConfig
 from hyperpocket.config.session import SessionConfigInMemory
 from hyperpocket.futures import FutureStore
-from hyperpocket.pocket_auth import PocketAuth, AuthState
+from hyperpocket.pocket_auth import AuthState, PocketAuth
 from hyperpocket.session.in_memory import InMemorySessionStorage
 
 

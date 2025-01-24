@@ -1,7 +1,7 @@
 from typing import Optional
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urlencode, urljoin
 
-from hyperpocket.auth import AuthProvider, AuthHandlerInterface
+from hyperpocket.auth import AuthHandlerInterface, AuthProvider
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.github.token_context import GitHubTokenAuthContext
 from hyperpocket.auth.github.token_schema import GitHubTokenRequest, GitHubTokenResponse

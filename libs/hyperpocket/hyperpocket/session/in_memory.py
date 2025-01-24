@@ -3,10 +3,14 @@ from typing import Dict, List, Optional
 
 from hyperpocket.auth import AuthProvider
 from hyperpocket.auth.context import AuthContext
-from hyperpocket.config.session import SessionConfigInMemory
-from hyperpocket.config.session import SessionType
-from hyperpocket.session.interface import SessionStorageInterface, SESSION_KEY_DELIMITER, \
-    BaseSessionValue, V, K
+from hyperpocket.config.session import SessionConfigInMemory, SessionType
+from hyperpocket.session.interface import (
+    SESSION_KEY_DELIMITER,
+    BaseSessionValue,
+    K,
+    SessionStorageInterface,
+    V,
+)
 
 InMemorySessionKey = str
 InMemorySessionValue = BaseSessionValue

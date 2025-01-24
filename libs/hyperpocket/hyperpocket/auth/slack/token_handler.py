@@ -1,11 +1,11 @@
 from typing import Optional
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urlencode, urljoin
 
 from hyperpocket.auth import AuthProvider
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.handler import AuthHandlerInterface
 from hyperpocket.auth.slack.token_context import SlackTokenAuthContext
-from hyperpocket.auth.slack.token_schema import SlackTokenResponse, SlackTokenRequest
+from hyperpocket.auth.slack.token_schema import SlackTokenRequest, SlackTokenResponse
 from hyperpocket.config import config
 from hyperpocket.futures import FutureStore
 

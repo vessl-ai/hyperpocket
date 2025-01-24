@@ -1,6 +1,6 @@
 import datetime
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, List, Set, Optional, Iterable
+from typing import Generic, Iterable, List, Optional, Set, TypeVar
 
 from pydantic import BaseModel, Field
 

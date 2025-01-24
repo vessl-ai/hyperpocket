@@ -1,5 +1,5 @@
 from typing import Optional
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urlencode, urljoin
 
 import httpx
 
@@ -7,7 +7,7 @@ from hyperpocket.auth import AuthProvider
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.handler import AuthHandlerInterface
 from hyperpocket.auth.slack.oauth2_context import SlackOAuth2AuthContext
-from hyperpocket.auth.slack.oauth2_schema import SlackOAuth2Response, SlackOAuth2Request
+from hyperpocket.auth.slack.oauth2_schema import SlackOAuth2Request, SlackOAuth2Response
 from hyperpocket.config import config as config
 from hyperpocket.futures import FutureStore
 

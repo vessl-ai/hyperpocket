@@ -1,13 +1,12 @@
 import ast
 from unittest.async_case import IsolatedAsyncioTestCase
-from urllib.parse import urlparse, parse_qs, unquote
+from urllib.parse import parse_qs, unquote, urlparse
 
 import pytest
 from pydantic import BaseModel
 
 from hyperpocket import Pocket
 from hyperpocket.auth import AuthProvider
-from hyperpocket.config import config
 from hyperpocket.tool import function_tool
 
 

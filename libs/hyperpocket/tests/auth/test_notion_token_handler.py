@@ -1,5 +1,5 @@
 from unittest.async_case import IsolatedAsyncioTestCase
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
 
 from hyperpocket.auth.notion.token_context import NotionTokenAuthContext
 from hyperpocket.auth.notion.token_handler import NotionTokenAuthHandler

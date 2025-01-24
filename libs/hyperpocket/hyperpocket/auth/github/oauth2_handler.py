@@ -5,7 +5,10 @@ import httpx
 
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.github.oauth2_context import GitHubOAuth2AuthContext
-from hyperpocket.auth.github.oauth2_schema import GitHubOAuth2Request, GitHubOAuth2Response
+from hyperpocket.auth.github.oauth2_schema import (
+    GitHubOAuth2Request,
+    GitHubOAuth2Response,
+)
 from hyperpocket.auth.handler import AuthHandlerInterface, AuthProvider
 from hyperpocket.config import config
 from hyperpocket.futures import FutureStore

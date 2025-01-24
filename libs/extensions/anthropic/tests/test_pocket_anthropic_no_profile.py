@@ -2,10 +2,10 @@ import ast
 from unittest.async_case import IsolatedAsyncioTestCase
 
 from anthropic import Anthropic
-from pydantic import BaseModel
-
 from hyperpocket.config import config, secret
 from hyperpocket.tool import from_git
+from pydantic import BaseModel
+
 from hyperpocket_anthropic import PocketAnthropic
 
 

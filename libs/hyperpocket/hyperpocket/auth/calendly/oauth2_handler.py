@@ -4,7 +4,10 @@ from urllib.parse import urlencode, urljoin
 import httpx
 
 from hyperpocket.auth.calendly.oauth2_context import CalendlyOAuth2AuthContext
-from hyperpocket.auth.calendly.oauth2_schema import CalendlyOAuth2Request, CalendlyOAuth2Response
+from hyperpocket.auth.calendly.oauth2_schema import (
+    CalendlyOAuth2Request,
+    CalendlyOAuth2Response,
+)
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.handler import AuthHandlerInterface, AuthProvider
 from hyperpocket.config import config

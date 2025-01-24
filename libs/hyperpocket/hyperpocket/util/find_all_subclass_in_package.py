@@ -1,7 +1,7 @@
 import importlib
 import inspect
 import pkgutil
-from typing import TypeVar, Type, List
+from typing import List, Type, TypeVar
 
 from hyperpocket.config import pocket_logger
 

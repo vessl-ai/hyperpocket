@@ -1,7 +1,16 @@
 import os
-import click
 from pathlib import Path
-from hyperpocket.cli.codegen.auth import get_server_auth_token_template, get_auth_context_template, get_auth_token_context_template, get_auth_token_handler_template, get_auth_token_schema_template
+
+import click
+
+from hyperpocket.cli.codegen.auth import (
+    get_auth_context_template,
+    get_auth_token_context_template,
+    get_auth_token_handler_template,
+    get_auth_token_schema_template,
+    get_server_auth_token_template,
+)
+
 
 @click.command()
 @click.argument('service_name', type=str)
@@ -38,7 +47,7 @@ def generate_hyperpocket_auth_dir(service_name, parent_path):
         os.makedirs(parent_path / f'hyperpocket/hyperpocket/auth/{service_name}')
     
     output_path = parent_path / f'hyperpocket/hyperpocket/auth/{service_name}/__init__.py'
-    with open(output_path, "w") as f:
+    with open(output_path, "w"):
         pass
 
 def generate_auth_context(service_name, capitliazed_service_name, parent_path):

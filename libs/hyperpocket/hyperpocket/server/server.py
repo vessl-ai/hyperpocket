@@ -200,10 +200,8 @@ class PocketServer(object):
     def _create_https_proxy_server(self) -> Optional[Server]:
         if not config().enable_local_callback_proxy:
             return None
-        from hyperpocket.server.proxy import _generate_ssl_certificates
-        from hyperpocket.server.proxy import https_proxy_app
-
         from hyperpocket.config.settings import POCKET_ROOT
+        from hyperpocket.server.proxy import _generate_ssl_certificates, https_proxy_app
         ssl_keypath = POCKET_ROOT / "callback_server.key"
         ssl_certpath = POCKET_ROOT / "callback_server.crt"
 

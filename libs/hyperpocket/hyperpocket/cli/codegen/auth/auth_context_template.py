@@ -1,5 +1,6 @@
 from jinja2 import Template
 
+
 def get_auth_context_template() -> Template:
     return Template('''
 from hyperpocket.auth.context import AuthContext

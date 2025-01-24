@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from hyperpocket.config import config
 from hyperpocket.futures import FutureStore
 from hyperpocket.tool.wasm.browser import InvokerBrowser
-from hyperpocket.tool.wasm.script import ScriptRuntime, ScriptStore, Script
+from hyperpocket.tool.wasm.script import Script, ScriptRuntime, ScriptStore
 from hyperpocket.tool.wasm.templates import render
 
 

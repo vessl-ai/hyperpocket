@@ -9,6 +9,7 @@ select = [
 ]
 ignore = [
     "E501", # line too long, handled by formatting
+    "E741", # ambiguous variable name, distinguishable by modern monospace fonts
 ]
 
 [lint.per-file-ignores]

@@ -1,5 +1,4 @@
-from typing import TypeVar, Type, List
-
+from typing import List, Type, TypeVar
 
 from hyperpocket.util.find_all_subclass_in_package import find_all_subclass_in_package
 

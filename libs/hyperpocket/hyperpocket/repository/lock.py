@@ -6,7 +6,7 @@ from typing import Optional, Tuple
 import git
 from pydantic import BaseModel, Field
 
-from hyperpocket.config import settings, pocket_logger
+from hyperpocket.config import pocket_logger, settings
 
 
 class Lock(BaseModel, abc.ABC):

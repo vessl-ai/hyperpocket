@@ -1,10 +1,11 @@
 import uuid
-from datetime import timezone, datetime
+from datetime import datetime, timezone
 from unittest.async_case import IsolatedAsyncioTestCase
 from unittest.mock import patch
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
 
 import httpx
+
 from hyperpocket.auth.slack.oauth2_context import SlackOAuth2AuthContext
 from hyperpocket.auth.slack.oauth2_handler import SlackOAuth2AuthHandler
 from hyperpocket.auth.slack.oauth2_schema import SlackOAuth2Request, SlackOAuth2Response

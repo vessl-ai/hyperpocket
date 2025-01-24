@@ -1,5 +1,5 @@
-from hyperpocket.util.flatten_json_schema import flatten_json_schema
 from hyperpocket.tool import Tool
+from hyperpocket.util.flatten_json_schema import flatten_json_schema
 
 
 def tool_to_open_ai_spec(tool: Tool, use_profile: bool) -> dict:

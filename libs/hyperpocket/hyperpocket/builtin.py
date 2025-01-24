@@ -2,7 +2,7 @@ from typing import List
 
 from hyperpocket.auth import AuthProvider
 from hyperpocket.pocket_auth import PocketAuth
-from hyperpocket.tool import from_func, Tool
+from hyperpocket.tool import Tool, from_func
 
 
 def get_builtin_tools(pocket_auth: PocketAuth) -> List[Tool]:

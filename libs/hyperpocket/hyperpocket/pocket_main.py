@@ -1,5 +1,5 @@
 import asyncio
-from typing import Any, Optional, List, Union
+from typing import Any, List, Optional, Union
 
 from hyperpocket.config import pocket_logger
 from hyperpocket.pocket_auth import PocketAuth
@@ -100,7 +100,7 @@ class Pocket(object):
         """
         try:
             loop = asyncio.new_event_loop()
-        except RuntimeError as e:
+        except RuntimeError:
             pocket_logger.warning("Can't execute sync def in event loop. use nest-asyncio")
 
             import nest_asyncio

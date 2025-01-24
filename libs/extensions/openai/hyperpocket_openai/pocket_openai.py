@@ -13,9 +13,8 @@ except ImportError:
     raise ImportError("You need to install openai to use pocket PocketOpenAI.")
 
 from hyperpocket import Pocket
-
-from hyperpocket.tool import Tool
 from hyperpocket.config import pocket_logger
+from hyperpocket.tool import Tool
 
 
 class PocketOpenAI(Pocket):

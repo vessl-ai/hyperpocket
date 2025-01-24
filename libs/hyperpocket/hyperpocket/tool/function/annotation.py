@@ -1,4 +1,4 @@
-from typing import List, Callable, Optional
+from typing import Callable, List, Optional
 
 from hyperpocket.auth import AuthProvider
 from hyperpocket.tool.function.tool import FunctionTool

@@ -1,9 +1,12 @@
 from typing import Optional
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urlencode, urljoin
 
-from hyperpocket.auth import AuthHandlerInterface, AuthContext, AuthProvider
+from hyperpocket.auth import AuthContext, AuthHandlerInterface, AuthProvider
 from hyperpocket.auth.gumloop.token_context import GumLoopTokenContext
-from hyperpocket.auth.gumloop.token_schema import GumloopTokenRequest, GumloopTokenResponse
+from hyperpocket.auth.gumloop.token_schema import (
+    GumloopTokenRequest,
+    GumloopTokenResponse,
+)
 from hyperpocket.auth.schema import AuthenticateRequest
 from hyperpocket.config import config
 from hyperpocket.futures import FutureStore

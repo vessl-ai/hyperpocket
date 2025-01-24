@@ -1,11 +1,11 @@
-import os
 import json
 import pathlib
 from typing import Any, Optional
 
 import toml
+
 from hyperpocket.auth import AuthProvider
-from hyperpocket.config import settings, pocket_logger
+from hyperpocket.config import pocket_logger
 from hyperpocket.repository import Lock, Lockfile
 from hyperpocket.repository.lock import GitLock, LocalLock
 from hyperpocket.tool import Tool, ToolRequest

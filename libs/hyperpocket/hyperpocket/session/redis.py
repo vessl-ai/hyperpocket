@@ -1,14 +1,18 @@
 import json
-from typing import List, Optional, Any
+from typing import Any, List, Optional
 
 import redis
 
-from hyperpocket.auth import AuthProvider, AUTH_CONTEXT_MAP
+from hyperpocket.auth import AUTH_CONTEXT_MAP, AuthProvider
 from hyperpocket.auth.context import AuthContext
-from hyperpocket.config.session import SessionConfigRedis
-from hyperpocket.config.session import SessionType
-from hyperpocket.session.interface import SessionStorageInterface, SESSION_KEY_DELIMITER, \
-    BaseSessionValue, V, K
+from hyperpocket.config.session import SessionConfigRedis, SessionType
+from hyperpocket.session.interface import (
+    SESSION_KEY_DELIMITER,
+    BaseSessionValue,
+    K,
+    SessionStorageInterface,
+    V,
+)
 
 RedisSessionKey = str
 RedisSessionValue = BaseSessionValue

@@ -1,5 +1,5 @@
 from unittest.async_case import IsolatedAsyncioTestCase
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
 
 from hyperpocket.auth.gumloop.token_context import GumLoopTokenContext
 from hyperpocket.auth.gumloop.token_handler import GumloopTokenAuthHandler

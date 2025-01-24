@@ -3,6 +3,7 @@ import tempfile
 
 import hyperdock_fileio.read as read_functions
 
+
 def test_read_text_file_detect_encoding():
     with tempfile.NamedTemporaryFile(mode="w", encoding='euc-kr') as fp:
         fp.write("이유씨케이알")
