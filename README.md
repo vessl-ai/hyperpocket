@@ -327,10 +327,10 @@ client_secret = ""  # your github client secret
 
 - While creating your github OAuth app, configuring your app's `Authorization callback URL` is different for your
   development environment and production environment.
-  - For local testing environment, you can use `https://localhost:8001/proxy/auth/<provider>/callback` for TSL enabled redirect url. (ex. `https://localhost:8001/proxy/auth/github/callback`)
+  - For local testing environment, you can use `https://localhost:8001/proxy/auth/<provider>/callback` for TLS enabled redirect url. (ex. `https://localhost:8001/proxy/auth/github/callback`)
     - **Note**: Default port for hyperpocket dev server is `8000`. If you are using a different port, make sure to
       replace `8000` with your actual port number.
-    - **Note**: But for easy dev experience, you can use TSL proxy on port `8001` provided out-of-the-box.
+    - **Note**: But for easy dev experience, you can use TLS proxy on port `8001` provided out-of-the-box.
       - You can change the `proxy` prefix in settings.toml to your desired prefix with `callback_url_rewrite_prefix` key.
   - For production environment, you can use `https://yourdomain.com/auth/github/callback`
     - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.
