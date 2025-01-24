@@ -157,17 +157,35 @@ class PocketServer(object):
     def run(self, pocket_core: PocketCore):
         self._set_mp_start_method()
 
+        error_queue = mp.Queue()
         self.pipe = mp.Pipe()
-        self.process = mp.Process(target=self._run, args=(pocket_core,))
-        self.process.start()
+        lock = mp.Lock()
+        self.process = mp.Process(target=self._run, args=(pocket_core, error_queue, lock))
 
-    def _run(self, pocket_core):
-        self.pocket_core = pocket_core
-        self.main_server = self._create_main_server()
-        self.proxy_server = self._create_https_proxy_server()
-        loop = asyncio.new_event_loop()
-        loop.run_until_complete(self._run_async())
-        loop.close()
+        lock.acquire()  # set lock
+        self.process.start()  # process start
+        lock.acquire()  # wait for initializing process
+
+        if not error_queue.empty():
+            error_message = error_queue.get()
+            raise error_message
+
+    def _run(self, pocket_core, error_queue, lock):
+        try:
+            # init process
+            self.pocket_core = pocket_core
+            self.main_server = self._create_main_server()
+            self.proxy_server = self._create_https_proxy_server()
+            lock.release()  # release lock
+
+            loop = asyncio.new_event_loop()
+            loop.run_until_complete(self._run_async())
+            loop.close()
+        except Exception as error:
+            error_queue.put(error)
+        finally:
+            if not lock.acquire(block=False):
+                lock.release()
 
     def _create_main_server(self) -> Server:
         app = FastAPI()

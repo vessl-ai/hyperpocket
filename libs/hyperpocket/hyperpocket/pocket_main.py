@@ -101,9 +101,6 @@ class Pocket(object):
         """
         try:
             loop = asyncio.new_event_loop()
-            result = loop.run_until_complete(
-                self.ainvoke_with_state(tool_name, body, thread_id, profile, *args, **kwargs))
-
         except RuntimeError as e:
             pocket_logger.warning("Can't execute sync def in event loop. use nest-asyncio")
 
@@ -111,8 +108,8 @@ class Pocket(object):
             loop = asyncio.new_event_loop()
             nest_asyncio.apply(loop=loop)
 
-            result = loop.run_until_complete(
-                self.ainvoke_with_state(tool_name, body, thread_id, profile, *args, **kwargs))
+        result = loop.run_until_complete(
+            self.ainvoke_with_state(tool_name, body, thread_id, profile, *args, **kwargs))
 
         return result
 
