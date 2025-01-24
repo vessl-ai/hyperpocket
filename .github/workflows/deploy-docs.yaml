@@ -11,8 +11,9 @@ on:
 jobs:
   build-and-deploy:
     if: >-
-      github.event.pull_request.merged == true &&
-      github.event.pull_request.base.ref == 'main'
+      (github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'main') ||
+      github.event_name == 'workflow_dispatch'
 
     runs-on: ubuntu-latest
 
