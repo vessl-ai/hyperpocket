@@ -171,7 +171,7 @@ class PocketServer(object):
 
     def _create_main_server(self) -> Server:
         app = FastAPI()
-        _config = Config(app, host="0.0.0.0", port=self.internal_server_port)
+        _config = Config(app, host="0.0.0.0", port=self.internal_server_port, log_level=config.log_level)
         app.include_router(tool_router)
         app.include_router(auth_router)
         app.add_api_route("/health", lambda: {"status": "ok"}, methods=["GET"])
@@ -193,7 +193,7 @@ class PocketServer(object):
             _generate_ssl_certificates(ssl_keypath, ssl_certpath)
 
         _config = Config(https_proxy_app, host="0.0.0.0", port=self.proxy_port, ssl_keyfile=ssl_keypath,
-                         ssl_certfile=ssl_certpath)
+                         ssl_certfile=ssl_certpath, log_level=config.log_level)
         proxy_server = Server(_config)
         return proxy_server
 

@@ -43,7 +43,7 @@ class Config(BaseModel):
     public_server_protocol: str = "https"
     public_server_port: int = 8001
     callback_url_rewrite_prefix: str = "proxy"  # should not start with a slash
-    log_level: str = "INFO"
+    log_level: str = "info"
     auth: AuthConfig = DefaultAuthConfig
     session: SessionConfig = DefaultSessionConfig
     tool_vars: dict[str, str] = Field(default_factory=dict)
