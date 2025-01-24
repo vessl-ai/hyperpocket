@@ -1,10 +1,10 @@
+<p align="center">
+<img src="logo.png" alt="hyperpocket" width="570"/>
+</p>
+
 # Hyperpocket 👛
 
 Hyperpocket is where tools belong. Power your agent up with a pocket of tools. 👛
-
-<figure>
-<img src="logo.png" alt="hyperpocket" width="200"/>
-</figure>
 
 ## Introduction
 
@@ -354,3 +354,6 @@ client_secret = ""  # your github client secret
     - reactions:write,
 
 3. Set your Slack APP Client ID / Client Secret in `$HOME/.pocket/settings.toml`
+
+## Special thanks
+- [tott](https://x.com/tott____) for drawing the cute possum in a pocket.
