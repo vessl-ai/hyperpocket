@@ -41,7 +41,9 @@ def click_mouse():
     """
     Click mouse
     """
+    sleep(0.1)
     pyautogui.click()
+    sleep(0.1)
 
     return "Mouse clicked"
 
@@ -404,7 +406,7 @@ When locating in screen, you should start by using higher confidence level and d
     )
 
     print("\n\n\n")
-    print("Hello, this is langchain desktop calculator agent.")
+    print("Hello, this is test GUI control agent.")
     while True:
         print("user(q to quit) : ", end="")
         user_input = input()
