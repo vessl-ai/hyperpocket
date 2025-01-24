@@ -1,6 +1,6 @@
-<figure align="center">
+<p align="center">
 <img src="../../logo.png" alt="hyperpocket" width="570"/>
-</figure>
+</p>
 
 # Hyperpocket 👛
 
