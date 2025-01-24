@@ -40,12 +40,14 @@ WASM tools are executed in secure, sandboxed environments, making them ideal for
 WASM Tool has two following variants:
 
 **Git-based Execution**
-  - Tools are fetched from a GitHub repository, downloaded locally, and executed via a WASM interpreter.
-  - This approach is useful for managed tools maintained by Hyperpocket or open-source contributions by the community.
+
+- Tools are fetched from a GitHub repository, downloaded locally, and executed via a WASM interpreter.
+- This approach is useful for managed tools maintained by Hyperpocket or open-source contributions by the community.
 
 **Local Execution**
-  - Pre-existing tools stored locally are executed directly using their file paths.
-  - Ideal for private tools or custom setups where internet access might be restricted.
+
+- Pre-existing tools stored locally are executed directly using their file paths.
+- Ideal for private tools or custom setups where internet access might be restricted.
 
 ```python
 from hyperpocket.tool import from_git
@@ -86,25 +88,25 @@ def get_weather(location: str) -> str:
 
 ### Tool categorization by availability
 
-#### 🛠 Built-in Tools
+#### Built-in Tools
 
 Built-in tools are pre-installed and included in Hyperpocket to manage authentication sessions.
 
-#### 📦 Public Tools (open-source)
+#### Public Tools (open-source)
 
-Public tools are open-source and shared by the broader community, including individual contributors, other open-source projects, and Hyperpocket team as well. These tools can be hosted on various platforms such as Hyperpocket repository, other GitHub repositories and LangChain community, etc. 
+Public tools are open-source and shared by the broader community, including individual contributors, other open-source projects, and Hyperpocket team as well. These tools can be hosted on various platforms such as Hyperpocket repository, other GitHub repositories and LangChain community, etc.
 
 ```python
 from hyperpocket.tool import from_git
 
-# managed by Hyperpocket Team 
+# managed by Hyperpocket Team
 tool = from_git("https://github.com/vessl-ai/hyperpocket", "main", "slack/post-message")
 
 # managed by community
 tool = from_git("https://github.com/user/custom-tool-repo", "main", "community-tools/custom-task")
 ```
 
-#### ✏️ Your own tools
+#### Your own tools
 
 Custom tools are highly personalized tools that users can directly create and deploy in their local environments. These tools are fully managed by the user or their organization and can be implemented as inline functions or packaged modules. Users can execute them using either a local Python interpreter or a secure WASM interpreter, providing maximum flexibility for bespoke workflows.
 
@@ -135,26 +137,8 @@ tool = from_local(path="./local-tools/simple-echo-tool")
 
 ### By availability
 
-| Tool Type       | Category       | Description                                       | Operation by                                                               |
-| --------------- | -------------- | ------------------------------------------------- | -------------------------------------------------------------------------- |
-| Built-in Tools  | Function       | Pre-installed tools ready for immediate use.      | Managed and predefined by Hyperpocket.                                     |
-| Public Tools    | WASM, Function | Community-developed tools, officially maintained. | Developed by community.                                                    |
-| Custom Tools    | WASM, Function | Personalized tools created and deployed by users. | Fully managed by the user, supporting inline and packaged implementations. |
-
-
-### By availability
-
-| Tool Type       | Category       | Description                                                             | Operation by                                                                                    |
-| --------------- | -------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| Built-in Tools | Function        | Pre-installed tools included in Hyperpocket for managing auth sessions. | Managed and predefined by Hyperpocket.                                                          |
-| Public Tools    | WASM, Function | Open-source tools shared by the broader community and Hyperpocket team. | Developed by community, including individual contributors and other open-source projects.        |
-| Custom Tools    | WASM, Function | Highly personalized tools created and deployed in local environments.   | Fully managed by the user or their organization, supporting inline and packaged implementations. |
-
-
-**To learn how to apply our tools, please visit the pages below:**
-
-- [Applying Local Tools](apply-local-tools.md)
-
-- [Applying Function Tools](apply-function-tools.md)
-
-- [Integration from GitHub](integration-from-github.md)
+| Tool Type      | Category       | Description                                       | Operation by                                                               |
+| -------------- | -------------- | ------------------------------------------------- | -------------------------------------------------------------------------- |
+| Built-in Tools | Function       | Pre-installed tools ready for immediate use.      | Managed and predefined by Hyperpocket.                                     |
+| Public Tools   | WASM, Function | Community-developed tools, officially maintained. | Developed by community.                                                    |
+| Custom Tools   | WASM, Function | Personalized tools created and deployed by users. | Fully managed by the user, supporting inline and packaged implementations. |
