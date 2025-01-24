@@ -70,4 +70,4 @@ While many AI frameworks are **Python-centric**, Hyperpocket is built with **WAS
 - **Product Teams & MLOps Practitioners** needing flexible AI workflows without vendor lock-in.
 - **Researchers & AI Enthusiasts** wanting to experiment with AI tools across different languages.
 
-Hyperpocket is **your AI tool integration solution—fully open-source, extensible, and built for scale.** 🚀
+🚀 Hyperpocket is **your fully open-source, extensible AI tool integration solution.**
