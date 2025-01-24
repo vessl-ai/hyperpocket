@@ -168,6 +168,22 @@ jobs:
           uv build
           uv publish --publish-url https://test.pypi.org/legacy/
 
+      - name: Publish hyperdock-fileio package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
+        working-directory: libs/docks/hyperdock-fileio
+        run: |
+          uv build
+          uv publish
+
+      - name: Publish hyperdock-langchain package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
+        working-directory: libs/docks/hyperdock-langchain
+        run: |
+          uv build
+          uv publish
+
 
   check-version-after:
     runs-on: ubuntu-latest
