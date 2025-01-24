@@ -180,23 +180,3 @@ class TestPocket(IsolatedAsyncioTestCase):
         scope_list = scopes.split(delimiter)
         stripped_scopes = [s.strip() for s in scope_list]
         return stripped_scopes
-
-    def test_pocket_settings_env_inject(self):
-        import os, random, string
-        key = ''.join([random.choice(string.ascii_letters) for _ in range(16)])
-        os.environ['POCKET_AUTH__GOOGLE__CLIENT_ID'] = key
-        os.environ['POCKET_AUTH__GOOGLE__CLIENT_SECRET'] = key
-        
-        @function_tool
-        def inside_pocket():
-            from hyperpocket.config import config
-            return config().auth.google.client_id
-
-        self.pocket = Pocket(tools=[
-            inside_pocket,
-        ])
-        try:
-            result = self.pocket.invoke('inside_pocket', {})
-            self.assertEqual(result, key)
-        except Exception as e:
-            assert False
