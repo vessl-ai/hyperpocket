@@ -203,9 +203,9 @@ class PocketServer(object):
         from hyperpocket.server.proxy import _generate_ssl_certificates
         from hyperpocket.server.proxy import https_proxy_app
 
-        from hyperpocket.config.settings import pocket_root
-        ssl_keypath = pocket_root / "callback_server.key"
-        ssl_certpath = pocket_root / "callback_server.crt"
+        from hyperpocket.config.settings import POCKET_ROOT
+        ssl_keypath = POCKET_ROOT / "callback_server.key"
+        ssl_certpath = POCKET_ROOT / "callback_server.crt"
 
         if not ssl_keypath.exists() or not ssl_certpath.exists():
             _generate_ssl_certificates(ssl_keypath, ssl_certpath)
