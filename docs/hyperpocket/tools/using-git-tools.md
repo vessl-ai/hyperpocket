@@ -8,7 +8,9 @@ A **Git Tool** is a tool that is fetched from remote git repositories and run on
 
 You can copy and paste your git url itself, or use `from_git` function to load tools from a git repository.
 
-### Simply putting git URL
+### Simply putting github URL
+
+This simple feature is only supported for github.
 
 ```python
 from hyperpocket_langchain import PocketLangchain
@@ -47,27 +49,36 @@ Ensure the tool is structured with the required configuration files (e.g., schem
 Example structure for python tool is as follows:
 
 ```shell
-/local-tool
-  /local-tool
+/git-tool
+  /git-tool
     /__init__.py
     /__main__.py
   /config.toml
   /schema.json
 ```
 
-- `__init__.py`: The entry point of the tool.
+- `__init__.py`: The entry point of the tool. This should export the main function.
+
+  ```python
+  from git_tool.__main__ import main
+  ```
+
+**all** = ["main"]
+
+````
+
 - `__main__.py`: The main logic of the tool.
 - `config.toml`: The configuration file for the tool.
 
-  ```toml
-  name = "local-tool"
-  description = "description of the tool"
-  language = "python" # or else
+```toml
+name = "git-tool"
+description = "description of the tool"
+language = "python" # or else
 
-  [auth]
-  auth_provider = "github" # example, or else
-  scopes = ["repo"] # different by auth provider
-  ```
+[auth]
+auth_provider = "github" # example, or else
+scopes = ["repo"] # different by auth provider
+````
 
 - `schema.json`: The schema of the argument for the tool. This is used for defining pydantic model and also used as tool specs for LLMs.
 
