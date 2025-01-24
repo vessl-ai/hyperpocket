@@ -1,7 +1,8 @@
 [project]
 name = "hyperdock-langchain"
 version = "0.1.10"
-description = "Add your description here"
+description = "hyperdock-langchain"
+authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
