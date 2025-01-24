@@ -118,7 +118,7 @@ WASM-compatible.</p></li>
 <li><p><strong>Security:</strong> Sandboxed execution prevents unauthorized access or system interference.</p></li>
 <li><p><strong>Performance:</strong> Local execution reduces dependency on network latency.</p></li>
 <li><p><strong>Customization:</strong> Developers can tailor tools to their specific needs using their preferred programming language.</p></li>
-<li><p><strong>Ease of Integration:</strong> Simple API (from_local) to load and execute tools seamlessly within Hyperpocket workflows.</p></li>
+<li><p><strong>Ease of Integration:</strong> Simple API to load and execute tools seamlessly within Hyperpocket workflows.</p></li>
 </ul>
 <section id="how-to-use-local-tools">
 <h3><strong>How to Use Local Tools</strong><a class="headerlink" href="#how-to-use-local-tools" title="Link to this heading"></a></h3>
@@ -135,7 +135,7 @@ required configuration files (e.g., schema.json, config.toml).</p>
 <span class="n">tool_request</span> <span class="o">=</span> <span class="n">from_local</span><span class="p">(</span><span class="s2">&quot;/path/to/local/tool&quot;</span><span class="p">)</span>
 
 <span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span>
-  <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">tool_request</span><span class="p">]</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">tool_request</span><span class="p">]</span>
 <span class="p">)</span>
 
 <span class="c1"># And more ...</span>
@@ -145,9 +145,9 @@ required configuration files (e.g., schema.json, config.toml).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
 
 <span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span>
-  <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
-    <span class="s2">&quot;/path/to/local/tool&quot;</span>
-  <span class="p">]</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;/path/to/local/tool&quot;</span>
+    <span class="p">]</span>
 <span class="p">)</span>
 
 <span class="c1"># And more ...</span>
@@ -160,9 +160,9 @@ required configuration files (e.g., schema.json, config.toml).</p>
 
 <span class="c1"># Using the Function Tool</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-  <span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;/path/to/local/tool&quot;</span><span class="p">])</span>
-  <span class="n">tool_result</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;get_weather&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;Seoul&quot;</span><span class="p">})</span>
-  <span class="nb">print</span><span class="p">(</span><span class="n">tool_result</span><span class="p">)</span>  <span class="c1"># Output: The weather in Seoul is sunny with a high of 25°C.</span>
+    <span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;/path/to/local/tool&quot;</span><span class="p">])</span>
+    <span class="n">tool_result</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;get_weather&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;Seoul&quot;</span><span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">tool_result</span><span class="p">)</span>  <span class="c1"># Output: The weather in Seoul is sunny with a high of 25°C.</span>
 </pre></div>
 </div>
 <p><strong>Structure of a Local Tool Directory</strong></p>
@@ -205,6 +205,46 @@ required configuration files (e.g., schema.json, config.toml).</p>
 <ul class="simple">
 <li><p>The script or executable logic for the tool, e.g., a Python script or a Node.js file.</p></li>
 </ul>
+<p>Example(Python):</p>
+<p>in <code class="docutils literal notranslate"><span class="pre">my_tool/__main__.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyToolRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">arg1</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">do_something</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">MyToolRequest</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
+    <span class="n">req_typed</span> <span class="o">=</span> <span class="n">MyToolRequest</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">do_something</span><span class="p">(</span><span class="n">req_typed</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Add your tool code in <code class="docutils literal notranslate"><span class="pre">__main__.py</span></code></p></li>
+<li><p>You can get the input via <code class="docutils literal notranslate"><span class="pre">stdin</span></code></p></li>
+<li><p>You should return your output via <code class="docutils literal notranslate"><span class="pre">stdout</span></code></p></li>
+</ul>
+<p>in <code class="docutils literal notranslate"><span class="pre">my_tool/__init__.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">my_tool.__main__</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>You should specify your <code class="docutils literal notranslate"><span class="pre">main</span></code> method in <code class="docutils literal notranslate"><span class="pre">__main__.py</span></code> in <code class="docutils literal notranslate"><span class="pre">__all__</span></code></p></li>
+</ul>
+<p>And Build your code to <code class="docutils literal notranslate"><span class="pre">dist</span></code> and locate this in <code class="docutils literal notranslate"><span class="pre">my_tool/dist/</span></code></p>
 </section>
 </section>
 <section id="when-to-use-local-tools">
@@ -212,7 +252,7 @@ required configuration files (e.g., schema.json, config.toml).</p>
 <p>WASM Local Tools are ideal for scenarios where:</p>
 <ol class="arabic simple">
 <li><p><strong>Custom Logic is Required:</strong> You have specific business logic that cannot be fetched from a remote repository.</p></li>
-<li><p><strong>Secure Execution is Crucial:</strong> Tools run in an isolated environment, reducing security risks.</p></li>
+<li><p><strong>Secure Execution is Crucial:</strong> You don’t need to upload your code to any other remote spaces.</p></li>
 <li><p><strong>Offline Availability:</strong> Tools can be accessed and executed without an internet connection.</p></li>
 <li><p><strong>Flexibility in Testing:</strong> Easy to test and debug local tools before sharing or deploying them remotely.</p></li>
 </ol>

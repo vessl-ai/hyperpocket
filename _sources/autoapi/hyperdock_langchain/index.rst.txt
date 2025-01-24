@@ -45,8 +45,6 @@ Functions
 Package Contents
 ----------------
 
-.. py:function:: connect(tool_type: ToolType) -> Callable[[Ellipsis], str]
-
 .. py:class:: LangchainToolRequest(tool_type: Type[langchain.tools.BaseTool], tool_args: Optional[dict[str, Any]] = None, env_dict_extends: Optional[dict[str, str]] = None, auth: Optional[dict[str, Any]] = None, tool_vars: Optional[dict[str, str]] = None)
 
    Bases: :py:obj:`object`
@@ -71,6 +69,8 @@ Package Contents
    .. py:attribute:: tool_vars
       :type:  dict[str, str]
 
+
+.. py:function:: connect(tool_type: ToolType) -> Callable[[Ellipsis], str]
 
 .. py:data:: Converter
 
