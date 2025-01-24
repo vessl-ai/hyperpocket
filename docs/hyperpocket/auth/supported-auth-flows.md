@@ -111,7 +111,7 @@ if __name__ == "__main__":
 
 ## **🔹 Code Example: Initializing authentication in advance **
 
-Here’s an example of how to setup authentication in intial phase that reduces latency during actual usage:
+Here’s an example of how to set up authentication in the initial phase, making it unnecessary for the user to proceed through complex authentication steps.
 
 ```python
 import asyncio
