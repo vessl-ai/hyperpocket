@@ -9,3 +9,6 @@ dependencies = [
     "chardet>=5.2.0",
     "pytest>=8.3.4",
 ]
+
+[tool.ruff]
+extend = "../../../.ruff.toml"
