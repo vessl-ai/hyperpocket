@@ -1,0 +1,23 @@
+{
+  "properties": {
+    "team": {
+      "description": "Key or name of Linear Team",
+      "type": "string"
+    },
+    "assignee": {
+      "description": "Assignee name or email of linear issue",
+      "type": "string"
+    },
+    "state": {
+      "description": "Workflow state",
+      "type": "string"
+    },
+    "title": {
+      "description": "Issue title keyword",
+      "type": "string"
+    }
+  },
+  "required": [],
+  "title": "LinearGetIssuesRequest",
+  "type": "object"
+}

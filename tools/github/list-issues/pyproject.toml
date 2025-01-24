@@ -1,0 +1,7 @@
+[project]
+name = "list-issues"
+version = "0.1.0"
+description = "List issues for a repository"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [ "pydantic", "pygithub==2.5.0",]

@@ -1,0 +1,5 @@
+annotated-types==0.7.0
+pydantic==2.10.1
+pydantic_core==2.27.1
+typing_extensions==4.12.2
+requests==2.32.3

@@ -1,0 +1,7 @@
+name = "github_create_issue_comment"
+description = "Create a GitHub issue comment"
+language = "python"
+
+[auth]
+auth_provider = "github"
+scopes = ["repo"]

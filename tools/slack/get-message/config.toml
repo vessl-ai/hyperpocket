@@ -1,0 +1,8 @@
+name = "slack_get_messages"
+description = "get slack messages"
+language = "python"
+
+[auth]
+auth_provider = "slack"
+scopes = ["channels:history"]
+

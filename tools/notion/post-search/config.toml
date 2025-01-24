@@ -1,0 +1,8 @@
+name = "notion_search"
+description = "search notion contents"
+language = "python"
+
+[auth]
+auth_provider = "notion"
+auth_handler = "notion-token"
+scopes = []

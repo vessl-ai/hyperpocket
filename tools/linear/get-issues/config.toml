@@ -1,0 +1,8 @@
+name = "linear-get-issues"
+description = "Get linear issues by filters"
+language = "node"
+
+[auth]
+auth_provider = "linear"
+scopes = []
+

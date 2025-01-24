@@ -1,0 +1,26 @@
+{
+  "properties": {
+    "calendar_id": {
+      "description": "Google Calendar ID. The format should follow {user_name}@{domain}.",
+      "title": "Calendar Id",
+      "type": "string"
+    },
+    "event_id": {
+      "description": "Event id to be deleted",
+      "title": "Event Id",
+      "type": "string"
+    },
+    "send_updates": {
+      "default": "none",
+      "description": "Whether to send notifications about the creation of the new event. Note that some emails might still be sent. \nThe default is none.\nAcceptable values are:\n- all: Notifications are sent to all guests.\n- externalOnly: Notifications are sent to non-Google Calendar guests only.\n- none: No notifications are sent.\n",
+      "title": "Send Updates",
+      "type": "string"
+    }
+  },
+  "required": [
+    "calendar_id",
+    "event_id"
+  ],
+  "title": "GoogleDeleteCalendarEventsRequest",
+  "type": "object"
+}

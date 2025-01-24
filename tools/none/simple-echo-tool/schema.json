@@ -1,0 +1,13 @@
+{
+  "properties": {
+    "text": {
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "text"
+  ],
+  "title": "EchoRequest",
+  "type": "object"
+}

@@ -1,0 +1,18 @@
+{
+  "properties": {
+    "channel": {
+      "title": "Channel",
+      "type": "string"
+    },
+    "text": {
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "channel",
+    "text"
+  ],
+  "title": "SlackPostMessageRequest",
+  "type": "object"
+}

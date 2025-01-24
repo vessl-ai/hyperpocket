@@ -1,0 +1,11 @@
+[project]
+name = "start-flow-run"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "gumloop>=0.1.0",
+    "pydantic",
+    "requests>=2.32.3",
+]
