@@ -1,6 +1,6 @@
 [project]
 name = "hyperdock-langchain"
-version = "0.1.10"
+version = "0.2.0"
 description = "hyperdock-langchain"
 authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 readme = "README.md"
