@@ -30,6 +30,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
+        working-directory: docs/hyperpocket
         run: |
           uv sync
 
@@ -41,7 +42,6 @@ jobs:
           uv run make clean
           uv run make html
           
-      # 5. Deploy to gh-pages
       - name: Deploy to GitHub Pages
         run: |
           ls -al
