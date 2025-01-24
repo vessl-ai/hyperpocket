@@ -3,12 +3,12 @@
 ### Get Pocket OpenAI Tool Spec
 
 ```python
-from hyperpocket.tool import from_git
+
 from hyperpocket_openai import PocketOpenAI
 
 pocket = PocketOpenAI(tools=[
-    from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-    from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ]
 )
 
@@ -66,14 +66,13 @@ if choice.finish_reason == "tool_calls":
 ```python
 import os
 
-from hyperpocket.tool import from_git
 from openai import OpenAI
 
 from hyperpocket_openai import PocketOpenAI
 
 pocket = PocketOpenAI(tools=[
-    from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-    from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ]
 )
 tool_specs = pocket.get_open_ai_tool_specs()

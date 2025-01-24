@@ -1,6 +1,8 @@
+import ast
 from unittest.async_case import IsolatedAsyncioTestCase
 from urllib.parse import urlparse, parse_qs, unquote
 
+import pytest
 from pydantic import BaseModel
 
 from hyperpocket import Pocket
@@ -99,22 +101,29 @@ class TestPocket(IsolatedAsyncioTestCase):
         # then
         self.assertEqual(result, "4")
 
-    # async def test_wasm_tool(self):
-    #     # given
-    #     tool_name = "simple_echo_text"
-    #
-    #     # when
-    #     result = await self.pocket.ainvoke(
-    #         tool_name=tool_name,
-    #         body={
-    #             "text": "test"
-    #         },
-    #         thread_id=self.thread_id,
-    #         profile=self.profile,
-    #     )
-    #
-    #     # then
-    #     self.assertTrue(result.startswith("echo message : test"))
+    @pytest.mark.skip(reason="after open repo")
+    async def test_wasm_tool(self):
+        # given
+        tool_name = "simple_echo_text"
+        self.pocket = Pocket(
+            tools=[
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/none/simple-echo-tool"
+            ]
+        )
+
+        # when
+        result = await self.pocket.ainvoke(
+            tool_name=tool_name,
+            body={
+                "text": "test"
+            },
+            thread_id=self.thread_id,
+            profile=self.profile,
+        )
+        output = ast.literal_eval(result)
+
+        # then
+        self.assertTrue(output["stdout"].startswith("echo message : test"))
 
     async def test_initialize_tool_auth(self):
         # given

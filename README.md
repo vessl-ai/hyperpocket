@@ -71,60 +71,59 @@ OPENAI_API_KEY = "<OPENAI_API_KEY>"
 `langchain_example.py`
 
 ```python
-from hyperpocket.config import secret
-from hyperpocket.tool import from_git
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.memory import ConversationBufferMemory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
+from hyperpocket.config import secret
 from hyperpocket_langchain import PocketLangchain
 
 if __name__ == '__main__':
-    pocket = PocketLangchain(
-        tools=[
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-        ],
-    )
-    tools = pocket.get_tools()
-    llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"])
-    prompt = ChatPromptTemplate.from_messages(
-        [
-            (
-                "system",
-                "You are a tool calling assistant. You can help the user by calling proper tools",
-            ),
-            ("placeholder", "{chat_history}"),
-            ("user", "{input}"),
-            MessagesPlaceholder(variable_name="agent_scratchpad"),
-        ]
-    )
+  pocket = PocketLangchain(
+    tools=[
+      "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+      "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+    ],
+  )
+  tools = pocket.get_tools()
+  llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"])
+  prompt = ChatPromptTemplate.from_messages(
+    [
+      (
+        "system",
+        "You are a tool calling assistant. You can help the user by calling proper tools",
+      ),
+      ("placeholder", "{chat_history}"),
+      ("user", "{input}"),
+      MessagesPlaceholder(variable_name="agent_scratchpad"),
+    ]
+  )
 
-    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-    agent = create_tool_calling_agent(llm, tools, prompt)
-    agent_executor = AgentExecutor(
-        agent=agent,
-        tools=tools,
-        memory=memory,
-        verbose=True,
-        handle_parsing_errors=True,
-    )
+  memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+  agent = create_tool_calling_agent(llm, tools, prompt)
+  agent_executor = AgentExecutor(
+    agent=agent,
+    tools=tools,
+    memory=memory,
+    verbose=True,
+    handle_parsing_errors=True,
+  )
 
-    print("Hello, This is simple slack agent using hyperpocket.")
-    while True:
-        print("user(q to quit) : ", end="")
-        user_input = input()
+  print("Hello, This is simple slack agent using hyperpocket.")
+  while True:
+    print("user(q to quit) : ", end="")
+    user_input = input()
 
-        if user_input is None or user_input == "":
-            continue
-        elif user_input == "q":
-            print("Good bye!")
-            break
+    if user_input is None or user_input == "":
+      continue
+    elif user_input == "q":
+      print("Good bye!")
+      break
 
-        response = agent_executor.invoke({"input": user_input})
-        print("agent : ", response["output"])
-        print()
+    response = agent_executor.invoke({"input": user_input})
+    print("agent : ", response["output"])
+    print()
 ```
 
 ### 4. Done !
@@ -149,16 +148,16 @@ Or just use LLM API Clients out of the box.
 ### Using out-of-the-box tools
 
 ```python
-from hyperpocket.tool import from_git
+
 from langchain_openai import ChatOpenAI
 
 from hyperpocket_langchain import PocketLangchain
 
 pklc = PocketLangchain(
-    tools=[
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-    ]
+  tools=[
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+  ]
 )
 tools = pklc.get_tools()
 
@@ -206,7 +205,7 @@ Pocket provides way to use end user auth easily.
 You can manage your auths in request-wise level. (e.g. you can use different auths for different requests)
 
 ```python
-from hyperpocket.tool import from_git
+
 from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, START, MessagesState
 from langgraph.prebuilt import tools_condition
@@ -214,10 +213,10 @@ from langgraph.prebuilt import tools_condition
 from hyperpocket_langgraph import PocketLanggraph
 
 pklg = PocketLanggraph(
-    tools=[
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-    ],
+  tools=[
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+  ],
 )
 llm = ChatOpenAI()
 
@@ -242,22 +241,21 @@ graph_builder.compile()
 ```
 
 ```python
-from hyperpocket.config import secret
-from hyperpocket.tool import from_git
 from llama_index.core.agent import FunctionCallingAgent
 from llama_index.llms.openai import OpenAI
 
+from hyperpocket.config import secret
 from hyperpocket_llamaindex import PocketLlamaindex
 
 llm = OpenAI(api_key=secret["OPENAI_API_KEY"])
 pocket = PocketLlamaindex(
-    tools=[
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-events"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-list"),
-    ]
+  tools=[
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+  ]
 )
 tools = pocket.get_tools()
 

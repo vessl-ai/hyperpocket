@@ -36,7 +36,7 @@ def agent(pocket: PocketLangchain):
     )
 
     print("\n\n\n")
-    print("Hello, this is langchain slack agent.")
+    print("Hello, this is langchain gumloop agent.")
     while True:
         print("user(q to quit) : ", end="")
         user_input = input()
@@ -45,19 +45,16 @@ def agent(pocket: PocketLangchain):
             break
 
         response = agent_executor.invoke({"input": user_input})
-        print("slack agent : ", response["output"])
+        print("gumloop agent : ", response["output"])
         print()
 
 
 if __name__ == "__main__":
     with PocketLangchain(
             tools=[
-                from_git("https://github.com/vessl-ai/hyperawesometools", ref="main",
-                         rel_path="managed-tools/gumloop/start-flow-run"),
-                from_git("https://github.com/vessl-ai/hyperawesometools", ref="main",
-                         rel_path="managed-tools/gumloop/list-saved-flows"),
-                from_git("https://github.com/vessl-ai/hyperawesometools", ref="main",
-                         rel_path="managed-tools/gumloop/retrieve-input-schema"),
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/gumloop/start-flow-run",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/gumloop/list-saved-flows",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/gumloop/retrieve-input-schema",
             ],
     ) as pocket:
         agent(pocket)

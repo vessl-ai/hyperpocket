@@ -1,8 +1,6 @@
 from openai import OpenAI
 
 from hyperpocket.config import secret
-from hyperpocket.tool import from_git
-
 from hyperpocket_openai import PocketOpenAI
 
 
@@ -15,13 +13,13 @@ def agent():
 async def _agent():
     pocket = PocketOpenAI(
         tools=[
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-events"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-list"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/insert-calendar-events"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/github/pr-list"),
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
         ]
     )
     tool_specs = pocket.get_open_ai_tool_specs()

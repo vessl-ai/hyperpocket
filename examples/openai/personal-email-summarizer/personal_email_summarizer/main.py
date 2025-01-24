@@ -1,16 +1,18 @@
 import datetime
 import json
+import os
+
 import openai
+import requests
+
 from hyperpocket.auth.provider import AuthProvider
 from hyperpocket.config import secret
 from hyperpocket.tool.function.annotation import function_tool
-from hyperpocket.tool.wasm.tool import from_git
 from hyperpocket_openai import PocketOpenAI
-import requests
 
 
 def summarize_email(content):
-    openai.api_key = "YOUR_API_KEY"
+    openai.api_key = os.environ["OPENAI_API_KEY"]
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=[{"role": "user", "content": f"Summarize this email: {content}"}],
@@ -32,66 +34,30 @@ class BuiltinTools:
     @classmethod
     def github(cls):
         return [
-            from_git(
-                "https://github.com/vessl-ai/hyperawesometools",
-                "main",
-                "managed-tools/github/pr-list",
-            ),
-            from_git(
-                "https://github.com/vessl-ai/hyperawesometools",
-                "main",
-                "managed-tools/github/read-pull-request",
-            ),
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/read-pull-request",
         ]
 
     @classmethod
     def google_calendar(cls):
         return [
-            from_git(
-                "https://github.com/vessl-ai/hyperawesometools",
-                "main",
-                "managed-tools/google/get-calendar-events",
-            ),
-            from_git(
-                "https://github.com/vessl-ai/hyperawesometools",
-                "main",
-                "managed-tools/google/get-calendar-list",
-            ),
-            from_git(
-                "https://github.com/vessl-ai/hyperawesometools",
-                "main",
-                "managed-tools/google/insert-calendar-events",
-            ),
-            from_git(
-                "https://github.com/vessl-ai/hyperawesometools",
-                "main",
-                "managed-tools/google/delete-calendar-event",
-            ),
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/delete-calendar-event",
         ]
 
     @classmethod
     def slack(cls):
         return [
-            from_git(
-                "https://github.com/vessl-ai/hyperawesometools",
-                "main",
-                "managed-tools/slack/get-message",
-            ),
-            from_git(
-                "https://github.com/vessl-ai/hyperawesometools",
-                "main",
-                "managed-tools/slack/post-message",
-            ),
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
         ]
 
     @classmethod
     def linear(cls):
         return [
-            from_git(
-                "https://github.com/vessl-ai/hyperawesometools",
-                "main",
-                "managed-tools/linear/get-issues",
-            ),
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues"
         ]
 
 
@@ -414,7 +380,6 @@ async def agent():
             get_gmail_short_snippet,
             get_today,
             read_gmail_detail,
-            # read_gmail_thread_detail,
         ]
     )
     tool_specs = pocket.get_open_ai_tool_specs()

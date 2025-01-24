@@ -8,13 +8,13 @@
 ## Get Pocket Subgraph
 
 ```python
-from hyperpocket.tool import from_git
+
 
 from hyperpocket_langgraph import PocketLanggraph
 
 pocket = PocketLanggraph(tools=[
-  from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-  from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
   "https://github.com/my-org/some-awesome-tool",
 ])
 
@@ -27,14 +27,13 @@ pocket_node = pocket.get_tool_node()
 ```python
 import os
 
-from hyperpocket.tool import from_git
 from langchain_openai import ChatOpenAI
 
 from hyperpocket_langgraph import PocketLanggraph
 
 pocket = PocketLanggraph(tools=[
-  from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-  from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
 
 # get tools from pocket to bind llm
@@ -51,7 +50,6 @@ llm_with_tools = llm.bind_tools(tools)
 import os
 from typing import Annotated
 
-from hyperpocket.tool import from_git
 from langchain_core.runnables import RunnableConfig
 from langchain_openai import ChatOpenAI
 from langgraph.checkpoint.memory import MemorySaver
@@ -64,8 +62,8 @@ from hyperpocket_langgraph import PocketLanggraph
 
 # Define pocket tools
 pocket = PocketLanggraph(tools=[
-  from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-  from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
 
 # Get Pocket ToolNode
@@ -122,14 +120,14 @@ by setting the `should_interrupt` flag when calling `get_tool_node`
 Perform authentication in a multi-turn way
 
 ```python
-from hyperpocket.tool import from_git
+
 
 from hyperpocket_langgraph import PocketLanggraph
 
 # Define pocket tools
 pocket = PocketLanggraph(tools=[
-  from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-  from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
 
 # Get Pocket ToolNode
@@ -139,14 +137,14 @@ pocket_node = pocket.get_tool_node(should_interrupt=False)  # multi turn
 ### Human-in-the-loop Auth
 
 ```python
-from hyperpocket.tool import from_git
+
 
 from hyperpocket_langgraph import PocketLanggraph
 
 # Define pocket tools
 pocket = PocketLanggraph(tools=[
-  from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-  from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
 
 # Get Pocket ToolNode

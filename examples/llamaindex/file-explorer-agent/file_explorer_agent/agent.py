@@ -1,16 +1,18 @@
+from hyperdock_fileio import initialize_dock as fileio_dock
 from llama_index.core.agent import AgentRunner, FunctionCallingAgent
 from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.llms.openai import OpenAI
+
 from hyperpocket.config import secret
-from hyperpocket.tool import from_git, from_dock
+from hyperpocket.tool import from_dock
 from hyperpocket_llamaindex import PocketLlamaindex
-from hyperdock_fileio import initialize_dock as fileio_dock
+
 
 def build():
     llm = OpenAI(api_key=secret["OPENAI_API_KEY"])
     pocket = PocketLlamaindex(
         tools=[
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
             *from_dock(fileio_dock()),
         ]
     )

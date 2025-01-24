@@ -4,7 +4,6 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
 from hyperpocket.config import secret
-from hyperpocket.tool import from_git
 from hyperpocket_langchain import PocketLangchain
 
 
@@ -53,19 +52,14 @@ def agent(pocket: PocketLangchain):
 if __name__ == "__main__":
     with PocketLangchain(
             tools=[
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
-                         "managed-tools/google/get-calendar-events"),
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
-                         "managed-tools/google/get-calendar-list"),
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
-                         "managed-tools/google/insert-calendar-events"),
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/github/pr-list"),
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
-                         "managed-tools/github/read-pull-request"),
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/read-pull-request",
             ],
-            # force_update=True,
     ) as pocket:
         agent(pocket)
