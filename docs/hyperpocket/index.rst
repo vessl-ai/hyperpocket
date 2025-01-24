@@ -1,9 +1,7 @@
 Hyperpocket
 ===========
 
-Welcome to the Hyperpocket documentation!
-
-.. include:: overview.md
+.. include:: introduction/overview.md
    :parser: myst_parser.sphinx_
 
 .. toctree::
