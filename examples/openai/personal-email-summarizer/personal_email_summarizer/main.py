@@ -6,7 +6,6 @@ import openai
 import requests
 
 from hyperpocket.auth.provider import AuthProvider
-from hyperpocket.config import secret
 from hyperpocket.tool.function.annotation import function_tool
 from hyperpocket_openai import PocketOpenAI
 
@@ -384,7 +383,7 @@ async def agent():
     )
     tool_specs = pocket.get_open_ai_tool_specs()
 
-    model = openai.OpenAI(api_key=secret["OPENAI_API_KEY"])
+    model = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     messages = []
 
     system_prompt = {

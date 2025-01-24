@@ -1,5 +1,6 @@
+import os
+
 from anthropic import Anthropic
-from hyperpocket.config import secret
 from hyperpocket.tool import from_git
 from hyperpocket_anthropic import PocketAnthropic
 
@@ -11,7 +12,7 @@ def agent():
 
 
 async def _agent():
-    client = Anthropic(api_key=secret["ANTHROPIC_API_KEY"])
+    client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
     pocket = PocketAnthropic(
         tools=[
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",

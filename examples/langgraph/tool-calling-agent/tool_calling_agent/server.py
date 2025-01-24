@@ -1,3 +1,4 @@
+import os
 import traceback
 import uuid
 from typing import Optional
@@ -14,7 +15,6 @@ from langgraph.types import Command
 from pydantic import BaseModel
 from starlette.responses import StreamingResponse
 
-from hyperpocket.config import secret
 from hyperpocket.tool import from_git
 
 from hyperpocket_langgraph import PocketLanggraph
@@ -31,7 +31,7 @@ def build():
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
     ])
 
-    llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"], streaming=True)
+    llm = ChatOpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"), streaming=True)
     llm_with_tools = llm.bind_tools(pocket.get_tools())
 
     graph_builder = StateGraph(MessagesState)

@@ -1,6 +1,6 @@
-from openai import OpenAI
+import os
 
-from hyperpocket.config import secret
+from openai import OpenAI
 from hyperpocket_openai import PocketOpenAI
 
 
@@ -24,7 +24,7 @@ async def _agent():
     )
     tool_specs = pocket.get_open_ai_tool_specs()
 
-    model = OpenAI(api_key=secret["OPENAI_API_KEY"])
+    model = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     messages = []
     while True:
         print("user input(q to quit) : ", end="")
