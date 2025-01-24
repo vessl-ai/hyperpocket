@@ -1,0 +1,9 @@
+name = "github_search_commit"
+description = "search github commits"
+language = "python"
+
+[auth]
+auth_provider = "github"
+auth_handler = "github-oauth2"
+scopes = ["repo", "user"]
+

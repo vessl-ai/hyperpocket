@@ -45,7 +45,6 @@ def agent_generator(pocket: PocketLangchain):
     def _agent(thread_id: str):
         prompt = ChatPromptTemplate.from_messages(
             [
-                ("placeholder", "{chat_history}"),
                 (
                     "system",
                     """
@@ -67,6 +66,7 @@ def agent_generator(pocket: PocketLangchain):
                     Otherwise, just say "N/A".
                     """,
                 ),
+                ("placeholder", "{chat_history}"),
                 ("user", "{input}"),
                 MessagesPlaceholder(variable_name="agent_scratchpad"),
             ]

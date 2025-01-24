@@ -1,0 +1,6 @@
+name = "gumloop_retrieve_input_schema"
+description = "Retrieve the input schema for flows in Gumloop. If you’re starting a flow and are unsure about its input schema, use this tool to obtain the required schema first."
+language = "python"
+
+[auth]
+auth_provider = "gumloop"

@@ -1,0 +1,9 @@
+name = "github_search_user"
+description = "search github user"
+language = "python"
+
+[auth]
+auth_provider = "github"
+auth_handler = "github-oauth2"
+scopes = ["repo", "user"]
+

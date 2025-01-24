@@ -19,7 +19,16 @@ jobs:
           echo "Checking if version $VERSION already exists for all packages..."
 
           # Define package names
-          PACKAGES=("hyperpocket" "hyperpocket-anthropic" "hyperpocket-langchain" "hyperpocket-langgraph" "hyperpocket-openai" "hyperpocket-llamaindex")
+          PACKAGES=(
+            "hyperpocket"
+            "hyperpocket-anthropic"
+            "hyperpocket-langchain"
+            "hyperpocket-langgraph"
+            "hyperpocket-openai"
+            "hyperpocket-llamaindex"
+            "hyperdock-fileio"
+            "hyperdock-langchain"
+          )
 
           for PACKAGE in "${PACKAGES[@]}"; do
             echo "Checking package: $PACKAGE"
@@ -76,6 +85,8 @@ jobs:
             "libs/extensions/langgraph"
             "libs/extensions/llamaindex"
             "libs/extensions/openai"
+            "libs/docks/hyperdock-fileio"
+            "libs/docks/hyperdock-langchain"
           )
           
           for PATH in "${PATHS[@]}"; do
@@ -169,7 +180,16 @@ jobs:
         run: |
           echo "Checking if version $VERSION uploaded successfully for all packages..."
           
-          PACKAGES=("hyperpocket" "hyperpocket-anthropic" "hyperpocket-langchain" "hyperpocket-langgraph" "hyperpocket-openai" "hyperpocket-llamaindex")
+          PACKAGES=(
+            "hyperpocket"
+            "hyperpocket-anthropic"
+            "hyperpocket-langchain"
+            "hyperpocket-langgraph"
+            "hyperpocket-openai"
+            "hyperpocket-llamaindex"
+            "hyperdock-fileio"
+            "hyperdock-langchain"
+          )
           
           for PACKAGE in "${PACKAGES[@]}"; do
             echo "Checking package: $PACKAGE"

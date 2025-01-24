@@ -1,0 +1,7 @@
+name = "github_create_issue"
+description = "Create a GitHub issue"
+language = "python"
+
+[auth]
+auth_provider = "github"
+scopes = ["repo"]

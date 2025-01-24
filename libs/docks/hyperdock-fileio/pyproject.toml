@@ -1,10 +1,10 @@
 [project]
 name = "hyperdock-fileio"
-version = "0.1.0"
+version = "0.1.9"
 description = "hyperdockt-fileio"
 authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = [
     "chardet>=5.2.0",
     "pytest>=8.3.4",

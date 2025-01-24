@@ -1,0 +1,7 @@
+name = "github_list_issue_comments"
+description = "List GitHub issue comments"
+language = "python"
+
+[auth]
+auth_provider = "github"
+scopes = ["repo"]

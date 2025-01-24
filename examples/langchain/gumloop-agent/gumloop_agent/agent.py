@@ -15,11 +15,11 @@ def agent(pocket: PocketLangchain):
 
     prompt = ChatPromptTemplate.from_messages(
         [
-            ("placeholder", "{chat_history}"),
             (
                 "system",
                 "You are a tool calling assistant. You can help the user by calling proper tools",
             ),
+            ("placeholder", "{chat_history}"),
             ("user", "{input}"),
             MessagesPlaceholder(variable_name="agent_scratchpad"),
         ]

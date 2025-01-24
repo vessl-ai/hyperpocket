@@ -1,0 +1,27 @@
+{
+  "properties": {
+    "owner": {
+      "description": "The account owner of the repository. The name is not case sensitive.",
+      "type": "string"
+    },
+    "repo": {
+      "description": "The name of the repository. The name is not case sensitive.",
+      "type": "string"
+    },
+    "pr_number": {
+      "description": "The number that identifies the pull request.",
+      "type": "integer"
+    },
+    "number_of_reviews": {
+      "description": "The number of reviews to return",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "owner",
+    "repo",
+    "pr_number"
+  ],
+  "title": "GithubListPRReviewsRequest",
+  "type": "object"
+}

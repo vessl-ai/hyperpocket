@@ -1,0 +1,10 @@
+{
+  "properties": {
+    "date": {
+      "title": "Date",
+      "type": "string"
+    }
+  },
+  "title": "GoogleListGmailRequest",
+  "type": "object"
+}

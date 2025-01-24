@@ -1,0 +1,48 @@
+{
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "co_hosts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "date_setting_type": {
+      "type": "string"
+    },
+    "date_setting_start_date": {
+      "type": "string"
+    },
+    "date_setting_end_date": {
+      "type": "string"
+    },
+    "location_kind": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "location_additional_info": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "duration",
+    "timezone",
+    "date_setting_type",
+    "date_setting_start_date",
+    "date_setting_end_date",
+    "location_kind"
+  ],
+  "title": "CalendlyCreateOneOffEventTypeRequest",
+  "type": "object"
+}

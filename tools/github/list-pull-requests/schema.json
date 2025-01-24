@@ -1,0 +1,18 @@
+{
+  "properties": {
+    "owner": {
+      "title": "Owner",
+      "type": "string"
+    },
+    "repo": {
+      "title": "Repo",
+      "type": "string"
+    }
+  },
+  "required": [
+    "owner",
+    "repo"
+  ],
+  "title": "GithubPRListRequest",
+  "type": "object"
+}

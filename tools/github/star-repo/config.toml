@@ -1,0 +1,7 @@
+name = "github_star_repo"
+description = "Star a GitHub repository"
+language = "python"
+
+[auth]
+auth_provider = "github"
+scopes = ["user", "repo"]

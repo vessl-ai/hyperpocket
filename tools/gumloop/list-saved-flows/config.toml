@@ -1,0 +1,6 @@
+name = "gumloop_list_saved_flows"
+description = "list saved flows in gumloop"
+language = "python"
+
+[auth]
+auth_provider = "gumloop"

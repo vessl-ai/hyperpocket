@@ -1,0 +1,7 @@
+name = "google_list_gmail"
+description = "get gmail list"
+language = "python"
+
+[auth]
+auth_provider = "google"
+scopes = ['https://www.googleapis.com/auth/gmail.readonly']

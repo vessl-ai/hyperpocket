@@ -1,0 +1,7 @@
+name = "github_list_issues"
+description = "List GitHub issues"
+language = "python"
+
+[auth]
+auth_provider = "github"
+scopes = ["repo"]

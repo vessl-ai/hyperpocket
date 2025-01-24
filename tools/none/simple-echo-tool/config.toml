@@ -1,0 +1,5 @@
+name = "simple_echo_text"
+description = "echo text"
+language = "python"
+
+
