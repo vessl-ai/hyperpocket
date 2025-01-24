@@ -181,10 +181,12 @@ Pocket provides way to use end user auth easily.
   - [ ] Basic Auth (Username, Password)
 
 - Supported OAuth Providers
+
   - [x] Google
   - [x] GitHub
   - [x] Slack
-  - [x] Linear
+  - [x] Reddit
+  - [x] Calendly
   - [ ] Facebook
   - [ ] X (Previously Twitter)
   - [ ] LinkedIn
@@ -193,6 +195,13 @@ Pocket provides way to use end user auth easily.
   - [ ] Microsoft
   - [ ] Spotify
   - [ ] Twitch
+
+- Supported Token Providers
+  - [x] Notion
+  - [x] Slack
+  - [x] Linear
+  - [x] Gumloop
+  - [x] Github
 
 You can manage your auths in request-wise level. (e.g. you can use different auths for different requests)
 
@@ -255,27 +264,14 @@ tools = pocket.get_tools()
 agent = FunctionCallingAgent.from_tools(tools=tools, llm=llm)
 ```
 
-### Specifying auth methods for tool type
-
-Some resources support multiple auth methods. Your end user should be able to select between those methods.
+### Auth flow included
 
 ```text
 Human: List my slack messages in 'general' channel
 
-Assistance: To access your slack messages, you need authentication. Slack api provides 1) bot token auth 2) OAuth auth. Which do you want to proceed?
+Assistance: It looks like you need to authenticate to access the Slack messages. Please use [this link](https://slack.com/oauth/v2/authorize?user_scope=SCOPES&client_id=CLIENT_ID&redirect_uri=REDIRECT_URL) to authenticate your Slack account, and then let me know when you're done!
 
-Human: I'll go with OAuth
-
-Assistance: You need chat:read, channel:history scopes to list messages. Do you confirm?
-
-Human: OK.
-
-Assistance: Please proceed to the following url and finish authentication. After that, let me know.
-> https://slack.com/authorize?clientId=xxx&scope=chat:read,channel:history&redirect_url=xxx
-
-Human: I'm done. (if necessary)
-
-Assistance: I've checked you finished your auth. Let me search messages in slack channel 'general'.
+Human: done.
 
 Assistance: Here are the recent 10 messages.
 (...)
@@ -331,11 +327,13 @@ client_secret = ""  # your github client secret
 
 - While creating your github OAuth app, configuring your app's `Authorization callback URL` is different for your
   development environment and production environment.
-    - For development environment, you can use `http://localhost:8000/auth/github/callback`
-        - **Note**: Default port for hyperpocket dev server is `8000`. If you are using a different port, make sure to
-          replace `8000` with your actual port number.
-    - For production environment, you can use `https://yourdomain.com/auth/github/callback`
-        - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.
+  - For local testing environment, you can use `https://localhost:8001/proxy/auth/<provider>/callback` for TLS enabled redirect url. (ex. `https://localhost:8001/proxy/auth/github/callback`)
+    - **Note**: Default port for hyperpocket dev server is `8000`. If you are using a different port, make sure to
+      replace `8000` with your actual port number.
+    - **Note**: But for easy dev experience, you can use TLS proxy on port `8001` provided out-of-the-box.
+      - You can change the `proxy` prefix in settings.toml to your desired prefix with `callback_url_rewrite_prefix` key.
+  - For production environment, you can use `https://yourdomain.com/auth/github/callback`
+    - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.
 
 #### How to integrate SLACK OAuth app
 
