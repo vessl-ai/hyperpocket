@@ -1,4 +1,5 @@
 import asyncio
+from concurrent.futures import ThreadPoolExecutor
 from typing import Any, List, Optional, Union
 
 from hyperpocket.config import pocket_logger
@@ -21,16 +22,19 @@ class Pocket(object):
         use_profile: bool = False,
     ):
         self.use_profile = use_profile
-
         self.core = PocketCore(
             tools=tools,
             auth=auth,
             lockfile_path=lockfile_path,
             force_update=force_update,
         )
-
         self.server = PocketServer()
         self.server.run(self.core)
+        try:
+            self.server.wait_initialized()
+        except Exception as e:
+            pocket_logger.error(f"Failed to initialize pocket server. error : {e}")
+            self._teardown_server()
 
     def invoke(
         self,
