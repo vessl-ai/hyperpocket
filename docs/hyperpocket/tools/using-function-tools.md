@@ -1,11 +1,11 @@
 # Using Function Tools
 
-## What Are Function Tools?
+## Function Tools
 
-Function Tools are lightweight, Python-based tools that integrate directly into AI workflows. These tools are defined
+**Function Tools** are lightweight, Python-based tools that integrate directly into AI workflows. These tools are defined
 using the `@function_tool` decorator, making it simple to extend the capabilities of AI agents with minimal setup.
 
-You can also easily add supported auth methods. Details are below. 
+You can also easily add supported auth methods. Details are below.
 
 ## Example
 
@@ -15,7 +15,7 @@ Code Example: Creating and Using a Function Tool with Langchain and OpenAI
 from hyperpocket.tool import function_tool
 from hyperpocket_langchain import PocketLangchain
 
-from langchain.agents import 
+from langchain.agents import
 from langchain_openai import ChatOpenAI
 
 # Define a Function Tool
@@ -39,7 +39,7 @@ if __name__ == "__main__":
    user_input = # user input
    response = agent_executor.invoke(user_input)
    print(response)
-   
+
 ```
 
 ## Guides
@@ -51,11 +51,12 @@ if __name__ == "__main__":
    Use the `@function_tool` decorator to define a Python function as a tool. Add relevant input arguments and return the desired
    output.
 
-2. (Optional) Add auth capability for end user. 
+2. (Optional) Add auth capability for end user.
 
    You can simply add predefined auth methods by specifing auth providers in the decorator.
 
    Example:
+
    ```python
    from hyperpocket.auth import AuthProvider
    @function_tool(
@@ -64,18 +65,19 @@ if __name__ == "__main__":
    def some_slack_action():
       ...
    ```
+
    This example shows `some_slack_action` function will use Slack auth methods(OAuth or tokens) provided by Hyperpocket.
-   
+
    See [Auth](https://vessl-ai.github.io/hyperpocket/auth/index.html) for more details.
-   
 
 3. Initialize pocket and plug into your LLMs.
-  
+
    Initialize a pocket instance and put your tool inside.
-   
+
    For example for Langchain,
+
    ```python
-   from hyperpocket_langchain import PocketLangchain 
+   from hyperpocket_langchain import PocketLangchain
 
    pocket = PocketOpenAI(
       tools=[
@@ -86,9 +88,10 @@ if __name__ == "__main__":
 
    Generate tool specs and plug them into your LLM client or workflow.
    For example for Langchain with OpenAI as LLM engine,
+
    ```python
    # (import langchain related here)
-   
+
    tools = pocket.get_tools()
    llm = ChatOpenAI(model="gpt-4o")
 
@@ -115,4 +118,3 @@ There are situations that the data your tool returns needed to be modified - lik
 Hyperpocket provides advanced usages that you can postprocess the tool call results, with not changing the tool code itself.
 
 See [TBD](ff) for details.
-

@@ -1,36 +1,22 @@
 # Hyperpocket Docs
 
+## Prerequisites
+
+Install dependencies:
+
+```bash
+uv sync
+```
+
 ## How To Add New Document
 
 Follow these steps to add a new document to HyperPocket Docs:
 
-1. Add the new md file to the managed directory.
-2. Update the `_templates/autoapi/index.rst` file by adding a reference to the new document. For example:
+1. Add the new md file to the wanted directory.
+2. Add to `index.rst` in the relevant directory.
 
-```text
-Introduction
-============
+3. Build and preview the docs:
 
-This is hyperpocket.
-
-.. toctree::
-   :hidden:
-
-   Getting Started </autoapi/managed/getting_started.md>
-   Conceptual Guide </autoapi/managed/conceptual_guide.md>
-   Quick Start </autoapi/managed/quick_start.md>
-   API Reference </autoapi/hyperpocket/index>
-
-    <-- Add Hear -->
+```bash
+uv run make preview
 ```
-
-3. Submit a pull request for your changes.
-4. Once reviewed, merge the pull request into the main branch.
-
-## How To Edit Existing Document
-
-To update an existing document:
-
-1. Edit the relevant file in the managed directory.
-2. Submit a pull request for your changes.
-3. After review, merge the pull request into the main branch.
