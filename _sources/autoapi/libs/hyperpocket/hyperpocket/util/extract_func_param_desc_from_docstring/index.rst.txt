@@ -11,6 +11,7 @@ Functions
 .. autoapisummary::
 
    libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_docstring_mapping
+   libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.clean_string
    libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.clean_bracket_content
    libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_other_styles
    libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_desc_by_google_stype_docstring
@@ -33,6 +34,8 @@ Module Contents
                    and its description.
    :rtype: list
 
+
+.. py:function:: clean_string(input_string)
 
 .. py:function:: clean_bracket_content(content)
 
