@@ -63,7 +63,7 @@ html_context = {
     "github_user": "vessl-ai",  # Username
     "github_repo": "hyperpocket",  # Repo name
     "github_version": "main",  # Version
-    "conf_py_path": "/docs/",  # Path in the checkout to the docs root
+    "conf_py_path": "/docs/hyperpocket/",  # Path in the checkout to the docs root
 }
 
 
