@@ -105,3 +105,6 @@ Module Contents
    .. py:method:: run(pocket_core: hyperpocket.pocket_core.PocketCore)
 
 
+   .. py:method:: wait_initialized()
+
+

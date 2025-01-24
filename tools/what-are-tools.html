@@ -47,16 +47,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tools</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">What are tools?</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#why-do-ai-agents-need-tools"><strong>Why Do AI Agents Need Tools?</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#how-tool-calling-works"><strong>How Tool Calling Works</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#how-hyperpocket-handles-tools"><strong>How Hyperpocket Handles Tools</strong></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#tool-categorization-by-integration-method"><strong>Tool Categorization by Integration Method</strong></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#tool-categorization-by-availability"><strong>Tool Categorization by Availability</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#why-do-ai-agents-need-tools">Why do AI Agents need tools?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-tool-calling-works">How tool calling works</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-hyperpocket-handles-tools">How Hyperpocket handles tools</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tool-categorization-by-integration-method">Tool categorization by integration method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tool-categorization-by-availability">Tool categorization by availability</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#summary">Summary</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#by-integration-method"><strong>By Integration Method</strong></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#by-availability"><strong>By Availability</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tool-categories-in-a-nutshell">Tool categories in a nutshell</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#by-integration-method">By integration method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#by-availability">By availability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">By availability</a></li>
 </ul>
 </li>
 </ul>
@@ -100,122 +101,113 @@
   <section id="what-are-tools">
 <h1>What are tools?<a class="headerlink" href="#what-are-tools" title="Link to this heading"></a></h1>
 <section id="why-do-ai-agents-need-tools">
-<h2><strong>Why Do AI Agents Need Tools?</strong><a class="headerlink" href="#why-do-ai-agents-need-tools" title="Link to this heading"></a></h2>
-<p>Language models excel at processing and generating text, but they cannot independently fetch real-time data, communicate with external systems, or execute code. While they can reason and analyze information, they require external tools to interact with the digital world and take meaningful actions.</p>
-<p><strong>Tools can solve this limitation.</strong></p>
-<p><strong>With tools, AI models can extend their capabilities beyond text generation to:</strong></p>
-<p>✅ Fetching live data (e.g., retrieving stock prices, weather updates)</p>
-<p>✅ Calling APIs (e.g., sending Slack messages, querying databases)</p>
-<p>✅ Running local code (e.g., executing Python scripts, processing WASM code)</p>
-<p>✅ Managing files (e.g., reading and writing to disk, handling cloud storage)</p>
+<h2>Why do AI Agents need tools?<a class="headerlink" href="#why-do-ai-agents-need-tools" title="Link to this heading"></a></h2>
+<p>Language models excel at processing and generating text, but they cannot independently fetch real-time data, communicate with external systems, or execute code. While they can reason and analyze information, they require external tools to interact with the digital world and take meaningful actions. Tools can solve this limitation.</p>
+<p>With tools, AI models can extend their capabilities beyond text generation to:</p>
+<ul class="simple">
+<li><p>Fetching live data (e.g., retrieving stock prices, weather updates)</p></li>
+<li><p>Calling APIs (e.g., sending Slack messages, querying databases)</p></li>
+<li><p>Running local code (e.g., executing Python scripts, processing WASM code)</p></li>
+<li><p>Managing files (e.g., reading and writing to disk, handling cloud storage)</p></li>
+</ul>
 </section>
 <section id="how-tool-calling-works">
-<h2><strong>How Tool Calling Works</strong><a class="headerlink" href="#how-tool-calling-works" title="Link to this heading"></a></h2>
+<h2>How tool calling works<a class="headerlink" href="#how-tool-calling-works" title="Link to this heading"></a></h2>
 <p>AI models with <strong>tool-calling capabilities</strong> can recognize when a tool is needed, select the appropriate tool, and execute it to fulfill a user’s request. Developers can design and integrate these tools, allowing AI models to take real-world actions.</p>
-<p><strong>Example: AI Agent Using Tools</strong></p>
 <ul class="simple">
-<li><p>🗣 <strong>User:</strong> “Can you check the latest GitHub stars for Hyperpocket?”</p></li>
+<li><p>🗣 <strong>User:</strong> “Can you check the latest issue for vessl-ai/hyperpocket?”</p></li>
 <li><p>🤖 <strong>AI Model’s Process:</strong></p>
 <ol class="arabic simple">
 <li><p>Recognizes that live data is needed.</p></li>
-<li><p>Selects the appropriate tool (GitHub.GetStars).</p></li>
-<li><p>Calls the tool, fetching the latest star count from GitHub.</p></li>
+<li><p>Selects the appropriate tool (GitHub.GetIssue).</p></li>
+<li><p>Calls the tool, fetching the latest issue from GitHub.</p></li>
 <li><p>Generates a response using the retrieved data.</p></li>
 </ol>
 </li>
 </ul>
 </section>
 <section id="how-hyperpocket-handles-tools">
-<h2><strong>How Hyperpocket Handles Tools</strong><a class="headerlink" href="#how-hyperpocket-handles-tools" title="Link to this heading"></a></h2>
+<h2>How Hyperpocket handles tools<a class="headerlink" href="#how-hyperpocket-handles-tools" title="Link to this heading"></a></h2>
 <section id="tool-categorization-by-integration-method">
-<h3><strong>Tool Categorization by Integration Method</strong><a class="headerlink" href="#tool-categorization-by-integration-method" title="Link to this heading"></a></h3>
-<p><strong>Hyperpocket provides two distinct ways to integrate tools into AI agents:</strong></p>
+<h3>Tool categorization by integration method<a class="headerlink" href="#tool-categorization-by-integration-method" title="Link to this heading"></a></h3>
 <p><img alt="image.png" src="../_images/image.png" /></p>
+<p>Hyperpocket provides two distinct ways to integrate tools into AI agents:</p>
 <ol class="arabic simple">
 <li><p><strong>WASM Tools</strong> : Tools executed securely in an isolated WebAssembly (WASM) environment.</p></li>
 <li><p><strong>Function Tools</strong> : Lightweight Python functions that can be directly integrated into workflows.</p></li>
 </ol>
 <section id="wasm-tools">
-<h4><strong>1. WASM Tools</strong><a class="headerlink" href="#wasm-tools" title="Link to this heading"></a></h4>
+<h4>WASM Tools<a class="headerlink" href="#wasm-tools" title="Link to this heading"></a></h4>
 <p>WASM tools are executed in secure, sandboxed environments, making them ideal for scenarios requiring high security and performance isolation. These tools can either be fetched from external repositories like GitHub or loaded directly from local storage.</p>
-<p><strong>WASM Tool Variants</strong></p>
+<p>WASM Tool has two following variants:</p>
+<p><strong>Git-based Execution</strong></p>
 <ul class="simple">
-<li><p><strong>GitHub-based Execution</strong></p>
-<ul>
 <li><p>Tools are fetched from a GitHub repository, downloaded locally, and executed via a WASM interpreter.</p></li>
 <li><p>This approach is useful for managed tools maintained by Hyperpocket or open-source contributions by the community.</p></li>
 </ul>
-</li>
-<li><p><strong>Local Execution</strong></p>
-<ul>
+<p><strong>Local Execution</strong></p>
+<ul class="simple">
 <li><p>Pre-existing tools stored locally are executed directly using their file paths.</p></li>
 <li><p>Ideal for private tools or custom setups where internet access might be restricted.</p></li>
 </ul>
-</li>
-</ul>
-<p><strong>Example Command:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
 
+<span class="c1"># git-based execution</span>
 <span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperpocket&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;managed-tools/slack/get-message&quot;</span><span class="p">)</span>
+
+<span class="c1"># local execution</span>
+<span class="n">tool</span> <span class="o">=</span> <span class="n">from_local</span><span class="p">(</span><span class="s2">&quot;yout/path/to/wasm/tool/in/local/env/slack/get-message&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>or you can just write github url</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tool</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message&quot;</span>
+<p>The tool in the GitHub repository can be used by its URL directly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="function-tools">
-<h4><strong>2. Function Tools</strong><a class="headerlink" href="#function-tools" title="Link to this heading"></a></h4>
-<p>Function tools are lightweight, easy-to-implement tools that utilize Python functions decorated with a specific Hyperpocket interface. These tools are ideal for quick, inline tool development or rapid prototyping.</p>
-<p><strong>Example Code:</strong></p>
+<h4>Function Tools<a class="headerlink" href="#function-tools" title="Link to this heading"></a></h4>
+<p>Function Tools are lightweight, easy-to-implement tools that utilize Python functions decorated with a specific Hyperpocket interface. These tools are ideal for quick, inline tool development or rapid prototyping. To make Function Tool, the original function must have a docstring or implement <code class="docutils literal notranslate"><span class="pre">__doc__</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_tool</span>
 
 <span class="nd">@function_tool</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_weather</span><span class="p">(</span><span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the weather in a specific location.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        location (str): The location to get the weather for.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The weather in the specified location.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;The weather in </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> is sunny.&quot;</span>
 </pre></div>
 </div>
 </section>
 </section>
 <section id="tool-categorization-by-availability">
-<h3><strong>Tool Categorization by Availability</strong><a class="headerlink" href="#tool-categorization-by-availability" title="Link to this heading"></a></h3>
-<p>Hyperpocket tools are also classified into four categories based on ownership and management, offering flexibility for various user needs.</p>
-<p><img alt="image.png" src="tools/what-are-tools/image%201.png" /></p>
-<section id="built-in-tools-provided-as-function-tools">
-<h4><strong>🛠 Built-in Tools (provided as Function Tools)</strong><a class="headerlink" href="#built-in-tools-provided-as-function-tools" title="Link to this heading"></a></h4>
-<p>Built-in tools are pre-installed and included with Hyperpocket, requiring no additional setup. These tools are managed and predefined by the Hyperpocket team, allowing users to utilize them out of the box with minimal effort.</p>
-<p><strong>Example Command:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">built_in_tool</span>
-
-<span class="nd">@built_in_tool</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">simple_task</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s2">&quot;This is a built-in function tool!&quot;</span>
-</pre></div>
-</div>
+<h3>Tool categorization by availability<a class="headerlink" href="#tool-categorization-by-availability" title="Link to this heading"></a></h3>
+<section id="built-in-tools">
+<h4>🛠 Built-in Tools<a class="headerlink" href="#built-in-tools" title="Link to this heading"></a></h4>
+<p>Built-in tools are pre-installed and included in Hyperpocket to manage authentication sessions.</p>
 </section>
-<section id="managed-tools">
-<h4><strong>📦 Managed Tools</strong><a class="headerlink" href="#managed-tools" title="Link to this heading"></a></h4>
-<p>Managed tools are developed by individual contributors and officially reviewed, uploaded, and maintained by the Hyperpocket team. These tools are curated for reliability and can be seamlessly integrated into workflows through the Hyperpocket framework.</p>
-<p><strong>Example Command:</strong></p>
+<section id="public-tools-open-source">
+<h4>📦 Public Tools (open-source)<a class="headerlink" href="#public-tools-open-source" title="Link to this heading"></a></h4>
+<p>Public tools are open-source and shared by the broader community, including individual contributors, other open-source projects, and Hyperpocket team as well. These tools can be hosted on various platforms such as Hyperpocket repository, other GitHub repositories and LangChain community, etc.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
 
-<span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperpocket&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;managed-tools/slack/post-message&quot;</span><span class="p">)</span>
+<span class="c1"># managed by Hyperpocket Team </span>
+<span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/vessl-ai/hyperpocket&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;slack/post-message&quot;</span><span class="p">)</span>
+
+<span class="c1"># managed by community</span>
+<span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/user/custom-tool-repo&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;community-tools/custom-task&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="community-tools-open-source-external-contributions">
-<h4><strong>🌍 Community Tools (Open-Source &amp; External Contributions)</strong><a class="headerlink" href="#community-tools-open-source-external-contributions" title="Link to this heading"></a></h4>
-<p>Community tools are open-source and shared by the broader community. These tools are managed by individual contributors through personal repositories or platforms such as LangChain-Hub, Hugging Face, and MCP. They provide diverse functionality and encourage collaboration across users.</p>
-<p><strong>Example Command:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">&quot;https://github.com/user/custom-tool-repo&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;community-tools/custom-task&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="custom-tools">
-<h4>✏️ Custom Tools<a class="headerlink" href="#custom-tools" title="Link to this heading"></a></h4>
+<section id="your-own-tools">
+<h4>✏️ Your own tools<a class="headerlink" href="#your-own-tools" title="Link to this heading"></a></h4>
 <p>Custom tools are highly personalized tools that users can directly create and deploy in their local environments. These tools are fully managed by the user or their organization and can be implemented as inline functions or packaged modules. Users can execute them using either a local Python interpreter or a secure WASM interpreter, providing maximum flexibility for bespoke workflows.</p>
-<p><strong>Example Command(Inline function tool):</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool.function.annotation</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_tool</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_tool</span><span class="p">,</span> <span class="n">from_local</span>
 
 <span class="nd">@function_tool</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">custom_task</span><span class="p">():</span>
@@ -224,10 +216,7 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 
     <span class="k">return</span> <span class="s2">&quot;This is my custom tool!&quot;</span>
-</pre></div>
-</div>
-<p><strong>Example Command (Packaged Local Tool):</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_local</span>
+
 
 <span class="n">tool</span> <span class="o">=</span> <span class="n">from_local</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;./local-tools/simple-echo-tool&quot;</span><span class="p">)</span>
 </pre></div>
@@ -235,10 +224,10 @@
 </section>
 </section>
 </section>
-<section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<section id="tool-categories-in-a-nutshell">
+<h2>Tool categories in a nutshell<a class="headerlink" href="#tool-categories-in-a-nutshell" title="Link to this heading"></a></h2>
 <section id="by-integration-method">
-<h3><strong>By Integration Method</strong><a class="headerlink" href="#by-integration-method" title="Link to this heading"></a></h3>
+<h3>By integration method<a class="headerlink" href="#by-integration-method" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Integration Method</p></th>
@@ -263,7 +252,7 @@
 </table>
 </section>
 <section id="by-availability">
-<h3><strong>By Availability</strong><a class="headerlink" href="#by-availability" title="Link to this heading"></a></h3>
+<h3>By availability<a class="headerlink" href="#by-availability" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Tool Type</p></th>
@@ -278,20 +267,44 @@
 <td><p>Pre-installed tools ready for immediate use.</p></td>
 <td><p>Managed and predefined by Hyperpocket.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Managed Tools</p></td>
-<td><p>WASM</p></td>
-<td><p>Community-developed tools, officially maintained.</p></td>
-<td><p>Managed by Hyperpocket, developed by individual contributors.</p></td>
-</tr>
-<tr class="row-even"><td><p>Community Tools</p></td>
+<tr class="row-odd"><td><p>Public Tools</p></td>
 <td><p>WASM, Function</p></td>
-<td><p>Open-source tools shared by the community.</p></td>
-<td><p>Managed by individual contributors through GitHub or other platforms.</p></td>
+<td><p>Community-developed tools, officially maintained.</p></td>
+<td><p>Developed by community.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Custom Tools</p></td>
+<tr class="row-even"><td><p>Custom Tools</p></td>
 <td><p>WASM, Function</p></td>
 <td><p>Personalized tools created and deployed by users.</p></td>
 <td><p>Fully managed by the user, supporting inline and packaged implementations.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id1">
+<h3>By availability<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Tool Type</p></th>
+<th class="head"><p>Category</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Operation by</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Built-in Tools</p></td>
+<td><p>Function</p></td>
+<td><p>Pre-installed tools included in Hyperpocket for managing auth sessions.</p></td>
+<td><p>Managed and predefined by Hyperpocket.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Public Tools</p></td>
+<td><p>WASM, Function</p></td>
+<td><p>Open-source tools shared by the broader community and Hyperpocket team.</p></td>
+<td><p>Developed by community, including individual contributors and other open-source projects.</p></td>
+</tr>
+<tr class="row-even"><td><p>Custom Tools</p></td>
+<td><p>WASM, Function</p></td>
+<td><p>Highly personalized tools created and deployed in local environments.</p></td>
+<td><p>Fully managed by the user or their organization, supporting inline and packaged implementations.</p></td>
 </tr>
 </tbody>
 </table>
