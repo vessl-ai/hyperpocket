@@ -1,14 +1,17 @@
 # Enabling Token-Based Authentication with Hyperpocket
 
-Token-based authentication in Hyperpocket is ideal for tools that rely on pre-configured static credentials, such as API keys or bearer tokens. This approach is simple and efficient, making it perfect for lightweight workflows.
+Hyperpocket support token based authentication that is used in case user already have their own token, or you can't
+choose OAuth flow.
+
+This approach is simple and efficient, making it perfect for lightweight workflows.
 
 ## **How to Apply Token Authentication**
 
-1.	**Define the Token Configuration**
+1. **Define the Token Configuration**
 
 Pass the token or API key as part of the auth parameter in the @tool decorator.
 
-2.	**Define the Tool**
+2. **Define the Tool**
 
 Use the @tool decorator to create a tool with token-based authentication.
 
@@ -17,25 +20,31 @@ Use the @tool decorator to create a tool with token-based authentication.
 Here’s how to define and use a tool with an API key:
 
 ```python
-from hyperpocket.tool import tool
+from slack_sdk import WebClient
 
-# Define the tool with token-based authentication
-@tool(auth={"api_key": "YOUR_API_KEY"})
-def get_weather(location: str) -> str:
-    """Fetch the weather for a given location."""
-    return f"The weather in {location} is sunny with a high of 25°C."
+from hyperpocket.auth import AuthProvider
+from hyperpocket.tool import function_tool
 
-# Use the tool
-if __name__ == "__main__":
-    location = "Seoul"
-    weather = get_weather(location)
-    print(weather)  # Output: The weather in Seoul is sunny with a high of 25°C.
+
+@function_tool(
+    auth_provider=AuthProvider.SLACK,
+    auth_handler="slack-token",
+    scopes=["channels:history", "im:history", "mpim:history", "groups:history", "mpim:read", "im:read"])
+def slack_get_messages(channel: str, limit: int = 10, **kwargs) -> list:
+    """
+    Get recent messages from a Slack channel.
+    
+    Args:
+        channel(str): slack channel to be fetched
+        limit(int): maximum message limit 
+    """
+    client = WebClient(token=kwargs["SLACK_BOT_TOKEN"])
+    response = client.conversations_history(channel=channel, limit=limit)
+    return list(response)
 ```
 
 ## **Why Use Token-Based Authentication with Hyperpocket?**
 
-•	**Quick Setup:** Requires minimal configuration.
-
-•	**Lightweight Workflow:** Ideal for single-step operations with static credentials.
-
-•	**Secure Credential Management:** Tokens are securely passed and managed within Hyperpocket’s internal environment.
+- **Quick Setup:** Requires minimal configuration.
+- **Lightweight Workflow:** Ideal for single-step operations with static credentials.
+- **Secure Credential Management:** Tokens are securely passed and managed within Hyperpocket’s internal environment.
