@@ -3,7 +3,7 @@ name = "hyperdock-langchain"
 version = "0.1.9"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = [
     "langchain>=0.3.15",
     "multiprocess>=0.70.17",
