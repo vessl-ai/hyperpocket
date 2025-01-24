@@ -135,13 +135,15 @@ graph_builder.compile()
 ```
 
 ```python
+import os
+
 from llama_index.core.agent import FunctionCallingAgent
 from llama_index.llms.openai import OpenAI
 
 from hyperpocket.config import secret
 from hyperpocket_llamaindex import PocketLlamaindex
 
-llm = OpenAI(api_key=secret["OPENAI_API_KEY"])
+llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 pocket = PocketLlamaindex(
   tools=[
     "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",

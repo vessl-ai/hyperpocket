@@ -48,8 +48,7 @@ class Pocket(object):
         Returns:
             str: tool result
         """
-        result = asyncio.run(self.ainvoke(tool_name, body, thread_id, profile, *args, **kwargs))
-        return result
+        return asyncio.run(self.ainvoke(tool_name, body, thread_id, profile, *args, **kwargs))
 
     async def ainvoke(self,
                       tool_name: str,

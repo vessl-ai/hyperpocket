@@ -31,8 +31,8 @@ class PocketServer(object):
     torn_down: bool = False
 
     def __init__(self,
-                 internal_server_port: int = config.internal_server_port,
-                 proxy_port: int = config.public_server_port):
+                 internal_server_port: int = config().internal_server_port,
+                 proxy_port: int = config().public_server_port):
         self.internal_server_port = internal_server_port
         self.proxy_port = proxy_port
         self.future_store = dict()
@@ -189,7 +189,7 @@ class PocketServer(object):
 
     def _create_main_server(self) -> Server:
         app = FastAPI()
-        _config = Config(app, host="0.0.0.0", port=self.internal_server_port, log_level=config.log_level)
+        _config = Config(app, host="0.0.0.0", port=self.internal_server_port, log_level=config().log_level)
         app.include_router(tool_router)
         app.include_router(auth_router)
         app.add_api_route("/health", lambda: {"status": "ok"}, methods=["GET"])
@@ -198,7 +198,7 @@ class PocketServer(object):
         return app
 
     def _create_https_proxy_server(self) -> Optional[Server]:
-        if not config.enable_local_callback_proxy:
+        if not config().enable_local_callback_proxy:
             return None
         from hyperpocket.server.proxy import _generate_ssl_certificates
         from hyperpocket.server.proxy import https_proxy_app
@@ -211,7 +211,7 @@ class PocketServer(object):
             _generate_ssl_certificates(ssl_keypath, ssl_certpath)
 
         _config = Config(https_proxy_app, host="0.0.0.0", port=self.proxy_port, ssl_keyfile=ssl_keypath,
-                         ssl_certfile=ssl_certpath, log_level=config.log_level)
+                         ssl_certfile=ssl_certpath, log_level=config().log_level)
         proxy_server = Server(_config)
         return proxy_server
 

@@ -15,7 +15,7 @@ class SlackTokenAuthHandler(AuthHandlerInterface):
     description: str = "This handler is used to authenticate users using the Slack token."
     scoped: bool = False
 
-    _TOKEN_URL: str = urljoin(config.public_base_url + "/", f"{config.callback_url_rewrite_prefix}/auth/token")
+    _TOKEN_URL: str = urljoin(config().public_base_url + "/", f"{config().callback_url_rewrite_prefix}/auth/token")
 
     @staticmethod
     def provider() -> AuthProvider:
@@ -28,8 +28,8 @@ class SlackTokenAuthHandler(AuthHandlerInterface):
     def prepare(self, auth_req: SlackTokenRequest, thread_id: str, profile: str,
                 future_uid: str, *args, **kwargs) -> str:
         redirect_uri = urljoin(
-            config.public_base_url + "/",
-            f"{config.callback_url_rewrite_prefix}/auth/slack/token/callback",
+            config().public_base_url + "/",
+            f"{config().callback_url_rewrite_prefix}/auth/slack/token/callback",
         )
         url = self._make_auth_url(req=auth_req, redirect_uri=redirect_uri, state=future_uid)
         FutureStore.create_future(future_uid, data={

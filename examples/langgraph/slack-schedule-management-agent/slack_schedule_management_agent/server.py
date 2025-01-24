@@ -1,5 +1,6 @@
 import asyncio
 from datetime import datetime
+import os
 
 import pytz
 import uvicorn
@@ -16,13 +17,12 @@ from slack_sdk.errors import SlackApiError
 from slack_sdk.signature import SignatureVerifier
 from starlette.responses import JSONResponse
 
-from hyperpocket.config import secret
 from hyperpocket.server import add_callback_proxy
 from hyperpocket_langgraph import PocketLanggraph
 from .local_tools import fetch_user_prs_from_organization, get_user_slack_threads
 
-slack_client = WebClient(secret["SLACK_BOT_TOKEN"])
-verifier = SignatureVerifier(signing_secret=secret["SLACK_SIGNING_SECRET"])
+slack_client = WebClient(os.getenv("SLACK_BOT_TOKEN"))
+verifier = SignatureVerifier(signing_secret=os.getenv("SLACK_SIGNING_SECRET"))
 
 
 def send_slack_message(channel, text):
@@ -57,7 +57,7 @@ def build():
         fetch_user_prs_from_organization
     ])
 
-    llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"], streaming=True)
+    llm = ChatOpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"), streaming=True)
     llm_with_tools = llm.bind_tools(pocket.get_tools())
 
     graph_builder = StateGraph(MessagesState)

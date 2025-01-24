@@ -41,8 +41,8 @@ class GitHubOAuth2AuthHandler(AuthHandlerInterface):
         **kwargs,
     ) -> str:
         redirect_uri = urljoin(
-            config.public_base_url + "/",
-            f"{config.callback_url_rewrite_prefix}/auth/github/oauth2/callback",
+            config().public_base_url + "/",
+            f"{config().callback_url_rewrite_prefix}/auth/github/oauth2/callback",
         )
         auth_url = self._make_auth_url(auth_req, redirect_uri, future_uid)
 
@@ -138,6 +138,6 @@ class GitHubOAuth2AuthHandler(AuthHandlerInterface):
     ) -> GitHubOAuth2Request:
         return GitHubOAuth2Request(
             auth_scopes=auth_scopes,
-            client_id=config.auth.github.client_id,
-            client_secret=config.auth.github.client_secret,
+            client_id=config().auth.github.client_id,
+            client_secret=config().auth.github.client_secret,
         )

@@ -34,7 +34,7 @@ class WasmInvoker(object):
         future_data = FutureStore.create_future(uid=uid)
         browser = await InvokerBrowser.get_instance()
         page = await browser.new_page()
-        url = urljoin(config.internal_base_url + '/', f'tools/wasm/scripts/{uid}/browse')
+        url = urljoin(config().internal_base_url + '/', f'tools/wasm/scripts/{uid}/browse')
         await page.goto(url)
         stdout = await future_data.future
         await page.close()

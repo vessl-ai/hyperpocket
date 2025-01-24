@@ -1,12 +1,12 @@
 import os
 
-from hyperpocket_langchain import PocketLangchain
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.memory import ConversationBufferMemory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
 from hyperpocket.tool import from_git
+from hyperpocket_langchain import PocketLangchain
 
 
 def agent(pocket: PocketLangchain):
@@ -37,7 +37,7 @@ def agent(pocket: PocketLangchain):
     )
 
     print("\n\n\n")
-    print("Hello, this is langchain gumloop agent.")
+    print("Hello, this is langchain slack agent.")
     while True:
         print("user(q to quit) : ", end="")
         user_input = input()
@@ -46,16 +46,27 @@ def agent(pocket: PocketLangchain):
             break
 
         response = agent_executor.invoke({"input": user_input})
-        print("gumloop agent : ", response["output"])
+        print("slack agent : ", response["output"])
         print()
 
 
 if __name__ == "__main__":
     with PocketLangchain(
             tools=[
-                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/gumloop/start-flow-run",
-                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/gumloop/list-saved-flows",
-                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/gumloop/retrieve-input-schema",
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/google/get-calendar-events"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/google/get-calendar-list"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/google/insert-calendar-events"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/github/pr-list"),
+                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
+                         "managed-tools/github/read-pull-request"),
+
             ],
+            # force_update=True,
     ) as pocket:
         agent(pocket)
