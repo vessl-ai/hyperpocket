@@ -150,11 +150,11 @@ print("Hello, This is a simple Slack agent using Hyperpocket.")
 
 while True:
     user_input = input("user (q to quit): ")
-    
+
     if user_input.lower() == "q":
         print("Goodbye!")
         break
-    
+
     response = agent_executor.invoke({"input": user_input})
     print("agent:", response["output"])
     print()
@@ -194,16 +194,16 @@ user (q to quit) :
 
 Before using Slack-related functionalities, make sure your Slack app has the proper permissions to post and retrieve messages from channels. Follow these steps:
 
-1.	Go to the [Slack API Dashboard](https://api.slack.com/).
+1. Go to the [Slack API Dashboard](https://api.slack.com/).
 
-2.	Navigate to **Your Apps** and select your app.
+2. Navigate to **Your Apps** and select your app.
 
-3.	Under the **OAuth & Permissions** section, ensure your app has the following scopes:
+3. Under the **OAuth & Permissions** section, ensure your app has the following scopes:
 
 - channels:history (for retrieving messages)
 - channels:write (for posting messages)
 
-4.	Save your changes and reinstall the app to apply the updated permissions.
+4. Save your changes and reinstall the app to apply the updated permissions.
 
 ### Step2 : Authenticate via Slack
 
@@ -223,7 +223,7 @@ INFO:     127.0.0.1:51151 - "GET /auth/slack/oauth2/callback?code=****&state=***
 
 **Retrieve the Last Message from Slack Channel**
 
-```python
+```bash
 user (q to quit) : Retrieve the last message from #general
 agent : "Please authenticate using this link: [Slack Authentication Link]"
 INFO:     127.0.0.1:51151 - "GET /auth/slack/oauth2/callback?code=****&state=**** HTTP/1.1" 200 OK

@@ -229,11 +229,11 @@ pip<span class="w"> </span>install<span class="w"> </span>langchain_openai
 
 <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
     <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;user (q to quit): &quot;</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">user_input</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Goodbye!&quot;</span><span class="p">)</span>
         <span class="k">break</span>
-    
+
     <span class="n">response</span> <span class="o">=</span> <span class="n">agent_executor</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">user_input</span><span class="p">})</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;agent:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
     <span class="nb">print</span><span class="p">()</span>
@@ -301,11 +301,11 @@ pip<span class="w"> </span>install<span class="w"> </span>langchain_openai
 <section id="example-commands">
 <h3><strong>Example Commands</strong><a class="headerlink" href="#example-commands" title="Link to this heading"></a></h3>
 <p><strong>Retrieve the Last Message from Slack Channel</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">user</span> <span class="p">(</span><span class="n">q</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span> <span class="p">:</span> <span class="n">Retrieve</span> <span class="n">the</span> <span class="n">last</span> <span class="n">message</span> <span class="kn">from</span><span class="w"> </span><span class="c1">#general</span>
-<span class="n">agent</span> <span class="p">:</span> <span class="s2">&quot;Please authenticate using this link: [Slack Authentication Link]&quot;</span>
-<span class="n">INFO</span><span class="p">:</span>     <span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">51151</span> <span class="o">-</span> <span class="s2">&quot;GET /auth/slack/oauth2/callback?code=****&amp;state=**** HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="n">OK</span>
-<span class="n">user</span> <span class="p">(</span><span class="n">q</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span> <span class="p">:</span> <span class="n">Okay</span>
-<span class="n">agent</span> <span class="p">:</span> <span class="s2">&quot;The last message in #general is: &#39;Hello, world!&#39;&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>user<span class="w"> </span><span class="o">(</span>q<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span><span class="w"> </span>:<span class="w"> </span>Retrieve<span class="w"> </span>the<span class="w"> </span>last<span class="w"> </span>message<span class="w"> </span>from<span class="w"> </span><span class="c1">#general</span>
+agent<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Please authenticate using this link: [Slack Authentication Link]&quot;</span>
+INFO:<span class="w">     </span><span class="m">127</span>.0.0.1:51151<span class="w"> </span>-<span class="w"> </span><span class="s2">&quot;GET /auth/slack/oauth2/callback?code=****&amp;state=**** HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+user<span class="w"> </span><span class="o">(</span>q<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span><span class="w"> </span>:<span class="w"> </span>Okay
+agent<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;The last message in #general is: &#39;Hello, world!&#39;&quot;</span>
 </pre></div>
 </div>
 <p><strong>Post a message to Slack</strong></p>
