@@ -1,7 +1,8 @@
 import asyncio
 import copy
 import inspect
-from typing import Callable, Optional, Any, Coroutine
+from typing import Any, Coroutine
+from typing import Callable, Optional
 
 from pydantic import BaseModel
 
@@ -44,32 +45,37 @@ class FunctionTool(Tool):
         _kwargs = copy.deepcopy(kwargs)
 
         # make body args to model
-        schema_model = self.schema_model()
-        model = schema_model(body=_kwargs["body"])
+        schema_model = self.schema_model(use_profile=False)
+        model = schema_model(**_kwargs["body"])
         _kwargs.pop("body")
 
         # body model to dict
-        args = self.model_to_kwargs(model.body)
+        args = self.model_to_kwargs(model)
 
         # binding args
         binding_args = {}
-        sig = inspect.signature(self.func)
-        for param_name, param in sig.parameters.items():
-            if param_name not in args:
-                continue
+        if self.func.__dict__.get("__model__") is not None:
+            # when a function signature is not inferrable from the function itself
+            binding_args = args.copy()
+            binding_args |= _kwargs.get("envs", {}) | self.tool_vars
+        else:
+            sig = inspect.signature(self.func)
+            for param_name, param in sig.parameters.items():
+                if param_name not in args:
+                    continue
 
-            if param.kind == param.VAR_KEYWORD:
-                # var keyword args should be passed by plain dict
-                binding_args |= args[param_name]
-                binding_args |= _kwargs.get("envs", {})
+                if param.kind == param.VAR_KEYWORD:
+                    # var keyword args should be passed by plain dict
+                    binding_args |= args[param_name]
+                    binding_args |= _kwargs.get("envs", {}) | self.tool_vars
 
-                if "envs" in _kwargs:
-                    _kwargs.pop("envs")
+                    if "envs" in _kwargs:
+                        _kwargs.pop("envs")
 
-                binding_args |= _kwargs  # add other kwargs
-                continue
+                    binding_args |= _kwargs  # add other kwargs
+                    continue
 
-            binding_args[param_name] = args[param_name]
+                binding_args[param_name] = args[param_name]
 
         return binding_args
 
@@ -84,10 +90,25 @@ class FunctionTool(Tool):
     @classmethod
     def from_func(
         cls,
-        func: Callable,
-        afunc: Callable[..., Coroutine[Any, Any, str]] = None,
-        auth: Optional[ToolAuth] = None
+        func: Callable | 'FunctionTool',
+        afunc: Callable[..., Coroutine[Any, Any, str]] | 'FunctionTool' = None,
+        auth: Optional[ToolAuth] = None,
+        tool_vars: dict[str, str] = None,
     ) -> "FunctionTool":
+        if tool_vars is None:
+            tool_vars = dict()
+            
+        if isinstance(func, FunctionTool):
+            if tool_vars is not None:
+                func.override_tool_variables(tool_vars)
+            return func
+        elif isinstance(afunc, FunctionTool):
+            if tool_vars is not None:
+                afunc.override_tool_variables(tool_vars)
+            return afunc
+        elif not callable(func) and not callable(afunc):
+            raise ValueError("FunctionTool can only be created from a callable")
+        
         model = function_to_model(func)
         argument_json_schema = flatten_json_schema(model.model_json_schema())
 
@@ -95,19 +116,26 @@ class FunctionTool(Tool):
             func=func,
             afunc=afunc,
             name=func.__name__,
-            description=model.__doc__,
+            description=func.__doc__ if func.__doc__ is not None else "",
             argument_json_schema=argument_json_schema,
-            auth=auth
+            auth=auth,
+            default_tool_vars=tool_vars
         )
     
     @classmethod
     def from_dock(
         cls,
         dock: list[Callable[..., str]],
+        tool_vars: Optional[dict[str, str]] = None,
     ) -> list["FunctionTool"]:
+        if tool_vars is None:
+            tool_vars = dict()
         tools = []
         for func in dock:
-            model = function_to_model(func)
+            if (_model := func.__dict__.get("__model__")) is not None:
+                model = _model
+            else:
+                model = function_to_model(func)
             argument_json_schema = flatten_json_schema(model.model_json_schema())
             if not callable(func):
                 raise ValueError(f"Dock element should be a list of functions, but found {func}")
@@ -123,6 +151,7 @@ class FunctionTool(Tool):
                     description=func.__doc__,
                     argument_json_schema=argument_json_schema,
                     auth=auth,
+                    default_tool_vars=(tool_vars | func.__dict__.get("__vars__", {})),
                 ))
             else:
                 tools.append(cls(
@@ -132,5 +161,6 @@ class FunctionTool(Tool):
                     description=func.__doc__,
                     argument_json_schema=argument_json_schema,
                     auth=auth,
+                    default_tool_vars=(tool_vars | func.__dict__.get("__vars__", {})),
                 ))
         return tools

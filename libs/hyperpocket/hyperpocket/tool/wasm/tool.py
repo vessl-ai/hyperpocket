@@ -1,10 +1,11 @@
+import os
 import json
 import pathlib
 from typing import Any, Optional
 
 import toml
 from hyperpocket.auth import AuthProvider
-from hyperpocket.config import pocket_logger
+from hyperpocket.config import settings, pocket_logger
 from hyperpocket.repository import Lock, Lockfile
 from hyperpocket.repository.lock import GitLock, LocalLock
 from hyperpocket.tool import Tool, ToolRequest
@@ -17,21 +18,23 @@ class WasmToolRequest(ToolRequest):
     lock: Lock
     rel_path: str
 
-    def __init__(self, lock: Lock, rel_path: str):
+    def __init__(self, lock: Lock, rel_path: str, tool_vars: dict):
         self.lock = lock
         self.rel_path = rel_path
+        self.overridden_tool_vars = tool_vars
 
     def __str__(self):
         return f"ToolRequest(lock={self.lock}, rel_path={self.rel_path})"
 
+def from_local(path: str, tool_vars: Optional[dict[str, str]] = None) -> WasmToolRequest:
+    if tool_vars is None:
+        tool_vars = dict()
+    return WasmToolRequest(LocalLock(path), "", tool_vars)
 
-def from_local(path: str) -> WasmToolRequest:
-    return WasmToolRequest(LocalLock(path), "")
-
-
-def from_git(repository: str, ref: str, rel_path: str) -> WasmToolRequest:
-    return WasmToolRequest(GitLock(repository_url=repository, git_ref=ref), rel_path)
-
+def from_git(repository: str, ref: str, rel_path: str, tool_vars: Optional[dict[str, str]] = None) -> WasmToolRequest:
+    if not tool_vars:
+        tool_vars = dict()
+    return WasmToolRequest(GitLock(repository_url=repository, git_ref=ref), rel_path, tool_vars)
 
 class WasmTool(Tool):
     """
@@ -70,6 +73,7 @@ class WasmTool(Tool):
             pocket_logger.warning(f"{toolpkg_path} failed to load json schema. error : {e}")
             json_schema = None
 
+        default_tool_vars = dict()
         try:
             with config_path.open("r") as f:
                 config = toml.load(f)
@@ -86,6 +90,7 @@ class WasmTool(Tool):
                 else:
                     raise ValueError("`language` field is required in config.toml")
                 auth = cls._get_auth(config)
+                default_tool_vars = config.get("tool_vars", {})
         except Exception as e:
             raise ValueError(f"Failed to load config.toml: {e}")
 
@@ -94,6 +99,7 @@ class WasmTool(Tool):
                 readme = f.read()
         else:
             readme = None
+        
         return cls(
             name=name,
             description=description,
@@ -104,6 +110,8 @@ class WasmTool(Tool):
             pkg_lock=tool_req.lock,
             rel_path=tool_req.rel_path,
             postprocessings=tool_req.postprocessings,
+            default_tool_vars=default_tool_vars,
+            overridden_tool_vars=tool_req.overridden_tool_vars,
         )
 
     @classmethod
@@ -119,7 +127,7 @@ class WasmTool(Tool):
             auth_handler=auth_handler,
             scopes=scopes,
         )
-
+    
     def template_arguments(self) -> dict[str, str]:
         return {}
 
@@ -128,7 +136,7 @@ class WasmTool(Tool):
             str(self.pkg_lock.toolpkg_path() / self.rel_path),
             self.runtime,
             body,
-            envs,
+            envs | self.tool_vars,
             **kwargs,
         )
 
@@ -137,6 +145,6 @@ class WasmTool(Tool):
             str(self.pkg_lock.toolpkg_path() / self.rel_path),
             self.runtime,
             body,
-            envs,
+            envs | self.tool_vars,
             **kwargs,
         )

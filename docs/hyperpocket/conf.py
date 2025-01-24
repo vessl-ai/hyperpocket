@@ -13,7 +13,7 @@ from pathlib import Path
 import jinja2
 from sphinx.application import Sphinx
 
-sys.path.insert(0, os.path.abspath('../../libs/hyperpocket/'))
+sys.path.insert(0, os.path.abspath('../../libs/'))
 
 project = 'hyperpocket'
 copyright = '2025, vessl-ai'
@@ -35,8 +35,13 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # autoapi config
 autoapi_type = 'python'
-autoapi_dirs = ['../../libs/hyperpocket/hyperpocket']
-autoapi_ignore = ["**/tests/*"]
+autoapi_dirs = ['../../libs/']
+# 제외 규칙 설정
+autoapi_ignore = [
+    '**/test/**',
+    '**/tests/**',
+    '**/.venv/**',
+]
 autoapi_add_toctree_entry = True
 autoapi_options = [
     "members",
@@ -72,23 +77,33 @@ def autoapi_prepare_jinja_env(jinja_env: jinja2.Environment):
 
 # set event
 def copy_readme(app: Sphinx, config):
-    autoapi_root = Path("./autoapi/hyperpocket").resolve()
-    package_dirs = Path("../../libs/hyperpocket").rglob("**/readme.md")
+    autoapi_root = Path("./autoapi").resolve()
+    package_dirs = Path("../../libs/").rglob("**/readme.md")
 
     for readme_path in package_dirs:
         readme_path = readme_path.resolve()
-        parts: list = readme_path.parts
-        base_index = len(parts) - 1 - parts[::-1].index("hyperpocket")
-        package_path = Path(*parts[base_index + 1:-1])
 
-        if package_path.name.startswith("."):
+        if ".venv" in str(readme_path) or ".pytest_cache" in str(readme_path):
             continue
 
-        target_readme_dir = autoapi_root / package_path
-        target_readme = target_readme_dir / "README.md"
+        parts: list = readme_path.parts
 
-        if not os.path.exists(target_readme_dir):
-            os.makedirs(target_readme_dir)
+        base_index = -1
+
+        for i in range(len(parts)):
+            if parts[i] == "libs":
+                base_index = i
+                break
+
+        if base_index == -1:
+            continue
+
+        package_path = Path(*parts[base_index:])
+        target_readme = autoapi_root / package_path
+        print("make readme in ", target_readme)
+
+        if not os.path.exists(target_readme.parent):
+            os.makedirs(target_readme.parent)
 
         with open(readme_path, "r", encoding="utf-8") as f_md:
             readme_content = f_md.read()

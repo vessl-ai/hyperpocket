@@ -1,17 +1,16 @@
-# Pocket 👛
+# Hyperpocket 👛
 
-Pocket is where tools belong. Power your agent up with a pocket of tools. 👛
+Hyperpocket is where tools belong. Power your agent up with a pocket of tools. 👛
 
 <figure>
-<img src="image.png" alt="4d-pocket" width="200"/>
-<figcaption>© Doraemon</figcaption>
+<img src="../../logo.png" alt="hyperpocket" width="200"/>
 </figure>
 
 ## Introduction
 
-Pocket is a tool that allows you to easily use tool and auth for agents on your machine.
+Hyperpocket is a tool that allows you to easily use tool and auth for agents on your machine.
 
-**_Start fast._** Just install Pocket and use it. We know you don't have time to authenticate to our server.
+**_Start fast._** Just install Hyperpocket and use it. We know you don't have time to authenticate to our server.
 
 **_Go securely._** Not like others, you are the only one who knows your secret tokens. We do NOT. All of your secret
 tokens belong to your infrastructure, not ours.
@@ -21,11 +20,6 @@ link to the tool. Your tool will run on isolated environment based on WebAssembl
 with the dependency spaghetti.
 
 **_Battery Included_** You can use popular tools and authentication providers out-of-the-box.
-
-<figure>
-<img src="pocket1.png" alt="pocket-flow" width="400"/>
-<figcaption></figcaption>
-</figure>
 
 ## Installation
 
@@ -79,7 +73,7 @@ llm_tool_binding.invoke(...)
 
 There are two kinds of auth process, one is using system auth(developer api key) and the other is using end user auth.
 
-Pocket provides way to use end user auth easily.
+Hyperpocket provides way to use end user auth easily.
 (Of course, you can also just set your STRIPE_API_KEY when using Stripe API related tools)
 
 - Supported methods
@@ -193,11 +187,7 @@ Assistance: Here are the recent 10 messages.
 
 ### Config
 
-Running `pocket config init` will create your config file in `$HOME/.pocket/settings.toml`
-
 The `settings.toml` looks as follows.
-
-TODO: Add `secrets.toml`.
 
 ```toml
 log_level = "debug"
@@ -240,7 +230,7 @@ client_secret = ""  # your github client secret
 - While creating your github OAuth app, configuring your app's `Authorization callback URL` is different for your
   development environment and production environment.
   - For development environment, you can use `http://localhost:8000/auth/github/callback`
-    - **Note**: Default port for pocket dev server is `8000`. If you are using a different port, make sure to
+    - **Note**: Default port for hyperpocket dev server is `8000`. If you are using a different port, make sure to
       replace `8000` with your actual port number.
   - For production environment, you can use `https://yourdomain.com/auth/github/callback`
     - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.

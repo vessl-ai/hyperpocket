@@ -136,11 +136,11 @@ class PocketServer(object):
         while True:
             if conn.poll():
                 op, uid, result, error = conn.recv()
-                if error:
-                    raise error
-
                 future = self.future_store[uid]
-                future.set_result(result)
+                if error:
+                    future.set_exception(error)
+                else:
+                    future.set_result(result)
                 break
             else:
                 await asyncio.sleep(0)
@@ -158,7 +158,7 @@ class PocketServer(object):
         self._set_mp_start_method()
 
         self.pipe = mp.Pipe()
-        self.process = mp.Process(target=self._run, args=(pocket_core,), daemon=True)
+        self.process = mp.Process(target=self._run, args=(pocket_core,))
         self.process.start()
 
     def _run(self, pocket_core):

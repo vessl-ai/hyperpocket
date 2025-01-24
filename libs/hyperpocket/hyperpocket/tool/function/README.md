@@ -64,7 +64,7 @@ Pocket(tools=[
 ])
 ```
 
-Authentication access tokens are passed to the Python function as __variable keyword__ arguments.
+Authentication access tokens are passed to the Python function as **variable keyword** arguments.
 
 ```python
 from hyperpocket.tool import function_tool
@@ -81,6 +81,35 @@ def my_function(**kwargs):
 ```
 
 - Check the `_ACCESS_TOKEN_KEY` field of each provider for the mapping key of their access tokens.
+
+### Inject tool variables
+
+If the user specifies `tool_vars` in the `@function_tool` decorator, which are allowed to be injected dynamically when the user develops an agent, it can be injected through the following steps.
+
+```python
+@function_tool(
+    tool_vars={
+        'a': '1',
+        'b': '1',
+    },
+)
+def always_two(**kwargs):
+    a = int(kwargs['a'])
+    b = int(kwargs['b'])
+    return str(a+b)
+```
+
+1. Injecting tool_vars when importing tool in code
+
+```python
+from_func('https://github.com/your-organization/your-repository/tree/main',
+tool_vars = {
+    "b": "2"
+})
+```
+
+2. Injecting tool_vars by settings.toml
+   Hyperpocket checks the `settings.toml` from the agent code directory and modify the tool_vars.
 
 ## Docstring Parsing
 
@@ -99,7 +128,7 @@ The following docstring styles are supported:
 def my_function(a: int, b: int):
     """
     My Function
-    
+
     Args:
         a (int): First argument
         b (int): Second argument
@@ -113,7 +142,7 @@ def my_function(a: int, b: int):
 def my_function(a: int, b: int):
     """
     My Function
-        
+
     :param a: First argument
     :param b: Second argument
     """
@@ -126,7 +155,7 @@ def my_function(a: int, b: int):
 def my_function(a: int, b: int):
     """
     My Function
-        
+
     @param a: First argument
     @param b: Second argument
     """
@@ -139,12 +168,12 @@ def my_function(a: int, b: int):
 def my_function(a: int, b: int):
     """
     My Function
-        
+
     @arg a: First argument
     @arg b: Second argument
-    
-    or 
-      
+
+    or
+
     :arg a: First argument
     :arg b: Second argument
     """
@@ -157,7 +186,7 @@ def my_function(a: int, b: int):
 def my_function(a: int, b: int):
     """
     My Function
-        
+
     a(int): First argument
     b(int): Second argument
     """

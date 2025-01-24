@@ -1,0 +1,29 @@
+[project]
+name = "slack-schedule-management-agent"
+version = "0.0.1"
+description = "Slack schedule management agent with hyperpocket and Langgraph"
+authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115.6",
+    "hyperpocket>=0.0.3",
+    "hyperpocket_langgraph>=0.0.3",
+    "langchain-openai>=0.3.1",
+    "langgraph>=0.2.65",
+    "pygithub>=2.5.0",
+    "pytz>=2024.2",
+    "slack-sdk>=3.34.0",
+    "starlette>=0.41.3",
+    "uvicorn>=0.34.0",
+]
+
+[project.scripts]
+run_server = "slack_schedule_management_agent:main"
+
+[tool.uv]
+package = true
+
+[tool.uv.sources]
+hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
+hyperpocket_langgraph = { path = "../../../libs/extensions/langgraph", editable = true }
