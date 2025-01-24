@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Applying Local Tools &mdash; Hyperpocket  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Integration from GitHub" href="integration-from-github.html" />
+    <link rel="prev" title="Applying Function Tools" href="apply-function-tools.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Hyperpocket
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="what-are-tools.html">What are tools?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apply-function-tools.html">Applying Function Tools</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Applying Local Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-a-wasm-local-tool"><strong>What is a WASM Local Tool?</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#key-characteristics-of-wasm-local-tools"><strong>Key Characteristics of WASM Local Tools</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#benefits-of-wasm-local-tools"><strong>Benefits of WASM Local Tools</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-use-local-tools"><strong>How to Use Local Tools</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#when-to-use-local-tools"><strong>When to Use Local Tools?</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="integration-from-github.html">Integration from GitHub</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auth/index.html">Auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../supported-frameworks/index.html">Supported frameworks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute/index.html">Contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/libs/index.html">API References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Hyperpocket</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Tools</a></li>
+      <li class="breadcrumb-item active">Applying Local Tools</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/vessl-ai/hyperpocket/blob/main/docs/tools/apply-local-tools.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="applying-local-tools">
+<h1>Applying Local Tools<a class="headerlink" href="#applying-local-tools" title="Link to this heading"></a></h1>
+<section id="what-is-a-wasm-local-tool">
+<h2><strong>What is a WASM Local Tool?</strong><a class="headerlink" href="#what-is-a-wasm-local-tool" title="Link to this heading"></a></h2>
+<p>A <strong>WASM Local Tool</strong> in Hyperpocket is a tool stored locally on your system and executed within a secure, isolated *
+<em>WebAssembly (WASM)</em>* environment. This ensures that even local tools run in a sandboxed environment, providing both
+flexibility and security.</p>
+<section id="key-characteristics-of-wasm-local-tools">
+<h3><strong>Key Characteristics of WASM Local Tools</strong><a class="headerlink" href="#key-characteristics-of-wasm-local-tools" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Local Execution:</strong> Runs tools directly from your system’s file directory.</p></li>
+<li><p><strong>Sandboxed Environment:</strong> Uses WASM to isolate the execution, preventing interference with the host system.</p></li>
+<li><p><strong>Customizable:</strong> Allows developers to define their own logic, input/output schemas, and configurations.</p></li>
+<li><p><strong>WASM Compatibility:</strong> Supports tools written in multiple languages like Python or Node.js, as long as they are
+WASM-compatible.</p></li>
+</ul>
+</section>
+</section>
+<section id="benefits-of-wasm-local-tools">
+<h2><strong>Benefits of WASM Local Tools</strong><a class="headerlink" href="#benefits-of-wasm-local-tools" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Security:</strong> Sandboxed execution prevents unauthorized access or system interference.</p></li>
+<li><p><strong>Performance:</strong> Local execution reduces dependency on network latency.</p></li>
+<li><p><strong>Customization:</strong> Developers can tailor tools to their specific needs using their preferred programming language.</p></li>
+<li><p><strong>Ease of Integration:</strong> Simple API (from_local) to load and execute tools seamlessly within Hyperpocket workflows.</p></li>
+</ul>
+<section id="how-to-use-local-tools">
+<h3><strong>How to Use Local Tools</strong><a class="headerlink" href="#how-to-use-local-tools" title="Link to this heading"></a></h3>
+<p><strong>1️⃣ Define a Local Tool</strong></p>
+<p>A local tool can be any WASM-compatible tool stored in a specified directory. Ensure the tool is structured with the
+required configuration files (e.g., schema.json, config.toml).</p>
+<p><strong>2️⃣ Load the Local Tool</strong></p>
+<p>Use the from_local function to load a tool from a specified path.</p>
+<p>Example Code: Loading a Local Tool</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool.wasm.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_local</span>
+
+<span class="c1"># Load a local WASM tool</span>
+<span class="n">tool_request</span> <span class="o">=</span> <span class="n">from_local</span><span class="p">(</span><span class="s2">&quot;/path/to/local/tool&quot;</span><span class="p">)</span>
+
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span>
+  <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">tool_request</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># And more ...</span>
+</pre></div>
+</div>
+<p>or you can just write your local path</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span>
+  <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+    <span class="s2">&quot;/path/to/local/tool&quot;</span>
+  <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># And more ...</span>
+</pre></div>
+</div>
+<p><strong>3️⃣ Execute the Local Tool</strong></p>
+<p>Once the local tool is loaded, you can execute it using the invoke method.</p>
+<p><strong>Example Code: Executing a Local Tool</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+
+<span class="c1"># Using the Function Tool</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;/path/to/local/tool&quot;</span><span class="p">])</span>
+  <span class="n">tool_result</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;get_weather&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;Seoul&quot;</span><span class="p">})</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">tool_result</span><span class="p">)</span>  <span class="c1"># Output: The weather in Seoul is sunny with a high of 25°C.</span>
+</pre></div>
+</div>
+<p><strong>Structure of a Local Tool Directory</strong></p>
+<p>Your local tool directory should include the following files:</p>
+<ol class="arabic simple">
+<li><p>config.toml</p></li>
+</ol>
+<ul class="simple">
+<li><p>Defines the tool’s name, description, and runtime environment.</p></li>
+<li><p>Example:</p></li>
+</ul>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Example Local Tool&quot;</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;A local tool example&quot;</span>
+<span class="n">language</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;python&quot;</span><span class="w">  </span><span class="c1"># Supported: python, node</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>schema.json</p></li>
+</ol>
+<ul class="simple">
+<li><p>Specifies the tool’s input and output schema.</p></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;key&quot;</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>Tool Script</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>The script or executable logic for the tool, e.g., a Python script or a Node.js file.</p></li>
+</ul>
+</section>
+</section>
+<section id="when-to-use-local-tools">
+<h2><strong>When to Use Local Tools?</strong><a class="headerlink" href="#when-to-use-local-tools" title="Link to this heading"></a></h2>
+<p>WASM Local Tools are ideal for scenarios where:</p>
+<ol class="arabic simple">
+<li><p><strong>Custom Logic is Required:</strong> You have specific business logic that cannot be fetched from a remote repository.</p></li>
+<li><p><strong>Secure Execution is Crucial:</strong> Tools run in an isolated environment, reducing security risks.</p></li>
+<li><p><strong>Offline Availability:</strong> Tools can be accessed and executed without an internet connection.</p></li>
+<li><p><strong>Flexibility in Testing:</strong> Easy to test and debug local tools before sharing or deploying them remotely.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="apply-function-tools.html" class="btn btn-neutral float-left" title="Applying Function Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="integration-from-github.html" class="btn btn-neutral float-right" title="Integration from GitHub" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, VESSL AI Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

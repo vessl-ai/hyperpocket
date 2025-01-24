@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start &mdash; Hyperpocket  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tools" href="../tools/index.html" />
+    <link rel="prev" title="Introduction" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Hyperpocket
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Introduction</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites"><strong>1️⃣ Prerequisites</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration"><strong>2️⃣ Configuration</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#writing-the-code"><strong>3️⃣ Writing the Code</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-import-required-modules"><strong>Step 1: Import Required Modules</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-initialize-hyperpocket-and-load-tools"><strong>Step 2: Initialize Hyperpocket and Load Tools</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-initialize-openai-llm"><strong>Step 3: Initialize OpenAI LLM</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-define-langchain-prompt-and-memory"><strong>Step 4: Define LangChain Prompt and Memory</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-create-the-langchain-agent"><strong>Step 5: Create the LangChain Agent</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-6-run-the-agent-interactive-mode"><strong>Step 6: Run the Agent (Interactive Mode)</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-7-test-the-agent-with-a-single-query"><strong>Step 7: Test the Agent with a Single Query</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-script"><strong>4️⃣ Run the Script</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-usage"><strong>5️⃣ Example Usage</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-set-up-slack-api-permissions">Step 1 : Set Up Slack API Permissions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step2-authenticate-via-slack">Step2 : Authenticate via Slack</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-commands"><strong>Example Commands</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#full-code">Full code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auth/index.html">Auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../supported-frameworks/index.html">Supported frameworks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute/index.html">Contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/libs/index.html">API References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Hyperpocket</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Introduction</a></li>
+      <li class="breadcrumb-item active">Quick Start</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/vessl-ai/hyperpocket/blob/main/docs/introduction/quickstart.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h1>
+<p>This guide will help you quickly set up <strong>Hyperpocket</strong> with <strong>LangChain</strong> to build a tool-calling AI agent. In this example, <strong>we will integrate Slack API tools that can retrieve and post messages</strong> using Hyperpocket.</p>
+<section id="prerequisites">
+<h2><strong>1️⃣ Prerequisites</strong><a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<p>Before we begin, install the required dependencies.</p>
+<p><strong>Python Version</strong></p>
+<p>python 3.10 to python 3.13 is required</p>
+<p><strong>Install Required Packages</strong></p>
+<p>Run the following commands to install Hyperpocket and LangChain dependencies</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>hyperpocket_langchain
+pip<span class="w"> </span>install<span class="w"> </span>langchain_openai
+</pre></div>
+</div>
+<p><strong>Install Playwright (if not already installed)</strong></p>
+<p>Playwright is required to run the WASM environment. Install it using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>playwright<span class="w"> </span>install
+</pre></div>
+</div>
+</section>
+<section id="configuration">
+<h2><strong>2️⃣ Configuration</strong><a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<p>To use Hyperpocket, you need to create configuration files for storing credentials and API settings.</p>
+<p><strong>Set Up Hyperpocket Configuration</strong></p>
+<p>Create a configuration file at <code class="docutils literal notranslate"><span class="pre">&lt;repository-root&gt;/.pocket/settings.toml</span></code> and add the following</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">log_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span>
+
+<span class="k">[git]</span>
+<span class="k">[git.github]</span>
+<span class="n">github_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;GITHUB_TOKEN&gt;&quot;</span>
+
+<span class="k">[auth.slack]</span>
+<span class="n">client_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;SLACK_CLIENT_ID&gt;&quot;</span>
+<span class="n">client_secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;SLACK_CLIENT_SECRET&gt;&quot;</span>
+</pre></div>
+</div>
+<p>This configuration allows Hyperpocket to fetch tools from GitHub and authenticate with Slack.</p>
+<p><strong>Set Up Secret Keys</strong></p>
+<p>Create a file at <code class="docutils literal notranslate"><span class="pre">&lt;repository-root&gt;~/.pocket/.secret.toml</span></code> and store sensitive API keys:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">OPENAI_API_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;OPENAI_API_KEY&gt;&quot;</span>
+</pre></div>
+</div>
+<p>Alternatively, you can set this directly in your environment:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">export</span><span class="w"> </span><span class="n">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_OPENAI_API_KEY&gt;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="writing-the-code">
+<h2><strong>3️⃣ Writing the Code</strong><a class="headerlink" href="#writing-the-code" title="Link to this heading"></a></h2>
+<p>Below is a breakdown of the code to set up and run the AI agent.</p>
+<section id="step-1-import-required-modules">
+<h3><strong>Step 1: Import Required Modules</strong><a class="headerlink" href="#step-1-import-required-modules" title="Link to this heading"></a></h3>
+<p>Import the necessary libraries for integrating Hyperpocket and LangChain.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">secret</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.agents</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentExecutor</span><span class="p">,</span> <span class="n">create_tool_calling_agent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.memory</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationBufferMemory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatPromptTemplate</span><span class="p">,</span> <span class="n">MessagesPlaceholder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLangchain</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-initialize-hyperpocket-and-load-tools">
+<h3><strong>Step 2: Initialize Hyperpocket and Load Tools</strong><a class="headerlink" href="#step-2-initialize-hyperpocket-and-load-tools" title="Link to this heading"></a></h3>
+<p>Set up Hyperpocket and fetch the tools from GitHub.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize Hyperpocket and load Slack tools</span>
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketLangchain</span><span class="p">(</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+<span class="n">tools</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">get_tools</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="step-3-initialize-openai-llm">
+<h3><strong>Step 3: Initialize OpenAI LLM</strong><a class="headerlink" href="#step-3-initialize-openai-llm" title="Link to this heading"></a></h3>
+<p>Configure the OpenAI language model (LLM) for use with LangChain.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize OpenAI LLM</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">secret</span><span class="p">[</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">])</span>
+<span class="n">llm_with_tools</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">bind_tools</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="step-4-define-langchain-prompt-and-memory">
+<h3><strong>Step 4: Define LangChain Prompt and Memory</strong><a class="headerlink" href="#step-4-define-langchain-prompt-and-memory" title="Link to this heading"></a></h3>
+<p>Create a prompt template and initialize memory to manage conversation history.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the conversation prompt</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_messages</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;placeholder&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{chat_history}</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;You are a tool-calling assistant. You can help the user by calling proper tools.&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{input}</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="n">MessagesPlaceholder</span><span class="p">(</span><span class="n">variable_name</span><span class="o">=</span><span class="s2">&quot;agent_scratchpad&quot;</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Initialize memory for conversation history</span>
+<span class="n">memory</span> <span class="o">=</span> <span class="n">ConversationBufferMemory</span><span class="p">(</span><span class="n">memory_key</span><span class="o">=</span><span class="s2">&quot;chat_history&quot;</span><span class="p">,</span> <span class="n">return_messages</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="step-5-create-the-langchain-agent">
+<h3><strong>Step 5: Create the LangChain Agent</strong><a class="headerlink" href="#step-5-create-the-langchain-agent" title="Link to this heading"></a></h3>
+<p>Combine the tools, LLM, prompt, and memory to create a LangChain agent.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create LangChain agent</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">create_tool_calling_agent</span><span class="p">(</span><span class="n">llm</span><span class="p">,</span> <span class="n">tools</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
+
+<span class="n">agent_executor</span> <span class="o">=</span> <span class="n">AgentExecutor</span><span class="p">(</span>
+    <span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">,</span>
+    <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
+    <span class="n">memory</span><span class="o">=</span><span class="n">memory</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">handle_parsing_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="step-6-run-the-agent-interactive-mode">
+<h3><strong>Step 6: Run the Agent (Interactive Mode)</strong><a class="headerlink" href="#step-6-run-the-agent-interactive-mode" title="Link to this heading"></a></h3>
+<p>Run the agent interactively in a terminal or Jupyter Notebook to test its functionality.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, This is a simple Slack agent using Hyperpocket.&quot;</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;user (q to quit): &quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">user_input</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Goodbye!&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+    
+    <span class="n">response</span> <span class="o">=</span> <span class="n">agent_executor</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">user_input</span><span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;agent:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="step-7-test-the-agent-with-a-single-query">
+<h3><strong>Step 7: Test the Agent with a Single Query</strong><a class="headerlink" href="#step-7-test-the-agent-with-a-single-query" title="Link to this heading"></a></h3>
+<p>For a simpler test, try running a single query.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test the agent with a single input</span>
+<span class="n">test_input</span> <span class="o">=</span> <span class="s2">&quot;Retrieve the last message from #general&quot;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">agent_executor</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">test_input</span><span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User Input:&quot;</span><span class="p">,</span> <span class="n">test_input</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Agent Response:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="run-the-script">
+<h2><strong>4️⃣ Run the Script</strong><a class="headerlink" href="#run-the-script" title="Link to this heading"></a></h2>
+<p>Once everything is set up, execute the script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">langchain_example</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p><strong>Expected Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Hello</span><span class="p">,</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">simple</span> <span class="n">Slack</span> <span class="n">agent</span> <span class="n">using</span> <span class="n">Hyperpocket</span><span class="o">.</span>
+<span class="n">user</span> <span class="p">(</span><span class="n">q</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span> <span class="p">:</span>
+</pre></div>
+</div>
+</section>
+<section id="example-usage">
+<h2><strong>5️⃣ Example Usage</strong><a class="headerlink" href="#example-usage" title="Link to this heading"></a></h2>
+<section id="step-1-set-up-slack-api-permissions">
+<h3>Step 1 : Set Up Slack API Permissions<a class="headerlink" href="#step-1-set-up-slack-api-permissions" title="Link to this heading"></a></h3>
+<p>Before using Slack-related functionalities, make sure your Slack app has the proper permissions to post and retrieve messages from channels. Follow these steps:</p>
+<ol class="arabic simple">
+<li><p>Go to the <a class="reference external" href="https://api.slack.com/">Slack API Dashboard</a>.</p></li>
+<li><p>Navigate to <strong>Your Apps</strong> and select your app.</p></li>
+<li><p>Under the <strong>OAuth &amp; Permissions</strong> section, ensure your app has the following scopes:</p></li>
+</ol>
+<ul class="simple">
+<li><p>channels:history (for retrieving messages)</p></li>
+<li><p>channels:write (for posting messages)</p></li>
+</ul>
+<ol class="arabic simple" start="4">
+<li><p>Save your changes and reinstall the app to apply the updated permissions.</p></li>
+</ol>
+</section>
+<section id="step2-authenticate-via-slack">
+<h3>Step2 : Authenticate via Slack<a class="headerlink" href="#step2-authenticate-via-slack" title="Link to this heading"></a></h3>
+<p>When entering a Slack-related query for the first time, the system will provide an authentication link. Follow these steps to authenticate:</p>
+<ol class="arabic simple">
+<li><p>Enter a query, such as retrieving or posting a message.</p></li>
+<li><p>The agent will respond with an <strong>authentication link</strong> in the form of a URL. Example:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>INFO:<span class="w">     </span><span class="m">127</span>.0.0.1:51151<span class="w"> </span>-<span class="w"> </span><span class="s2">&quot;GET /auth/slack/oauth2/callback?code=****&amp;state=**** HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Open the provided link in your browser and complete the authentication process.</p></li>
+<li><p>After authenticating, return to the interface and enter <strong>any message</strong> to confirm the setup. The agent will now be ready to perform Slack actions.</p></li>
+</ol>
+</section>
+<section id="example-commands">
+<h3><strong>Example Commands</strong><a class="headerlink" href="#example-commands" title="Link to this heading"></a></h3>
+<p><strong>Retrieve the Last Message from Slack Channel</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">user</span> <span class="p">(</span><span class="n">q</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span> <span class="p">:</span> <span class="n">Retrieve</span> <span class="n">the</span> <span class="n">last</span> <span class="n">message</span> <span class="kn">from</span><span class="w"> </span><span class="c1">#general</span>
+<span class="n">agent</span> <span class="p">:</span> <span class="s2">&quot;Please authenticate using this link: [Slack Authentication Link]&quot;</span>
+<span class="n">INFO</span><span class="p">:</span>     <span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">51151</span> <span class="o">-</span> <span class="s2">&quot;GET /auth/slack/oauth2/callback?code=****&amp;state=**** HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="n">user</span> <span class="p">(</span><span class="n">q</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span> <span class="p">:</span> <span class="n">Okay</span>
+<span class="n">agent</span> <span class="p">:</span> <span class="s2">&quot;The last message in #general is: &#39;Hello, world!&#39;&quot;</span>
+</pre></div>
+</div>
+<p><strong>Post a message to Slack</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>user<span class="w"> </span><span class="o">(</span>q<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span><span class="w"> </span>:<span class="w"> </span>Post<span class="w"> </span><span class="s1">&#39;Good morning&#39;</span><span class="w"> </span>to<span class="w"> </span><span class="c1">#random</span>
+agent<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Please authenticate using this link: [Slack Authentication Link]&quot;</span>
+INFO:<span class="w">     </span><span class="m">127</span>.0.0.1:51149<span class="w"> </span>-<span class="w"> </span><span class="s2">&quot;GET /auth/slack/oauth2/callback?code=****&amp;state=**** HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+user<span class="w"> </span><span class="o">(</span>q<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span><span class="w"> </span>:<span class="w"> </span>Okay
+agent<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Message successfully posted to #random&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="full-code">
+<h2>Full code<a class="headerlink" href="#full-code" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.agents</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentExecutor</span><span class="p">,</span> <span class="n">create_tool_calling_agent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.memory</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationBufferMemory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatPromptTemplate</span><span class="p">,</span> <span class="n">MessagesPlaceholder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">secret</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLangchain</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketLangchain</span><span class="p">(</span>
+        <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">tools</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">get_tools</span><span class="p">()</span>
+    <span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">secret</span><span class="p">[</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">])</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_messages</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;placeholder&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{chat_history}</span><span class="s2">&quot;</span><span class="p">),</span>
+            <span class="p">(</span>
+                <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;You are a tool calling assistant. You can help the user by calling proper tools&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{input}</span><span class="s2">&quot;</span><span class="p">),</span>
+            <span class="n">MessagesPlaceholder</span><span class="p">(</span><span class="n">variable_name</span><span class="o">=</span><span class="s2">&quot;agent_scratchpad&quot;</span><span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">memory</span> <span class="o">=</span> <span class="n">ConversationBufferMemory</span><span class="p">(</span><span class="n">memory_key</span><span class="o">=</span><span class="s2">&quot;chat_history&quot;</span><span class="p">,</span> <span class="n">return_messages</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">create_tool_calling_agent</span><span class="p">(</span><span class="n">llm</span><span class="p">,</span> <span class="n">tools</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
+    <span class="n">agent_executor</span> <span class="o">=</span> <span class="n">AgentExecutor</span><span class="p">(</span>
+        <span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">,</span>
+        <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
+        <span class="n">memory</span><span class="o">=</span><span class="n">memory</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">handle_parsing_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, This is simple slack agent using hyperpocket.&quot;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;user(q to quit) : &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">user_input</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">user_input</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">elif</span> <span class="n">user_input</span> <span class="o">==</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Good bye!&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">agent_executor</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">user_input</span><span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;agent : &quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../tools/index.html" class="btn btn-neutral float-right" title="Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, VESSL AI Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

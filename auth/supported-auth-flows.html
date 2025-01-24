@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supported Auth flows &mdash; Hyperpocket  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Enabling OAuth with Hyperpocket" href="enabling-oauth-with-hyperpocket.html" />
+    <link rel="prev" title="Auth" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Hyperpocket
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Auth</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Supported Auth flows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#authentication-features"><strong>🔹 Authentication Features</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#multi-turn-authentication">1.	<strong>Multi-Turn Authentication</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#secure-internal-auth-server">2.	<strong>Secure Internal Auth Server</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#profile-based-auth">3.	<strong>Profile-Based Auth</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wide-language-support">4.	<strong>Wide Language Support</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tool-level-isolation">5.	<strong>Tool-Level Isolation</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interrupt-based-flows">6.	<strong>Interrupt-Based Flows</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#why-hyperpocket-auth-stands-out"><strong>🔹 Why Hyperpocket Auth Stands Out</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#code-example-oauth-integration"><strong>🔹 Code Example: OAuth Integration</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#supported-authentication-scenarios"><strong>🔹 Supported Authentication Scenarios</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#advantages-of-hyperpocket-auth"><strong>🔹 Advantages of Hyperpocket Auth</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="enabling-oauth-with-hyperpocket.html">Enabling OAuth with Hyperpocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enabling-token-based-authentication-with-hyperpocket.html">Enabling Token-Based Authentication with Hyperpocket</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../supported-frameworks/index.html">Supported frameworks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute/index.html">Contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/libs/index.html">API References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Hyperpocket</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Auth</a></li>
+      <li class="breadcrumb-item active">Supported Auth flows</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/vessl-ai/hyperpocket/blob/main/docs/auth/supported-auth-flows.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="supported-auth-flows">
+<h1>Supported Auth flows<a class="headerlink" href="#supported-auth-flows" title="Link to this heading"></a></h1>
+<p><strong>What is Hyperpocket Auth?</strong></p>
+<p>Hyperpocket provides a robust and flexible authentication flow to support secure interactions with external tools and APIs. It enables <strong>multi-turn authentication</strong>, ensures the safety of sensitive data, and integrates seamlessly with various AI agent frameworks. By supporting multiple authentication scenarios, Hyperpocket removes the need for static user credentials and provides dynamic, secure authentication tailored to different workflows.</p>
+<section id="authentication-features">
+<h2><strong>🔹 Authentication Features</strong><a class="headerlink" href="#authentication-features" title="Link to this heading"></a></h2>
+<section id="multi-turn-authentication">
+<h3>1.	<strong>Multi-Turn Authentication</strong><a class="headerlink" href="#multi-turn-authentication" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Supports complex, multi-step authentication scenarios (e.g., OAuth flows).</p></li>
+<li><p>Memory-enabled workflows allow AI agents to complete authentication over multiple interactions.</p></li>
+</ul>
+<p>Example: Logging into multiple Slack accounts across different organizations.</p>
+</section>
+<section id="secure-internal-auth-server">
+<h3>2.	<strong>Secure Internal Auth Server</strong><a class="headerlink" href="#secure-internal-auth-server" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>An internal authentication server is initialized during Hyperpocket setup.</p></li>
+<li><p>Handles OAuth callbacks and issues access tokens securely without exposing authentication codes or tokens to external systems.</p></li>
+<li><p>Tokens and sensitive data are stored internally, ensuring no external leaks.</p></li>
+</ul>
+</section>
+<section id="profile-based-auth">
+<h3>3.	<strong>Profile-Based Auth</strong><a class="headerlink" href="#profile-based-auth" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Defines “Profiles” to allow users to manage multiple personas within the same thread.</p></li>
+</ul>
+<p>Example: A user can authenticate with multiple accounts (e.g., A’s Slack and B’s Slack) simultaneously.</p>
+</section>
+<section id="wide-language-support">
+<h3>4.	<strong>Wide Language Support</strong><a class="headerlink" href="#wide-language-support" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Supports tools written in multiple programming languages (e.g., Python, JavaScript).</p></li>
+<li><p>Auth flows are compatible across different tool implementations.</p></li>
+</ul>
+</section>
+<section id="tool-level-isolation">
+<h3>5.	<strong>Tool-Level Isolation</strong><a class="headerlink" href="#tool-level-isolation" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Each tool operates in its isolated WASM runtime, ensuring no dependency conflicts.</p></li>
+<li><p>Tokens and environment variables are passed securely to each tool.</p></li>
+</ul>
+</section>
+<section id="interrupt-based-flows">
+<h3>6.	<strong>Interrupt-Based Flows</strong><a class="headerlink" href="#interrupt-based-flows" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Supports interrupt-based workflows where tools can be called without requiring a full multi-turn session.</p></li>
+<li><p>Ideal for lightweight, single-step operations.</p></li>
+</ul>
+</section>
+</section>
+<section id="why-hyperpocket-auth-stands-out">
+<h2><strong>🔹 Why Hyperpocket Auth Stands Out</strong><a class="headerlink" href="#why-hyperpocket-auth-stands-out" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Dynamic and Flexible</strong></p>
+<ul>
+<li><p>Unlike static user authentication, Hyperpocket adapts to dynamic scenarios, making it suitable for diverse agent frameworks.</p></li>
+</ul>
+</li>
+<li><p><strong>Enhanced Security</strong></p>
+<ul>
+<li><p>Access tokens and authentication codes are securely managed within Hyperpocket’s environment.</p></li>
+</ul>
+</li>
+<li><p>No external exposure of sensitive credentials.</p>
+<ul>
+<li><p><strong>Seamless Integration</strong></p></li>
+</ul>
+</li>
+<li><p>No need for additional server setup; the internal auth server handles all token issuance and management.</p></li>
+<li><p>Compatible with various agent frameworks like LangChain or custom implementations.</p></li>
+<li><p><strong>Multi-Account Support</strong></p></li>
+<li><p>A single user can authenticate with multiple accounts (e.g., multiple Slack workspaces or GitHub organizations).</p></li>
+</ul>
+</section>
+<section id="code-example-oauth-integration">
+<h2><strong>🔹 Code Example: OAuth Integration</strong><a class="headerlink" href="#code-example-oauth-integration" title="Link to this heading"></a></h2>
+<p>Here’s an example of how Hyperpocket handles an OAuth-based tool with multi-turn authentication:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">slack_sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebClient</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_tool</span>
+
+<span class="c1"># Define a tool with OAuth authentication</span>
+<span class="nd">@function_tool</span><span class="p">(</span>
+    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">SLACK</span><span class="p">,</span>
+    <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;channels:history&quot;</span><span class="p">,</span> <span class="s2">&quot;im:history&quot;</span><span class="p">,</span> <span class="s2">&quot;mpim:history&quot;</span><span class="p">,</span> <span class="s2">&quot;groups:history&quot;</span><span class="p">,</span> <span class="s2">&quot;reactions:read&quot;</span><span class="p">,</span> <span class="s2">&quot;mpim:read&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;im:read&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_slack_messages</span><span class="p">(</span><span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fetch recent messages from a Slack channel.</span>
+
+<span class="sd">    channel(str): slack channel name</span>
+<span class="sd">    limit(int): message limit</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">token</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;SLACK_BOT_TOKEN&quot;</span><span class="p">]</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">WebClient</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="c1"># do something you need</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">conversations_history</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">tool</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">OAuthHandler</span>
+
+<span class="c1"># Define a tool with OAuth authentication</span>
+<span class="nd">@tool</span><span class="p">(</span><span class="n">auth</span><span class="o">=</span><span class="n">OAuthHandler</span><span class="p">(</span>
+    <span class="n">client_id</span><span class="o">=</span><span class="s2">&quot;your_client_id&quot;</span><span class="p">,</span>
+    <span class="n">client_secret</span><span class="o">=</span><span class="s2">&quot;your_client_secret&quot;</span><span class="p">,</span>
+    <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;read:messages&quot;</span><span class="p">,</span> <span class="s2">&quot;write:messages&quot;</span><span class="p">],</span>
+    <span class="n">auth_url</span><span class="o">=</span><span class="s2">&quot;https://slack.com/oauth/authorize&quot;</span><span class="p">,</span>
+    <span class="n">token_url</span><span class="o">=</span><span class="s2">&quot;https://slack.com/api/oauth.access&quot;</span>
+<span class="p">))</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_slack_messages</span><span class="p">(</span><span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetch recent messages from a Slack channel.&quot;&quot;&quot;</span>
+		<span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span> 
+		<span class="c1"># do somethin return [{&quot;user&quot;: &quot;Alice&quot;, &quot;message&quot;: &quot;Hello!&quot;}, {&quot;user&quot;: &quot;Bob&quot;, &quot;message&quot;: &quot;Hi!&quot;}]</span>
+
+<span class="c1"># Example usage</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+	
+    <span class="n">messages</span> <span class="o">=</span> <span class="n">get_slack_messages</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="supported-authentication-scenarios">
+<h2><strong>🔹 Supported Authentication Scenarios</strong><a class="headerlink" href="#supported-authentication-scenarios" title="Link to this heading"></a></h2>
+<p>Hyperpocket’s auth system supports a wide range of scenarios, including:</p>
+<ul class="simple">
+<li><p><strong>OAuth 2.0 Flows:</strong> Token issuance, callback handling, and multi-account support.</p></li>
+<li><p><strong>Environment-Based Auth:</strong> Tokens and static information passed securely as environment variables.</p></li>
+</ul>
+<p>•	<strong>Multi-Profile Management:</strong> Manage multiple tokens for different accounts or personas.</p>
+</section>
+<section id="advantages-of-hyperpocket-auth">
+<h2><strong>🔹 Advantages of Hyperpocket Auth</strong><a class="headerlink" href="#advantages-of-hyperpocket-auth" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>🛡️ <strong>Security:</strong> Tokens and sensitive data are securely managed, reducing the risk of leaks.</p></li>
+<li><p>⚡ <strong>Simplicity:</strong> No need to manage additional server infrastructure; the internal auth server does it all.</p></li>
+<li><p>🌐 <strong>Flexibility:</strong> Works across different tools and agent frameworks, supporting various workflows.</p></li>
+</ul>
+<p>•	🤝 <strong>Compatibility:</strong> Handles multi-account scenarios with ease, enabling more complex use cases.</p>
+<p>Hyperpocket’s authentication flow provides the foundation for secure, scalable, and flexible tool interactions in AI-driven workflows. Let me know if you’d like further examples or clarifications! 🚀</p>
+<p><a class="reference external" href="https://www.notion.so/Simple-Auth-Flow-17dbfa25e9fc8075b7a5e1193d8930b7?pvs=21"><strong>Simple Auth Flow</strong></a></p>
+<p><a class="reference external" href="https://www.notion.so/Complex-Auth-Flow-17dbfa25e9fc8000bd04e6981bc0b4a1?pvs=21"><strong>Complex Auth Flow</strong></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Auth" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="enabling-oauth-with-hyperpocket.html" class="btn btn-neutral float-right" title="Enabling OAuth with Hyperpocket" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, VESSL AI Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

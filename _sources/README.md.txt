@@ -1,10 +1,10 @@
-# HyperPocket Docs
+# Hyperpocket Docs
 
 ## How To Add New Document
 
 Follow these steps to add a new document to HyperPocket Docs:
 
-1. Add the new README file to the managed directory.
+1. Add the new md file to the managed directory.
 2. Update the `_templates/autoapi/index.rst` file by adding a reference to the new document. For example:
 
 ```text
@@ -20,7 +20,7 @@ This is hyperpocket.
    Conceptual Guide </autoapi/managed/conceptual_guide.md>
    Quick Start </autoapi/managed/quick_start.md>
    API Reference </autoapi/hyperpocket/index>
-    
+
     <-- Add Hear -->
 ```
 
