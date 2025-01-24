@@ -1,12 +1,12 @@
 name: Build and Deploy Docs
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
     types:
       - closed
-  workflow_dispatch
 
 jobs:
   build-and-deploy:
