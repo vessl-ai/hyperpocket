@@ -16,33 +16,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Repository Checkout
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: '0'
 
-      # 2. Setup Python
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v5
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      # 3. Install Dependencies
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r docs/hyperpocket/requirements.txt
+          uv sync
 
-      # 4. Build Documentation
       - name: Build Sphinx Documentation
         working-directory: docs/hyperpocket
         run: |
           git checkout main
           
-          make clean
-          make html
-
+          uv run make clean
+          uv run make html
+          
       # 5. Deploy to gh-pages
       - name: Deploy to GitHub Pages
         run: |
