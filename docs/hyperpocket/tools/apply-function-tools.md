@@ -2,9 +2,11 @@
 
 ## What Are Function Tools?
 
-Function Tools are lightweight, Python-based tools that integrate directly into AI workflows. These tools are defined using the @tool decorator, making it simple to extend the capabilities of AI agents with minimal setup.
+Function Tools are lightweight, Python-based tools that integrate directly into AI workflows. These tools are defined
+using the @tool decorator, making it simple to extend the capabilities of AI agents with minimal setup.
 
-To explore more about Hyperpocket tools, please visit[What are tools?](https://www.notion.so/What-are-tools-17cbfa25e9fc806c95c6d9896acfd964?pvs=21)
+To explore more about Hyperpocket tools, please
+visit [What are tools?](https://www.notion.so/What-are-tools-17cbfa25e9fc806c95c6d9896acfd964?pvs=21)
 
 ## **How to Use Function Tools**
 
@@ -13,25 +15,30 @@ Here’s an example of defining and using a Function Tool with Hyperpocket.
 **Code Example: Creating and Using a Function Tool**
 
 ```python
+from hyperpocket import Pocket
 from hyperpocket.tool import function_tool
 
+
 # Define a Function Tool
-@tool
+@function_tool
 def get_weather(location: str) -> str:
-    """Fetch the weather information for a given location."""
-    return f"The weather in {location} is sunny with a high of 25°C."
+   """Fetch the weather information for a given location."""
+   return f"The weather in {location} is sunny with a high of 25°C."
+
 
 # Using the Function Tool
 if __name__ == "__main__":
-    user_input = "Seoul"
-    print(get_weather(user_input))  # Output: The weather in Seoul is sunny with a high of 25°C.
+   pocket = Pocket(tools=[get_weather])
+   tool_result = pocket.invoke(tool_name="get_weather", body={"location": "Seoul"})
+   print(tool_result)  # Output: The weather in Seoul is sunny with a high of 25°C.
 ```
 
 ## Action To do
 
 1. **Define a Function Tool**
 
-   Use the @tool decorator to define a Python function as a tool. Add relevant input arguments and return the desired output.
+   Use the `@function_tool` decorator to define a Python function as a tool. Add relevant input arguments and return the desired
+   output.
 
 2. **Integrate into Your Workflow**
 

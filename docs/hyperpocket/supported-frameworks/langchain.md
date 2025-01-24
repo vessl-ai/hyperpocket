@@ -13,14 +13,13 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
 from hyperpocket.config import secret
-from hyperpocket.tool import from_git
 from hyperpocket_langchain import PocketLangchain
 
 # Initialize Hyperpocket
 pocket = PocketLangchain(
     tools=[
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message"
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message"
     ],
 )
 

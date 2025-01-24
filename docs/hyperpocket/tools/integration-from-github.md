@@ -37,44 +37,25 @@ Once the tool is loaded, create an instance of the WasmTool class and execute th
 **Code Example: Executing a GitHub Tool**
 
 ```python
-from hyperpocket.tool.wasm.tool import WasmTool
 from hyperpocket import Pocket
-from hyperpocket.tool.wasm.tool import from_git
 
 if __name__ == '__main__':
-		# Load the tool request
-		tools = [
-			from_git(repository="https://github.com/vessl-ai/hyperawesometools", ref="main", rel_path="managed-tools/none/simple-echo-tool")
-			]
-		
-		# Create the tool instance
+    # Write Github URL in tools
+    tools = [
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/none/simple-echo-tool"
+    ]
+
+    # Create the tool instance
     pocket = Pocket(tools=tools)
-		
-		# Execute the tool
+
+    # Execute the tool
     result = pocket.invoke(
         tool_name="simple_echo_text",
         body={
             "text": "hello"
         }
     )
-    print(result) # Output: JSON response from the tool
-
-# Load the tool request
-tool_request = from_git(
-    repository="https://github.com/vessl-ai/hyperawesometools",
-    ref="main",
-    rel_path="managed-tools/slack/get-message"
-)
-
-# Create the tool instance
-tool = WasmTool.from_tool_request(tool_request)
-
-# Input data to pass to the tool
-input_data = {"channel": "general", "limit": 10}
-
-# Execute the tool
-result = tool.invoke(body=input_data, envs={})
-print(result)  # Output: JSON response from the tool
+    print(result)  # Output: JSON response from the tool
 ```
 
 **Structure of a GitHub Tool Repository**

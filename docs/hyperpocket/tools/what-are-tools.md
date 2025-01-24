@@ -58,7 +58,13 @@ WASM tools are executed in secure, sandboxed environments, making them ideal for
 ```python
 from hyperpocket.tool import from_git
 
-tool = from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message")
+tool = from_git("https://github.com/vessl-ai/hyperpocket", "main", "managed-tools/slack/get-message")
+```
+
+or you can just write github url
+
+```python
+tool = "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message"
 ```
 
 #### **2. Function Tools**
@@ -104,7 +110,7 @@ Managed tools are developed by individual contributors and officially reviewed, 
 ```python
 from hyperpocket.tool import from_git
 
-tool = from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message")
+tool = from_git("https://github.com/vessl-ai/hyperpocket", "main", "managed-tools/slack/post-message")
 ```
 
 #### **🌍 Community Tools (Open-Source & External Contributions)**
@@ -124,9 +130,9 @@ Custom tools are highly personalized tools that users can directly create and de
 **Example Command(Inline function tool):**
 
 ```python
-from hyperpocket.decorators import tool
+from hyperpocket.tool.function.annotation import function_tool
 
-@tool(name="custom_task", description="A custom inline function tool.")
+@function_tool
 def custom_task():
 		"""
 		A custom inline function tool.
@@ -140,7 +146,7 @@ def custom_task():
 ```python
 from hyperpocket.tool import from_local
 
-tool = from_local(path="./local-tools/my-tool.wasm", interpreter="wasm")
+tool = from_local(path="./local-tools/simple-echo-tool")
 ```
 
 ## Summary

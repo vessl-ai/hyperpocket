@@ -2,14 +2,17 @@
 
 ## **What is a WASM Local Tool?**
 
-A **WASM Local Tool** in Hyperpocket is a tool stored locally on your system and executed within a secure, isolated **WebAssembly (WASM)** environment. This ensures that even local tools run in a sandboxed environment, providing both flexibility and security.
+A **WASM Local Tool** in Hyperpocket is a tool stored locally on your system and executed within a secure, isolated *
+*WebAssembly (WASM)** environment. This ensures that even local tools run in a sandboxed environment, providing both
+flexibility and security.
 
 ### **Key Characteristics of WASM Local Tools**
 
 - **Local Execution:** Runs tools directly from your system’s file directory.
 - **Sandboxed Environment:** Uses WASM to isolate the execution, preventing interference with the host system.
 - **Customizable:** Allows developers to define their own logic, input/output schemas, and configurations.
-- **WASM Compatibility:** Supports tools written in multiple languages like Python or Node.js, as long as they are WASM-compatible.
+- **WASM Compatibility:** Supports tools written in multiple languages like Python or Node.js, as long as they are
+  WASM-compatible.
 
 ## **Benefits of WASM Local Tools**
 
@@ -22,7 +25,8 @@ A **WASM Local Tool** in Hyperpocket is a tool stored locally on your system and
 
 **1️⃣ Define a Local Tool**
 
-A local tool can be any WASM-compatible tool stored in a specified directory. Ensure the tool is structured with the required configuration files (e.g., schema.json, config.toml).
+A local tool can be any WASM-compatible tool stored in a specified directory. Ensure the tool is structured with the
+required configuration files (e.g., schema.json, config.toml).
 
 **2️⃣ Load the Local Tool**
 
@@ -31,12 +35,31 @@ Use the from_local function to load a tool from a specified path.
 Example Code: Loading a Local Tool
 
 ```python
+from hyperpocket import Pocket
 from hyperpocket.tool.wasm.tool import from_local
 
 # Load a local WASM tool
 tool_request = from_local("/path/to/local/tool")
 
-print(tool_request)  # Output: ToolRequest(lock=LocalLock(/path/to/local/tool), rel_path="")
+pocket = Pocket(
+  tools=[tool_request]
+)
+
+# And more ...
+```
+
+or you can just write your local path
+
+```python
+from hyperpocket import Pocket
+
+pocket = Pocket(
+  tools=[
+    "/path/to/local/tool"
+  ]
+)
+
+# And more ...
 ```
 
 **3️⃣ Execute the Local Tool**
@@ -46,20 +69,13 @@ Once the local tool is loaded, you can execute it using the invoke method.
 **Example Code: Executing a Local Tool**
 
 ```python
-from hyperpocket.tool.wasm.tool import WasmTool
+from hyperpocket import Pocket
 
-# Load the tool request
-tool_request = from_local("/path/to/local/tool")
-
-# Create the tool instance
-tool = WasmTool.from_tool_request(tool_request)
-
-# Input data to pass to the tool
-input_data = {"key": "value"}
-
-# Execute the tool
-result = tool.invoke(body=input_data, envs={})
-print(result)  # Output: Execution result from the WASM tool
+# Using the Function Tool
+if __name__ == "__main__":
+  pocket = Pocket(tools=["/path/to/local/tool"])
+  tool_result = pocket.invoke(tool_name="get_weather", body={"location": "Seoul"})
+  print(tool_result)  # Output: The weather in Seoul is sunny with a high of 25°C.
 ```
 
 **Structure of a Local Tool Directory**
@@ -87,9 +103,13 @@ Example:
 {
   "type": "object",
   "properties": {
-    "key": { "type": "string" }
+    "key": {
+      "type": "string"
+    }
   },
-  "required": ["key"]
+  "required": [
+    "key"
+  ]
 }
 ```
 
