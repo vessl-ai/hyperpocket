@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Using Local Tools &mdash; Hyperpocket  documentation</title>
+  <title>Using Git Tools &mdash; Hyperpocket  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
@@ -20,8 +20,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tool interfaces" href="tool-interfaces.html" />
-    <link rel="prev" title="Using Function Tools" href="using-function-tools.html" /> 
+    <link rel="next" title="Using Function Tools" href="using-function-tools.html" />
+    <link rel="prev" title="What are tools?" href="what-are-tools.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,18 +47,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tools</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="what-are-tools.html">What are tools?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using-git-tools.html">Using Git Tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using-function-tools.html">Using Function Tools</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Using Local Tools</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#local-tool">Local Tool</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#how-it-works">How it works</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#guides">Guides</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using Git Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#git-tools">Git Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-use-git-tools">How to Use Git Tools</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simply-putting-git-url">Simply putting git URL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#from-git-function"><code class="docutils literal notranslate"><span class="pre">from_git</span></code> function</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#advanced-structure-of-a-git-tool-repository">Advanced - Structure of a Git Tool Repository</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#define-a-local-tool">Define a Local Tool</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#load-and-use-the-local-tool">Load and use the Local Tool</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="using-function-tools.html">Using Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-local-tools.html">Using Local Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tool-interfaces.html">Tool interfaces</a></li>
 </ul>
 </li>
@@ -83,9 +86,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Tools</a></li>
-      <li class="breadcrumb-item active">Using Local Tools</li>
+      <li class="breadcrumb-item active">Using Git Tools</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/vessl-ai/hyperpocket/blob/main/docs/hyperpocket/tools/using-local-tools.md" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/vessl-ai/hyperpocket/blob/main/docs/hyperpocket/tools/using-git-tools.md" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -93,28 +96,48 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="using-local-tools">
-<h1>Using Local Tools<a class="headerlink" href="#using-local-tools" title="Link to this heading"></a></h1>
-<section id="local-tool">
-<h2>Local Tool<a class="headerlink" href="#local-tool" title="Link to this heading"></a></h2>
-<p>A <strong>Local Tool</strong> in Hyperpocket is a tool you can write locally on your environment and can be run on a isolated *
-*WebAssembly (WASM)**.</p>
-<p>Local tools are used to run custom logic or tools that are not available in git tools.</p>
-<p>But for the most part, you will be enough with git tools or function tools.</p>
-<p>You will want to use local tools in the following cases:</p>
-<ul class="simple">
-<li><p>Utilizing other languages than Python: If a tool’s language is supported by WASM, you can run it as a local tool.</p></li>
-<li><p>(Coming soon) Ejecting git tools for customizing: You can eject a git tool and customize it as a local tool. (This feature is coming soon.)</p></li>
-</ul>
-<p>Go to the bottom of the guide to see a detailed example.</p>
+  <section id="using-git-tools">
+<h1>Using Git Tools<a class="headerlink" href="#using-git-tools" title="Link to this heading"></a></h1>
+<section id="git-tools">
+<h2>Git Tools<a class="headerlink" href="#git-tools" title="Link to this heading"></a></h2>
+<p>A <strong>Git Tool</strong> is a tool that is fetched from remote git repositories and run on WASM runtime.</p>
 </section>
-<section id="how-it-works">
-<h2>How it works<a class="headerlink" href="#how-it-works" title="Link to this heading"></a></h2>
-<p>Similar to git tools, but it loads code from your local directory.</p>
-<p>See <a class="reference internal" href="#tbd"><span class="xref myst">(TBU) How tools are loaded</span></a> for more details.</p>
+<section id="how-to-use-git-tools">
+<h2>How to Use Git Tools<a class="headerlink" href="#how-to-use-git-tools" title="Link to this heading"></a></h2>
+<p>You can copy and paste your git url itself, or use <code class="docutils literal notranslate"><span class="pre">from_git</span></code> function to load tools from a git repository.</p>
+<section id="simply-putting-git-url">
+<h3>Simply putting git URL<a class="headerlink" href="#simply-putting-git-url" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLangchain</span>
+
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketLangchain</span><span class="p">(</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># ...</span>
+</pre></div>
+</div>
 </section>
-<section id="guides">
-<h2>Guides<a class="headerlink" href="#guides" title="Link to this heading"></a></h2>
+<section id="from-git-function">
+<h3><code class="docutils literal notranslate"><span class="pre">from_git</span></code> function<a class="headerlink" href="#from-git-function" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLangchain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
+
+
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketLangchain</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">from_git</span><span class="p">(</span>
+    <span class="n">repository</span><span class="o">=</span><span class="s2">&quot;https://github.com/vessl-ai/hyperpocket&quot;</span><span class="p">,</span>
+    <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;main&quot;</span><span class="p">,</span>
+    <span class="n">rel_path</span><span class="o">=</span><span class="s2">&quot;tools/slack/get-message&quot;</span>
+<span class="p">)])</span>
+
+<span class="c1"># ...</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="advanced-structure-of-a-git-tool-repository">
+<h2>Advanced - Structure of a Git Tool Repository<a class="headerlink" href="#advanced-structure-of-a-git-tool-repository" title="Link to this heading"></a></h2>
 <section id="define-a-local-tool">
 <h3>Define a Local Tool<a class="headerlink" href="#define-a-local-tool" title="Link to this heading"></a></h3>
 <p>Ensure the tool is structured with the required configuration files (e.g., schema.json, config.toml).</p>
@@ -158,21 +181,6 @@
 </li>
 </ul>
 </section>
-<section id="load-and-use-the-local-tool">
-<h3>Load and use the Local Tool<a class="headerlink" href="#load-and-use-the-local-tool" title="Link to this heading"></a></h3>
-<p>Use the <code class="docutils literal notranslate"><span class="pre">from_local</span></code> function to load a tool from a specified path.</p>
-<p>Example Code: Loading a Local Tool</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketOpenAI</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_local</span>
-
-<span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketOpenAI</span><span class="p">(</span>
-    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">from_local</span><span class="p">(</span><span class="s2">&quot;/path/to/local/tool&quot;</span><span class="p">)]</span>
-<span class="p">)</span>
-
-<span class="c1"># And more ...</span>
-</pre></div>
-</div>
-</section>
 </section>
 </section>
 
@@ -180,8 +188,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="using-function-tools.html" class="btn btn-neutral float-left" title="Using Function Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="tool-interfaces.html" class="btn btn-neutral float-right" title="Tool interfaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="what-are-tools.html" class="btn btn-neutral float-left" title="What are tools?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="using-function-tools.html" class="btn btn-neutral float-right" title="Using Function Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
