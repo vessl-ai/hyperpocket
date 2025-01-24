@@ -50,7 +50,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Using Git Tools</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#git-tools">Git Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#how-to-use-git-tools">How to Use Git Tools</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#simply-putting-git-url">Simply putting git URL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simply-putting-github-url">Simply putting github URL</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#from-git-function"><code class="docutils literal notranslate"><span class="pre">from_git</span></code> function</a></li>
 </ul>
 </li>
@@ -105,8 +105,9 @@
 <section id="how-to-use-git-tools">
 <h2>How to Use Git Tools<a class="headerlink" href="#how-to-use-git-tools" title="Link to this heading"></a></h2>
 <p>You can copy and paste your git url itself, or use <code class="docutils literal notranslate"><span class="pre">from_git</span></code> function to load tools from a git repository.</p>
-<section id="simply-putting-git-url">
-<h3>Simply putting git URL<a class="headerlink" href="#simply-putting-git-url" title="Link to this heading"></a></h3>
+<section id="simply-putting-github-url">
+<h3>Simply putting github URL<a class="headerlink" href="#simply-putting-github-url" title="Link to this heading"></a></h3>
+<p>This simple feature is only supported for github.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLangchain</span>
 
 <span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketLangchain</span><span class="p">(</span>
@@ -142,8 +143,8 @@
 <h3>Define a Local Tool<a class="headerlink" href="#define-a-local-tool" title="Link to this heading"></a></h3>
 <p>Ensure the tool is structured with the required configuration files (e.g., schema.json, config.toml).</p>
 <p>Example structure for python tool is as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/local-tool
-<span class="w">  </span>/local-tool
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/git-tool
+<span class="w">  </span>/git-tool
 <span class="w">    </span>/__init__.py
 <span class="w">    </span>/__main__.py
 <span class="w">  </span>/config.toml
@@ -151,19 +152,28 @@
 </pre></div>
 </div>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>: The entry point of the tool.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">__main__.py</span></code>: The main logic of the tool.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">config.toml</span></code>: The configuration file for the tool.</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;local-tool&quot;</span>
-<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;description of the tool&quot;</span>
-<span class="n">language</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;python&quot;</span><span class="w"> </span><span class="c1"># or else</span>
-
-<span class="k">[auth]</span>
-<span class="n">auth_provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;github&quot;</span><span class="w"> </span><span class="c1"># example, or else</span>
-<span class="n">scopes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;repo&quot;</span><span class="p">]</span><span class="w"> </span><span class="c1"># different by auth provider</span>
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>: The entry point of the tool. This should export the main function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">git_tool.__main__</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span>
 </pre></div>
 </div>
 </li>
+</ul>
+<p><strong>all</strong> = [“main”]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+- `__main__.py`: The main logic of the tool.
+- `config.toml`: The configuration file for the tool.
+
+```toml
+name = &quot;git-tool&quot;
+description = &quot;description of the tool&quot;
+language = &quot;python&quot; # or else
+
+[auth]
+auth_provider = &quot;github&quot; # example, or else
+scopes = [&quot;repo&quot;] # different by auth provider
+</pre></div>
+</div>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">schema.json</span></code>: The schema of the argument for the tool. This is used for defining pydantic model and also used as tool specs for LLMs.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
