@@ -49,7 +49,13 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Auth</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="supported-auth-flows.html">Supported Auth flows</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Enabling OAuth with Hyperpocket</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#how-to-apply-oauth-in-hyperpocket"><strong>How to Apply OAuth in Hyperpocket</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-apply-oauth-in-hyperpocket"><strong>How to Apply OAuth in Hyperpocket</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hyperpocket-wasmtool">Hyperpocket WasmTool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hyperpocket-functiontool">Hyperpocket FunctionTool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Full code</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#why-use-oauth-with-hyperpocket">Why Use OAuth with Hyperpocket?</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="enabling-token-based-authentication-with-hyperpocket.html">Enabling Token-Based Authentication with Hyperpocket</a></li>
@@ -87,47 +93,243 @@
              
   <section id="enabling-oauth-with-hyperpocket">
 <h1>Enabling OAuth with Hyperpocket<a class="headerlink" href="#enabling-oauth-with-hyperpocket" title="Link to this heading"></a></h1>
-<p>Hyperpocket simplifies the integration of OAuth-based authentication, making it easy to handle multi-step flows securely. OAuth is particularly useful for tools that require user authorization, such as Slack, GitHub, or Google APIs.</p>
+<p>Hyperpocket simplifies the integration of OAuth-based authentication, making it easy to handle multi-step flows
+securely.</p>
+<p>OAuth is particularly useful for tools that require user authorization, such as Slack, GitHub, or Google APIs.</p>
 <section id="how-to-apply-oauth-in-hyperpocket">
 <h2><strong>How to Apply OAuth in Hyperpocket</strong><a class="headerlink" href="#how-to-apply-oauth-in-hyperpocket" title="Link to this heading"></a></h2>
-<ol class="arabic simple">
-<li><p><strong>Define the OAuth Configuration</strong></p></li>
-</ol>
-<p>Use the OAuthHandler to set up the required credentials and endpoints.</p>
-<p>•	<strong>Client ID and Secret:</strong> These are provided by the service you’re integrating with.</p>
-<p>•	<strong>Scopes:</strong> Specify the permissions your tool requires.</p>
-<p>•	<strong>Authorization and Token URLs:</strong> Define the endpoints for initiating OAuth and obtaining tokens.</p>
-<ol class="arabic simple" start="2">
-<li><p><strong>Define the Tool</strong></p></li>
-</ol>
-<p>Use the &#64;tool decorator to create a tool with the OAuth configuration.</p>
-<p><strong>Code Example: Applying OAuth</strong></p>
-<p>Here’s how to define and use a Slack tool with OAuth authentication:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">tool</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">OAuthHandler</span>
-
-<span class="c1"># Define the tool with OAuthHandler</span>
-<span class="nd">@tool</span><span class="p">(</span><span class="n">auth</span><span class="o">=</span><span class="n">OAuthHandler</span><span class="p">(</span>
-    <span class="n">client_id</span><span class="o">=</span><span class="s2">&quot;your_client_id&quot;</span><span class="p">,</span>
-    <span class="n">client_secret</span><span class="o">=</span><span class="s2">&quot;your_client_secret&quot;</span><span class="p">,</span>
-    <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;read:messages&quot;</span><span class="p">,</span> <span class="s2">&quot;write:messages&quot;</span><span class="p">],</span>
-    <span class="n">auth_url</span><span class="o">=</span><span class="s2">&quot;https://slack.com/oauth/authorize&quot;</span><span class="p">,</span>
-    <span class="n">token_url</span><span class="o">=</span><span class="s2">&quot;https://slack.com/api/oauth.access&quot;</span>
-<span class="p">))</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">fetch_slack_messages</span><span class="p">(</span><span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetch recent messages from a Slack channel.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello!&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Hi!&quot;</span><span class="p">}]</span>
-
-<span class="c1"># Use the tool</span>
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">messages</span> <span class="o">=</span> <span class="n">fetch_slack_messages</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+<section id="hyperpocket-wasmtool">
+<h3>Hyperpocket WasmTool<a class="headerlink" href="#hyperpocket-wasmtool" title="Link to this heading"></a></h3>
+<section id="set-the-oauth-configuration">
+<h4>1. Set the OAuth Configuration<a class="headerlink" href="#set-the-oauth-configuration" title="Link to this heading"></a></h4>
+<p>Set a oauth configuration. it varies by Oauth Provider</p>
+<p>Example(Slack):</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[auth.slack]</span>
+<span class="n">client_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;YOUR_GOOGLE_APP_CLIENT_ID&gt;&quot;</span>
+<span class="n">client_secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;YOUR_GOOGLE_APP_CLIENT_SECRET&gt;&quot;</span>
 </pre></div>
 </div>
-<p><strong>Why Use OAuth with Hyperpocket?</strong></p>
-<p>•	<strong>Dynamic Token Management:</strong> Handles token issuance, storage, and refresh cycles internally.</p>
-<p>•	<strong>Secure Authentication:</strong> No exposure of sensitive credentials like access tokens.</p>
-<p>•	<strong>Seamless Integration:</strong> Easily integrate OAuth flows into multi-turn workflows.</p>
+</section>
+<section id="define-wasm-tool-path-config-toml-in-your-wasm-tool">
+<h4>2. Define <code class="docutils literal notranslate"><span class="pre">wasm-tool-path/config.toml</span></code> in your wasm tool<a class="headerlink" href="#define-wasm-tool-path-config-toml-in-your-wasm-tool" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Add fields about authentication to <code class="docutils literal notranslate"><span class="pre">config.toml</span></code></p></li>
+</ul>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;slack_get_messages&quot;</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;get slack messages&quot;</span>
+<span class="n">language</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;python&quot;</span>
+
+<span class="c1"># needed fields for authentication</span>
+<span class="k">[auth]</span>
+<span class="n">auth_provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;slack&quot;</span>
+<span class="n">scopes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;channels:history&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="plug-in-the-tool-in-hyperpocket">
+<h4>3. Plug in the tool in Hyperpocket`<a class="headerlink" href="#plug-in-the-tool-in-hyperpocket" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;your/local/auth/tool/path&quot;</span><span class="p">])</span>
+<span class="c1"># or</span>
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;https://github.com/your-organizaion/your-repository&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="invoke-tool-with-authentication">
+<h4>4. Invoke tool with authentication<a class="headerlink" href="#invoke-tool-with-authentication" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize tool authentication.</span>
+<span class="n">authentication_url</span> <span class="o">=</span> <span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">initialize_tool_auth</span><span class="p">()</span>
+
+<span class="c1"># send this authentication_url to user.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">authentication_url</span><span class="p">)</span>
+
+<span class="c1"># wait for your authentication process.</span>
+<span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">wait_tool_auth</span><span class="p">()</span>
+
+<span class="c1"># invoke tool and get result</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span>
+    <span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;get_slack_messages&quot;</span><span class="p">,</span>
+    <span class="n">body</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_CHANNEL&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="full-code">
+<h4>Full code<a class="headerlink" href="#full-code" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># init pocket with your tool.</span>
+    <span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;https://github.com/your-organizaion/your-repository&quot;</span><span class="p">])</span>
+
+    <span class="c1"># initialize tool authentication.</span>
+    <span class="n">authentication_url</span> <span class="o">=</span> <span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">initialize_tool_auth</span><span class="p">()</span>
+
+    <span class="c1"># send this authentication_url to user.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">authentication_url</span><span class="p">)</span>
+
+    <span class="c1"># wait for your authentication process.</span>
+    <span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">wait_tool_auth</span><span class="p">()</span>
+
+    <span class="c1"># invoke tool and get result</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span>
+        <span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;get_slack_messages&quot;</span><span class="p">,</span>
+        <span class="n">body</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_CHANNEL&gt;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="hyperpocket-functiontool">
+<h3>Hyperpocket FunctionTool<a class="headerlink" href="#hyperpocket-functiontool" title="Link to this heading"></a></h3>
+<section id="id1">
+<h4>1. Set the OAuth Configuration<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<p>Set a oauth configuration. it varies by Oauth Provider</p>
+<p>Example(Slack):</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[auth.slack]</span>
+<span class="n">client_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;YOUR_GOOGLE_APP_CLIENT_ID&gt;&quot;</span>
+<span class="n">client_secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;YOUR_GOOGLE_APP_CLIENT_SECRET&gt;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="define-the-tool">
+<h4>2. Define the Tool<a class="headerlink" href="#define-the-tool" title="Link to this heading"></a></h4>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">&#64;function_tool</span></code> decorator to create a tool with the OAuth configuration.</p>
+<p>Example(Slack):</p>
+<p>Here’s how to define and use a Google tool with OAuth authentication:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">slack_sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebClient</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_tool</span>
+
+
+<span class="nd">@function_tool</span><span class="p">(</span>
+    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">SLACK</span><span class="p">,</span>
+    <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;channels:history&quot;</span><span class="p">,</span> <span class="s2">&quot;im:history&quot;</span><span class="p">,</span> <span class="s2">&quot;mpim:history&quot;</span><span class="p">,</span> <span class="s2">&quot;groups:history&quot;</span><span class="p">,</span> <span class="s2">&quot;mpim:read&quot;</span><span class="p">,</span> <span class="s2">&quot;im:read&quot;</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">slack_get_messages</span><span class="p">(</span><span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get recent messages from a Slack channel.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        channel(str): slack channel to be fetched</span>
+<span class="sd">        limit(int): maximum message limit </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">WebClient</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;SLACK_BOT_TOKEN&quot;</span><span class="p">])</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">conversations_history</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">auth_provider</span></code>: Define which authentication provider token is needed in your tool</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scopes</span></code>: needed authentication scopes in your tool</p></li>
+</ul>
+</section>
+<section id="id2">
+<h4>3. Plug in the tool in Hyperpocket`<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">slack_get_messages</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h4>4. Invoke tool with authentication<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize tool authentication.</span>
+<span class="n">authentication_url</span> <span class="o">=</span> <span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">initialize_tool_auth</span><span class="p">()</span>
+
+<span class="c1"># send this authentication_url to user.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">authentication_url</span><span class="p">)</span>
+
+<span class="c1"># wait for your authentication process.</span>
+<span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">wait_tool_auth</span><span class="p">()</span>
+
+<span class="c1"># invoke tool and get result</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span>
+    <span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;get_slack_messages&quot;</span><span class="p">,</span>
+    <span class="n">body</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_CHANNEL&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id4">
+<h3>Full code<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">slack_sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebClient</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_tool</span>
+
+
+<span class="nd">@function_tool</span><span class="p">(</span>
+    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">SLACK</span><span class="p">,</span>
+    <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;channels:history&quot;</span><span class="p">,</span> <span class="s2">&quot;im:history&quot;</span><span class="p">,</span> <span class="s2">&quot;mpim:history&quot;</span><span class="p">,</span> <span class="s2">&quot;groups:history&quot;</span><span class="p">,</span> <span class="s2">&quot;mpim:read&quot;</span><span class="p">,</span> <span class="s2">&quot;im:read&quot;</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">slack_get_messages</span><span class="p">(</span><span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get recent messages from a Slack channel.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        channel(str): slack channel to be fetched</span>
+<span class="sd">        limit(int): maximum message limit </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">WebClient</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;SLACK_BOT_TOKEN&quot;</span><span class="p">])</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">conversations_history</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># init pocket with your tool.</span>
+    <span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">slack_get_messages</span><span class="p">])</span>
+
+    <span class="c1"># initialize tool authentication.</span>
+    <span class="n">authentication_url</span> <span class="o">=</span> <span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">initialize_tool_auth</span><span class="p">()</span>
+
+    <span class="c1"># send this authentication_url to user.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">authentication_url</span><span class="p">)</span>
+
+    <span class="c1"># wait for your authentication process.</span>
+    <span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">wait_tool_auth</span><span class="p">()</span>
+
+    <span class="c1"># invoke tool and get result</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span>
+        <span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;get_slack_messages&quot;</span><span class="p">,</span>
+        <span class="n">body</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_CHANNEL&gt;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="why-use-oauth-with-hyperpocket">
+<h2>Why Use OAuth with Hyperpocket?<a class="headerlink" href="#why-use-oauth-with-hyperpocket" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Dynamic Token Management:</strong> Handles token issuance, storage, and refresh cycles internally.</p></li>
+<li><p><strong>Secure Authentication:</strong> No exposure of sensitive credentials like access tokens.</p></li>
+<li><p><strong>Seamless Integration:</strong> Easily integrate OAuth flows into multi-turn workflows.</p></li>
+</ul>
 </section>
 </section>
 
