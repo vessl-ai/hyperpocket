@@ -217,7 +217,7 @@ def locate_button_start_run_workflow(confidence: float = 0.9):
         #     confidence=confidence,
         # )
         screenshot = pyautogui.screenshot()
-        screenshot.save("screenshot-start.png")
+        # screenshot.save("screenshot-start.png")
         button_box = pyautogui.locate(
             "images/button-start-run-workflow.png", screenshot, confidence=confidence
         )
@@ -243,7 +243,7 @@ def locate_input_version_to_publish(confidence: float = 0.9):
         #     confidence=confidence,
         # )
         screenshot = pyautogui.screenshot()
-        screenshot.save("screenshot-input.png")
+        # screenshot.save("screenshot-input.png")
         button_box = pyautogui.locate(
             "images/input-version-to-publish.png", screenshot, confidence=confidence
         )
@@ -269,7 +269,7 @@ def locate_button_submit_run_workflow(confidence: float = 0.9):
         #     confidence=confidence,
         # )
         screenshot = pyautogui.screenshot()
-        screenshot.save("screenshot-submit.png")
+        # screenshot.save("screenshot-submit.png")
         button_box = pyautogui.locate(
             "images/button-submit-run-workflow.png", screenshot, confidence=confidence
         )
