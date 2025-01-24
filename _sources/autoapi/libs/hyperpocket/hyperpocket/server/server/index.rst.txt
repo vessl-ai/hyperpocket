@@ -42,7 +42,7 @@ Module Contents
 
 
 
-.. py:class:: PocketServer(internal_server_port: int = config.internal_server_port, proxy_port: int = config.public_server_port)
+.. py:class:: PocketServer(internal_server_port: int = config().internal_server_port, proxy_port: int = config().public_server_port)
 
    Bases: :py:obj:`object`
 

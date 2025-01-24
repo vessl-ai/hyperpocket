@@ -16,7 +16,6 @@ Attributes
    libs.hyperpocket.hyperpocket.config.settings.secret_path
    libs.hyperpocket.hyperpocket.config.settings.toolpkg_path
    libs.hyperpocket.hyperpocket.config.settings.settings
-   libs.hyperpocket.hyperpocket.config.settings.config
 
 
 Classes
@@ -25,6 +24,14 @@ Classes
 .. autoapisummary::
 
    libs.hyperpocket.hyperpocket.config.settings.Config
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.config.settings.config
 
 
 Module Contents
@@ -107,6 +114,5 @@ Module Contents
    .. py:property:: public_base_url
 
 
-.. py:data:: config
-   :type:  Config
+.. py:function:: config() -> Config
 

@@ -18,22 +18,3 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/config/settings/index
 
 
-Attributes
-----------
-
-.. autoapisummary::
-
-   libs.hyperpocket.hyperpocket.config.config
-   libs.hyperpocket.hyperpocket.config.secret
-   libs.hyperpocket.hyperpocket.config.pocket_logger
-
-
-Package Contents
-----------------
-
-.. py:data:: config
-
-.. py:data:: secret
-
-.. py:data:: pocket_logger
-
