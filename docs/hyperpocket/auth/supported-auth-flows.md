@@ -111,7 +111,7 @@ if __name__ == "__main__":
 
 ## **🔹 Code Example: Initializing authentication in advance **
 
-Here’s an example of how to setup authentication to bypass multi-turn authentication:
+Here’s an example of how to setup authentication in intial phase that reduces latency during actual usage:
 
 ```python
 import asyncio
