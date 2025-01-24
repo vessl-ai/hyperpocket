@@ -19,7 +19,7 @@ from langchain.agents import
 from langchain_openai import ChatOpenAI
 
 # Define a Function Tool
-@function_tool
+@function_tool()
 def get_weather(location: str) -> str:
    """Fetch the weather information for a given location."""
    return f"The weather in {location} is sunny with a high of 25°C."
