@@ -49,16 +49,17 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Auth</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Supported Auth flows</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#authentication-features"><strong>🔹 Authentication Features</strong></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#multi-turn-authentication">1.	<strong>Multi-Turn Authentication</strong></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#secure-internal-auth-server">2.	<strong>Secure Internal Auth Server</strong></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#profile-based-auth">3.	<strong>Profile-Based Auth</strong></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#wide-language-support">4.	<strong>Wide Language Support</strong></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#tool-level-isolation">5.	<strong>Tool-Level Isolation</strong></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#interrupt-based-flows">6.	<strong>Interrupt-Based Flows</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multi-turn-authentication">1. <strong>Multi-Turn Authentication</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#secure-internal-auth-server">2. <strong>Secure Internal Auth Server</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#profile-based-auth">3. <strong>Profile-Based Auth</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wide-language-support">4. <strong>Wide Language Support</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tool-level-isolation">5. <strong>Tool-Level Isolation</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interrupt-based-flows">6. <strong>Interrupt-Based Flows</strong></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#why-hyperpocket-auth-stands-out"><strong>🔹 Why Hyperpocket Auth Stands Out</strong></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#code-example-oauth-integration"><strong>🔹 Code Example: OAuth Integration</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#code-example-initializing-authentication-in-advance">**🔹 Code Example: Initializing authentication in advance **</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#supported-authentication-scenarios"><strong>🔹 Supported Authentication Scenarios</strong></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#advantages-of-hyperpocket-auth"><strong>🔹 Advantages of Hyperpocket Auth</strong></a></li>
 </ul>
@@ -104,15 +105,16 @@
 <section id="authentication-features">
 <h2><strong>🔹 Authentication Features</strong><a class="headerlink" href="#authentication-features" title="Link to this heading"></a></h2>
 <section id="multi-turn-authentication">
-<h3>1.	<strong>Multi-Turn Authentication</strong><a class="headerlink" href="#multi-turn-authentication" title="Link to this heading"></a></h3>
+<h3>1. <strong>Multi-Turn Authentication</strong><a class="headerlink" href="#multi-turn-authentication" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Supports complex, multi-step authentication scenarios (e.g., OAuth flows).</p></li>
 <li><p>Memory-enabled workflows allow AI agents to complete authentication over multiple interactions.</p></li>
+<li><p>Allows tools to initialize authentication in advance, reducing latency during actual usage.</p></li>
 </ul>
 <p>Example: Logging into multiple Slack accounts across different organizations.</p>
 </section>
 <section id="secure-internal-auth-server">
-<h3>2.	<strong>Secure Internal Auth Server</strong><a class="headerlink" href="#secure-internal-auth-server" title="Link to this heading"></a></h3>
+<h3>2. <strong>Secure Internal Auth Server</strong><a class="headerlink" href="#secure-internal-auth-server" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>An internal authentication server is initialized during Hyperpocket setup.</p></li>
 <li><p>Handles OAuth callbacks and issues access tokens securely without exposing authentication codes or tokens to external systems.</p></li>
@@ -120,28 +122,28 @@
 </ul>
 </section>
 <section id="profile-based-auth">
-<h3>3.	<strong>Profile-Based Auth</strong><a class="headerlink" href="#profile-based-auth" title="Link to this heading"></a></h3>
+<h3>3. <strong>Profile-Based Auth</strong><a class="headerlink" href="#profile-based-auth" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Defines “Profiles” to allow users to manage multiple personas within the same thread.</p></li>
 </ul>
 <p>Example: A user can authenticate with multiple accounts (e.g., A’s Slack and B’s Slack) simultaneously.</p>
 </section>
 <section id="wide-language-support">
-<h3>4.	<strong>Wide Language Support</strong><a class="headerlink" href="#wide-language-support" title="Link to this heading"></a></h3>
+<h3>4. <strong>Wide Language Support</strong><a class="headerlink" href="#wide-language-support" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Supports tools written in multiple programming languages (e.g., Python, JavaScript).</p></li>
 <li><p>Auth flows are compatible across different tool implementations.</p></li>
 </ul>
 </section>
 <section id="tool-level-isolation">
-<h3>5.	<strong>Tool-Level Isolation</strong><a class="headerlink" href="#tool-level-isolation" title="Link to this heading"></a></h3>
+<h3>5. <strong>Tool-Level Isolation</strong><a class="headerlink" href="#tool-level-isolation" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Each tool operates in its isolated WASM runtime, ensuring no dependency conflicts.</p></li>
 <li><p>Tokens and environment variables are passed securely to each tool.</p></li>
 </ul>
 </section>
 <section id="interrupt-based-flows">
-<h3>6.	<strong>Interrupt-Based Flows</strong><a class="headerlink" href="#interrupt-based-flows" title="Link to this heading"></a></h3>
+<h3>6. <strong>Interrupt-Based Flows</strong><a class="headerlink" href="#interrupt-based-flows" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Supports interrupt-based workflows where tools can be called without requiring a full multi-turn session.</p></li>
 <li><p>Ideal for lightweight, single-step operations.</p></li>
@@ -215,14 +217,81 @@
 <span class="p">))</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_slack_messages</span><span class="p">(</span><span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetch recent messages from a Slack channel.&quot;&quot;&quot;</span>
-		<span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span> 
+		<span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
 		<span class="c1"># do somethin return [{&quot;user&quot;: &quot;Alice&quot;, &quot;message&quot;: &quot;Hello!&quot;}, {&quot;user&quot;: &quot;Bob&quot;, &quot;message&quot;: &quot;Hi!&quot;}]</span>
 
 <span class="c1"># Example usage</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-	
+
     <span class="n">messages</span> <span class="o">=</span> <span class="n">get_slack_messages</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="code-example-initializing-authentication-in-advance">
+<h2>**🔹 Code Example: Initializing authentication in advance **<a class="headerlink" href="#code-example-initializing-authentication-in-advance" title="Link to this heading"></a></h2>
+<p>Here’s an example of how to set up authentication in the initial phase, making it unnecessary for the user to proceed through complex authentication steps.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_tool</span>
+
+
+<span class="c1"># before starting, set slack, google oauth client id/secret in pocket setting.toml</span>
+
+<span class="nd">@function_tool</span><span class="p">(</span>
+    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">SLACK</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">function_tool_with_slack_auth</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function tool with slack auth</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># do something with SLACK_BOT_TOKEN ..</span>
+
+    <span class="k">return</span> <span class="s2">&quot;success to test slack&quot;</span>
+
+
+<span class="nd">@function_tool</span><span class="p">(</span>
+    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">GOOGLE</span><span class="p">,</span>
+    <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;https://www.googleapis.com/auth/calendar&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">function_tool_with_google_auth</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function tool with google auth</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># do something with GOOGLE_TOKEN</span>
+
+    <span class="k">return</span> <span class="s2">&quot;success to test google&quot;</span>
+
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span>
+        <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">function_tool_with_slack_auth</span><span class="p">,</span>
+            <span class="n">function_tool_with_google_auth</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 01. get authenticatio URI</span>
+    <span class="n">prepare_list</span> <span class="o">=</span> <span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">initialize_tool_auth</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">prepare</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">prepare_list</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">prepare</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 02. wait until auth is done</span>
+    <span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">wait_tool_auth</span><span class="p">()</span>
+
+    <span class="c1"># 03. tool invoke without interrupt</span>
+    <span class="n">slack_auth_function_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">ainvoke</span><span class="p">(</span><span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;function_tool_with_slack_auth&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="p">{})</span>
+    <span class="n">google_auth_function_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">pocket</span><span class="o">.</span><span class="n">ainvoke</span><span class="p">(</span><span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;function_tool_with_google_auth&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="p">{})</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;slack auth function result: &quot;</span><span class="p">,</span> <span class="n">slack_auth_function_result</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;google auth function result: &quot;</span><span class="p">,</span> <span class="n">google_auth_function_result</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </pre></div>
 </div>
 </section>
@@ -233,7 +302,7 @@
 <li><p><strong>OAuth 2.0 Flows:</strong> Token issuance, callback handling, and multi-account support.</p></li>
 <li><p><strong>Environment-Based Auth:</strong> Tokens and static information passed securely as environment variables.</p></li>
 </ul>
-<p>•	<strong>Multi-Profile Management:</strong> Manage multiple tokens for different accounts or personas.</p>
+<p>• <strong>Multi-Profile Management:</strong> Manage multiple tokens for different accounts or personas.</p>
 </section>
 <section id="advantages-of-hyperpocket-auth">
 <h2><strong>🔹 Advantages of Hyperpocket Auth</strong><a class="headerlink" href="#advantages-of-hyperpocket-auth" title="Link to this heading"></a></h2>
@@ -242,7 +311,7 @@
 <li><p>⚡ <strong>Simplicity:</strong> No need to manage additional server infrastructure; the internal auth server does it all.</p></li>
 <li><p>🌐 <strong>Flexibility:</strong> Works across different tools and agent frameworks, supporting various workflows.</p></li>
 </ul>
-<p>•	🤝 <strong>Compatibility:</strong> Handles multi-account scenarios with ease, enabling more complex use cases.</p>
+<p>• 🤝 <strong>Compatibility:</strong> Handles multi-account scenarios with ease, enabling more complex use cases.</p>
 <p>Hyperpocket’s authentication flow provides the foundation for secure, scalable, and flexible tool interactions in AI-driven workflows. Let me know if you’d like further examples or clarifications! 🚀</p>
 <p><a class="reference external" href="https://www.notion.so/Simple-Auth-Flow-17dbfa25e9fc8075b7a5e1193d8930b7?pvs=21"><strong>Simple Auth Flow</strong></a></p>
 <p><a class="reference external" href="https://www.notion.so/Complex-Auth-Flow-17dbfa25e9fc8000bd04e6981bc0b4a1?pvs=21"><strong>Complex Auth Flow</strong></a></p>

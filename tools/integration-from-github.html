@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Integration from GitHub &mdash; Hyperpocket  documentation</title>
+  <title>Integration from Git &mdash; Hyperpocket  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
@@ -47,13 +47,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tools</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="what-are-tools.html">What are tools?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="apply-function-tools.html">Applying Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apply-function-tools.html">Using Function Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apply-local-tools.html">Applying Local Tools</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Integration from GitHub</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#what-is-a-github-integrated-wasm-tool"><strong>What is a GitHub-Integrated WASM Tool?</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#how-to-use-github-integrated-wasm-tools"><strong>How to Use GitHub-Integrated WASM Tools</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#executing-a-github-tool"><strong>Executing a GitHub Tool</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#when-to-use-github-integrated-wasm-tools"><strong>When to Use GitHub-Integrated WASM Tools</strong></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Integration from Git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-a-git-integrated-wasm-tool"><strong>What is a Git-Integrated WASM Tool?</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-use-git-integrated-wasm-tools"><strong>How to Use Git-Integrated WASM Tools</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#executing-a-git-tool"><strong>Executing a Git Tool</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#when-to-use-git-integrated-wasm-tools"><strong>When to Use Git-Integrated WASM Tools</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -79,7 +79,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Tools</a></li>
-      <li class="breadcrumb-item active">Integration from GitHub</li>
+      <li class="breadcrumb-item active">Integration from Git</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/vessl-ai/hyperpocket/blob/main/docs/hyperpocket/tools/integration-from-github.md" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -89,39 +89,50 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="integration-from-github">
-<h1>Integration from GitHub<a class="headerlink" href="#integration-from-github" title="Link to this heading"></a></h1>
-<section id="what-is-a-github-integrated-wasm-tool">
-<h2><strong>What is a GitHub-Integrated WASM Tool?</strong><a class="headerlink" href="#what-is-a-github-integrated-wasm-tool" title="Link to this heading"></a></h2>
-<p>A <strong>GitHub-Integrated WASM Tool</strong> is a WebAssembly-based tool that is fetched directly from a GitHub repository. This allows developers to maintain tools remotely and integrate them seamlessly into Hyperpocket workflows.</p>
+  <section id="integration-from-git">
+<h1>Integration from Git<a class="headerlink" href="#integration-from-git" title="Link to this heading"></a></h1>
+<section id="what-is-a-git-integrated-wasm-tool">
+<h2><strong>What is a Git-Integrated WASM Tool?</strong><a class="headerlink" href="#what-is-a-git-integrated-wasm-tool" title="Link to this heading"></a></h2>
+<p>A <strong>Git-Integrated WASM Tool</strong> is a WebAssembly-based tool that is fetched directly from a Git(Github, GitLab,
+BitBucket, …) repository.</p>
+<p>This allows developers to maintain tools remotely and integrate them seamlessly into
+Hyperpocket workflows.</p>
 </section>
-<section id="how-to-use-github-integrated-wasm-tools">
-<h2><strong>How to Use GitHub-Integrated WASM Tools</strong><a class="headerlink" href="#how-to-use-github-integrated-wasm-tools" title="Link to this heading"></a></h2>
-<p>Hyperpocket provides the from_git function to load tools from a GitHub repository. Here’s how it works:</p>
+<section id="how-to-use-git-integrated-wasm-tools">
+<h2><strong>How to Use Git-Integrated WASM Tools</strong><a class="headerlink" href="#how-to-use-git-integrated-wasm-tools" title="Link to this heading"></a></h2>
+<p>Hyperpocket provides the <code class="docutils literal notranslate"><span class="pre">from_git</span></code> function to load tools from a Git repository. Here’s how it works:</p>
 <ol class="arabic simple">
-<li><p><strong>Repository URL:</strong> Specify the GitHub repository where the tool is hosted.</p></li>
+<li><p><strong>Repository URL:</strong> Specify the Git repository where the tool is hosted.</p></li>
 <li><p><strong>Branch/Tag (ref):</strong> Define the Git reference (branch or tag) to use.</p></li>
 <li><p><strong>Relative Path:</strong> Specify the tool’s path within the repository.</p></li>
 </ol>
-<p><strong>Code Example: Loading a GitHub Tool</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool.wasm.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
+<p><strong>Code Example: Loading a Git Tool</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool.wasm.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
 
-<span class="c1"># Load a WASM tool from GitHub</span>
-<span class="n">tool_request</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span>
-    <span class="n">repository</span><span class="o">=</span><span class="s2">&quot;https://github.com/vessl-ai/hyperawesometools&quot;</span><span class="p">,</span>
+<span class="n">tools</span> <span class="o">=</span> <span class="p">[</span><span class="n">from_git</span><span class="p">(</span>
+    <span class="n">repository</span><span class="o">=</span><span class="s2">&quot;https://github.com/vessl-ai/hyperpocket&quot;</span><span class="p">,</span>
     <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;main&quot;</span><span class="p">,</span>
-    <span class="n">rel_path</span><span class="o">=</span><span class="s2">&quot;managed-tools/slack/get-message&quot;</span>
-<span class="p">)</span>
+    <span class="n">rel_path</span><span class="o">=</span><span class="s2">&quot;tools/slack/get-message&quot;</span>
+<span class="p">)]</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">tool_request</span><span class="p">)</span>  
-<span class="c1"># Output: ToolRequest(lock=GitLock(repository_url=https://github.com/vessl-ai/hyperawesometools, git_ref=main), rel_path=&quot;managed-tools/slack/get-message&quot;)</span>
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">)</span>
+
+<span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>Or you can just put <strong>Github URL</strong> on the Hyperpocket.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
+
+<span class="n">tools</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages&quot;</span><span class="p">]</span>
+<span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="executing-a-github-tool">
-<h2><strong>Executing a GitHub Tool</strong><a class="headerlink" href="#executing-a-github-tool" title="Link to this heading"></a></h2>
+<section id="executing-a-git-tool">
+<h2><strong>Executing a Git Tool</strong><a class="headerlink" href="#executing-a-git-tool" title="Link to this heading"></a></h2>
 <p>Once the tool is loaded, create an instance of the WasmTool class and execute the tool using the invoke method.</p>
-<p><strong>Code Example: Executing a GitHub Tool</strong></p>
+<p><strong>Code Example: Executing a Git Tool</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pocket</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
@@ -130,7 +141,7 @@
         <span class="s2">&quot;https://github.com/vessl-ai/hyperpocket/tree/main/tools/none/simple-echo-tool&quot;</span>
     <span class="p">]</span>
 
-    <span class="c1"># Create the tool instance</span>
+    <span class="c1"># Create Pocket</span>
     <span class="n">pocket</span> <span class="o">=</span> <span class="n">Pocket</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">)</span>
 
     <span class="c1"># Execute the tool</span>
@@ -143,12 +154,12 @@
     <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># Output: JSON response from the tool</span>
 </pre></div>
 </div>
-<p><strong>Structure of a GitHub Tool Repository</strong></p>
+<p><strong>Structure of a Git Tool Repository</strong></p>
 <p>The tool repository must include the following:</p>
 <ol class="arabic simple">
 <li><p>config.toml**:** Defines tool metadata and runtime.</p></li>
 </ol>
-<p>•	Example:</p>
+<p>• Example:</p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Slack Get Message Tool&quot;</span>
 <span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Fetch messages from a Slack channel.&quot;</span>
 <span class="n">language</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;python&quot;</span>
@@ -157,27 +168,34 @@
 <ol class="arabic simple" start="2">
 <li><p>schema.json**:** Defines the input/output schema for the tool.</p></li>
 </ol>
-<p>•	Example:</p>
+<p>• Example:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;channel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="nt">&quot;channel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;channel&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;limit&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;channel&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;limit&quot;</span>
+<span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
-<li><p><strong>Tool Script:</strong> The logic for the tool, e.g., a Python script to interact with the Slack API.</p></li>
+<li><p><strong>Tool Script:</strong> The logic for the tool and <code class="docutils literal notranslate"><span class="pre">dist</span></code> file, e.g., a Python script to interact with the Slack API.</p></li>
 </ol>
 </section>
-<section id="when-to-use-github-integrated-wasm-tools">
-<h2><strong>When to Use GitHub-Integrated WASM Tools</strong><a class="headerlink" href="#when-to-use-github-integrated-wasm-tools" title="Link to this heading"></a></h2>
-<p>Use GitHub tools when:</p>
-<p>•	<strong>Remote Management is Preferred:</strong> Tools are centrally stored and updated in a repository.</p>
-<p>•	<strong>Collaboration is Key:</strong> Multiple developers can contribute and improve tools.</p>
-<p>•	<strong>Version Control is Necessary:</strong> GitHub’s branching and versioning simplify tool updates and testing.</p>
+<section id="when-to-use-git-integrated-wasm-tools">
+<h2><strong>When to Use Git-Integrated WASM Tools</strong><a class="headerlink" href="#when-to-use-git-integrated-wasm-tools" title="Link to this heading"></a></h2>
+<p>Use Git tools when:</p>
+<p>•    <strong>Remote Management is Preferred:</strong> Tools are centrally stored and updated in a repository.</p>
+<p>•    <strong>Collaboration is Key:</strong> Multiple developers can contribute and improve tools.</p>
+<p>•    <strong>Version Control is Necessary:</strong> Git’s branching and versioning simplify tool updates and testing.</p>
 </section>
 </section>
 

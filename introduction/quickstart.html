@@ -60,12 +60,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#run-the-script"><strong>4️⃣ Run the Script</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#example-usage"><strong>5️⃣ Example Usage</strong></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#step-1-set-up-slack-api-permissions">Step 1 : Set Up Slack API Permissions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#step2-authenticate-via-slack">Step2 : Authenticate via Slack</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example-commands"><strong>Example Commands</strong></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#example-usage"><strong>5️⃣ Example Usage</strong></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#full-code">Full code</a></li>
 </ul>
 </li>
@@ -110,15 +105,17 @@
 <h2><strong>1️⃣ Prerequisites</strong><a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
 <p>Before we begin, install the required dependencies.</p>
 <p><strong>Python Version</strong></p>
-<p>python 3.10 to python 3.13 is required</p>
+<p>Python &gt;= 3.10</p>
 <p><strong>Install Required Packages</strong></p>
-<p>Run the following commands to install Hyperpocket and LangChain dependencies</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>hyperpocket_langchain
+<p>Run the following commands to install Hyperpocket and LangChain dependencies.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>hyperpocket_langchain
 pip<span class="w"> </span>install<span class="w"> </span>langchain_openai
 </pre></div>
 </div>
-<p><strong>Install Playwright (if not already installed)</strong></p>
-<p>Playwright is required to run the WASM environment. Install it using</p>
+<p><strong>Install Chromium for Playwright (if not already installed)</strong></p>
+<p>Chromium is used as a runtime for WASM environment and is required to execute WASM tools. You can install and integrate chromium with playwright by:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>playwright<span class="w"> </span>install
 </pre></div>
 </div>
@@ -127,28 +124,24 @@ pip<span class="w"> </span>install<span class="w"> </span>langchain_openai
 <h2><strong>2️⃣ Configuration</strong><a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
 <p>To use Hyperpocket, you need to create configuration files for storing credentials and API settings.</p>
 <p><strong>Set Up Hyperpocket Configuration</strong></p>
-<p>Create a configuration file at <code class="docutils literal notranslate"><span class="pre">&lt;repository-root&gt;/.pocket/settings.toml</span></code> and add the following</p>
+<p>Create a configuration file at <code class="docutils literal notranslate"><span class="pre">&lt;repository-root&gt;/settings.toml</span></code> and add the following</p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">log_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span>
-
-<span class="k">[git]</span>
-<span class="k">[git.github]</span>
-<span class="n">github_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;GITHUB_TOKEN&gt;&quot;</span>
-
-<span class="k">[auth.slack]</span>
+</pre></div>
+</div>
+<p>For sensitive values like Slack OAuth2 client secret, you might want to keep those values in <code class="docutils literal notranslate"><span class="pre">&lt;repository-root&gt;/.secrets.toml</span></code> and gitignore it.
+Both files will be merged into one configuration object.</p>
+<p>In this tutorial, you are going to use Slack App OAuth2 feature to use slack related tools. First, visit <a class="reference external" href="https://api.slack.com/apps/">Slack apps page</a> and create new app.
+If you have a proper manifest, you may use it to build the new slack app. Or you can just build the slack app from the scratch.</p>
+<p>You’ll find Client ID and Client Secret from the <strong>Settings &gt; Basic Information</strong> of the app dashboard. Copy them, and paste into the <code class="docutils literal notranslate"><span class="pre">.secrets.toml</span></code> file like:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[auth.slack]</span>
 <span class="n">client_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;SLACK_CLIENT_ID&gt;&quot;</span>
 <span class="n">client_secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;SLACK_CLIENT_SECRET&gt;&quot;</span>
 </pre></div>
 </div>
-<p>This configuration allows Hyperpocket to fetch tools from GitHub and authenticate with Slack.</p>
-<p><strong>Set Up Secret Keys</strong></p>
-<p>Create a file at <code class="docutils literal notranslate"><span class="pre">&lt;repository-root&gt;~/.pocket/.secret.toml</span></code> and store sensitive API keys:</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">OPENAI_API_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;OPENAI_API_KEY&gt;&quot;</span>
-</pre></div>
-</div>
-<p>Alternatively, you can set this directly in your environment:</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">export</span><span class="w"> </span><span class="n">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_OPENAI_API_KEY&gt;&quot;</span>
-</pre></div>
-</div>
+<p>This configuration allows Hyperpocket to authenticate with Slack.</p>
+<p>In this tutorial, you are going to try get and post some slack messages. To do so, you have to allow the slack application to get or post one.
+Visit <strong>Features &gt; OAuth &amp; Permissions</strong> of the app dashboard. In the <code class="docutils literal notranslate"><span class="pre">Scopes</span></code> section, you have to add <code class="docutils literal notranslate"><span class="pre">channels:history</span></code>, <code class="docutils literal notranslate"><span class="pre">chat:write</span></code> as bot token scopes.
+Configuration is done for the app side. Now, install your app into your workspace by following <a class="reference external" href="https://slack.com/help/articles/202035138-Add-apps-to-your-Slack-workspace">this Slack guideline</a>.</p>
 </section>
 <section id="writing-the-code">
 <h2><strong>3️⃣ Writing the Code</strong><a class="headerlink" href="#writing-the-code" title="Link to this heading"></a></h2>
@@ -156,7 +149,8 @@ pip<span class="w"> </span>install<span class="w"> </span>langchain_openai
 <section id="step-1-import-required-modules">
 <h3><strong>Step 1: Import Required Modules</strong><a class="headerlink" href="#step-1-import-required-modules" title="Link to this heading"></a></h3>
 <p>Import the necessary libraries for integrating Hyperpocket and LangChain.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">secret</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">langchain.agents</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentExecutor</span><span class="p">,</span> <span class="n">create_tool_calling_agent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">langchain.memory</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationBufferMemory</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatPromptTemplate</span><span class="p">,</span> <span class="n">MessagesPlaceholder</span>
@@ -183,7 +177,7 @@ pip<span class="w"> </span>install<span class="w"> </span>langchain_openai
 <h3><strong>Step 3: Initialize OpenAI LLM</strong><a class="headerlink" href="#step-3-initialize-openai-llm" title="Link to this heading"></a></h3>
 <p>Configure the OpenAI language model (LLM) for use with LangChain.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize OpenAI LLM</span>
-<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">secret</span><span class="p">[</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">])</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">))</span>
 <span class="n">llm_with_tools</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">bind_tools</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -194,8 +188,8 @@ pip<span class="w"> </span>install<span class="w"> </span>langchain_openai
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the conversation prompt</span>
 <span class="n">prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_messages</span><span class="p">(</span>
     <span class="p">[</span>
-        <span class="p">(</span><span class="s2">&quot;placeholder&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{chat_history}</span><span class="s2">&quot;</span><span class="p">),</span>
         <span class="p">(</span><span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;You are a tool-calling assistant. You can help the user by calling proper tools.&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;placeholder&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{chat_history}</span><span class="s2">&quot;</span><span class="p">),</span>
         <span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{input}</span><span class="s2">&quot;</span><span class="p">),</span>
         <span class="n">MessagesPlaceholder</span><span class="p">(</span><span class="n">variable_name</span><span class="o">=</span><span class="s2">&quot;agent_scratchpad&quot;</span><span class="p">),</span>
     <span class="p">]</span>
@@ -229,11 +223,11 @@ pip<span class="w"> </span>install<span class="w"> </span>langchain_openai
 
 <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
     <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;user (q to quit): &quot;</span><span class="p">)</span>
-
+    
     <span class="k">if</span> <span class="n">user_input</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Goodbye!&quot;</span><span class="p">)</span>
         <span class="k">break</span>
-
+    
     <span class="n">response</span> <span class="o">=</span> <span class="n">agent_executor</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">user_input</span><span class="p">})</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;agent:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
     <span class="nb">print</span><span class="p">()</span>
@@ -267,56 +261,49 @@ pip<span class="w"> </span>install<span class="w"> </span>langchain_openai
 </section>
 <section id="example-usage">
 <h2><strong>5️⃣ Example Usage</strong><a class="headerlink" href="#example-usage" title="Link to this heading"></a></h2>
-<section id="step-1-set-up-slack-api-permissions">
-<h3>Step 1 : Set Up Slack API Permissions<a class="headerlink" href="#step-1-set-up-slack-api-permissions" title="Link to this heading"></a></h3>
-<p>Before using Slack-related functionalities, make sure your Slack app has the proper permissions to post and retrieve messages from channels. Follow these steps:</p>
-<ol class="arabic simple">
-<li><p>Go to the <a class="reference external" href="https://api.slack.com/">Slack API Dashboard</a>.</p></li>
-<li><p>Navigate to <strong>Your Apps</strong> and select your app.</p></li>
-<li><p>Under the <strong>OAuth &amp; Permissions</strong> section, ensure your app has the following scopes:</p></li>
-</ol>
-<ul class="simple">
-<li><p>channels:history (for retrieving messages)</p></li>
-<li><p>channels:write (for posting messages)</p></li>
-</ul>
-<ol class="arabic simple" start="4">
-<li><p>Save your changes and reinstall the app to apply the updated permissions.</p></li>
-</ol>
-</section>
-<section id="step2-authenticate-via-slack">
-<h3>Step2 : Authenticate via Slack<a class="headerlink" href="#step2-authenticate-via-slack" title="Link to this heading"></a></h3>
 <p>When entering a Slack-related query for the first time, the system will provide an authentication link. Follow these steps to authenticate:</p>
-<ol class="arabic simple">
+<ul class="simple">
 <li><p>Enter a query, such as retrieving or posting a message.</p></li>
-<li><p>The agent will respond with an <strong>authentication link</strong> in the form of a URL. Example:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>INFO:<span class="w">     </span><span class="m">127</span>.0.0.1:51151<span class="w"> </span>-<span class="w"> </span><span class="s2">&quot;GET /auth/slack/oauth2/callback?code=****&amp;state=**** HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
-</pre></div>
-</div>
-<ol class="arabic simple">
+<li><p>The agent will respond with an authentication link in the form of a URL. Example:</p></li>
 <li><p>Open the provided link in your browser and complete the authentication process.</p></li>
-<li><p>After authenticating, return to the interface and enter <strong>any message</strong> to confirm the setup. The agent will now be ready to perform Slack actions.</p></li>
-</ol>
-</section>
-<section id="example-commands">
-<h3><strong>Example Commands</strong><a class="headerlink" href="#example-commands" title="Link to this heading"></a></h3>
-<p><strong>Retrieve the Last Message from Slack Channel</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>user<span class="w"> </span><span class="o">(</span>q<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span><span class="w"> </span>:<span class="w"> </span>Retrieve<span class="w"> </span>the<span class="w"> </span>last<span class="w"> </span>message<span class="w"> </span>from<span class="w"> </span><span class="c1">#general</span>
-agent<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Please authenticate using this link: [Slack Authentication Link]&quot;</span>
-INFO:<span class="w">     </span><span class="m">127</span>.0.0.1:51151<span class="w"> </span>-<span class="w"> </span><span class="s2">&quot;GET /auth/slack/oauth2/callback?code=****&amp;state=**** HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
-user<span class="w"> </span><span class="o">(</span>q<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span><span class="w"> </span>:<span class="w"> </span>Okay
-agent<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;The last message in #general is: &#39;Hello, world!&#39;&quot;</span>
+<li><p>After authenticating, return to the interface and talk to your agent that you’ve done with the authentication. The agent will now be ready to perform Slack actions.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user(q to quit) : Get some slack messages from engr-test.
+
+&gt; Entering new AgentExecutor chain...
+
+Invoking: `slack_get_messages` with `{&#39;channel&#39;: &#39;engr-test&#39;, &#39;limit&#39;: 5}`
+
+
+redirect_uri: https://localhost:8001/proxy/auth/slack/oauth2/callback
+User needs to authenticate using the following URL: https://slack.com/oauth/v2/authorize?&lt;some url parameters&gt;
+
+The tool execution interrupted. Please talk to me to resume.It looks like you need to authenticate in order to access the Slack messages from the &quot;engr-test&quot; channel. Please [click here to authenticate with Slack](https://slack.com/oauth/v2/authorize?&lt;some url parameters&gt;). After you&#39;ve done that, let me know!
+
+&gt; Finished chain.
+slack agent :  It looks like you need to authenticate in order to access the Slack messages from the &quot;engr-test&quot; channel. Please [click here to authenticate with Slack](https://slack.com/oauth/v2/authorize?&lt;some url parameters&gt;). After you&#39;ve done that, let me know!
+
+user(q to quit) : I&#39;m done.
+
+&gt; Entering new AgentExecutor chain...
+
+Invoking: `slack_get_messages` with `{&#39;channel&#39;: &#39;engr-test&#39;, &#39;limit&#39;: 10}`
+
+&gt; Finished chain.
+slack agent :  Here are some recent messages from the &quot;engr-test&quot; Slack channel:
+
+1. **User Message:**
+   - **User:** ASDFASDF
+   - **Text:** &quot;Hey, the HyperPocket project is awesome!&quot;
+   - **Reactions:** :+1: (123 reactions)
+
+2. **User Message:**
+   - **User:** ASDFASDF2
+   - **Text:** &quot;Hey, it&#39;s so true!&quot;
+   - **Reactions:** :+1: (456 reactions)
+...
 </pre></div>
 </div>
-<p><strong>Post a message to Slack</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>user<span class="w"> </span><span class="o">(</span>q<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span><span class="w"> </span>:<span class="w"> </span>Post<span class="w"> </span><span class="s1">&#39;Good morning&#39;</span><span class="w"> </span>to<span class="w"> </span><span class="c1">#random</span>
-agent<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Please authenticate using this link: [Slack Authentication Link]&quot;</span>
-INFO:<span class="w">     </span><span class="m">127</span>.0.0.1:51149<span class="w"> </span>-<span class="w"> </span><span class="s2">&quot;GET /auth/slack/oauth2/callback?code=****&amp;state=**** HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
-user<span class="w"> </span><span class="o">(</span>q<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span><span class="w"> </span>:<span class="w"> </span>Okay
-agent<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Message successfully posted to #random&quot;</span>
-</pre></div>
-</div>
-</section>
 </section>
 <section id="full-code">
 <h2>Full code<a class="headerlink" href="#full-code" title="Link to this heading"></a></h2>
