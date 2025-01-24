@@ -76,42 +76,24 @@
              
   <section id="hyperpocket-docs">
 <h1>Hyperpocket Docs<a class="headerlink" href="#hyperpocket-docs" title="Link to this heading"></a></h1>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<p>Install dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>sync
+</pre></div>
+</div>
+</section>
 <section id="how-to-add-new-document">
 <h2>How To Add New Document<a class="headerlink" href="#how-to-add-new-document" title="Link to this heading"></a></h2>
 <p>Follow these steps to add a new document to HyperPocket Docs:</p>
 <ol class="arabic simple">
-<li><p>Add the new md file to the managed directory.</p></li>
-<li><p>Update the <code class="docutils literal notranslate"><span class="pre">_templates/autoapi/index.rst</span></code> file by adding a reference to the new document. For example:</p></li>
+<li><p>Add the new md file to the wanted directory.</p></li>
+<li><p>Add to <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> in the relevant directory.</p></li>
+<li><p>Build and preview the docs:</p></li>
 </ol>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Introduction
-============
-
-This is hyperpocket.
-
-.. toctree::
-   :hidden:
-
-   Getting Started &lt;/autoapi/managed/getting_started.md&gt;
-   Conceptual Guide &lt;/autoapi/managed/conceptual_guide.md&gt;
-   Quick Start &lt;/autoapi/managed/quick_start.md&gt;
-   API Reference &lt;/autoapi/hyperpocket/index&gt;
-
-    &lt;-- Add Hear --&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>make<span class="w"> </span>preview
 </pre></div>
 </div>
-<ol class="arabic simple" start="3">
-<li><p>Submit a pull request for your changes.</p></li>
-<li><p>Once reviewed, merge the pull request into the main branch.</p></li>
-</ol>
-</section>
-<section id="how-to-edit-existing-document">
-<h2>How To Edit Existing Document<a class="headerlink" href="#how-to-edit-existing-document" title="Link to this heading"></a></h2>
-<p>To update an existing document:</p>
-<ol class="arabic simple">
-<li><p>Edit the relevant file in the managed directory.</p></li>
-<li><p>Submit a pull request for your changes.</p></li>
-<li><p>After review, merge the pull request into the main branch.</p></li>
-</ol>
 </section>
 </section>
 

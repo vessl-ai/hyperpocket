@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tool interfaces &mdash; Hyperpocket  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Auth" href="../auth/index.html" />
+    <link rel="prev" title="Using Local Tools" href="using-local-tools.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Hyperpocket
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="what-are-tools.html">What are tools?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration-from-github.html">Integration from Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-function-tools.html">Using Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-local-tools.html">Using Local Tools</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tool interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#git-tools-and-local-tools">Git Tools and Local Tools</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example-create-issue-github-tool-in-hyperpocket">Example: <code class="docutils literal notranslate"><span class="pre">create-issue</span></code> github tool in hyperpocket</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#function-tools">Function Tools</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example-list-gmail-function-tool">Example: <code class="docutils literal notranslate"><span class="pre">list_gmail</span></code> function tool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Input and Output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authentication-data">Authentication data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auth/index.html">Auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../supported-frameworks/index.html">Supported frameworks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute/index.html">Contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/libs/index.html">API References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Hyperpocket</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Tools</a></li>
+      <li class="breadcrumb-item active">Tool interfaces</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/vessl-ai/hyperpocket/blob/main/docs/hyperpocket/tools/tool-interfaces.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tool-interfaces">
+<h1>Tool interfaces<a class="headerlink" href="#tool-interfaces" title="Link to this heading"></a></h1>
+<section id="git-tools-and-local-tools">
+<h2>Git Tools and Local Tools<a class="headerlink" href="#git-tools-and-local-tools" title="Link to this heading"></a></h2>
+<p>The two types of tools are implemented in same way, similar as writing a python package.</p>
+<!-- TODO: Add directory structure -->
+<section id="example-create-issue-github-tool-in-hyperpocket">
+<h3>Example: <code class="docutils literal notranslate"><span class="pre">create-issue</span></code> github tool in hyperpocket<a class="headerlink" href="#example-create-issue-github-tool-in-hyperpocket" title="Link to this heading"></a></h3>
+<p>source: <a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/create-issue">tools/github/create-issue</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># tools/github/create-issue/create-issue/__main__.py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">github</span><span class="w"> </span><span class="kn">import</span> <span class="n">Auth</span><span class="p">,</span> <span class="n">Github</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">github.GithubObject</span><span class="w"> </span><span class="kn">import</span> <span class="n">NotSet</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">GithubCreateIssueRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">owner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The owner of the repository&quot;</span><span class="p">)</span>
+    <span class="n">repo</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The name of the repository&quot;</span><span class="p">)</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The title of the issue&quot;</span><span class="p">)</span>
+    <span class="n">body</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The body of the issue&quot;</span><span class="p">)</span>
+    <span class="n">assignee</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The assignee of the issue&quot;</span><span class="p">)</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The labels of the issue&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_issue</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">GithubCreateIssueRequest</span><span class="p">):</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;GITHUB_TOKEN&quot;</span><span class="p">)</span>
+    <span class="n">github</span> <span class="o">=</span> <span class="n">Github</span><span class="p">(</span><span class="n">auth</span><span class="o">=</span><span class="n">Auth</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
+
+    <span class="n">body</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">body</span> <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">body</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">NotSet</span>
+    <span class="n">assignee</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">assignee</span> <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">assignee</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">NotSet</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">labels</span> <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">NotSet</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="n">github</span><span class="o">.</span><span class="n">get_repo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">req</span><span class="o">.</span><span class="n">owner</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">req</span><span class="o">.</span><span class="n">repo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">create_issue</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+        <span class="n">assignee</span><span class="o">=</span><span class="n">assignee</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">raw_data</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
+    <span class="n">req_typed</span> <span class="o">=</span> <span class="n">GithubCreateIssueRequest</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">create_issue</span><span class="p">(</span><span class="n">req_typed</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="c1"># tools/github/create-issue/create-issue/config.toml</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;github_create_issue&quot;</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Create a GitHub issue&quot;</span>
+<span class="n">language</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;python&quot;</span>
+
+<span class="k">[auth]</span>
+<span class="n">auth_provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;github&quot;</span>
+<span class="n">scopes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;repo&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<section id="input-and-output">
+<h4>Input and Output<a class="headerlink" href="#input-and-output" title="Link to this heading"></a></h4>
+<p>Input is fed from stdin.
+You should return output to stdout.</p>
+</section>
+<section id="using-passed-authentication-token">
+<h4>Using passed authentication token<a class="headerlink" href="#using-passed-authentication-token" title="Link to this heading"></a></h4>
+<p>Authentication resulting token is provided through environment variable. In this case, <code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code>.</p>
+<p>For each auth provider, the key name is different. (See <a class="reference external" href="https://vessl-ai.github.io/hyperpocket/auth/index.html">Auth</a> for more details.)</p>
+<!-- TODO: Add ToolVar example -->
+</section>
+</section>
+</section>
+<section id="function-tools">
+<h2>Function Tools<a class="headerlink" href="#function-tools" title="Link to this heading"></a></h2>
+<p>Function Tools are just python functions with authentication data supplied through <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<section id="example-list-gmail-function-tool">
+<h3>Example: <code class="docutils literal notranslate"><span class="pre">list_gmail</span></code> function tool<a class="headerlink" href="#example-list-gmail-function-tool" title="Link to this heading"></a></h3>
+<p>source: <a class="reference external" href="https://github.com/vessl-ai/hyperpocket/blob/main/examples/openai/personal-email-summarizer/personal_email_summarizer/main.py#L254">examples/openai/personal-email-summarizer#L254</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@function_tool</span><span class="p">(</span>
+    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">GOOGLE</span><span class="p">,</span>
+    <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;https://www.googleapis.com/auth/gmail.readonly&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_gmail</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List gmail with gmail query</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        q(str) : gmail query, see https://support.google.com/mail/answer/7190?hl=en</span>
+<span class="sd">                 call get_gmail_query_definition to get the definition of gmail query</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;GOOGLE_TOKEN&quot;</span><span class="p">]</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;https://gmail.googleapis.com/gmail/v1/users/me/messages&quot;</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;failed to get mail list. error : </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h3>Input and Output<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>Input and output are passed as function arguments and return values.</p>
+</section>
+<section id="authentication-data">
+<h3>Authentication data<a class="headerlink" href="#authentication-data" title="Link to this heading"></a></h3>
+<p>Authentication data is passed as keyword arguments. For the example above, the <code class="docutils literal notranslate"><span class="pre">GOOGLE_TOKEN</span></code> is passed as a keyword argument.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="nd">@function_tool</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_tool</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="n">token</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;GOOGLE_TOKEN&quot;</span><span class="p">]</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>For each auth provider, the key name is different. (See <a class="reference external" href="https://vessl-ai.github.io/hyperpocket/auth/index.html">Auth</a> for more details.)</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="using-local-tools.html" class="btn btn-neutral float-left" title="Using Local Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../auth/index.html" class="btn btn-neutral float-right" title="Auth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, VESSL AI Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
