@@ -12,5 +12,5 @@ Hyperpocket
    tools/index
    auth/index
    supported-frameworks/index
-   contribute/index
+   Contributing <contribute/contribute-to-hyperpocket>
    API References </autoapi/libs/index>
