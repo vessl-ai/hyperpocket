@@ -10,7 +10,8 @@ Attributes
 
 .. autoapisummary::
 
-   libs.hyperpocket.hyperpocket.config.settings.pocket_root
+   libs.hyperpocket.hyperpocket.config.settings.POCKET_ROOT
+   libs.hyperpocket.hyperpocket.config.settings.SETTING_ROOT
    libs.hyperpocket.hyperpocket.config.settings.settings_path
    libs.hyperpocket.hyperpocket.config.settings.secret_path
    libs.hyperpocket.hyperpocket.config.settings.toolpkg_path
@@ -29,7 +30,9 @@ Classes
 Module Contents
 ---------------
 
-.. py:data:: pocket_root
+.. py:data:: POCKET_ROOT
+
+.. py:data:: SETTING_ROOT
 
 .. py:data:: settings_path
 
