@@ -85,7 +85,7 @@ Module Contents
 
    .. py:attribute:: log_level
       :type:  str
-      :value: 'INFO'
+      :value: 'info'
 
 
 
