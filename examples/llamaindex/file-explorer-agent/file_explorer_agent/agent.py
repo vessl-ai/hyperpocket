@@ -12,7 +12,7 @@ def build():
     llm = OpenAI(api_key=secret["OPENAI_API_KEY"])
     pocket = PocketLlamaindex(
         tools=[
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
             *from_dock(fileio_dock()),
         ]
     )
