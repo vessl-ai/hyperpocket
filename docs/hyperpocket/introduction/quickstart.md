@@ -6,7 +6,7 @@ This guide will help you quickly set up **Hyperpocket** with **LangChain** to bu
 
 Before we begin, install the required dependencies.
 
-### Python Version
+**Python Version**
 
 python 3.10 to python 3.13 is required
 
