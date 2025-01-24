@@ -1,11 +1,11 @@
-import os
 import json
 import pathlib
 from typing import Any, Optional
 
 import toml
+
 from hyperpocket.auth import AuthProvider
-from hyperpocket.config import settings, pocket_logger
+from hyperpocket.config import pocket_logger
 from hyperpocket.repository import Lock, Lockfile
 from hyperpocket.repository.lock import GitLock, LocalLock
 from hyperpocket.tool import Tool, ToolRequest
@@ -26,15 +26,24 @@ class WasmToolRequest(ToolRequest):
     def __str__(self):
         return f"ToolRequest(lock={self.lock}, rel_path={self.rel_path})"
 
-def from_local(path: str, tool_vars: Optional[dict[str, str]] = None) -> WasmToolRequest:
+
+def from_local(
+    path: str, tool_vars: Optional[dict[str, str]] = None
+) -> WasmToolRequest:
     if tool_vars is None:
         tool_vars = dict()
     return WasmToolRequest(LocalLock(path), "", tool_vars)
 
-def from_git(repository: str, ref: str, rel_path: str, tool_vars: Optional[dict[str, str]] = None) -> WasmToolRequest:
+
+def from_git(
+    repository: str, ref: str, rel_path: str, tool_vars: Optional[dict[str, str]] = None
+) -> WasmToolRequest:
     if not tool_vars:
         tool_vars = dict()
-    return WasmToolRequest(GitLock(repository_url=repository, git_ref=ref), rel_path, tool_vars)
+    return WasmToolRequest(
+        GitLock(repository_url=repository, git_ref=ref), rel_path, tool_vars
+    )
+
 
 class WasmTool(Tool):
     """
@@ -55,7 +64,9 @@ class WasmTool(Tool):
         return self._invoker
 
     @classmethod
-    def from_tool_request(cls, tool_req: WasmToolRequest, lockfile: Lockfile = None, **kwargs) -> 'WasmTool':
+    def from_tool_request(
+        cls, tool_req: WasmToolRequest, lockfile: Lockfile = None, **kwargs
+    ) -> "WasmTool":
         if not lockfile:
             raise ValueError("lockfile is required")
         tool_req.lock = lockfile.get_lock(tool_req.lock.key())
@@ -70,20 +81,22 @@ class WasmTool(Tool):
             with schema_path.open("r") as f:
                 json_schema = json.load(f)
         except Exception as e:
-            pocket_logger.warning(f"{toolpkg_path} failed to load json schema. error : {e}")
+            pocket_logger.warning(
+                f"{toolpkg_path} failed to load json schema. error : {e}"
+            )
             json_schema = None
 
         default_tool_vars = dict()
         try:
             with config_path.open("r") as f:
                 config = toml.load(f)
-                name = config.get('name')
-                description = config.get('description')
-                if language := config.get('language'):
+                name = config.get("name")
+                description = config.get("description")
+                if language := config.get("language"):
                     lang = language.lower()
-                    if lang == 'python':
+                    if lang == "python":
                         runtime = ScriptRuntime.Python
-                    elif lang == 'node':
+                    elif lang == "node":
                         runtime = ScriptRuntime.Node
                     else:
                         raise ValueError(f"The language `{lang}` is not supported.")
@@ -99,7 +112,7 @@ class WasmTool(Tool):
                 readme = f.read()
         else:
             readme = None
-        
+
         return cls(
             name=name,
             description=description,
@@ -127,7 +140,7 @@ class WasmTool(Tool):
             auth_handler=auth_handler,
             scopes=scopes,
         )
-    
+
     def template_arguments(self) -> dict[str, str]:
         return {}
 

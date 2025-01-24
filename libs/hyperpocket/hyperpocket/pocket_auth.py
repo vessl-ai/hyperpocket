@@ -3,13 +3,13 @@ import enum
 import uuid
 from typing import Optional, Type
 
-from hyperpocket.auth import AuthProvider, PREBUILT_AUTH_HANDLERS
+from hyperpocket.auth import PREBUILT_AUTH_HANDLERS, AuthProvider
 from hyperpocket.auth.context import AuthContext
-from hyperpocket.auth.handler import AuthHandlerInterface, AuthenticateRequest
+from hyperpocket.auth.handler import AuthenticateRequest, AuthHandlerInterface
 from hyperpocket.config import config, pocket_logger
 from hyperpocket.futures import FutureStore
 from hyperpocket.session import SESSION_STORAGE_LIST
-from hyperpocket.session.interface import SessionStorageInterface, BaseSessionValue
+from hyperpocket.session.interface import BaseSessionValue, SessionStorageInterface
 
 
 class AuthState(enum.Enum):
@@ -26,10 +26,11 @@ class PocketAuth(object):
     session_storage: SessionStorageInterface
 
     def __init__(
-            self,
-            handlers: Optional[list[Type[AuthHandlerInterface]]] = None,
-            session_storage: Optional[SessionStorageInterface] = None,
-            use_prebuilt_handlers: bool = None):
+        self,
+        handlers: Optional[list[Type[AuthHandlerInterface]]] = None,
+        session_storage: Optional[SessionStorageInterface] = None,
+        use_prebuilt_handlers: bool = None,
+    ):
         if config().auth.use_prebuilt_auth or use_prebuilt_handlers:
             handlers = PREBUILT_AUTH_HANDLERS + (handlers or [])
         handler_impls = [C() for C in handlers] if handlers else []
@@ -39,20 +40,30 @@ class PocketAuth(object):
         else:
             for session_type in SESSION_STORAGE_LIST:
                 if session_type.session_storage_type() == config().session.session_type:
-                    session_config = getattr(config().session, config().session.session_type.value)
+                    session_config = getattr(
+                        config().session, config().session.session_type.value
+                    )
 
-                    pocket_logger.info(f"init {session_type.session_storage_type()} session storage..")
+                    pocket_logger.info(
+                        f"init {session_type.session_storage_type()} session storage.."
+                    )
                     self.session_storage = session_type(session_config)
 
             if self.session_storage is None:
-                pocket_logger.error(f"not supported session type({config().session.session_type})")
-                raise RuntimeError(f"Not Supported Session Type({config().session.session_type})")
+                pocket_logger.error(
+                    f"not supported session type({config().session.session_type})"
+                )
+                raise RuntimeError(
+                    f"Not Supported Session Type({config().session.session_type})"
+                )
 
-    def make_request(self,
-                     auth_scopes: list[str] = None,
-                     auth_handler_name: Optional[str] = None,
-                     auth_provider: Optional[AuthProvider] = None,
-                     **kwargs) -> AuthenticateRequest:
+    def make_request(
+        self,
+        auth_scopes: list[str] = None,
+        auth_handler_name: Optional[str] = None,
+        auth_provider: Optional[AuthProvider] = None,
+        **kwargs,
+    ) -> AuthenticateRequest:
         """
         Make AuthenticationRequest based on authentication handler.
 
@@ -67,14 +78,16 @@ class PocketAuth(object):
         handler = self.find_handler_instance(auth_handler_name, auth_provider)
         return handler.make_request(auth_scopes, **kwargs)
 
-    def check(self,
-              auth_req: AuthenticateRequest,
-              auth_handler_name: Optional[str] = None,
-              auth_provider: Optional[AuthProvider] = None,
-              thread_id: str = "default",
-              profile: str = 'default',
-              *args, **kwargs
-              ) -> AuthState:
+    def check(
+        self,
+        auth_req: AuthenticateRequest,
+        auth_handler_name: Optional[str] = None,
+        auth_provider: Optional[AuthProvider] = None,
+        thread_id: str = "default",
+        profile: str = "default",
+        *args,
+        **kwargs,
+    ) -> AuthState:
         """
         Check current authentication state.
 
@@ -104,7 +117,9 @@ class PocketAuth(object):
         return auth_state
 
     @staticmethod
-    def get_session_state(session: Optional[BaseSessionValue], auth_req: Optional[AuthenticateRequest]) -> AuthState:
+    def get_session_state(
+        session: Optional[BaseSessionValue], auth_req: Optional[AuthenticateRequest]
+    ) -> AuthState:
         if not session:
             return AuthState.NO_SESSION
 
@@ -115,8 +130,9 @@ class PocketAuth(object):
 
             return AuthState.PENDING_RESOLVE
 
-        if auth_req is not None and not session.is_auth_applicable(auth_provider_name=session.auth_provider_name,
-                                                                   auth_req=auth_req):
+        if auth_req is not None and not session.is_auth_applicable(
+            auth_provider_name=session.auth_provider_name, auth_req=auth_req
+        ):
             return AuthState.DO_AUTH
 
         if session.is_near_expires():
@@ -124,13 +140,15 @@ class PocketAuth(object):
 
         return AuthState.SKIP_AUTH
 
-    def prepare(self,
-                auth_req: AuthenticateRequest,
-                auth_handler_name: Optional[str] = None,
-                auth_provider: Optional[AuthProvider] = None,
-                thread_id: str = "default",
-                profile: str = 'default',
-                **kwargs) -> Optional[str]:
+    def prepare(
+        self,
+        auth_req: AuthenticateRequest,
+        auth_handler_name: Optional[str] = None,
+        auth_provider: Optional[AuthProvider] = None,
+        thread_id: str = "default",
+        profile: str = "default",
+        **kwargs,
+    ) -> Optional[str]:
         """
         Prepare authentication.
 
@@ -158,8 +176,13 @@ class PocketAuth(object):
         )
 
         pocket_logger.debug(
-            f"[thread_id({thread_id}):profile({profile})] {auth_provider.name} provider current auth state in prepare : {auth_state}")
-        if auth_state in [AuthState.SKIP_AUTH, AuthState.DO_REFRESH, AuthState.RESOLVED]:
+            f"[thread_id({thread_id}):profile({profile})] {auth_provider.name} provider current auth state in prepare : {auth_state}"
+        )
+        if auth_state in [
+            AuthState.SKIP_AUTH,
+            AuthState.DO_REFRESH,
+            AuthState.RESOLVED,
+        ]:
             return None
 
         handler = self.find_handler_instance(auth_handler_name, auth_provider)
@@ -168,12 +191,13 @@ class PocketAuth(object):
         if session:
             scope = scope.union(session.auth_scopes)
 
-        modified_req = auth_req.model_copy(update={'auth_scopes': scope})
+        modified_req = auth_req.model_copy(update={"auth_scopes": scope})
 
         # session in pending
         if session and session.auth_resolve_uid:
             pocket_logger.debug(
-                f"[thread_id({thread_id}):profile({profile})] already exists pending session(auth_resolve_uid:{session.auth_resolve_uid}).")
+                f"[thread_id({thread_id}):profile({profile})] already exists pending session(auth_resolve_uid:{session.auth_resolve_uid})."
+            )
             future_uid = session.auth_resolve_uid
 
             # update session, in case of requesting new scopes before session pending resolved.
@@ -182,7 +206,7 @@ class PocketAuth(object):
                 future_uid=session.auth_resolve_uid,
                 profile=profile,
                 thread_id=thread_id,
-                scope=scope
+                scope=scope,
             )
         else:  # create new pending session
             future_uid = str(uuid.uuid4())
@@ -191,25 +215,34 @@ class PocketAuth(object):
                 future_uid=future_uid,
                 profile=profile,
                 thread_id=thread_id,
-                scope=scope)
+                scope=scope,
+            )
 
             pocket_logger.debug(
-                f"[thread_id({thread_id}):profile({profile})] create new pending session(auth_resolve_uid:{future_uid}).")
-            asyncio.create_task(self._check_session_pending_resolved(handler, thread_id, profile))
+                f"[thread_id({thread_id}):profile({profile})] create new pending session(auth_resolve_uid:{future_uid})."
+            )
+            asyncio.create_task(
+                self._check_session_pending_resolved(handler, thread_id, profile)
+            )
 
-        prepare_url = handler.prepare(modified_req, thread_id, profile, future_uid, **kwargs)
+        prepare_url = handler.prepare(
+            modified_req, thread_id, profile, future_uid, **kwargs
+        )
         pocket_logger.debug(
-            f"[thread_id({thread_id}):profile({profile})] auth_handler({auth_handler_name})'s prepare_url : {prepare_url}.")
+            f"[thread_id({thread_id}):profile({profile})] auth_handler({auth_handler_name})'s prepare_url : {prepare_url}."
+        )
 
         return prepare_url
 
-    async def authenticate_async(self,
-                                 auth_req: AuthenticateRequest,
-                                 auth_handler_name: Optional[str] = None,
-                                 auth_provider: Optional[AuthProvider] = None,
-                                 thread_id: str = "default",
-                                 profile: str = 'default',
-                                 **kwargs) -> AuthContext:
+    async def authenticate_async(
+        self,
+        auth_req: AuthenticateRequest,
+        auth_handler_name: Optional[str] = None,
+        auth_provider: Optional[AuthProvider] = None,
+        thread_id: str = "default",
+        profile: str = "default",
+        **kwargs,
+    ) -> AuthContext:
         """
         Performing authentication.
         It is performing authentication. and save the session in session storage.
@@ -243,42 +276,61 @@ class PocketAuth(object):
         session = self.session_storage.get(handler.provider(), thread_id, profile)
         if session is None:
             pocket_logger.warning(
-                f"[thread_id({thread_id}):profile({profile})] Session can't find. session should exist in 'authenticate'.")
+                f"[thread_id({thread_id}):profile({profile})] Session can't find. session should exist in 'authenticate'."
+            )
             raise RuntimeError(
-                f"[thread_id({thread_id}):profile({profile})] Session can't find. session should exist in 'authenticate'.")
+                f"[thread_id({thread_id}):profile({profile})] Session can't find. session should exist in 'authenticate'."
+            )
 
         pocket_logger.debug(
-            f"[thread_id({thread_id}):profile({profile})] auth_handler({auth_handler_name})'s auth state : {auth_state}")
+            f"[thread_id({thread_id}):profile({profile})] auth_handler({auth_handler_name})'s auth state : {auth_state}"
+        )
         try:
             if auth_state == AuthState.SKIP_AUTH:
                 context = session.auth_context
             elif auth_state == AuthState.DO_REFRESH:
                 try:
                     context = await asyncio.wait_for(
-                        handler.refresh(auth_req=auth_req, context=session.auth_context, **kwargs), timeout=300)
+                        handler.refresh(
+                            auth_req=auth_req, context=session.auth_context, **kwargs
+                        ),
+                        timeout=300,
+                    )
                 except Exception as e:
                     self.session_storage.delete(handler.provider(), thread_id, profile)
                     FutureStore.delete_future(session.auth_resolve_uid)
 
                     pocket_logger.warning(
-                        f"[thread_id({thread_id}):profile({profile})] auth_handler({auth_handler_name}) failed to refresh the token.")
-                    raise RuntimeError("Failed to refresh the token. Please re-authenticate.") from e
-            elif auth_state == AuthState.PENDING_RESOLVE or auth_state == AuthState.RESOLVED:
+                        f"[thread_id({thread_id}):profile({profile})] auth_handler({auth_handler_name}) failed to refresh the token."
+                    )
+                    raise RuntimeError(
+                        "Failed to refresh the token. Please re-authenticate."
+                    ) from e
+            elif (
+                auth_state == AuthState.PENDING_RESOLVE
+                or auth_state == AuthState.RESOLVED
+            ):
                 future_uid = session.auth_resolve_uid
                 context = await asyncio.wait_for(
-                    handler.authenticate(auth_req=auth_req, future_uid=future_uid, **kwargs), timeout=300)
+                    handler.authenticate(
+                        auth_req=auth_req, future_uid=future_uid, **kwargs
+                    ),
+                    timeout=300,
+                )
             else:
                 # maybe auth_state is either AuthState.NO_SESSION or AuthState.DO_AUTH
                 pocket_logger.warning(
-                    f"[thread_id({thread_id}):profile({profile})] Invalid State. 'authenticate' cannot be reached while in state {auth_state}")
+                    f"[thread_id({thread_id}):profile({profile})] Invalid State. 'authenticate' cannot be reached while in state {auth_state}"
+                )
                 raise RuntimeError(
-                    f"[thread_id({thread_id}):profile({profile})] Invalid State. 'authenticate' cannot be reached while in state {auth_state}")
+                    f"[thread_id({thread_id}):profile({profile})] Invalid State. 'authenticate' cannot be reached while in state {auth_state}"
+                )
 
             session = await self._set_session_active(
                 context=context,
                 provider=handler.provider(),
                 profile=profile,
-                thread_id=thread_id
+                thread_id=thread_id,
             )
 
             return session.auth_context
@@ -288,33 +340,50 @@ class PocketAuth(object):
             FutureStore.delete_future(session.auth_resolve_uid)
             raise e
 
-    def get_auth_context(self, auth_provider: AuthProvider, thread_id: str = "default", profile: str = "default",
-                         **kwargs) -> Optional[AuthContext]:
+    def get_auth_context(
+        self,
+        auth_provider: AuthProvider,
+        thread_id: str = "default",
+        profile: str = "default",
+        **kwargs,
+    ) -> Optional[AuthContext]:
         session = self.session_storage.get(auth_provider, thread_id, profile, **kwargs)
         if session is None:
             return None
 
         return session.auth_context
 
-    def list_session_state(self, thread_id: str, auth_provider: Optional[AuthProvider] = None):
-        session_list = self.session_storage.get_by_thread_id(thread_id=thread_id, auth_provider=auth_provider)
+    def list_session_state(
+        self, thread_id: str, auth_provider: Optional[AuthProvider] = None
+    ):
+        session_list = self.session_storage.get_by_thread_id(
+            thread_id=thread_id, auth_provider=auth_provider
+        )
         session_state_list = []
         for session in session_list:
             state = self.get_session_state(session=session, auth_req=None)
 
-            session_state_list.append({
-                "provider": session.auth_provider_name,
-                "scope": session.auth_scopes,
-                "state": state,
-            })
+            session_state_list.append(
+                {
+                    "provider": session.auth_provider_name,
+                    "scope": session.auth_scopes,
+                    "state": state,
+                }
+            )
 
         return session_state_list
 
-    def delete_session(self, auth_provider: AuthProvider, thread_id: str = "default", profile: str = "default") -> bool:
+    def delete_session(
+        self,
+        auth_provider: AuthProvider,
+        thread_id: str = "default",
+        profile: str = "default",
+    ) -> bool:
         return self.session_storage.delete(auth_provider, thread_id, profile)
 
-    def find_handler_instance(self, name: Optional[str] = None,
-                              auth_provider: Optional[AuthProvider] = None) -> AuthHandlerInterface:
+    def find_handler_instance(
+        self, name: Optional[str] = None, auth_provider: Optional[AuthProvider] = None
+    ) -> AuthHandlerInterface:
         if name:
             return self.handlers[name]
         if auth_provider:
@@ -323,19 +392,35 @@ class PocketAuth(object):
                     return handler
         raise ValueError("No handler found")
 
-    async def _check_session_pending_resolved(self, auth_handler: AuthHandlerInterface, thread_id: str = "default",
-                                              profile: str = "default", timeout_seconds=300, **kwargs):
+    async def _check_session_pending_resolved(
+        self,
+        auth_handler: AuthHandlerInterface,
+        thread_id: str = "default",
+        profile: str = "default",
+        timeout_seconds=300,
+        **kwargs,
+    ):
         await asyncio.sleep(timeout_seconds)
-        session = self.session_storage.get(auth_handler.provider(), thread_id, profile, **kwargs)
+        session = self.session_storage.get(
+            auth_handler.provider(), thread_id, profile, **kwargs
+        )
         if session.auth_resolve_uid is not None:
-            pocket_logger.info(f"session({session.auth_resolve_uid}) is not resolved yet and timeout. remove session")
+            pocket_logger.info(
+                f"session({session.auth_resolve_uid}) is not resolved yet and timeout. remove session"
+            )
             self.delete_session(auth_handler.provider(), thread_id, profile)
             FutureStore.delete_future(session.auth_resolve_uid)
 
         return
 
     def _upsert_pending_session(
-            self, auth_handler: AuthHandlerInterface, future_uid: str, profile: str, thread_id: str, scope: set[str]):
+        self,
+        auth_handler: AuthHandlerInterface,
+        future_uid: str,
+        profile: str,
+        thread_id: str,
+        scope: set[str],
+    ):
         return self.session_storage.set(
             auth_provider=auth_handler.provider(),
             thread_id=thread_id,
@@ -346,7 +431,9 @@ class PocketAuth(object):
             auth_resolve_uid=future_uid,
         )
 
-    async def _set_session_active(self, context: AuthContext, provider: AuthProvider, profile: str, thread_id: str):
+    async def _set_session_active(
+        self, context: AuthContext, provider: AuthProvider, profile: str, thread_id: str
+    ):
         session = self.session_storage.get(provider, thread_id, profile)
         if session is None:
             pocket_logger.error("the session to be active doesn't exist.")

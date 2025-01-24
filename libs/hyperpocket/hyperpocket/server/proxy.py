@@ -15,12 +15,17 @@ async def proxy(request: Request, path: str):
             params=request.query_params,
             timeout=300,
         )
-        return HTMLResponse(content=resp.text, headers=resp.headers, status_code=resp.status_code)
+        return HTMLResponse(
+            content=resp.text, headers=resp.headers, status_code=resp.status_code
+        )
 
 
 def add_callback_proxy(app: FastAPI):
-    app.add_api_route(f"/{config().callback_url_rewrite_prefix}/{{path:path}}", proxy,
-                      methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+    app.add_api_route(
+        f"/{config().callback_url_rewrite_prefix}/{{path:path}}",
+        proxy,
+        methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    )
 
 
 https_proxy_app = None
@@ -44,20 +49,31 @@ def _generate_ssl_certificates(ssl_keypath, ssl_certpath):
         "/emailAddress=local@example.com"
     )
     command = [
-        "openssl", "req", "-x509",
-        "-newkey", "rsa:4096",
-        "-keyout", ssl_keypath,
-        "-out", ssl_certpath,
-        "-days", "1",
+        "openssl",
+        "req",
+        "-x509",
+        "-newkey",
+        "rsa:4096",
+        "-keyout",
+        ssl_keypath,
+        "-out",
+        ssl_certpath,
+        "-days",
+        "1",
         "-nodes",
-        '-subj', subj,
+        "-subj",
+        subj,
         "-sha256",
     ]
 
     try:
         # 명령 실행
-        subprocess.run(command, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        pocket_logger.info("SSL Certificates generated: callback_server.key, callback_server.crt")
+        subprocess.run(
+            command, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+        )
+        pocket_logger.info(
+            "SSL Certificates generated: callback_server.key, callback_server.crt"
+        )
     except subprocess.CalledProcessError as e:
         pocket_logger.warning(f"An error occurred while generating certificates: {e}")
         raise e

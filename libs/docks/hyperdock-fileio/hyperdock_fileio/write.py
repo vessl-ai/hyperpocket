@@ -9,7 +9,7 @@ def write_text_to_file(
     file_path: str,
     content: str,
     make_dirs: bool = False,
-    append: bool = False,   
+    append: bool = False,
     encoding: Optional[str] = None,
 ) -> str:
     """
@@ -28,20 +28,21 @@ def write_text_to_file(
     path = pathlib.Path(file_path)
     if make_dirs:
         path.parent.mkdir(parents=True, exist_ok=True)
-    flag = 'w'
+    flag = "w"
     if append:
         if path.exists():
-            with open(path, 'rb') as file:
-                encoding = detect(file.read(1024)).get('encoding')
-            flag = 'a'
+            with open(path, "rb") as file:
+                encoding = detect(file.read(1024)).get("encoding")
+            flag = "a"
         else:
-            flag = 'w'
+            flag = "w"
     try:
         with open(path, mode=flag, encoding=encoding) as file:
             file.write(content)
-        return f'{len(content)} letters written to {file_path}'
+        return f"{len(content)} letters written to {file_path}"
     except UnicodeEncodeError:
-        raise ValueError('Failed to encode the content.')
+        raise ValueError("Failed to encode the content.")
+
 
 def write_base64_bytes_to_file(
     file_path: str,
@@ -64,8 +65,8 @@ def write_base64_bytes_to_file(
     path = pathlib.Path(file_path)
     if make_dirs:
         path.parent.mkdir(parents=True, exist_ok=True)
-    flag = 'ab' if append else 'wb'
+    flag = "ab" if append else "wb"
     decoded_bytes = b64decode(base64_content)
     with open(path, flag) as file:
         file.write(decoded_bytes)
-    return f'{len(decoded_bytes)} bytes written to {file_path}'
+    return f"{len(decoded_bytes)} bytes written to {file_path}"

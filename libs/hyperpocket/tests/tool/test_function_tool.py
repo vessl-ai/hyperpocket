@@ -9,7 +9,6 @@ from hyperpocket.util.flatten_json_schema import flatten_json_schema
 
 
 class TestFunctionTool(TestCase):
-
     def test_function_tool_call(self):
         # given
         @function_tool
@@ -22,68 +21,68 @@ class TestFunctionTool(TestCase):
             return a + b
 
         # when
-        result = add_numbers.invoke(body={
-            "a": 1,
-            "b": 2
-        })
+        result = add_numbers.invoke(body={"a": 1, "b": 2})
 
         # then
-        self.assertEqual(result, '3')
-    
+        self.assertEqual(result, "3")
+
     def test_function_tool_variables(self):
         @function_tool(
             tool_vars={
-                'a': '1',
-                'b': '2',
+                "a": "1",
+                "b": "2",
             },
         )
         def always_three(**kwargs):
-            a = int(kwargs['a'])
-            b = int(kwargs['b'])
-            return str(a+b)
-        
-        result = always_three.invoke(
-            body={}
-        )
-        self.assertEqual(result, '3')
+            a = int(kwargs["a"])
+            b = int(kwargs["b"])
+            return str(a + b)
+
+        result = always_three.invoke(body={})
+        self.assertEqual(result, "3")
 
     def test_function_tool_overridden_variables(self):
         @function_tool(
             tool_vars={
-                'a': '1',
-                'b': '1',
+                "a": "1",
+                "b": "1",
             },
         )
         def always_two(**kwargs):
-            a = int(kwargs['a'])
-            b = int(kwargs['b'])
-            return str(a+b)
-        
-        always_two.override_tool_variables({
-            'a': '1',
-            'b': '2',
-        })
+            a = int(kwargs["a"])
+            b = int(kwargs["b"])
+            return str(a + b)
+
+        always_two.override_tool_variables(
+            {
+                "a": "1",
+                "b": "2",
+            }
+        )
         result = always_two.invoke(body={})
-        self.assertEqual(result, '3')
-    
+        self.assertEqual(result, "3")
+
     def test_function_tool_overridden_variables_from_func(self):
         @function_tool(
             tool_vars={
-                'a': '1',
-                'b': '1',
+                "a": "1",
+                "b": "1",
             },
         )
         def always_two(**kwargs):
-            a = int(kwargs['a'])
-            b = int(kwargs['b'])
-            return str(a+b)
-        
-        tool = FunctionTool.from_func(always_two, tool_vars={
-            "a": "1",
-            "b": "2",
-        })
+            a = int(kwargs["a"])
+            b = int(kwargs["b"])
+            return str(a + b)
+
+        tool = FunctionTool.from_func(
+            always_two,
+            tool_vars={
+                "a": "1",
+                "b": "2",
+            },
+        )
         result = tool.invoke(body={})
-        self.assertEqual(result, '3')
+        self.assertEqual(result, "3")
 
     def test_pydantic_input_function_tool_call(self):
         # given
@@ -103,17 +102,17 @@ class TestFunctionTool(TestCase):
             return a.first + b.second
 
         # when
-        result = add_numbers.invoke(body={
-            "a": {
-                "first": 1,
-            },
-            "b": {
-                "second": 2
+        result = add_numbers.invoke(
+            body={
+                "a": {
+                    "first": 1,
+                },
+                "b": {"second": 2},
             }
-        })
+        )
 
         # then
-        self.assertEqual(result, '3')
+        self.assertEqual(result, "3")
 
     def test_register_no_auth_no_init_func_case(self):
         """
@@ -130,14 +129,11 @@ class TestFunctionTool(TestCase):
             return a + b
 
         # when
-        result = add_numbers.invoke(body={
-            "a": 1,
-            "b": 2
-        })
+        result = add_numbers.invoke(body={"a": 1, "b": 2})
 
         # then
         self.assertIsInstance(add_numbers, FunctionTool)
-        self.assertEqual(result, '3')
+        self.assertEqual(result, "3")
 
     def test_register_no_auth_init_func_case(self):
         """
@@ -154,14 +150,11 @@ class TestFunctionTool(TestCase):
             return a + b
 
         # when
-        result = add_numbers.invoke(body={
-            "a": 1,
-            "b": 2
-        })
+        result = add_numbers.invoke(body={"a": 1, "b": 2})
 
         # then
         self.assertIsInstance(add_numbers, FunctionTool)
-        self.assertEqual(result, '3')
+        self.assertEqual(result, "3")
 
     def test_register_auth_init_func_case(self):
         """
@@ -179,17 +172,13 @@ class TestFunctionTool(TestCase):
             return a + b
 
         # when
-        result = add_numbers.invoke(body={
-            "a": 1,
-            "b": 2
-        },
-            envs={
-                "SLACK_BOT_TOKEN": "test"
-            })
+        result = add_numbers.invoke(
+            body={"a": 1, "b": 2}, envs={"SLACK_BOT_TOKEN": "test"}
+        )
 
         # then
         self.assertIsInstance(add_numbers, FunctionTool)
-        self.assertEqual(result, '3')
+        self.assertEqual(result, "3")
 
     def test_google_style_docstring_parsing(self):
         """

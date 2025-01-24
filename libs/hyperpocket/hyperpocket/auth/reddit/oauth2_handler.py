@@ -1,7 +1,6 @@
 import base64
-from os import access
 from typing import Optional
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urlencode, urljoin
 
 import httpx
 
@@ -10,8 +9,8 @@ from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.handler import AuthHandlerInterface
 from hyperpocket.auth.reddit.oauth2_context import RedditOAuth2AuthContext
 from hyperpocket.auth.reddit.oauth2_schema import (
-    RedditOAuth2Response,
     RedditOAuth2Request,
+    RedditOAuth2Response,
 )
 from hyperpocket.config import config as config
 from hyperpocket.futures import FutureStore

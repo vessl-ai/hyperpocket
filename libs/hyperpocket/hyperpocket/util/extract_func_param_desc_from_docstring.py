@@ -25,13 +25,17 @@ def extract_param_docstring_mapping(func) -> dict[str, str]:
 
     param_mapping = extract_param_desc_by_google_stype_docstring(docstring, func_params)
     if param_mapping:
-        pocket_logger.debug(f"success extract docstring of {func.__name__} by google style!")
+        pocket_logger.debug(
+            f"success extract docstring of {func.__name__} by google style!"
+        )
         return param_mapping
     pocket_logger.debug(f"not found param desc of {func.__name__} by google style..")
 
     param_mapping = extract_param_desc_by_other_styles(docstring, func_params)
     if param_mapping:
-        pocket_logger.debug(f"success extract docstring of {func.__name__} by other style!")
+        pocket_logger.debug(
+            f"success extract docstring of {func.__name__} by other style!"
+        )
         return param_mapping
     pocket_logger.debug(f"not found param desc of {func.__name__} by other styles..")
 
@@ -50,7 +54,9 @@ def extract_param_docstring_mapping(func) -> dict[str, str]:
             param_descriptions.append((cleaned_param_name, description))
 
     # Ensure no duplicates and match with function parameters
-    param_mapping = {param: desc for param, desc in param_descriptions if param in func_params}
+    param_mapping = {
+        param: desc for param, desc in param_descriptions if param in func_params
+    }
     pocket_logger.debug(f"final param_mapping of {func.__name__} : {param_mapping}")
 
     return param_mapping
@@ -74,11 +80,15 @@ def extract_param_desc_by_other_styles(docstring, func_params) -> dict[str, str]
         cleaned_param = clean_bracket_content(param)
         param_descriptions.append((cleaned_param, desc.strip()))
     # Ensure no duplicates and match with function parameters
-    param_mapping = {param: desc for param, desc in param_descriptions if param in func_params}
+    param_mapping = {
+        param: desc for param, desc in param_descriptions if param in func_params
+    }
     return param_mapping
 
 
-def extract_param_desc_by_google_stype_docstring(docstring, func_params) -> dict[str, str]:
+def extract_param_desc_by_google_stype_docstring(
+    docstring, func_params
+) -> dict[str, str]:
     # Regex pattern to extract parameter descriptions in Google style
     param_pattern = r"Args:\n(.*?)(?=\n\S|$)"  # Matches the Args: section
     match = re.search(param_pattern, docstring, re.DOTALL)
@@ -90,11 +100,17 @@ def extract_param_desc_by_google_stype_docstring(docstring, func_params) -> dict
     param_descriptions = {}
     for line in param_lines:
         # Match parameter line with "name (type): description"
-        param_match = re.match(r"^[^a-zA-Z_]*([a-zA-Z_]\w*)\s*[\(\[]\s*(.*?)\s*[\)\]]\s*:\s*(.*)", line)
+        param_match = re.match(
+            r"^[^a-zA-Z_]*([a-zA-Z_]\w*)\s*[\(\[]\s*(.*?)\s*[\)\]]\s*:\s*(.*)", line
+        )
         if param_match:
             param, _, desc = param_match.groups()
             cleaned_param = clean_bracket_content(param)
             param_descriptions[cleaned_param] = desc.strip()
     # Match parameters to descriptions
-    param_mapping = {param: desc for param, desc in param_descriptions.items() if param in func_params}
+    param_mapping = {
+        param: desc
+        for param, desc in param_descriptions.items()
+        if param in func_params
+    }
     return param_mapping

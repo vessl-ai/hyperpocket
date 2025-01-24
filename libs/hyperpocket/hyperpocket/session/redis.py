@@ -1,14 +1,18 @@
 import json
-from typing import List, Optional, Any
+from typing import Any, List, Optional
 
 import redis
 
-from hyperpocket.auth import AuthProvider, AUTH_CONTEXT_MAP
+from hyperpocket.auth import AUTH_CONTEXT_MAP, AuthProvider
 from hyperpocket.auth.context import AuthContext
-from hyperpocket.config.session import SessionConfigRedis
-from hyperpocket.config.session import SessionType
-from hyperpocket.session.interface import SessionStorageInterface, SESSION_KEY_DELIMITER, \
-    BaseSessionValue, V, K
+from hyperpocket.config.session import SessionConfigRedis, SessionType
+from hyperpocket.session.interface import (
+    SESSION_KEY_DELIMITER,
+    BaseSessionValue,
+    K,
+    SessionStorageInterface,
+    V,
+)
 
 RedisSessionKey = str
 RedisSessionValue = BaseSessionValue
@@ -24,7 +28,9 @@ class RedisSessionStorage(SessionStorageInterface[RedisSessionKey, RedisSessionV
     def session_storage_type(cls) -> SessionType:
         return SessionType.REDIS
 
-    def get(self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs) -> Optional[V]:
+    def get(
+        self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs
+    ) -> Optional[V]:
         key = self._make_session_key(auth_provider.name, thread_id, profile)
         raw_session: Any = self.client.get(key)
         if raw_session is None:
@@ -33,7 +39,9 @@ class RedisSessionStorage(SessionStorageInterface[RedisSessionKey, RedisSessionV
         session = self._deserialize(raw_session)
         return session
 
-    def get_by_thread_id(self, thread_id: str, auth_provider: Optional[AuthProvider] = None, **kwargs) -> List[V]:
+    def get_by_thread_id(
+        self, thread_id: str, auth_provider: Optional[AuthProvider] = None, **kwargs
+    ) -> List[V]:
         if auth_provider is None:
             auth_provider_name = "*"
         else:
@@ -57,19 +65,24 @@ class RedisSessionStorage(SessionStorageInterface[RedisSessionKey, RedisSessionV
 
         return session_list
 
-    def set(self, auth_provider: AuthProvider,
-            thread_id: str,
-            profile: str,
-            auth_scopes: List[str],
-            auth_resolve_uid: Optional[str],
-            auth_context: Optional[AuthContext],
-            is_auth_scope_universal: bool, **kwargs) -> V:
+    def set(
+        self,
+        auth_provider: AuthProvider,
+        thread_id: str,
+        profile: str,
+        auth_scopes: List[str],
+        auth_resolve_uid: Optional[str],
+        auth_context: Optional[AuthContext],
+        is_auth_scope_universal: bool,
+        **kwargs,
+    ) -> V:
         session = self._make_session(
             auth_provider_name=auth_provider.name,
             auth_scopes=auth_scopes,
             auth_context=auth_context,
             auth_resolve_uid=auth_resolve_uid,
-            is_auth_scope_universal=is_auth_scope_universal)
+            is_auth_scope_universal=is_auth_scope_universal,
+        )
 
         key = self._make_session_key(auth_provider.name, thread_id, profile)
 
@@ -77,7 +90,9 @@ class RedisSessionStorage(SessionStorageInterface[RedisSessionKey, RedisSessionV
         self.client.set(key, raw_session)
         return session
 
-    def delete(self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs) -> bool:
+    def delete(
+        self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs
+    ) -> bool:
         key = self._make_session_key(auth_provider.name, thread_id, profile)
         return self.client.delete(key) == 1
 
@@ -92,17 +107,18 @@ class RedisSessionStorage(SessionStorageInterface[RedisSessionKey, RedisSessionV
 
     @staticmethod
     def _make_session(
-            auth_provider_name: str,
-            auth_scopes: List[str],
-            auth_context: AuthContext,
-            auth_resolve_uid: str,
-            is_auth_scope_universal: bool) -> V:
+        auth_provider_name: str,
+        auth_scopes: List[str],
+        auth_context: AuthContext,
+        auth_resolve_uid: str,
+        is_auth_scope_universal: bool,
+    ) -> V:
         return RedisSessionValue(
             auth_provider_name=auth_provider_name,
             auth_scopes=set(auth_scopes),
             auth_context=auth_context,
             auth_resolve_uid=auth_resolve_uid,
-            scoped=is_auth_scope_universal
+            scoped=is_auth_scope_universal,
         )
 
     @staticmethod
@@ -116,13 +132,14 @@ class RedisSessionStorage(SessionStorageInterface[RedisSessionKey, RedisSessionV
         if auth_scopes:
             auth_scopes = list(auth_scopes)
 
-        serialized = {"auth_context_value": auth_context_value,
-                      "auth_context_type": auth_context_type,
-                      "auth_provider_name": session.auth_provider_name,
-                      "scoped": session.scoped,
-                      "auth_scopes": auth_scopes,
-                      "auth_resolve_uid": session.auth_resolve_uid,
-                      }
+        serialized = {
+            "auth_context_value": auth_context_value,
+            "auth_context_type": auth_context_type,
+            "auth_provider_name": session.auth_provider_name,
+            "scoped": session.scoped,
+            "auth_scopes": auth_scopes,
+            "auth_resolve_uid": session.auth_resolve_uid,
+        }
 
         return json.dumps(serialized)
 
@@ -146,5 +163,5 @@ class RedisSessionStorage(SessionStorageInterface[RedisSessionKey, RedisSessionV
             auth_scopes=auth_scopes,
             auth_resolve_uid=session_dict["auth_resolve_uid"],
             scoped=session_dict["scoped"],
-            auth_context=auth_context
+            auth_context=auth_context,
         )

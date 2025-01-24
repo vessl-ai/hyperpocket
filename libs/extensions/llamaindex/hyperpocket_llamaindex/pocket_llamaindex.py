@@ -3,11 +3,9 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 try:
-    from llama_index.core.tools import FunctionTool, BaseTool, ToolMetadata
+    from llama_index.core.tools import BaseTool, FunctionTool, ToolMetadata
 except ImportError:
-    raise ImportError(
-        "You need to install llama-index to use pocket llamaindex"
-    )
+    raise ImportError("You need to install llama-index to use pocket llamaindex")
 
 from hyperpocket import Pocket
 from hyperpocket.tool import Tool
@@ -35,11 +33,16 @@ class PocketLlamaindex(Pocket):
             if isinstance(body, BaseModel):
                 body = body.model_dump()
 
-            result, interrupted = self.invoke_with_state(pocket_tool.name, body=body, thread_id=thread_id,
-                                                         profile=profile, **kwargs)
+            result, interrupted = self.invoke_with_state(
+                pocket_tool.name,
+                body=body,
+                thread_id=thread_id,
+                profile=profile,
+                **kwargs,
+            )
             say = result
             if interrupted:
-                say = f'{say}\n\nThe tool execution interrupted. Please talk to me to resume.'
+                say = f"{say}\n\nThe tool execution interrupted. Please talk to me to resume."
             return say
 
         async def _ainvoke(**kwargs) -> str:
@@ -55,11 +58,16 @@ class PocketLlamaindex(Pocket):
             if isinstance(body, BaseModel):
                 body = body.model_dump()
 
-            result, interrupted = await self.ainvoke_with_state(pocket_tool.name, body=body,
-                                                                thread_id=thread_id, profile=profile, **kwargs)
+            result, interrupted = await self.ainvoke_with_state(
+                pocket_tool.name,
+                body=body,
+                thread_id=thread_id,
+                profile=profile,
+                **kwargs,
+            )
             say = result
             if interrupted:
-                say = f'{say}\n\nThe tool execution interrupted. Please talk to me to resume.'
+                say = f"{say}\n\nThe tool execution interrupted. Please talk to me to resume."
             return say
 
         return FunctionTool.from_defaults(
@@ -69,5 +77,5 @@ class PocketLlamaindex(Pocket):
                 name=pocket_tool.name,
                 description=pocket_tool.get_description(use_profile=self.use_profile),
                 fn_schema=pocket_tool.schema_model(use_profile=self.use_profile),
-            )
+            ),
         )

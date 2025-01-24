@@ -1,7 +1,7 @@
 import pathlib
 from concurrent.futures.thread import ThreadPoolExecutor
 
-from hyperpocket.repository.lock import Lock, LocalLock, GitLock
+from hyperpocket.repository.lock import GitLock, LocalLock, Lock
 
 
 class Lockfile:
@@ -51,7 +51,7 @@ class Lockfile:
         else:
             locks = list(self.locks.values())
         with ThreadPoolExecutor(
-                max_workers=min(len(locks) + 1, 100), thread_name_prefix="repository_loader"
+            max_workers=min(len(locks) + 1, 100), thread_name_prefix="repository_loader"
         ) as executor:
             executor.map(lambda lock: lock.sync(force_update=force_update), locks)
         self.write()

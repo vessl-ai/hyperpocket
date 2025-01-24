@@ -1,5 +1,5 @@
-from typing import Union, Callable
+from typing import Callable, Union
 
-from hyperpocket.tool import ToolRequest, Tool
+from hyperpocket.tool import Tool, ToolRequest
 
 ToolLike = Union[Tool, str, Callable, ToolRequest]

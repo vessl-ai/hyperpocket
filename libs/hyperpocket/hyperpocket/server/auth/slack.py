@@ -3,9 +3,7 @@ from starlette.responses import HTMLResponse
 
 from hyperpocket.futures import FutureStore
 
-slack_auth_router = APIRouter(
-    prefix="/slack"
-)
+slack_auth_router = APIRouter(prefix="/slack")
 
 
 @slack_auth_router.get("/oauth2/callback")

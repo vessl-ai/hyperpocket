@@ -1,12 +1,12 @@
 import asyncio
 import pathlib
-from typing import Any, Optional, Callable, List, Union
+from typing import Any, Callable, List, Optional, Union
 
 from hyperpocket.builtin import get_builtin_tools
 from hyperpocket.config import pocket_logger
 from hyperpocket.pocket_auth import PocketAuth
 from hyperpocket.repository import Lockfile
-from hyperpocket.repository.lock import LocalLock, GitLock
+from hyperpocket.repository.lock import GitLock, LocalLock
 from hyperpocket.tool import Tool, ToolRequest
 from hyperpocket.tool.function import from_func
 from hyperpocket.tool.wasm import WasmTool
@@ -18,11 +18,13 @@ class PocketCore:
     auth: PocketAuth
     tools: dict[str, Tool]
 
-    def __init__(self,
-                 tools: list[ToolLike],
-                 auth: PocketAuth = None,
-                 lockfile_path: Optional[str] = None,
-                 force_update: bool = False):
+    def __init__(
+        self,
+        tools: list[ToolLike],
+        auth: PocketAuth = None,
+        lockfile_path: Optional[str] = None,
+        force_update: bool = False,
+    ):
         if auth is None:
             auth = PocketAuth()
         self.auth = auth
@@ -38,7 +40,9 @@ class PocketCore:
                     lock = LocalLock(tool_like)
                     req = WasmToolRequest(lock, "")
                 else:
-                    base_repo_url, git_ref, rel_path = GitLock.parse_repo_url(repo_url=tool_like)
+                    base_repo_url, git_ref, rel_path = GitLock.parse_repo_url(
+                        repo_url=tool_like
+                    )
                     lock = GitLock(repository_url=base_repo_url, git_ref=git_ref)
                     req = WasmToolRequest(lock=lock, rel_path=rel_path, tool_vars={})
 
@@ -63,19 +67,26 @@ class PocketCore:
                 raise ValueError(f"Duplicate tool name: {tool.name}")
             self.tools[tool.name] = tool
 
-        pocket_logger.info(f"All Registered Tools Loaded successfully. total registered tools : {len(self.tools)}")
+        pocket_logger.info(
+            f"All Registered Tools Loaded successfully. total registered tools : {len(self.tools)}"
+        )
 
         builtin_tools = get_builtin_tools(self.auth)
         for tool in builtin_tools:
             self.tools[tool.name] = tool
-        pocket_logger.info(f"All BuiltIn Tools Loaded successfully. total tools : {len(self.tools)}")
+        pocket_logger.info(
+            f"All BuiltIn Tools Loaded successfully. total tools : {len(self.tools)}"
+        )
 
-    async def acall(self,
-                    tool_name: str,
-                    body: Any,
-                    thread_id: str = 'default',
-                    profile: str = 'default',
-                    *args, **kwargs) -> tuple[str, bool]:
+    async def acall(
+        self,
+        tool_name: str,
+        body: Any,
+        thread_id: str = "default",
+        profile: str = "default",
+        *args,
+        **kwargs,
+    ) -> tuple[str, bool]:
         """
         Invoke tool asynchronously, not that different from `Pocket.invoke`
         But this method is called only in subprocess.
@@ -105,11 +116,13 @@ class PocketCore:
         result = await self.tool_call(tool_name, body=body, envs=credentials, **kwargs)
         return result, False
 
-    def prepare_auth(self,
-                     tool_name: Union[str, List[str]],
-                     thread_id: str = 'default',
-                     profile: str = 'default',
-                     **kwargs) -> Optional[str]:
+    def prepare_auth(
+        self,
+        tool_name: Union[str, List[str]],
+        thread_id: str = "default",
+        profile: str = "default",
+        **kwargs,
+    ) -> Optional[str]:
         """
         Prepares the authentication process for the tool if necessary.
         Returns callback URL and whether the tool requires authentication.
@@ -142,12 +155,14 @@ class PocketCore:
         for tool in tools:
             if tool.auth.auth_handler != auth_handler_name:
                 pocket_logger.error(
-                    f"All Tools should have same auth handler. but it's different {tool.auth.auth_handler}, {auth_handler_name}")
+                    f"All Tools should have same auth handler. but it's different {tool.auth.auth_handler}, {auth_handler_name}"
+                )
 
                 return f"All Tools should have same auth handler. but it's different {tool.auth.auth_handler}, {auth_handler_name}"
             if tool.auth.auth_provider != auth_provider:
                 pocket_logger.error(
-                    f"All Tools should have same auth provider. but it's different {tool.auth.auth_provider}, {auth_provider}")
+                    f"All Tools should have same auth provider. but it's different {tool.auth.auth_provider}, {auth_provider}"
+                )
                 return f"All Tools should have same auth provider. but it's different {tool.auth.auth_provider}, {auth_provider}"
 
             if tool.auth.scopes is not None:
@@ -156,7 +171,8 @@ class PocketCore:
         auth_req = self.auth.make_request(
             auth_handler_name=auth_handler_name,
             auth_provider=auth_provider,
-            auth_scopes=list(auth_scopes))
+            auth_scopes=list(auth_scopes),
+        )
 
         return self.auth.prepare(
             auth_req=auth_req,
@@ -164,15 +180,16 @@ class PocketCore:
             auth_provider=auth_provider,
             thread_id=thread_id,
             profile=profile,
-            **kwargs
+            **kwargs,
         )
 
     async def authenticate(
-            self,
-            tool_name: str,
-            thread_id: str = 'default',
-            profile: str = 'default',
-            **kwargs) -> dict[str, str]:
+        self,
+        tool_name: str,
+        thread_id: str = "default",
+        profile: str = "default",
+        **kwargs,
+    ) -> dict[str, str]:
         """
         Authenticates the handler included in the tool and returns credentials.
 
@@ -190,7 +207,8 @@ class PocketCore:
         auth_req = self.auth.make_request(
             auth_handler_name=tool.auth.auth_handler,
             auth_provider=tool.auth.auth_provider,
-            auth_scopes=tool.auth.scopes)
+            auth_scopes=tool.auth.scopes,
+        )
         auth_ctx = await self.auth.authenticate_async(
             auth_req=auth_req,
             auth_handler_name=tool.auth.auth_handler,

@@ -60,6 +60,7 @@ class Config(BaseModel):
             return f"{self.public_server_protocol}://{self.public_hostname}"
         return f"{self.public_server_protocol}://{self.public_hostname}:{self.public_server_port}"
 
+
 def _dynaconf_to_config(s) -> dict:
     values = dict()
     for k, v in s.items():
@@ -69,10 +70,12 @@ def _dynaconf_to_config(s) -> dict:
             values[str(k).lower()] = v
     return values
 
+
 _config = None
+
 
 def config() -> Config:
     global _config
     if _config is None:
-        _config = Config.model_validate(_dynaconf_to_config(settings)) 
+        _config = Config.model_validate(_dynaconf_to_config(settings))
     return _config

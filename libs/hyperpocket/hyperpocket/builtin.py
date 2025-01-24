@@ -2,7 +2,7 @@ from typing import List
 
 from hyperpocket.auth import AuthProvider
 from hyperpocket.pocket_auth import PocketAuth
-from hyperpocket.tool import from_func, Tool
+from hyperpocket.tool import Tool, from_func
 
 
 def get_builtin_tools(pocket_auth: PocketAuth) -> List[Tool]:
@@ -34,7 +34,9 @@ def get_builtin_tools(pocket_auth: PocketAuth) -> List[Tool]:
         session_list = pocket_auth.list_session_state(thread_id)
         return str(session_list)
 
-    def __delete_session(auth_provider_name: str, thread_id: str = "default", profile: str = "default") -> str:
+    def __delete_session(
+        auth_provider_name: str, thread_id: str = "default", profile: str = "default"
+    ) -> str:
         """
         This tool deletes a saved session for a specified authentication provider in the given thread and profile.
 

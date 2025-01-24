@@ -1,7 +1,8 @@
 from jinja2 import Template
 
+
 def get_server_auth_token_template() -> Template:
-    return Template('''
+    return Template("""
 from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from hyperpocket.futures import FutureStore
@@ -15,4 +16,4 @@ async def {{ service_name }}_token_callback(state: str, token: str):
     except ValueError:
         return HTMLResponse(content="failed")
     return HTMLResponse(content="success")                    
-''')
+""")

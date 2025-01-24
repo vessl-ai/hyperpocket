@@ -4,7 +4,10 @@ from urllib.parse import urlencode, urljoin
 import httpx
 
 from hyperpocket.auth.calendly.oauth2_context import CalendlyOAuth2AuthContext
-from hyperpocket.auth.calendly.oauth2_schema import CalendlyOAuth2Request, CalendlyOAuth2Response
+from hyperpocket.auth.calendly.oauth2_schema import (
+    CalendlyOAuth2Request,
+    CalendlyOAuth2Response,
+)
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.handler import AuthHandlerInterface, AuthProvider
 from hyperpocket.config import config
@@ -16,7 +19,9 @@ class CalendlyOAuth2AuthHandler(AuthHandlerInterface):
     _CALENDLY_TOKEN_URL = "https://auth.calendly.com/oauth/token"
 
     name: str = "calendly-oauth2"
-    description: str = "This handler is used to authenticate users using Calendly OAuth."
+    description: str = (
+        "This handler is used to authenticate users using Calendly OAuth."
+    )
     scoped: bool = False
 
     @staticmethod
@@ -32,13 +37,13 @@ class CalendlyOAuth2AuthHandler(AuthHandlerInterface):
         return set()
 
     def prepare(
-            self,
-            auth_req: CalendlyOAuth2Request,
-            thread_id: str,
-            profile: str,
-            future_uid: str,
-            *args,
-            **kwargs,
+        self,
+        auth_req: CalendlyOAuth2Request,
+        thread_id: str,
+        profile: str,
+        future_uid: str,
+        *args,
+        **kwargs,
     ) -> str:
         redirect_uri = urljoin(
             config().public_base_url + "/",
@@ -58,7 +63,7 @@ class CalendlyOAuth2AuthHandler(AuthHandlerInterface):
         return f"User needs to authenticate using the following URL: {auth_url}"
 
     async def authenticate(
-            self, auth_req: CalendlyOAuth2Request, future_uid: str, *args, **kwargs
+        self, auth_req: CalendlyOAuth2Request, future_uid: str, *args, **kwargs
     ) -> AuthContext:
         future_data = FutureStore.get_future(future_uid)
         auth_code = await future_data.future
@@ -97,7 +102,7 @@ class CalendlyOAuth2AuthHandler(AuthHandlerInterface):
         return CalendlyOAuth2AuthContext.from_calendly_oauth2_response(auth_response)
 
     async def refresh(
-            self, auth_req: CalendlyOAuth2Request, context: AuthContext, *args, **kwargs
+        self, auth_req: CalendlyOAuth2Request, context: AuthContext, *args, **kwargs
     ) -> AuthContext:
         last_oauth2_resp: CalendlyOAuth2Response = context.detail
         refresh_token = last_oauth2_resp.refresh_token
@@ -127,7 +132,9 @@ class CalendlyOAuth2AuthHandler(AuthHandlerInterface):
             response = CalendlyOAuth2Response(**resp_json)
             return CalendlyOAuth2AuthContext.from_calendly_oauth2_response(response)
 
-    def _make_auth_url(self, auth_req: CalendlyOAuth2Request, redirect_uri: str, state: str):
+    def _make_auth_url(
+        self, auth_req: CalendlyOAuth2Request, redirect_uri: str, state: str
+    ):
         params = {
             "client_id": auth_req.client_id,
             "redirect_uri": redirect_uri,
@@ -137,7 +144,7 @@ class CalendlyOAuth2AuthHandler(AuthHandlerInterface):
         return f"{self._CALENDLY_AUTH_URL}?{urlencode(params)}"
 
     def make_request(
-            self, auth_scopes: Optional[list[str]] = None, **kwargs
+        self, auth_scopes: Optional[list[str]] = None, **kwargs
     ) -> CalendlyOAuth2Request:
         return CalendlyOAuth2Request(
             auth_scopes=auth_scopes,

@@ -13,9 +13,8 @@ except ImportError:
     raise ImportError("You need to install openai to use pocket PocketOpenAI.")
 
 from hyperpocket import Pocket
-
-from hyperpocket.tool import Tool
 from hyperpocket.config import pocket_logger
+from hyperpocket.tool import Tool
 
 
 class PocketOpenAI(Pocket):
@@ -39,8 +38,13 @@ class PocketOpenAI(Pocket):
         if isinstance(body, BaseModel):
             body = body.model_dump()
 
-        result = await super().ainvoke(tool_call.function.name, body=body, thread_id=thread_id, profile=profile,
-                                       **kwargs)
+        result = await super().ainvoke(
+            tool_call.function.name,
+            body=body,
+            thread_id=thread_id,
+            profile=profile,
+            **kwargs,
+        )
         tool_message = {"role": "tool", "content": result, "tool_call_id": tool_call.id}
 
         return tool_message
@@ -60,11 +64,11 @@ class PocketOpenAI(Pocket):
 
 
 async def handle_tool_call_async(
-        llm: OpenAI,
-        pocket: PocketOpenAI,
-        model: str,
-        tool_specs: List[dict],
-        messages: List[dict],
+    llm: OpenAI,
+    pocket: PocketOpenAI,
+    model: str,
+    tool_specs: List[dict],
+    messages: List[dict],
 ):
     while True:
         response = llm.chat.completions.create(
@@ -88,11 +92,11 @@ async def handle_tool_call_async(
 
 
 def handle_tool_call(
-        llm: OpenAI,
-        pocket: PocketOpenAI,
-        model: str,
-        tool_specs: List[dict],
-        messages: List[dict],
+    llm: OpenAI,
+    pocket: PocketOpenAI,
+    model: str,
+    tool_specs: List[dict],
+    messages: List[dict],
 ):
     while True:
         response = llm.chat.completions.create(

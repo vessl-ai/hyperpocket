@@ -1,7 +1,8 @@
 from jinja2 import Template
 
+
 def get_auth_token_handler_template() -> Template:
-    return Template('''
+    return Template("""
 from typing import Optional
 from urllib.parse import urljoin, urlencode
 
@@ -66,4 +67,4 @@ class {{ caplitalized_service_name }}TokenAuthHandler(AuthHandlerInterface):
 
     def make_request(self, auth_scopes: Optional[list[str]] = None, **kwargs) -> {{ caplitalized_service_name }}TokenRequest:
         return {{ caplitalized_service_name }}TokenRequest()
-''')
+""")

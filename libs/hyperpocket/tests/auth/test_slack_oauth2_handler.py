@@ -1,10 +1,11 @@
 import uuid
-from datetime import timezone, datetime
+from datetime import datetime, timezone
 from unittest.async_case import IsolatedAsyncioTestCase
 from unittest.mock import patch
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
 
 import httpx
+
 from hyperpocket.auth.slack.oauth2_context import SlackOAuth2AuthContext
 from hyperpocket.auth.slack.oauth2_handler import SlackOAuth2AuthHandler
 from hyperpocket.auth.slack.oauth2_schema import SlackOAuth2Request, SlackOAuth2Response
@@ -14,7 +15,6 @@ from hyperpocket.futures import FutureStore
 
 
 class TestSlackOAuth2AuthHandler(IsolatedAsyncioTestCase):
-
     async def asyncSetUp(self):
         config().auth.slack = SlackAuthConfig(
             client_id="test-client-id",
@@ -23,7 +23,13 @@ class TestSlackOAuth2AuthHandler(IsolatedAsyncioTestCase):
 
         self.handler = SlackOAuth2AuthHandler()
         self.auth_req = SlackOAuth2Request(
-            auth_scopes=["channels:history", "im:history", "mpim:history", "groups:history", "reactions:read"],
+            auth_scopes=[
+                "channels:history",
+                "im:history",
+                "mpim:history",
+                "groups:history",
+                "reactions:read",
+            ],
             client_id="test-client-id",
             client_secret="test-client-secret",
         )
@@ -34,7 +40,7 @@ class TestSlackOAuth2AuthHandler(IsolatedAsyncioTestCase):
         auth_url = self.handler._make_auth_url(
             req=self.auth_req,
             redirect_uri="http://test-redirect-uri.com",
-            state=future_uid
+            state=future_uid,
         )
         parsed = urlparse(auth_url)
         query_params = parse_qs(parsed.query)
@@ -43,10 +49,14 @@ class TestSlackOAuth2AuthHandler(IsolatedAsyncioTestCase):
         # then
         self.assertEqual(base_url, SlackOAuth2AuthHandler._SLACK_OAUTH_URL)
         self.assertEqual(query_params["state"][0], future_uid)
-        self.assertEqual(query_params["redirect_uri"][0], "http://test-redirect-uri.com")
+        self.assertEqual(
+            query_params["redirect_uri"][0], "http://test-redirect-uri.com"
+        )
         self.assertEqual(query_params["client_id"][0], "test-client-id")
-        self.assertEqual(query_params["user_scope"][0],
-                         "channels:history,im:history,mpim:history,groups:history,reactions:read")
+        self.assertEqual(
+            query_params["user_scope"][0],
+            "channels:history,im:history,mpim:history,groups:history,reactions:read",
+        )
 
     async def test_prepare(self):
         future_uid = str(uuid.uuid4())
@@ -58,7 +68,9 @@ class TestSlackOAuth2AuthHandler(IsolatedAsyncioTestCase):
             profile="test-prepare-profile",
             future_uid=future_uid,
         )
-        auth_url = prepare.removeprefix("User needs to authenticate using the following URL:").strip()
+        auth_url = prepare.removeprefix(
+            "User needs to authenticate using the following URL:"
+        ).strip()
         future_data = FutureStore.get_future(uid=future_uid)
 
         # then
@@ -75,12 +87,8 @@ class TestSlackOAuth2AuthHandler(IsolatedAsyncioTestCase):
             status_code=200,
             json={
                 "ok": True,
-                "authed_user": {
-                    "id": "test-user",
-                    "access_token": "test-token"
-                }
-
-            }
+                "authed_user": {"id": "test-user", "access_token": "test-token"},
+            },
         )
 
         # when
@@ -88,15 +96,14 @@ class TestSlackOAuth2AuthHandler(IsolatedAsyncioTestCase):
             auth_req=self.auth_req,
             thread_id="test-thread-id",
             profile="test-profile",
-            future_uid=future_uid
+            future_uid=future_uid,
         )
         future_data = FutureStore.get_future(uid=future_uid)
         future_data.future.set_result("test-code")
 
         with patch("httpx.AsyncClient.post", return_value=mock_response):
             response = await self.handler.authenticate(
-                auth_req=self.auth_req,
-                future_uid=future_uid
+                auth_req=self.auth_req, future_uid=future_uid
             )
 
         self.assertIsInstance(response, SlackOAuth2AuthContext)
@@ -112,7 +119,7 @@ class TestSlackOAuth2AuthHandler(IsolatedAsyncioTestCase):
                 "access_token": "new-access-token",
                 "refresh_token": "new-refresh-token",
                 "expires_in": 3600,
-            }
+            },
         )
 
         response = SlackOAuth2Response(
@@ -123,7 +130,7 @@ class TestSlackOAuth2AuthHandler(IsolatedAsyncioTestCase):
                     "access_token": "access-token",
                     "refresh_token": "refresh-token",
                     "expires_in": 3600,
-                }
+                },
             }
         )
         context = SlackOAuth2AuthContext.from_slack_oauth2_response(response)
@@ -131,11 +138,10 @@ class TestSlackOAuth2AuthHandler(IsolatedAsyncioTestCase):
         # when
         with patch("httpx.AsyncClient.post", return_value=mock_response):
             new_context: SlackOAuth2AuthContext = await self.handler.refresh(
-                auth_req=self.auth_req,
-                context=context
+                auth_req=self.auth_req, context=context
             )
 
-        time_diff = (new_context.expires_at - datetime.now(tz=timezone.utc))
+        time_diff = new_context.expires_at - datetime.now(tz=timezone.utc)
 
         # then
         self.assertIsInstance(new_context, SlackOAuth2AuthContext)

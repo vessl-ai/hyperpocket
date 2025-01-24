@@ -6,7 +6,7 @@ from typing import Optional, Tuple
 import git
 from pydantic import BaseModel, Field
 
-from hyperpocket.config import settings, pocket_logger
+from hyperpocket.config import pocket_logger, settings
 
 
 class Lock(BaseModel, abc.ABC):
@@ -34,17 +34,19 @@ class Lock(BaseModel, abc.ABC):
 
 
 class LocalLock(Lock):
-    tool_source: str = Field(default='local')
+    tool_source: str = Field(default="local")
     tool_path: str
 
     def __init__(self, tool_path: str):
-        super().__init__(tool_source="local", tool_path=str(pathlib.Path(tool_path).resolve()))
+        super().__init__(
+            tool_source="local", tool_path=str(pathlib.Path(tool_path).resolve())
+        )
 
     def __str__(self):
         return f"local\t{self.tool_path}"
 
     def key(self):
-        return self.tool_source, self.tool_path.rstrip('/')
+        return self.tool_source, self.tool_path.rstrip("/")
 
     def sync(self, **kwargs):
         pocket_logger.info(f"Syncing path: {self.tool_path} ...")
@@ -55,11 +57,11 @@ class LocalLock(Lock):
 
     def toolpkg_path(self) -> pathlib.Path:
         pocket_pkgs = settings.toolpkg_path
-        return pocket_pkgs / 'local' / self.tool_path[1:]
+        return pocket_pkgs / "local" / self.tool_path[1:]
 
 
 class GitLock(Lock):
-    tool_source: str = 'git'
+    tool_source: str = "git"
     repository_url: str
     git_ref: str
     ref_sha: Optional[str] = None
@@ -68,17 +70,17 @@ class GitLock(Lock):
         return f"git\t{self.repository_url}\t{self.git_ref}\t{self.ref_sha}"
 
     def key(self):
-        return self.tool_source, self.repository_url.rstrip('/'), self.git_ref
+        return self.tool_source, self.repository_url.rstrip("/"), self.git_ref
 
     def toolpkg_path(self) -> pathlib.Path:
         if not self.ref_sha:
             raise ValueError("ref_sha is not set")
         cleansed_url = self.repository_url
-        if self.repository_url.startswith('http://'):
+        if self.repository_url.startswith("http://"):
             cleansed_url = self.repository_url[7:]
-        elif self.repository_url.startswith('https://'):
+        elif self.repository_url.startswith("https://"):
             cleansed_url = self.repository_url[8:]
-        elif self.repository_url.startswith('git@'):
+        elif self.repository_url.startswith("git@"):
             cleansed_url = self.repository_url[4:]
         return settings.toolpkg_path / cleansed_url / self.ref_sha
 
@@ -91,12 +93,16 @@ class GitLock(Lock):
            to align the local repository with the remote version.
         """
         try:
-            pocket_logger.info(f"Syncing git: {self.repository_url} @ ref: {self.git_ref} ...")
+            pocket_logger.info(
+                f"Syncing git: {self.repository_url} @ ref: {self.git_ref} ..."
+            )
 
             # get new sha from refs
             new_sha = self._get_new_sha_if_exists_in_remote()
             if new_sha is None:
-                raise ValueError(f"Could not find ref {self.git_ref} in {self.repository_url}")
+                raise ValueError(
+                    f"Could not find ref {self.git_ref} in {self.repository_url}"
+                )
 
             # check self.ref_sha should be updated
             if self.ref_sha != new_sha:
@@ -111,10 +117,10 @@ class GitLock(Lock):
             # init git repo in local and set origin url
             repo = git.Repo.init(pkg_version_path)
             try:
-                remote = repo.remote('origin')
+                remote = repo.remote("origin")
                 remote.set_url(self.repository_url)
             except ValueError:
-                remote = repo.create_remote('origin', self.repository_url)
+                remote = repo.create_remote("origin", self.repository_url)
 
             # check current local commit include new_sha
             # if not included, fetch and do hard reset
@@ -126,10 +132,12 @@ class GitLock(Lock):
             if exist_sha is None or exist_sha != self.ref_sha:
                 remote.fetch(depth=1, refspec=self.ref_sha)
                 repo.git.checkout(new_sha)
-                repo.git.reset('--hard', new_sha)
-                repo.git.clean('-fd')
+                repo.git.reset("--hard", new_sha)
+                repo.git.clean("-fd")
         except Exception as e:
-            pocket_logger.error(f"failed to sync git: {self.repository_url} @ ref: {self.git_ref}. reason : {e}")
+            pocket_logger.error(
+                f"failed to sync git: {self.repository_url} @ ref: {self.git_ref}. reason : {e}"
+            )
             raise e
 
     def _get_new_sha_if_exists_in_remote(self):
@@ -143,8 +151,8 @@ class GitLock(Lock):
         refs = git.cmd.Git().ls_remote(self.repository_url)
 
         new_sha = None
-        for r in refs.split('\n'):
-            sha, ref = r.split('\t')
+        for r in refs.split("\n"):
+            sha, ref = r.split("\t")
             if sha == self.ref_sha:
                 new_sha = sha
                 break
@@ -195,7 +203,7 @@ class GitLock(Lock):
         # Parse base repo URL and remaining path
         tree_index = repo_path_list.index("tree")
         base_repo = f"https://github.com/{'/'.join(repo_path_list[:tree_index])}"
-        sub_path = repo_path_list[tree_index + 1:]
+        sub_path = repo_path_list[tree_index + 1 :]
 
         # Fetch branch information
         branches = cls.get_git_branches(base_repo)
@@ -204,14 +212,15 @@ class GitLock(Lock):
         for idx in range(1, len(sub_path) + 1):
             branch_name = "/".join(sub_path[:idx])
             if branch_name in branches:
-                directory_path = "/".join(sub_path[idx:]) if idx < len(sub_path) else None
+                directory_path = (
+                    "/".join(sub_path[idx:]) if idx < len(sub_path) else None
+                )
                 return base_repo, branch_name, directory_path
 
         # If no valid branch is found, raise an error
         raise ValueError("Branch not found in repository")
 
     def eject_to_path(self, dest_path: pathlib.Path, src_sub_path: str = None):
-
         # clone the git repository to the target path
         pocket_logger.info(
             f"Ejecting git: {self.repository_url} @ ref: {self.git_ref} source in path: {src_sub_path} to {dest_path} ..."
