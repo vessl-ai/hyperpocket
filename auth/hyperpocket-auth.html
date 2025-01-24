@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Auth &mdash; Hyperpocket  documentation</title>
+  <title>Hyperpocket Auth &mdash; Hyperpocket  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
@@ -20,8 +20,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Hyperpocket Auth" href="hyperpocket-auth.html" />
-    <link rel="prev" title="Tool interfaces" href="../tools/tool-interfaces.html" /> 
+    <link rel="next" title="Enabling OAuth with Hyperpocket" href="enabling-oauth-with-hyperpocket.html" />
+    <link rel="prev" title="Auth" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,8 +46,12 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Auth</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hyperpocket-auth.html">Hyperpocket Auth</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Auth</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Hyperpocket Auth</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#advantages-of-hyperpocket-auth">Advantages of Hyperpocket Auth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#supported-authentication-scenarios">Supported authentication scenarios</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="enabling-oauth-with-hyperpocket.html">Enabling OAuth with Hyperpocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="enabling-token-based-authentication-with-hyperpocket.html">Enabling Token-Based Authentication with Hyperpocket</a></li>
 </ul>
@@ -71,9 +75,10 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Auth</li>
+          <li class="breadcrumb-item"><a href="index.html">Auth</a></li>
+      <li class="breadcrumb-item active">Hyperpocket Auth</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/vessl-ai/hyperpocket/blob/main/docs/hyperpocket/auth/index.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/vessl-ai/hyperpocket/blob/main/docs/hyperpocket/auth/hyperpocket-auth.md" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -81,23 +86,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="auth">
-<h1>Auth<a class="headerlink" href="#auth" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="hyperpocket-auth.html">Hyperpocket Auth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="enabling-oauth-with-hyperpocket.html">Enabling OAuth with Hyperpocket</a></li>
-<li class="toctree-l1"><a class="reference internal" href="enabling-token-based-authentication-with-hyperpocket.html">Enabling Token-Based Authentication with Hyperpocket</a></li>
+  <section id="hyperpocket-auth">
+<h1>Hyperpocket Auth<a class="headerlink" href="#hyperpocket-auth" title="Link to this heading"></a></h1>
+<p>Hyperpocket provides a robust and flexible authentication flow to support secure interactions with external tools and APIs. It enables <strong>multi-turn authentication</strong>, ensures the safety of sensitive data, and integrates seamlessly with various AI agent frameworks. By supporting multiple authentication scenarios, Hyperpocket removes the need for static user credentials and provides dynamic, secure authentication tailored to different workflows.</p>
+<section id="advantages-of-hyperpocket-auth">
+<h2>Advantages of Hyperpocket Auth<a class="headerlink" href="#advantages-of-hyperpocket-auth" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Security</strong>: Tokens and sensitive data are securely managed, reducing the risk of leaks.</p></li>
+<li><p><strong>Simplicity</strong>: No need to manage additional server infrastructure; the internal auth server does it all.</p></li>
+<li><p><strong>Flexibility</strong>: Works across different tools and agent frameworks, supporting various workflows.</p></li>
+<li><p><strong>Compatibility</strong>: Handles multi-account scenarios with ease, enabling more complex use cases.</p></li>
 </ul>
-</div>
+</section>
+<section id="supported-authentication-scenarios">
+<h2>Supported authentication scenarios<a class="headerlink" href="#supported-authentication-scenarios" title="Link to this heading"></a></h2>
+<p>Hyperpocket supports two authentication flows: token-based auth and OAuth2. The OAuth2 flow includes token issuance, callback handling, and multi-account support, while token-based authentication allows tokens and static information to be passed securely as environment variables.</p>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../tools/tool-interfaces.html" class="btn btn-neutral float-left" title="Tool interfaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="hyperpocket-auth.html" class="btn btn-neutral float-right" title="Hyperpocket Auth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Auth" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="enabling-oauth-with-hyperpocket.html" class="btn btn-neutral float-right" title="Enabling OAuth with Hyperpocket" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
