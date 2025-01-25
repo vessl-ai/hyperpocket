@@ -44,86 +44,79 @@ playwright install
 
 setting hyperpocket config in your current working directory
 
-`${WORKDIR}/settings.toml`
+`${WORKDIR}/.secret.toml`
 
 ```toml
-log_level = "debug"
-
-[git]
-[git.github]
-github_token = "<GITHUB_TOKEN>"
-
 [auth.slack]
 client_id = "<SLACK_CLIENT_ID>"
 client_secret = "<SLACK_CLIENT_SECRET>"
 ```
 
-`${WORKDIR}/.secret.toml`
+setting openai api key env for this example.
 
-```toml
-OPENAI_API_KEY = "<OPENAI_API_KEY>"
+```shell
+export OPENAI_API_KEY=<OPENAI_API_KEY>
 ```
-
-- or just set this in your env
 
 ### 3. Writing code
 
 `langchain_example.py`
 
 ```python
+import os
+
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.memory import ConversationBufferMemory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
-from hyperpocket.config import secret
 from hyperpocket_langchain import PocketLangchain
 
 if __name__ == '__main__':
-  pocket = PocketLangchain(
-    tools=[
-      "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
-      "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
-    ],
-  )
-  tools = pocket.get_tools()
-  llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"])
-  prompt = ChatPromptTemplate.from_messages(
-    [
-      (
-        "system",
-        "You are a tool calling assistant. You can help the user by calling proper tools",
-      ),
-      ("placeholder", "{chat_history}"),
-      ("user", "{input}"),
-      MessagesPlaceholder(variable_name="agent_scratchpad"),
-    ]
-  )
+    pocket = PocketLangchain(
+        tools=[
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+        ],
+    )
+    tools = pocket.get_tools()
+    llm = ChatOpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"))
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "system",
+                "You are a tool calling assistant. You can help the user by calling proper tools",
+            ),
+            ("placeholder", "{chat_history}"),
+            ("user", "{input}"),
+            MessagesPlaceholder(variable_name="agent_scratchpad"),
+        ]
+    )
 
-  memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-  agent = create_tool_calling_agent(llm, tools, prompt)
-  agent_executor = AgentExecutor(
-    agent=agent,
-    tools=tools,
-    memory=memory,
-    verbose=True,
-    handle_parsing_errors=True,
-  )
+    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+    agent = create_tool_calling_agent(llm, tools, prompt)
+    agent_executor = AgentExecutor(
+        agent=agent,
+        tools=tools,
+        memory=memory,
+        verbose=True,
+        handle_parsing_errors=True,
+    )
 
-  print("Hello, This is simple slack agent using hyperpocket.")
-  while True:
-    print("user(q to quit) : ", end="")
-    user_input = input()
+    print("Hello, This is simple slack agent using hyperpocket.")
+    while True:
+        print("user(q to quit) : ", end="")
+        user_input = input()
 
-    if user_input is None or user_input == "":
-      continue
-    elif user_input == "q":
-      print("Good bye!")
-      break
+        if user_input is None or user_input == "":
+            continue
+        elif user_input == "q":
+            print("Good bye!")
+            break
 
-    response = agent_executor.invoke({"input": user_input})
-    print("agent : ", response["output"])
-    print()
+        response = agent_executor.invoke({"input": user_input})
+        print("agent : ", response["output"])
+        print()
 ```
 
 ### 4. Done !
@@ -154,10 +147,10 @@ from langchain_openai import ChatOpenAI
 from hyperpocket_langchain import PocketLangchain
 
 pklc = PocketLangchain(
-  tools=[
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
-  ]
+    tools=[
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+    ]
 )
 tools = pklc.get_tools()
 
@@ -175,32 +168,32 @@ Pocket provides way to use end user auth easily.
 
 - Supported methods
 
-  - [x] OAuth
-  - [x] Token
-  - [ ] Basic Auth (Username, Password)
+    - [x] OAuth
+    - [x] Token
+    - [ ] Basic Auth (Username, Password)
 
 - Supported OAuth Providers
 
-  - [x] Google
-  - [x] GitHub
-  - [x] Slack
-  - [x] Reddit
-  - [x] Calendly
-  - [ ] Facebook
-  - [ ] X (Previously Twitter)
-  - [ ] LinkedIn
-  - [ ] Discord
-  - [ ] Zoom
-  - [ ] Microsoft
-  - [ ] Spotify
-  - [ ] Twitch
+    - [x] Google
+    - [x] GitHub
+    - [x] Slack
+    - [x] Reddit
+    - [x] Calendly
+    - [ ] Facebook
+    - [ ] X (Previously Twitter)
+    - [ ] LinkedIn
+    - [ ] Discord
+    - [ ] Zoom
+    - [ ] Microsoft
+    - [ ] Spotify
+    - [ ] Twitch
 
 - Supported Token Providers
-  - [x] Notion
-  - [x] Slack
-  - [x] Linear
-  - [x] Gumloop
-  - [x] Github
+    - [x] Notion
+    - [x] Slack
+    - [x] Linear
+    - [x] Gumloop
+    - [x] Github
 
 You can manage your auths in request-wise level. (e.g. you can use different auths for different requests)
 
@@ -213,10 +206,10 @@ from langgraph.prebuilt import tools_condition
 from hyperpocket_langgraph import PocketLanggraph
 
 pklg = PocketLanggraph(
-  tools=[
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
-  ],
+    tools=[
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+    ],
 )
 llm = ChatOpenAI()
 
@@ -241,21 +234,22 @@ graph_builder.compile()
 ```
 
 ```python
+import os
+
 from llama_index.core.agent import FunctionCallingAgent
 from llama_index.llms.openai import OpenAI
 
-from hyperpocket.config import secret
 from hyperpocket_llamaindex import PocketLlamaindex
 
-llm = OpenAI(api_key=secret["OPENAI_API_KEY"])
+llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 pocket = PocketLlamaindex(
-  tools=[
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
-  ]
+    tools=[
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+    ]
 )
 tools = pocket.get_tools()
 
@@ -273,17 +267,14 @@ Human: done.
 
 Assistance: Here are the recent 10 messages.
 (...)
-
-
 ```
 
 ### Config
 
-Running `hyperpocket config init` will create your config file in `$HOME/.pocket/settings.toml`
+Running `hyperpocket config init` will create your config file in `${WORKDIR}/settings.toml` and
+`${WORKDIR}/.secrets.toml`
 
 The `settings.toml` looks as follows.
-
-TODO: Add `secrets.toml`.
 
 ```toml
 log_level = "debug"
@@ -301,22 +292,21 @@ host = "localhost"
 port = 6379
 db = 0
 
-[git]
-[git.github]
-github_token = "<Your github PAT>" # optional, your github personal access token
-app_id = "<Your github app id>" # optional, your github app id
-app_installation_id = "<Your github app installation id>" # optional, your github app installation id
-app_private_key = "<Your github app private key>" # optional, your github app private key
-
-[auth]
 [auth.slack] # add your slack app's client id and secret for slack auth
 client_id = "" # your slack client id
 client_secret = "" # your slack client secret
-
-[auth.github] # add your github app's client id and secret for github auth
-client_id = "" # your github client id
-client_secret = ""  # your github client secret
 ```
+
+Or you put some sensitive data on `{WORKDIR}/.secrets.toml`
+
+```toml
+[auth.slack] # add your slack app's client id and secret for slack auth
+client_id = "" # your slack client id
+client_secret = "" # your slack client secret
+```
+
+- in this case, by putting your slack app client_id and client_secret on `.secrets.toml`, you can manage your sensitive
+  data more safely.
 
 #### How to integrate github OAuth app
 
@@ -325,13 +315,15 @@ client_secret = ""  # your github client secret
 
 - While creating your github OAuth app, configuring your app's `Authorization callback URL` is different for your
   development environment and production environment.
-  - For local testing environment, you can use `https://localhost:8001/proxy/auth/<provider>/callback` for TLS enabled redirect url. (ex. `https://localhost:8001/proxy/auth/github/callback`)
-    - **Note**: Default port for hyperpocket dev server is `8000`. If you are using a different port, make sure to
-      replace `8000` with your actual port number.
-    - **Note**: But for easy dev experience, you can use TLS proxy on port `8001` provided out-of-the-box.
-      - You can change the `proxy` prefix in settings.toml to your desired prefix with `callback_url_rewrite_prefix` key.
-  - For production environment, you can use `https://yourdomain.com/auth/github/callback`
-    - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.
+    - For local testing environment, you can use `https://localhost:8001/proxy/auth/<provider>/callback` for TLS enabled
+      redirect url. (ex. `https://localhost:8001/proxy/auth/github/callback`)
+        - **Note**: Default port for hyperpocket dev server is `8000`. If you are using a different port, make sure to
+          replace `8000` with your actual port number.
+        - **Note**: But for easy dev experience, you can use TLS proxy on port `8001` provided out-of-the-box.
+            - You can change the `proxy` prefix in settings.toml to your desired prefix with
+              `callback_url_rewrite_prefix` key.
+    - For production environment, you can use `https://yourdomain.com/auth/github/callback`
+        - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.
 
 #### How to integrate SLACK OAuth app
 
@@ -342,18 +334,19 @@ client_secret = ""  # your github client secret
 - Redirect URLs :
   `{public_server_protocol}://{public_hostname}:[{public_server_port}]/{callback_url_rewrite_prefix}/auth/slack/oauth2/callback`
 - Scopes : What you want to request to user.
-  - Recommended scopes :
-    - channels:history,
-    - channels:read,
-    - chat:write,
-    - groups:history,
-    - groups:read,
-    - im:history,
-    - mpim:history,
-    - reactions:read,
-    - reactions:write,
+    - Recommended scopes :
+        - channels:history,
+        - channels:read,
+        - chat:write,
+        - groups:history,
+        - groups:read,
+        - im:history,
+        - mpim:history,
+        - reactions:read,
+        - reactions:write,
 
-3. Set your Slack APP Client ID / Client Secret in `$HOME/.pocket/settings.toml`
+3. Set your Slack APP Client ID / Client Secret in `{WORKDIR}/settings.toml`
 
 ## Special thanks
+
 - [tott](https://x.com/tott____) for drawing the cute possum in a pocket.
