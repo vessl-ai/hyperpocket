@@ -26,6 +26,7 @@ jobs:
             "hyperpocket-langgraph"
             "hyperpocket-openai"
             "hyperpocket-llamaindex"
+            "hyperpocket-crewai"
             "hyperdock-fileio"
             "hyperdock-langchain"
           )
@@ -168,6 +169,14 @@ jobs:
           uv build
           uv publish
 
+      - name: Publish hyperpocket crewai package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        working-directory: libs/extensions/crewai
+        run: |
+          uv build
+          uv publish
+
       - name: Publish hyperdock-fileio package
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
@@ -203,6 +212,7 @@ jobs:
             "hyperpocket-langgraph"
             "hyperpocket-openai"
             "hyperpocket-llamaindex"
+            "hyperpocket-crewai"
             "hyperdock-fileio"
             "hyperdock-langchain"
           )
