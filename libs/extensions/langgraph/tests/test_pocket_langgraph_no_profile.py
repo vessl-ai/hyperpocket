@@ -1,14 +1,14 @@
 import ast
+import os
 from unittest.async_case import IsolatedAsyncioTestCase
 
-from hyperpocket.config import config, secret
-from hyperpocket.tool import from_git
 from langchain_openai import ChatOpenAI
 from langgraph.constants import END, START
 from langgraph.graph import MessagesState, StateGraph
 from langgraph.prebuilt import tools_condition
 from pydantic import BaseModel
 
+from hyperpocket.config import config
 from hyperpocket_langgraph import PocketLanggraph
 
 
@@ -22,11 +22,7 @@ class TestPocketLanggraphNoProfile(IsolatedAsyncioTestCase):
 
         self.pocket = PocketLanggraph(
             tools=[
-                from_git(
-                    "https://github.com/vessl-ai/hyperawesometools",
-                    "main",
-                    "managed-tools/none/simple-echo-tool",
-                ),
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/none/simple-echo-tool",
                 self.add,
                 self.sub_pydantic_args,
             ],
@@ -35,7 +31,7 @@ class TestPocketLanggraphNoProfile(IsolatedAsyncioTestCase):
         tools = self.pocket.get_tools()
         tool_node = self.pocket.get_tool_node()
         self.llm = ChatOpenAI(
-            model="gpt-4o", api_key=secret["OPENAI_API_KEY"]
+            model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY")
         ).bind_tools(tools=tools)
 
         def chatbot(state: MessagesState):

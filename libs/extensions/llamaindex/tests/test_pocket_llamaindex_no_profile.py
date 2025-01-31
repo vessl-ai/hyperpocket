@@ -1,13 +1,13 @@
 import ast
 import json
+import os
 from unittest.async_case import IsolatedAsyncioTestCase
 
-from hyperpocket.config import config, secret
-from hyperpocket.tool import from_git
 from llama_index.agent.openai import OpenAIAgent
 from llama_index.llms.openai import OpenAI
 from pydantic import BaseModel
 
+from hyperpocket.config import config
 from hyperpocket_llamaindex import PocketLlamaindex
 
 
@@ -21,18 +21,14 @@ class TestPocketLlamaindexNoProfile(IsolatedAsyncioTestCase):
 
         self.pocket = PocketLlamaindex(
             tools=[
-                from_git(
-                    "https://github.com/vessl-ai/hyperawesometools",
-                    "main",
-                    "managed-tools/none/simple-echo-tool",
-                ),
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/none/simple-echo-tool",
                 self.add,
                 self.sub_pydantic_args,
             ],
             use_profile=False,
         )
 
-        self.llm = OpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"])
+        self.llm = OpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"))
 
     async def asyncTearDown(self):
         self.pocket._teardown_server()
@@ -41,7 +37,7 @@ class TestPocketLlamaindexNoProfile(IsolatedAsyncioTestCase):
         # given
         agent = OpenAIAgent.from_tools(
             tools=self.pocket.get_tools(),
-            llm=OpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"]),
+            llm=OpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY")),
             verbose=True,
         )
 
