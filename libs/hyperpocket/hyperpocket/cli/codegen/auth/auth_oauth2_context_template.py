@@ -7,16 +7,16 @@ from typing import Optional
 
 from pydantic import Field
 
-from hyperpocket.auth.{{ service_name }}.context import {{ caplitalized_service_name }}AuthContext
-from hyperpocket.auth.{{ service_name }}.oauth2_schema import {{ caplitalized_service_name }}OAuth2Response
+from hyperpocket.auth.{{ service_name }}.context import {{ capitalized_service_name }}AuthContext
+from hyperpocket.auth.{{ service_name }}.oauth2_schema import {{ capitalized_service_name }}OAuth2Response
 
 
-class {{ caplitalized_service_name }}OAuth2AuthContext({{ caplitalized_service_name }}AuthContext):
+class {{ capitalized_service_name }}OAuth2AuthContext({{ capitalized_service_name }}AuthContext):
     refresh_token: Optional[str] = Field(default=None, description="refresh token")
 
     @classmethod
-    def from_{{ service_name }}_oauth2_response(cls, response: {{ caplitalized_service_name }}OAuth2Response):
-        description = f'{{ caplitalized_service_name }} OAuth2 Context logged in as a user {response.authed_user.id}'
+    def from_{{ service_name }}_oauth2_response(cls, response: {{ capitalized_service_name }}OAuth2Response):
+        description = f'{{ capitalized_service_name }} OAuth2 Context logged in as a user {response.authed_user.id}'
         now = datetime.now(tz=timezone.utc)
 
         # user token

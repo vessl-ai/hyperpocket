@@ -9,10 +9,10 @@ from pydantic import BaseModel
 from hyperpocket.auth.schema import AuthenticateRequest, AuthenticateResponse
 
 
-class {{ caplitalized_service_name }}OAuth2Request(AuthenticateRequest):
+class {{ capitalized_service_name }}OAuth2Request(AuthenticateRequest):
     client_id: str
     client_secret: str
 
-class {{ caplitalized_service_name }}OAuth2Response(AuthenticateResponse):
+class {{ capitalized_service_name }}OAuth2Response(AuthenticateResponse):
     access_token: str
 ''')

@@ -44,7 +44,7 @@ def generate_hyperpocket_auth_dir(service_name, parent_path):
 def generate_auth_context(service_name, capitliazed_service_name, parent_path):
     print(f"Generating auth/context for '{service_name}'.")
     output_from_parsed_template = get_auth_context_template().render(
-        caplitalized_service_name=capitliazed_service_name, 
+        capitalized_service_name=capitliazed_service_name, 
         upper_service_name=service_name.upper()
     )
     output_path = parent_path / f'hyperpocket/hyperpocket/auth/{service_name}/context.py'
@@ -55,7 +55,7 @@ def generate_auth_oauth2_context(service_name, capitliazed_service_name, parent_
     print(f"Generating auth/oauth2 context for '{service_name}'.")
     output_from_parsed_template = get_auth_oauth2_context_template().render(
         service_name = service_name,
-        caplitalized_service_name=capitliazed_service_name, 
+        capitalized_service_name=capitliazed_service_name, 
     )
     output_path = parent_path / f'hyperpocket/hyperpocket/auth/{service_name}/oauth2_context.py'
     with open(output_path, "w") as f:
@@ -66,7 +66,7 @@ def generate_auth_oauth2_handler(service_name, capitliazed_service_name, parent_
     output_from_parsed_template = get_auth_oauth2_handler_template().render(
         service_name = service_name,
         auth_handler_name = service_name.replace('_','-'),
-        caplitalized_service_name=capitliazed_service_name,
+        capitalized_service_name=capitliazed_service_name,
         upper_service_name=service_name.upper()
     )
     output_path = parent_path / f'hyperpocket/hyperpocket/auth/{service_name}/oauth2_handler.py'
@@ -76,7 +76,7 @@ def generate_auth_oauth2_handler(service_name, capitliazed_service_name, parent_
 def generate_auth_oauth2_schema(service_name, capitliazed_service_name, parent_path):
     print(f"Generating auth/oauth2 schema for '{service_name}'.")
     output_from_parsed_template = get_auth_oauth2_schema_template().render(
-        caplitalized_service_name=capitliazed_service_name,
+        capitalized_service_name=capitliazed_service_name,
     )
     output_path = parent_path / f'hyperpocket/hyperpocket/auth/{service_name}/oauth2_schema.py'
     with open(output_path, "w") as f:
