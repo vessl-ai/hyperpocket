@@ -18,7 +18,7 @@ from hyperpocket.tool import Tool
 
 
 class PocketOpenAI(Pocket):
-    def invoke(self, tool_call: ChatCompletionMessageToolCall, *kwargs):
+    def invoke(self, tool_call: ChatCompletionMessageToolCall, **kwargs):
         loop = asyncio.get_running_loop()
         result = loop.run_until_complete(self.ainvoke(tool_call, **kwargs))
         return result
@@ -84,7 +84,7 @@ async def handle_tool_call_async(
         elif choice.finish_reason == "tool_calls":
             tool_calls = choice.message.tool_calls
             for tool_call in tool_calls:
-                pocket_logger.debug("[TOOL CALL] ", tool_call)
+                pocket_logger.debug(f"[TOOL CALL] {tool_call}")
                 tool_message = await pocket.ainvoke(tool_call)
                 messages.append(tool_message)
 
