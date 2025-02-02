@@ -19,16 +19,9 @@ class {{ capitalized_service_name }}OAuth2AuthContext({{ capitalized_service_nam
         description = f'{{ capitalized_service_name }} OAuth2 Context logged in as a user {response.authed_user.id}'
         now = datetime.now(tz=timezone.utc)
 
-        # user token
-        if response.authed_user:
-            access_token = response.authed_user.access_token
-            refresh_token = response.authed_user.refresh_token
-            expires_in = response.authed_user.expires_in
-        # bot token
-        else:
-            access_token = response.access_token
-            refresh_token = response.refresh_token
-            expires_in = response.expires_in
+        access_token = response.access_token
+        refresh_token = response.refresh_token
+        expires_in = response.expires_in
 
         if expires_in:
             expires_at = now + timedelta(seconds=response.authed_user.expires_in)

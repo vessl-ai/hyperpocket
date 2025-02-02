@@ -15,4 +15,6 @@ class {{ capitalized_service_name }}OAuth2Request(AuthenticateRequest):
 
 class {{ capitalized_service_name }}OAuth2Response(AuthenticateResponse):
     access_token: str
+    expires_in: int
+    refresh_token: Optional[str] = Field(default=None)
 ''')
