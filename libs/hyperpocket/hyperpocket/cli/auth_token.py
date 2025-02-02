@@ -14,7 +14,7 @@ from hyperpocket.cli.codegen.auth import (
 
 @click.command()
 @click.argument("service_name", type=str)
-@click.argument("--force", is_flag=True, default=False)
+@click.option("--force", is_flag=True, default=False)
 def create_token_auth_template(service_name, force):
     ## Validate service_name
     if not service_name.islower() or not service_name.replace("_", "").isalpha():
