@@ -1,5 +1,4 @@
 import asyncio
-from concurrent.futures import ThreadPoolExecutor
 from typing import Any, List, Optional, Union
 
 from hyperpocket.config import pocket_logger
@@ -90,6 +89,7 @@ class Pocket(object):
             *args,
             **kwargs,
         )
+        pocket_logger.debug(f"{tool_name} result: {result}")
         return result
 
     def invoke_with_state(
