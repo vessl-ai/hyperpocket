@@ -53,7 +53,7 @@ class RedditOAuth2AuthHandler(AuthHandlerInterface):
             config().public_base_url + "/",
             f"{config().callback_url_rewrite_prefix}/auth/reddit/oauth2/callback",
         )
-        print(f"redirect_uri: {redirect_uri}")
+
         auth_url = self._make_auth_url(
             req=auth_req, redirect_uri=redirect_uri, state=future_uid
         )

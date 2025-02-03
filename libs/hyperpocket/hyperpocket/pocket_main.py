@@ -1,5 +1,4 @@
 import asyncio
-from concurrent.futures import ThreadPoolExecutor
 from typing import Any, List, Optional, Union
 
 from hyperpocket.config import pocket_logger

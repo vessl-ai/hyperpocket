@@ -1,11 +1,11 @@
 import ast
+import os
 from unittest.async_case import IsolatedAsyncioTestCase
 
 from anthropic import Anthropic
-from hyperpocket.config import config, secret
-from hyperpocket.tool import from_git
 from pydantic import BaseModel
 
+from hyperpocket.config import config
 from hyperpocket_anthropic import PocketAnthropic
 
 
@@ -49,11 +49,7 @@ class TestPocketAnthropicUseProfile(IsolatedAsyncioTestCase):
 
         self.pocket = PocketAnthropic(
             tools=[
-                from_git(
-                    "https://github.com/vessl-ai/hyperawesometools",
-                    "main",
-                    "managed-tools/none/simple-echo-tool",
-                ),
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/none/simple-echo-tool",
                 self.add,
                 self.sub_pydantic_args,
             ],
@@ -61,7 +57,7 @@ class TestPocketAnthropicUseProfile(IsolatedAsyncioTestCase):
         self.tool_specs_use_profile = self.pocket.get_anthropic_tool_specs(
             use_profile=True
         )
-        self.client = Anthropic(api_key=secret["ANTHROPIC_API_KEY"])
+        self.client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
     async def asyncTearDown(self):
         self.pocket._teardown_server()
@@ -70,16 +66,8 @@ class TestPocketAnthropicUseProfile(IsolatedAsyncioTestCase):
         # given
         pocket = PocketAnthropic(
             tools=[
-                from_git(
-                    "https://github.com/vessl-ai/hyperawesometools",
-                    "main",
-                    "managed-tools/slack/get-message",
-                ),
-                from_git(
-                    "https://github.com/vessl-ai/hyperawesometools",
-                    "main",
-                    "managed-tools/slack/post-message",
-                ),
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/get-message",
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/post-message",
             ]
         )
 

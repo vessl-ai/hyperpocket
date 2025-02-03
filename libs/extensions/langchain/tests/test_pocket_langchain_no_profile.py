@@ -1,11 +1,11 @@
 import ast
+import os
 from unittest.async_case import IsolatedAsyncioTestCase
 
-from hyperpocket.config import config, secret
-from hyperpocket.tool import from_git
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel
 
+from hyperpocket.config import config
 from hyperpocket_langchain.pocket_langchain import PocketLangchain
 
 
@@ -19,18 +19,14 @@ class TestPocketLangchainNoProfile(IsolatedAsyncioTestCase):
 
         self.pocket = PocketLangchain(
             tools=[
-                from_git(
-                    "https://github.com/vessl-ai/hyperawesometools",
-                    "main",
-                    "managed-tools/none/simple-echo-tool",
-                ),
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/none/simple-echo-tool",
                 self.add,
                 self.sub_pydantic_args,
             ],
         )
 
         self.llm_no_profile = ChatOpenAI(
-            model="gpt-4o", api_key=secret["OPENAI_API_KEY"]
+            model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY")
         ).bind_tools(tools=self.pocket.get_tools(use_profile=False))
 
     async def asyncTearDown(self):

@@ -1,12 +1,12 @@
 import ast
 import json
+import os
 from unittest.async_case import IsolatedAsyncioTestCase
 
-from hyperpocket.config import config, secret
-from hyperpocket.tool import from_git
 from openai import OpenAI
 from pydantic import BaseModel
 
+from hyperpocket.config import config
 from hyperpocket_openai import PocketOpenAI
 
 
@@ -20,28 +20,16 @@ class TestPocketOpenAINoProfile(IsolatedAsyncioTestCase):
 
         self.pocket = PocketOpenAI(
             tools=[
-                from_git(
-                    "https://github.com/vessl-ai/hyperawesometools",
-                    "main",
-                    "managed-tools/slack/get-message",
-                ),
-                from_git(
-                    "https://github.com/vessl-ai/hyperawesometools",
-                    "main",
-                    "managed-tools/slack/post-message",
-                ),
-                from_git(
-                    "https://github.com/vessl-ai/hyperawesometools",
-                    "main",
-                    "managed-tools/none/simple-echo-tool",
-                ),
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/get-message",
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/post-message",
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/none/simple-echo-tool",
                 self.add,
                 self.sub_pydantic_args,
             ],
             use_profile=False,
         )
         self.tool_specs = self.pocket.get_open_ai_tool_specs()
-        self.client = OpenAI(api_key=secret["OPENAI_API_KEY"])
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     async def asyncTearDown(self):
         self.pocket._teardown_server()
