@@ -1534,7 +1534,7 @@ wheels = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.0.3"
+version = "0.2.1"
 source = { editable = "../../hyperpocket" }
 dependencies = [
     { name = "click" },
@@ -1576,6 +1576,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "pytest", specifier = ">=8.3.4" },
+    { name = "pytest-cov", specifier = ">=6.0.0" },
     { name = "ruff", specifier = ">=0.8.6" },
 ]
 

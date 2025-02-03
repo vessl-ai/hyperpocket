@@ -1,7 +1,7 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
-from hyperpocket_crewai.pocket_crewai import PocketCrewAI
+from hyperpocket_crewai import PocketCrewAI
 
 
 # If you want to run a snippet of code before or after the crew starts,
