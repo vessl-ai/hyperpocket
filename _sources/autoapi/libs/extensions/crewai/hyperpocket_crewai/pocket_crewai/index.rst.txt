@@ -1,0 +1,32 @@
+libs.extensions.crewai.hyperpocket_crewai.pocket_crewai
+=======================================================
+
+.. py:module:: libs.extensions.crewai.hyperpocket_crewai.pocket_crewai
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.extensions.crewai.hyperpocket_crewai.pocket_crewai.PocketCrewAI
+
+
+Module Contents
+---------------
+
+.. py:class:: PocketCrewAI
+
+   Bases: :py:obj:`hyperpocket.Pocket`
+
+
+   .. py:method:: init(thread_id='default', profile='default') -> None
+
+
+   .. py:method:: get_tools(use_profile: Optional[bool] = None) -> List[crewai.tools.BaseTool]
+
+
+   .. py:method:: get_tool(pocket_tool: hyperpocket.tool.Tool) -> crewai.tools.BaseTool
+
+

@@ -1,0 +1,16 @@
+libs.extensions.crewai
+======================
+
+.. py:module:: libs.extensions.crewai
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/extensions/crewai/hyperpocket_crewai/index
+
+
