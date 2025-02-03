@@ -96,8 +96,8 @@ class ScheduleSummarizer:
     @task
     def total_summarize(self) -> Task:
         return Task(
-            description=f"summarize the previous task's output and list all of the works",
-            expected_output="work schedule list",
+            description=f"list all of the works and summarize, schedule",
+            expected_output="today's todo list and schedule.",
             agent=self.summarizer(),
             input=["google_meeting_summarize", "github_summarize", "slack_summarize"],
             output_file="output/summary.txt"

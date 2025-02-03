@@ -21,7 +21,7 @@ def run():
         "slack_channel": "proj-hyperpocket",
         "github_org": "vessl-ai",
         "github_repo": "hyperpocket",
-        "current_date": datetime.today().astimezone(tz=pytz.timezone('Asia/Seoul')).strftime('%y-%m-%d')
+        "current_date": datetime.today().astimezone(tz=pytz.timezone('Asia/Seoul')).strftime('%m-%d-%Y')
     }
     crew = ScheduleSummarizer()
     try:
