@@ -30,7 +30,7 @@ Module Contents
    Bases: :py:obj:`hyperpocket.Pocket`
 
 
-   .. py:method:: invoke(tool_call: openai.types.chat.ChatCompletionMessageToolCall, *kwargs)
+   .. py:method:: invoke(tool_call: openai.types.chat.ChatCompletionMessageToolCall, **kwargs)
 
 
    .. py:method:: ainvoke(tool_call: openai.types.chat.ChatCompletionMessageToolCall, **kwargs)
