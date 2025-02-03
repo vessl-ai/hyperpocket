@@ -63,12 +63,18 @@ def add_tool(tool_name, tool_path):
         json.dump(tools, f)
 
 
-def delete_tool(tool_name):
-    if tool_name in tools:
-        del tools[str(tool_name)]
+def delete_tool(tool_path):
+    target_name = None
+    for name, path in tools.items():
+        if tool_path == path:
+            target_name = name
+            break
 
+    if target_name:
+        del tools[target_name]
         with open(tools_cache_path, "w") as f:
             json.dump(tools, f)
+    return
 
 
 async def chat(message, history):
@@ -222,7 +228,7 @@ def build_upload_ui(state):
 
 
 def build_chat_ui(state):
-    PRE_LOADED_TOOL_NUM = 20
+    PRE_LOADED_TOOL_NUM = 100
 
     def _refresh_tool_list_ui(tool_path, is_tool_list_refresh_needed):
         tool_values = list(tools.values())
@@ -264,12 +270,12 @@ def build_chat_ui(state):
         return updated_tool_path, *updated
 
     def _delete_tool_action(tool_path):
-        if str(tool_path) not in tools:
+        if str(tool_path) not in tools.values():
             print(f"not found {tool_path} in tools. tools: {tools}")
             is_tool_list_refresh_needed = False
         else:
-            print(">>> delete", tool_path)
             delete_tool(tool_path)
+            print(f"deleted {tool_path} in tools. tools: {tools}")
             is_tool_list_refresh_needed = True
 
         updated_tool_path, _, *updated = _refresh_tool_list_ui(tool_path, is_tool_list_refresh_needed)
