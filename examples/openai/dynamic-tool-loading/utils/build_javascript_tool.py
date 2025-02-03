@@ -21,6 +21,9 @@ def build_javascript_tool(
     if scopes is None:
         scopes = []
 
+    if dependencies is None:
+        dependencies = []
+
     tool_path = base_path / tool_name
     if tool_path.exists():
         print("delete ", tool_path)
