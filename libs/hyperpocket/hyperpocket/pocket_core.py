@@ -276,21 +276,7 @@ class PocketCore:
     @classmethod
     def _parse_tool_like(cls, tool_like: ToolLike) -> ToolLike:
         if isinstance(tool_like, str):
-            if pathlib.Path(tool_like).exists():
-                lock = LocalLock(tool_like)
-                parsed_tool_like = WasmToolRequest(lock=lock, rel_path="", tool_vars={})
-            elif tool_like.startswith("https://github.com"):
-                base_repo_url, git_ref, rel_path = GitLock.parse_repo_url(
-                    repo_url=tool_like
-                )
-                lock = GitLock(repository_url=base_repo_url, git_ref=git_ref)
-                parsed_tool_like = WasmToolRequest(lock=lock, rel_path=rel_path, tool_vars={})
-            else:
-                parsed_tool_like = None
-                RuntimeError(
-                    f"Can't convert to ToolRequest. it might be wrong github url or local path. path: {tool_like}")
-
-            return parsed_tool_like
+            return cls._parse_str_tool_like(tool_like)
 
         elif isinstance(tool_like, WasmToolRequest):
             return tool_like
@@ -301,3 +287,22 @@ class PocketCore:
             raise ValueError("WasmTool should pass ToolRequest instance instead.")
         else:  # Callable, Tool
             return tool_like
+
+    @classmethod
+    def _parse_str_tool_like(cls, tool_like: str) -> ToolLike:
+        if pathlib.Path(tool_like).exists():
+            lock = LocalLock(tool_like)
+            parsed_tool_like = WasmToolRequest(lock=lock, rel_path="", tool_vars={})
+        elif tool_like.startswith("https://github.com"):
+            base_repo_url, git_ref, rel_path = GitLock.parse_repo_url(
+                repo_url=tool_like
+            )
+            lock = GitLock(repository_url=base_repo_url, git_ref=git_ref)
+            parsed_tool_like = WasmToolRequest(lock=lock, rel_path=rel_path, tool_vars={})
+        else:
+            parsed_tool_like = None
+            RuntimeError(
+                f"Can't convert to ToolRequest. it might be wrong github url or local path. path: {tool_like}")
+
+        return parsed_tool_like
+
