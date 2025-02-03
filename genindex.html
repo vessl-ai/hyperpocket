@@ -1,114 +1,187 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html lang="en"
+      data-content_root="./"
+      x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }"
+      x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))"
+      class="scroll-smooth"
+      :class="{'dark': darkMode === 'dark' || (darkMode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}"
+>
 <head>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; Hyperpocket  documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-
+  <meta charset="utf-8" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <title>Index | Hyperpocket  documentation</title>
+    <meta property="og:title" content="Index | Hyperpocket  documentation" />
+    <meta name="twitter:title" content="Index | Hyperpocket  documentation" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="_static/theme.css?v=42baaae4" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+        <link rel="search" title="Search" href="search.html" />
+        <link rel="index" title="Index" href="#" />
+
+    <script>
+    <!-- Prevent Flash of wrong theme -->
+      const userPreference = localStorage.getItem('darkMode');
+      let mode;
+      if (userPreference === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        mode = 'dark';
+        document.documentElement.classList.add('dark');
+      } else {
+        mode = 'light';
+      }
+      if (!userPreference) {localStorage.setItem('darkMode', mode)}
+    </script>
 </head>
+  <body x-data="{ showSidebar: false, showScrollTop: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }">
+    <div x-cloak x-show="showSidebar" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" @click.self="showSidebar = false"></div><div id="page" class="relative flex flex-col min-h-screen"><a href="#content" class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100">
+      Skip to content
+    </a><header
+  class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
+    <div class="hidden mr-4 md:flex">
+      <a href="index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">Hyperpocket  documentation</span>
+      </a></div><button
+      class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
+      type="button" @click="showSidebar = true">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" aria-hidden="true"
+        fill="currentColor">
+        <path
+          d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z" />
+      </svg>
+      <span class="sr-only">Toggle navigation menu</span>
+    </button>
+    <div class="flex items-center justify-between flex-1 space-x-2 sm:space-x-4 md:justify-end">
+      <div class="flex-1 w-full md:w-auto md:flex-none"><form id="searchbox"
+      action="search.html"
+      method="get"
+      class="relative flex items-center group"
+      @keydown.k.window.meta="$refs.search.focus()">
+  <input x-ref="search"
+          name="q"
+          id="search-input"
+          type="search"
+          aria-label="Search the docs"
+          placeholder="Search ..."
+          class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" />
+  <kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+    <span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form>
+      </div>
+      <nav class="flex items-center space-x-1">
+        <button @click="darkMode = darkMode === 'light' ? 'dark' : 'light'"
+          class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9"
+          type="button"
+          aria-label="Color theme switcher">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" fill="currentColor"
+            class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0">
+            <path
+              d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" fill="currentColor"
+            class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100">
+            <path
+              d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+</header>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+    <div class="flex-1"><div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside id="left-sidebar"
+  class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
+  :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
 
-          
-          
-          <a href="index.html" class="icon icon-home">
-            Hyperpocket
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction/index.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tools/index.html">Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="auth/index.html">Auth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supported-frameworks/index.html">Supported frameworks</a></li>
+    <a href="index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">Hyperpocket  documentation</span>
+    </a>
+
+    <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
+      <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction/index.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/quickstart.html">Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools/index.html">Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools/what-are-tools.html">What are tools?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/using-wasm-tools.html">Using WASM Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/using-function-tools.html">Using Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/tool-interfaces.html">Tool interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="auth/index.html">Auth</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="auth/hyperpocket-auth.html">Hyperpocket Auth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auth/enabling-oauth-with-hyperpocket.html">Enabling OAuth with Hyperpocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auth/enabling-token-based-authentication-with-hyperpocket.html">Enabling Token-Based Authentication with Hyperpocket</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="supported-frameworks/index.html">Supported frameworks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="supported-frameworks/langchain.html">LangChain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supported-frameworks/langgraph.html">LangGraph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supported-frameworks/llamaindex.html">LlamaIndex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supported-frameworks/openai.html">OpenAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supported-frameworks/anthropic.html">Anthropic</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="contribute/contribute-to-hyperpocket.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="autoapi/libs/index.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/libs/index.html">API References</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/libs/docks/index.html">libs.docks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/libs/extensions/index.html">libs.extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/libs/hyperpocket/index.html">libs.hyperpocket</a></li>
+</ul>
+</li>
 </ul>
 
-        </div>
+</nav>
       </div>
-    </nav>
+    </div>
+    <button type="button" @click="showSidebar = false"
+      class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" fill="currentColor"
+        stroke="none" class="h-4 w-4">
+        <path
+          d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z" />
+      </svg>
+    </button>
+  </aside>
+        <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+<div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs"
+     class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+  <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
+     href="index.html">
+    <span class="hidden md:inline">Hyperpocket  documentation</span>
+    <svg xmlns="http://www.w3.org/2000/svg"
+         height="18"
+         width="18"
+         viewBox="0 96 960 960"
+         aria-label="Home"
+         fill="currentColor"
+         stroke="none"
+         class="md:hidden">
+      <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z" />
+    </svg>
+  </a>
+  
+<div class="mr-1">/</div><span aria-current="page"
+        class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Index</span>
+</nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Hyperpocket</a>
-      </nav>
+<div id="content" role="main">
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Index</li>
-      <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/vessl-ai/hyperpocket/blob/main/docs/hyperpocket/genindex" class="fa fa-github"> Edit on GitHub</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- <a href="#A"><strong>A</strong></a>
- | <a href="#B"><strong>B</strong></a>
- | <a href="#C"><strong>C</strong></a>
- | <a href="#D"><strong>D</strong></a>
- | <a href="#E"><strong>E</strong></a>
- | <a href="#F"><strong>F</strong></a>
- | <a href="#G"><strong>G</strong></a>
- | <a href="#H"><strong>H</strong></a>
- | <a href="#I"><strong>I</strong></a>
- | <a href="#J"><strong>J</strong></a>
- | <a href="#K"><strong>K</strong></a>
- | <a href="#L"><strong>L</strong></a>
- | <a href="#M"><strong>M</strong></a>
- | <a href="#N"><strong>N</strong></a>
- | <a href="#O"><strong>O</strong></a>
- | <a href="#P"><strong>P</strong></a>
- | <a href="#R"><strong>R</strong></a>
- | <a href="#S"><strong>S</strong></a>
- | <a href="#T"><strong>T</strong></a>
- | <a href="#U"><strong>U</strong></a>
- | <a href="#V"><strong>V</strong></a>
- | <a href="#W"><strong>W</strong></a>
- 
-</div>
-<h2 id="A">A</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <h1 id="index">Index</h1>
+  <h2 id="A">A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/pocket_core/index.html#libs.hyperpocket.hyperpocket.pocket_core.PocketCore.acall">acall() (libs.hyperpocket.hyperpocket.pocket_core.PocketCore method)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response.access_token">access_token (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext.access_token">(libs.hyperpocket.hyperpocket.auth.context.AuthContext attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Response.access_token">(libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Response attribute)</a>
@@ -144,7 +217,7 @@
 </li>
       <li><a href="autoapi/hyperpocket_openai/pocket_openai/index.html#hyperpocket_openai.pocket_openai.PocketOpenAI.ainvoke">ainvoke() (hyperpocket_openai.pocket_openai.PocketOpenAI method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperpocket_openai/index.html#hyperpocket_openai.PocketOpenAI.ainvoke">(hyperpocket_openai.PocketOpenAI method)</a>
 </li>
         <li><a href="autoapi/libs/extensions/anthropic/hyperpocket_anthropic/pocket_anthropic/index.html#libs.extensions.anthropic.hyperpocket_anthropic.pocket_anthropic.PocketAnthropic.ainvoke">(libs.extensions.anthropic.hyperpocket_anthropic.pocket_anthropic.PocketAnthropic method)</a>
@@ -164,7 +237,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response.app_id">app_id (libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/git/index.html#libs.hyperpocket.hyperpocket.config.git.GithubConfig.app_id">(libs.hyperpocket.hyperpocket.config.git.GithubConfig attribute)</a>
 </li>
       </ul></li>
@@ -176,7 +249,7 @@
 </li>
       <li><a href="autoapi/hyperdock_langchain/connector/index.html#hyperdock_langchain.connector.LangchainToolRequest.auth">auth (hyperdock_langchain.connector.LangchainToolRequest attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/index.html#hyperdock_langchain.LangchainToolRequest.auth">(hyperdock_langchain.LangchainToolRequest attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/settings/index.html#libs.hyperpocket.hyperpocket.config.settings.Config.auth">(libs.hyperpocket.hyperpocket.config.settings.Config attribute)</a>
@@ -187,7 +260,7 @@
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#libs.hyperpocket.hyperpocket.session.interface.BaseSessionValue.auth_context">auth_context (libs.hyperpocket.hyperpocket.session.interface.BaseSessionValue attribute)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/index.html#libs.hyperpocket.hyperpocket.auth.AUTH_CONTEXT_MAP">AUTH_CONTEXT_MAP (in module libs.hyperpocket.hyperpocket.auth)</a>
@@ -204,7 +277,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/schema/index.html#libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest.auth_scopes">auth_scopes (libs.hyperpocket.hyperpocket.auth.schema.AuthenticateRequest attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#libs.hyperpocket.hyperpocket.session.interface.BaseSessionValue.auth_scopes">(libs.hyperpocket.hyperpocket.session.interface.BaseSessionValue attribute)</a>
 </li>
       </ul></li>
@@ -218,7 +291,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler.authenticate">authenticate() (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler.authenticate">(libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/token_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler.authenticate">(libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler method)</a>
@@ -257,17 +330,18 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/pocket_auth/index.html#libs.hyperpocket.hyperpocket.pocket_auth.AuthState">AuthState (class in libs.hyperpocket.hyperpocket.pocket_auth)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="B">B</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="B">B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/auth/index.html#libs.hyperpocket.hyperpocket.config.auth.BaseAuthConfig">BaseAuthConfig (class in libs.hyperpocket.hyperpocket.config.auth)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#libs.hyperpocket.hyperpocket.session.interface.BaseSessionValue">BaseSessionValue (class in libs.hyperpocket.hyperpocket.session.interface)</a>
 </li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response.bot_user_id">bot_user_id (libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response attribute)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/wasm/index.html#libs.hyperpocket.hyperpocket.server.tool.wasm.browse_script_page">browse_script_page() (in module libs.hyperpocket.hyperpocket.server.tool.wasm)</a>
@@ -275,11 +349,12 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/browser/index.html#libs.hyperpocket.hyperpocket.tool.wasm.browser.InvokerBrowser.browser_context">browser_context (libs.hyperpocket.hyperpocket.tool.wasm.browser.InvokerBrowser attribute)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="C">C</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="C">C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/provider/index.html#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.CALENDLY">CALENDLY (libs.hyperpocket.hyperpocket.auth.provider.AuthProvider attribute)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/auth/index.html#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.calendly">calendly (libs.hyperpocket.hyperpocket.config.auth.AuthConfig attribute)</a>
@@ -316,7 +391,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Request.client_id">client_id (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Request attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Request.client_id">(libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Request attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request.client_id">(libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request attribute)</a>
@@ -335,10 +410,10 @@
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Request.client_secret">client_secret (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Request attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Request.client_secret">(libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Request attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request.client_secret">(libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Request attribute)</a>
@@ -364,7 +439,7 @@
 </li>
       <li><a href="autoapi/hyperdock_langchain/index.html#hyperdock_langchain.connect">connect() (in module hyperdock_langchain)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/connector/index.html#hyperdock_langchain.connector.connect">(in module hyperdock_langchain.connector)</a>
 </li>
       </ul></li>
@@ -372,7 +447,7 @@
 </li>
       <li><a href="autoapi/hyperdock_langchain/index.html#hyperdock_langchain.Converter">Converter (in module hyperdock_langchain)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/dictionary/index.html#hyperdock_langchain.dictionary.Converter">(in module hyperdock_langchain.dictionary)</a>
 </li>
       </ul></li>
@@ -389,18 +464,19 @@
       <li><a href="autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/directory/index.html#libs.docks.hyperdock-fileio.hyperdock_fileio.directory.current_working_directory">current_working_directory() (in module libs.docks.hyperdock-fileio.hyperdock_fileio.directory)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="D">D</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="D">D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/futures/futurestore/index.html#libs.hyperpocket.hyperpocket.futures.futurestore.FutureData.data">data (libs.hyperpocket.hyperpocket.futures.futurestore.FutureData attribute)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/session/index.html#libs.hyperpocket.hyperpocket.config.session.SessionConfigRedis.db">db (libs.hyperpocket.hyperpocket.config.session.SessionConfigRedis attribute)</a>
 </li>
       <li><a href="autoapi/hyperdock_langchain/dictionary/index.html#hyperdock_langchain.dictionary.EnvDict.default">default() (hyperdock_langchain.dictionary.EnvDict class method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/index.html#hyperdock_langchain.EnvDict.default">(hyperdock_langchain.EnvDict class method)</a>
 </li>
       </ul></li>
@@ -414,7 +490,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/in_memory/index.html#libs.hyperpocket.hyperpocket.session.in_memory.InMemorySessionStorage.delete">delete() (libs.hyperpocket.hyperpocket.session.in_memory.InMemorySessionStorage method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#libs.hyperpocket.hyperpocket.session.interface.SessionStorageInterface.delete">(libs.hyperpocket.hyperpocket.session.interface.SessionStorageInterface method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/redis/index.html#libs.hyperpocket.hyperpocket.session.redis.RedisSessionStorage.delete">(libs.hyperpocket.hyperpocket.session.redis.RedisSessionStorage method)</a>
@@ -426,7 +502,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler.description">description (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext.description">(libs.hyperpocket.hyperpocket.auth.context.AuthContext attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler.description">(libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler attribute)</a>
@@ -453,7 +529,7 @@
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext.detail">detail (libs.hyperpocket.hyperpocket.auth.context.AuthContext attribute)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/script/index.html#libs.hyperpocket.hyperpocket.tool.wasm.script.ScriptFileNode.directory">directory (libs.hyperpocket.hyperpocket.tool.wasm.script.ScriptFileNode attribute)</a>
@@ -469,20 +545,21 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/wasm/index.html#libs.hyperpocket.hyperpocket.server.tool.wasm.done_script_page">done_script_page() (in module libs.hyperpocket.hyperpocket.server.tool.wasm)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="E">E</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="E">E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/eject/index.html#libs.hyperpocket.hyperpocket.cli.eject.eject">eject() (in module libs.hyperpocket.hyperpocket.cli.eject)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/repository/index.html#libs.hyperpocket.hyperpocket.repository.repository.eject">(in module libs.hyperpocket.hyperpocket.repository.repository)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.GitLock.eject_to_path">eject_to_path() (libs.hyperpocket.hyperpocket.repository.lock.GitLock method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.Lock.eject_to_path">(libs.hyperpocket.hyperpocket.repository.lock.Lock method)</a>
 </li>
       </ul></li>
@@ -494,31 +571,31 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/dto/script/index.html#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint.entrypoint">entrypoint (libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/script/index.html#libs.hyperpocket.hyperpocket.tool.wasm.script.Script.entrypoint">(libs.hyperpocket.hyperpocket.tool.wasm.script.Script property)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/hyperdock_langchain/connector/index.html#hyperdock_langchain.connector.LangchainToolRequest.env_dict_extends">env_dict_extends (hyperdock_langchain.connector.LangchainToolRequest attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/index.html#hyperdock_langchain.LangchainToolRequest.env_dict_extends">(hyperdock_langchain.LangchainToolRequest attribute)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/hyperdock_langchain/index.html#hyperdock_langchain.EnvDict">EnvDict (class in hyperdock_langchain)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/dictionary/index.html#hyperdock_langchain.dictionary.EnvDict">(class in hyperdock_langchain.dictionary)</a>
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/dto/script/index.html#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult.error">error (libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptResult attribute)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext.expires_at">expires_at (libs.hyperpocket.hyperpocket.auth.context.AuthContext attribute)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response.expires_in">expires_in (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Response.expires_in">(libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Response attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Response.expires_in">(libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Response attribute)</a>
@@ -539,11 +616,12 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/extract_func_param_desc_from_docstring/index.html#libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring.extract_param_docstring_mapping">extract_param_docstring_mapping() (in module libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="F">F</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="F">F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/script/index.html#libs.hyperpocket.hyperpocket.tool.wasm.script.ScriptFileNode.file">file (libs.hyperpocket.hyperpocket.tool.wasm.script.ScriptFileNode attribute)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/find_all_leaf_class_in_package/index.html#libs.hyperpocket.hyperpocket.util.find_all_leaf_class_in_package.find_all_leaf_class_in_package">find_all_leaf_class_in_package() (in module libs.hyperpocket.hyperpocket.util.find_all_leaf_class_in_package)</a>
@@ -579,7 +657,7 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/gumloop/token_context/index.html#libs.hyperpocket.hyperpocket.auth.gumloop.token_context.GumLoopTokenContext.from_gumloop_token_response">from_gumloop_token_response() (libs.hyperpocket.hyperpocket.auth.gumloop.token_context.GumLoopTokenContext class method)</a>
 </li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/linear/token_context/index.html#libs.hyperpocket.hyperpocket.auth.linear.token_context.LinearTokenAuthContext.from_linear_token_response">from_linear_token_response() (libs.hyperpocket.hyperpocket.auth.linear.token_context.LinearTokenAuthContext class method)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/tool/index.html#libs.hyperpocket.hyperpocket.tool.wasm.tool.from_local">from_local() (in module libs.hyperpocket.hyperpocket.tool.wasm.tool)</a>
@@ -594,7 +672,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.Tool.from_tool_request">from_tool_request() (libs.hyperpocket.hyperpocket.tool.tool.Tool class method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/tool/index.html#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool.from_tool_request">(libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool class method)</a>
 </li>
       </ul></li>
@@ -616,16 +694,17 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/futures/futurestore/index.html#libs.hyperpocket.hyperpocket.futures.futurestore.FutureStore">FutureStore (class in libs.hyperpocket.hyperpocket.futures.futurestore)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/futures/index.html#libs.hyperpocket.hyperpocket.futures.FutureStore">(in module libs.hyperpocket.hyperpocket.futures)</a>
 </li>
       </ul></li>
   </ul></td>
-</tr></table>
-
-<h2 id="G">G</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="G">G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/auth/index.html#libs.hyperpocket.hyperpocket.cli.auth.generate_auth_context">generate_auth_context() (in module libs.hyperpocket.hyperpocket.cli.auth)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/auth/index.html#libs.hyperpocket.hyperpocket.cli.auth.generate_auth_token_context">generate_auth_token_context() (in module libs.hyperpocket.hyperpocket.cli.auth)</a>
@@ -640,7 +719,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/in_memory/index.html#libs.hyperpocket.hyperpocket.session.in_memory.InMemorySessionStorage.get">get() (libs.hyperpocket.hyperpocket.session.in_memory.InMemorySessionStorage method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#libs.hyperpocket.hyperpocket.session.interface.SessionStorageInterface.get">(libs.hyperpocket.hyperpocket.session.interface.SessionStorageInterface method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/redis/index.html#libs.hyperpocket.hyperpocket.session.redis.RedisSessionStorage.get">(libs.hyperpocket.hyperpocket.session.redis.RedisSessionStorage method)</a>
@@ -654,7 +733,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/index.html#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_context_template">get_auth_context_template() (in module libs.hyperpocket.hyperpocket.cli.codegen.auth)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_context_template/index.html#libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_context_template.get_auth_context_template">(in module libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_context_template)</a>
 </li>
       </ul></li>
@@ -662,19 +741,19 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/index.html#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_context_template">get_auth_token_context_template() (in module libs.hyperpocket.hyperpocket.cli.codegen.auth)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_token_context_template/index.html#libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_context_template.get_auth_token_context_template">(in module libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_context_template)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/index.html#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_handler_template">get_auth_token_handler_template() (in module libs.hyperpocket.hyperpocket.cli.codegen.auth)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_token_handler_template/index.html#libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_handler_template.get_auth_token_handler_template">(in module libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_handler_template)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/index.html#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_schema_template">get_auth_token_schema_template() (in module libs.hyperpocket.hyperpocket.cli.codegen.auth)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_token_schema_template/index.html#libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_schema_template.get_auth_token_schema_template">(in module libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_schema_template)</a>
 </li>
       </ul></li>
@@ -682,7 +761,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/in_memory/index.html#libs.hyperpocket.hyperpocket.session.in_memory.InMemorySessionStorage.get_by_thread_id">get_by_thread_id() (libs.hyperpocket.hyperpocket.session.in_memory.InMemorySessionStorage method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#libs.hyperpocket.hyperpocket.session.interface.SessionStorageInterface.get_by_thread_id">(libs.hyperpocket.hyperpocket.session.interface.SessionStorageInterface method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/redis/index.html#libs.hyperpocket.hyperpocket.session.redis.RedisSessionStorage.get_by_thread_id">(libs.hyperpocket.hyperpocket.session.redis.RedisSessionStorage method)</a>
@@ -710,19 +789,19 @@
 </li>
       <li><a href="autoapi/hyperpocket_openai/pocket_openai/index.html#hyperpocket_openai.pocket_openai.PocketOpenAI.get_open_ai_tool_spec">get_open_ai_tool_spec() (hyperpocket_openai.pocket_openai.PocketOpenAI method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperpocket_openai/index.html#hyperpocket_openai.PocketOpenAI.get_open_ai_tool_spec">(hyperpocket_openai.PocketOpenAI method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/hyperpocket_openai/pocket_openai/index.html#hyperpocket_openai.pocket_openai.PocketOpenAI.get_open_ai_tool_specs">get_open_ai_tool_specs() (hyperpocket_openai.pocket_openai.PocketOpenAI method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperpocket_openai/index.html#hyperpocket_openai.PocketOpenAI.get_open_ai_tool_specs">(hyperpocket_openai.PocketOpenAI method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/index.html#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_token_template">get_server_auth_token_template() (in module libs.hyperpocket.hyperpocket.cli.codegen.auth)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/server_auth_template/index.html#libs.hyperpocket.hyperpocket.cli.codegen.auth.server_auth_template.get_server_auth_token_template">(in module libs.hyperpocket.hyperpocket.cli.codegen.auth.server_auth_template)</a>
 </li>
       </ul></li>
@@ -730,17 +809,17 @@
 </li>
       <li><a href="autoapi/libs/extensions/langchain/hyperpocket_langchain/pocket_langchain/index.html#libs.extensions.langchain.hyperpocket_langchain.pocket_langchain.PocketLangchain.get_tool">get_tool() (libs.extensions.langchain.hyperpocket_langchain.pocket_langchain.PocketLangchain method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/llamaindex/hyperpocket_llamaindex/pocket_llamaindex/index.html#libs.extensions.llamaindex.hyperpocket_llamaindex.pocket_llamaindex.PocketLlamaindex.get_tool">(libs.extensions.llamaindex.hyperpocket_llamaindex.pocket_llamaindex.PocketLlamaindex method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/libs/extensions/langgraph/hyperpocket_langgraph/pocket_langgraph/index.html#libs.extensions.langgraph.hyperpocket_langgraph.pocket_langgraph.PocketLanggraph.get_tool_node">get_tool_node() (libs.extensions.langgraph.hyperpocket_langgraph.pocket_langgraph.PocketLanggraph method)</a>
 </li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/extensions/langchain/hyperpocket_langchain/pocket_langchain/index.html#libs.extensions.langchain.hyperpocket_langchain.pocket_langchain.PocketLangchain.get_tools">get_tools() (libs.extensions.langchain.hyperpocket_langchain.pocket_langchain.PocketLangchain method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/langgraph/hyperpocket_langgraph/pocket_langgraph/index.html#libs.extensions.langgraph.hyperpocket_langgraph.pocket_langgraph.PocketLanggraph.get_tools">(libs.extensions.langgraph.hyperpocket_langgraph.pocket_langgraph.PocketLanggraph method)</a>
 </li>
         <li><a href="autoapi/libs/extensions/llamaindex/hyperpocket_llamaindex/pocket_llamaindex/index.html#libs.extensions.llamaindex.hyperpocket_llamaindex.pocket_llamaindex.PocketLlamaindex.get_tools">(libs.extensions.llamaindex.hyperpocket_llamaindex.pocket_llamaindex.PocketLlamaindex method)</a>
@@ -754,7 +833,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/auth/index.html#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.github">github (libs.hyperpocket.hyperpocket.config.auth.AuthConfig attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/git/index.html#libs.hyperpocket.hyperpocket.config.git.GitConfig.github">(libs.hyperpocket.hyperpocket.config.git.GitConfig attribute)</a>
 </li>
       </ul></li>
@@ -833,11 +912,12 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/gumloop/token_schema/index.html#libs.hyperpocket.hyperpocket.auth.gumloop.token_schema.GumloopTokenResponse">GumloopTokenResponse (class in libs.hyperpocket.hyperpocket.auth.gumloop.token_schema)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="H">H</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="H">H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/hyperpocket_openai/pocket_openai/index.html#hyperpocket_openai.pocket_openai.handle_tool_call">handle_tool_call() (in module hyperpocket_openai.pocket_openai)</a>
 </li>
       <li><a href="autoapi/hyperpocket_openai/pocket_openai/index.html#hyperpocket_openai.pocket_openai.handle_tool_call_async">handle_tool_call_async() (in module hyperpocket_openai.pocket_openai)</a>
@@ -853,70 +933,71 @@
       <li>
     hyperdock_langchain
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/index.html#module-hyperdock_langchain">module</a>
 </li>
       </ul></li>
       <li>
     hyperdock_langchain.connector
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/connector/index.html#module-hyperdock_langchain.connector">module</a>
 </li>
       </ul></li>
       <li>
     hyperdock_langchain.converter
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/converter/index.html#module-hyperdock_langchain.converter">module</a>
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li>
     hyperdock_langchain.dictionary
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/dictionary/index.html#module-hyperdock_langchain.dictionary">module</a>
 </li>
       </ul></li>
       <li>
     hyperpocket_openai
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperpocket_openai/index.html#module-hyperpocket_openai">module</a>
 </li>
       </ul></li>
       <li>
     hyperpocket_openai.pocket_openai
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperpocket_openai/pocket_openai/index.html#module-hyperpocket_openai.pocket_openai">module</a>
 </li>
       </ul></li>
       <li>
     hyperpocket_openai.util
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperpocket_openai/util/index.html#module-hyperpocket_openai.util">module</a>
 </li>
       </ul></li>
       <li>
     hyperpocket_openai.util.tool_to_open_ai_spec
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperpocket_openai/util/tool_to_open_ai_spec/index.html#module-hyperpocket_openai.util.tool_to_open_ai_spec">module</a>
 </li>
       </ul></li>
   </ul></td>
-</tr></table>
-
-<h2 id="I">I</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="I">I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response.AuthedUser.id">id (libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response.AuthedUser attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response.Enterprise.id">(libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response.Enterprise attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response.Team.id">(libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response.Team attribute)</a>
@@ -944,15 +1025,15 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/settings/index.html#libs.hyperpocket.hyperpocket.config.settings.Config.internal_server_port">internal_server_port (libs.hyperpocket.hyperpocket.config.settings.Config attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/server/index.html#libs.hyperpocket.hyperpocket.server.server.PocketServer.internal_server_port">(libs.hyperpocket.hyperpocket.server.server.PocketServer attribute)</a>
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/hyperpocket_openai/pocket_openai/index.html#hyperpocket_openai.pocket_openai.PocketOpenAI.invoke">invoke() (hyperpocket_openai.pocket_openai.PocketOpenAI method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperpocket_openai/index.html#hyperpocket_openai.PocketOpenAI.invoke">(hyperpocket_openai.PocketOpenAI method)</a>
 </li>
         <li><a href="autoapi/libs/extensions/anthropic/hyperpocket_anthropic/pocket_anthropic/index.html#libs.extensions.anthropic.hyperpocket_anthropic.pocket_anthropic.PocketAnthropic.invoke">(libs.extensions.anthropic.hyperpocket_anthropic.pocket_anthropic.PocketAnthropic method)</a>
@@ -979,42 +1060,45 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#libs.hyperpocket.hyperpocket.session.interface.BaseSessionValue.is_near_expires">is_near_expires() (libs.hyperpocket.hyperpocket.session.interface.BaseSessionValue method)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="J">J</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="J">J</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/tool/index.html#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool.json_schema">json_schema (libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool attribute)</a>
 </li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/json_schema_to_model/index.html#libs.hyperpocket.hyperpocket.util.json_schema_to_model.json_schema_to_model">json_schema_to_model() (in module libs.hyperpocket.hyperpocket.util.json_schema_to_model)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="K">K</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="K">K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#libs.hyperpocket.hyperpocket.session.interface.K">K (in module libs.hyperpocket.hyperpocket.session.interface)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.GitLock.key">key() (libs.hyperpocket.hyperpocket.repository.lock.GitLock method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.LocalLock.key">(libs.hyperpocket.hyperpocket.repository.lock.LocalLock method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.Lock.key">(libs.hyperpocket.hyperpocket.repository.lock.Lock method)</a>
 </li>
       </ul></li>
   </ul></td>
-</tr></table>
-
-<h2 id="L">L</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="L">L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/hyperdock_langchain/index.html#hyperdock_langchain.LangchainToolRequest">LangchainToolRequest (class in hyperdock_langchain)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/connector/index.html#hyperdock_langchain.connector.LangchainToolRequest">(class in hyperdock_langchain.connector)</a>
 </li>
       </ul></li>
@@ -1023,1045 +1107,1045 @@
       <li>
     libs
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/index.html#module-libs">module</a>
 </li>
       </ul></li>
       <li>
     libs.docks
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/docks/index.html#module-libs.docks">module</a>
 </li>
       </ul></li>
       <li>
     libs.docks.hyperdock-fileio
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/docks/hyperdock-fileio/index.html#module-libs.docks.hyperdock-fileio">module</a>
 </li>
       </ul></li>
       <li>
     libs.docks.hyperdock-fileio.hyperdock_fileio
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/index.html#module-libs.docks.hyperdock-fileio.hyperdock_fileio">module</a>
 </li>
       </ul></li>
       <li>
     libs.docks.hyperdock-fileio.hyperdock_fileio.directory
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/directory/index.html#module-libs.docks.hyperdock-fileio.hyperdock_fileio.directory">module</a>
 </li>
       </ul></li>
       <li>
     libs.docks.hyperdock-fileio.hyperdock_fileio.operations
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/operations/index.html#module-libs.docks.hyperdock-fileio.hyperdock_fileio.operations">module</a>
 </li>
       </ul></li>
       <li>
     libs.docks.hyperdock-fileio.hyperdock_fileio.read
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/read/index.html#module-libs.docks.hyperdock-fileio.hyperdock_fileio.read">module</a>
 </li>
       </ul></li>
       <li>
     libs.docks.hyperdock-fileio.hyperdock_fileio.write
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/write/index.html#module-libs.docks.hyperdock-fileio.hyperdock_fileio.write">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/index.html#module-libs.extensions">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.anthropic
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/anthropic/index.html#module-libs.extensions.anthropic">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.anthropic.hyperpocket_anthropic
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/anthropic/hyperpocket_anthropic/index.html#module-libs.extensions.anthropic.hyperpocket_anthropic">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.anthropic.hyperpocket_anthropic.pocket_anthropic
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/anthropic/hyperpocket_anthropic/pocket_anthropic/index.html#module-libs.extensions.anthropic.hyperpocket_anthropic.pocket_anthropic">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.anthropic.hyperpocket_anthropic.util
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/anthropic/hyperpocket_anthropic/util/index.html#module-libs.extensions.anthropic.hyperpocket_anthropic.util">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.anthropic.hyperpocket_anthropic.util.tool_to_anthropic_spec
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/anthropic/hyperpocket_anthropic/util/tool_to_anthropic_spec/index.html#module-libs.extensions.anthropic.hyperpocket_anthropic.util.tool_to_anthropic_spec">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.langchain
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/langchain/index.html#module-libs.extensions.langchain">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.langchain.hyperpocket_langchain
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/langchain/hyperpocket_langchain/index.html#module-libs.extensions.langchain.hyperpocket_langchain">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.langchain.hyperpocket_langchain.pocket_langchain
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/langchain/hyperpocket_langchain/pocket_langchain/index.html#module-libs.extensions.langchain.hyperpocket_langchain.pocket_langchain">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.langgraph
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/langgraph/index.html#module-libs.extensions.langgraph">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.langgraph.hyperpocket_langgraph
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/langgraph/hyperpocket_langgraph/index.html#module-libs.extensions.langgraph.hyperpocket_langgraph">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.langgraph.hyperpocket_langgraph.pocket_langgraph
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/langgraph/hyperpocket_langgraph/pocket_langgraph/index.html#module-libs.extensions.langgraph.hyperpocket_langgraph.pocket_langgraph">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.llamaindex
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/llamaindex/index.html#module-libs.extensions.llamaindex">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.llamaindex.hyperpocket_llamaindex
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/llamaindex/hyperpocket_llamaindex/index.html#module-libs.extensions.llamaindex.hyperpocket_llamaindex">module</a>
 </li>
       </ul></li>
       <li>
     libs.extensions.llamaindex.hyperpocket_llamaindex.pocket_llamaindex
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/extensions/llamaindex/hyperpocket_llamaindex/pocket_llamaindex/index.html#module-libs.extensions.llamaindex.hyperpocket_llamaindex.pocket_llamaindex">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/index.html#module-libs.hyperpocket">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/index.html#module-libs.hyperpocket.hyperpocket">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/index.html#module-libs.hyperpocket.hyperpocket.auth">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.calendly
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/index.html#module-libs.hyperpocket.hyperpocket.auth.calendly">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.calendly.context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/context/index.html#module-libs.hyperpocket.hyperpocket.auth.calendly.context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.calendly.oauth2_context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_context/index.html#module-libs.hyperpocket.hyperpocket.auth.calendly.oauth2_context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_handler/index.html#module-libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_schema/index.html#module-libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/context/index.html#module-libs.hyperpocket.hyperpocket.auth.context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.github
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/index.html#module-libs.hyperpocket.hyperpocket.auth.github">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.github.context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/context/index.html#module-libs.hyperpocket.hyperpocket.auth.github.context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.github.oauth2_context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_context/index.html#module-libs.hyperpocket.hyperpocket.auth.github.oauth2_context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.github.oauth2_handler
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_handler/index.html#module-libs.hyperpocket.hyperpocket.auth.github.oauth2_handler">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.github.oauth2_schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_schema/index.html#module-libs.hyperpocket.hyperpocket.auth.github.oauth2_schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.github.token_context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/token_context/index.html#module-libs.hyperpocket.hyperpocket.auth.github.token_context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.github.token_handler
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/token_handler/index.html#module-libs.hyperpocket.hyperpocket.auth.github.token_handler">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.github.token_schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/token_schema/index.html#module-libs.hyperpocket.hyperpocket.auth.github.token_schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.google
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/index.html#module-libs.hyperpocket.hyperpocket.auth.google">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.google.context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/context/index.html#module-libs.hyperpocket.hyperpocket.auth.google.context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.google.oauth2_context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/oauth2_context/index.html#module-libs.hyperpocket.hyperpocket.auth.google.oauth2_context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.google.oauth2_handler
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/oauth2_handler/index.html#module-libs.hyperpocket.hyperpocket.auth.google.oauth2_handler">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.google.oauth2_schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/oauth2_schema/index.html#module-libs.hyperpocket.hyperpocket.auth.google.oauth2_schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.gumloop
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/gumloop/index.html#module-libs.hyperpocket.hyperpocket.auth.gumloop">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.gumloop.context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/gumloop/context/index.html#module-libs.hyperpocket.hyperpocket.auth.gumloop.context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.gumloop.token_context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/gumloop/token_context/index.html#module-libs.hyperpocket.hyperpocket.auth.gumloop.token_context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.gumloop.token_handler
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/gumloop/token_handler/index.html#module-libs.hyperpocket.hyperpocket.auth.gumloop.token_handler">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.gumloop.token_schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/gumloop/token_schema/index.html#module-libs.hyperpocket.hyperpocket.auth.gumloop.token_schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.handler
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/handler/index.html#module-libs.hyperpocket.hyperpocket.auth.handler">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.linear
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/linear/index.html#module-libs.hyperpocket.hyperpocket.auth.linear">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.linear.context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/linear/context/index.html#module-libs.hyperpocket.hyperpocket.auth.linear.context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.linear.token_context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/linear/token_context/index.html#module-libs.hyperpocket.hyperpocket.auth.linear.token_context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.linear.token_handler
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/linear/token_handler/index.html#module-libs.hyperpocket.hyperpocket.auth.linear.token_handler">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.linear.token_schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/linear/token_schema/index.html#module-libs.hyperpocket.hyperpocket.auth.linear.token_schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.notion
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/notion/index.html#module-libs.hyperpocket.hyperpocket.auth.notion">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.notion.context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/notion/context/index.html#module-libs.hyperpocket.hyperpocket.auth.notion.context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.notion.token_context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/notion/token_context/index.html#module-libs.hyperpocket.hyperpocket.auth.notion.token_context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.notion.token_handler
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/notion/token_handler/index.html#module-libs.hyperpocket.hyperpocket.auth.notion.token_handler">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.notion.token_schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/notion/token_schema/index.html#module-libs.hyperpocket.hyperpocket.auth.notion.token_schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.provider
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/provider/index.html#module-libs.hyperpocket.hyperpocket.auth.provider">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.reddit
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/reddit/index.html#module-libs.hyperpocket.hyperpocket.auth.reddit">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.reddit.context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/reddit/context/index.html#module-libs.hyperpocket.hyperpocket.auth.reddit.context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.reddit.oauth2_context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/reddit/oauth2_context/index.html#module-libs.hyperpocket.hyperpocket.auth.reddit.oauth2_context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.reddit.oauth2_handler
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/reddit/oauth2_handler/index.html#module-libs.hyperpocket.hyperpocket.auth.reddit.oauth2_handler">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.reddit.oauth2_schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/reddit/oauth2_schema/index.html#module-libs.hyperpocket.hyperpocket.auth.reddit.oauth2_schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/schema/index.html#module-libs.hyperpocket.hyperpocket.auth.schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.slack
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/index.html#module-libs.hyperpocket.hyperpocket.auth.slack">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.slack.context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/context/index.html#module-libs.hyperpocket.hyperpocket.auth.slack.context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.slack.oauth2_context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/oauth2_context/index.html#module-libs.hyperpocket.hyperpocket.auth.slack.oauth2_context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.slack.oauth2_handler
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/oauth2_handler/index.html#module-libs.hyperpocket.hyperpocket.auth.slack.oauth2_handler">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/oauth2_schema/index.html#module-libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.slack.token_context
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/token_context/index.html#module-libs.hyperpocket.hyperpocket.auth.slack.token_context">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.slack.token_handler
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/token_handler/index.html#module-libs.hyperpocket.hyperpocket.auth.slack.token_handler">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.auth.slack.token_schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/token_schema/index.html#module-libs.hyperpocket.hyperpocket.auth.slack.token_schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.builtin
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/builtin/index.html#module-libs.hyperpocket.hyperpocket.builtin">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.cli
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/index.html#module-libs.hyperpocket.hyperpocket.cli">module</a>
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li>
     libs.hyperpocket.hyperpocket.cli.auth
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/auth/index.html#module-libs.hyperpocket.hyperpocket.cli.auth">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.cli.codegen
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/index.html#module-libs.hyperpocket.hyperpocket.cli.codegen">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.cli.codegen.auth
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/index.html#module-libs.hyperpocket.hyperpocket.cli.codegen.auth">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_context_template
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_context_template/index.html#module-libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_context_template">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_context_template
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_token_context_template/index.html#module-libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_context_template">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_handler_template
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_token_handler_template/index.html#module-libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_handler_template">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_schema_template
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_token_schema_template/index.html#module-libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_schema_template">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.cli.codegen.auth.server_auth_template
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/server_auth_template/index.html#module-libs.hyperpocket.hyperpocket.cli.codegen.auth.server_auth_template">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.cli.eject
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/eject/index.html#module-libs.hyperpocket.hyperpocket.cli.eject">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.cli.pull
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/pull/index.html#module-libs.hyperpocket.hyperpocket.cli.pull">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.cli.sync
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/sync/index.html#module-libs.hyperpocket.hyperpocket.cli.sync">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.config
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/index.html#module-libs.hyperpocket.hyperpocket.config">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.config.auth
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/auth/index.html#module-libs.hyperpocket.hyperpocket.config.auth">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.config.git
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/git/index.html#module-libs.hyperpocket.hyperpocket.config.git">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.config.logger
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/logger/index.html#module-libs.hyperpocket.hyperpocket.config.logger">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.config.session
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/session/index.html#module-libs.hyperpocket.hyperpocket.config.session">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.config.settings
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/settings/index.html#module-libs.hyperpocket.hyperpocket.config.settings">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.constants
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/constants/index.html#module-libs.hyperpocket.hyperpocket.constants">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.futures
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/futures/index.html#module-libs.hyperpocket.hyperpocket.futures">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.futures.futurestore
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/futures/futurestore/index.html#module-libs.hyperpocket.hyperpocket.futures.futurestore">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.pocket_auth
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/pocket_auth/index.html#module-libs.hyperpocket.hyperpocket.pocket_auth">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.pocket_core
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/pocket_core/index.html#module-libs.hyperpocket.hyperpocket.pocket_core">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.pocket_main
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/pocket_main/index.html#module-libs.hyperpocket.hyperpocket.pocket_main">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.prompts
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/prompts/index.html#module-libs.hyperpocket.hyperpocket.prompts">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.repository
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/index.html#module-libs.hyperpocket.hyperpocket.repository">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.repository.lock
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#module-libs.hyperpocket.hyperpocket.repository.lock">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.repository.lockfile
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lockfile/index.html#module-libs.hyperpocket.hyperpocket.repository.lockfile">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.repository.repository
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/repository/index.html#module-libs.hyperpocket.hyperpocket.repository.repository">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/index.html#module-libs.hyperpocket.hyperpocket.server">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.auth
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/index.html#module-libs.hyperpocket.hyperpocket.server.auth">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.auth.calendly
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/calendly/index.html#module-libs.hyperpocket.hyperpocket.server.auth.calendly">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.auth.github
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/github/index.html#module-libs.hyperpocket.hyperpocket.server.auth.github">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.auth.google
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/google/index.html#module-libs.hyperpocket.hyperpocket.server.auth.google">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.auth.gumloop
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/gumloop/index.html#module-libs.hyperpocket.hyperpocket.server.auth.gumloop">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.auth.linear
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/linear/index.html#module-libs.hyperpocket.hyperpocket.server.auth.linear">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.auth.notion
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/notion/index.html#module-libs.hyperpocket.hyperpocket.server.auth.notion">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.auth.reddit
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/reddit/index.html#module-libs.hyperpocket.hyperpocket.server.auth.reddit">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.auth.slack
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/slack/index.html#module-libs.hyperpocket.hyperpocket.server.auth.slack">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.auth.token
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/token/index.html#module-libs.hyperpocket.hyperpocket.server.auth.token">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.proxy
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/proxy/index.html#module-libs.hyperpocket.hyperpocket.server.proxy">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.server
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/server/index.html#module-libs.hyperpocket.hyperpocket.server.server">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.tool
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/index.html#module-libs.hyperpocket.hyperpocket.server.tool">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.tool.dto
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/dto/index.html#module-libs.hyperpocket.hyperpocket.server.tool.dto">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.tool.dto.script
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/dto/script/index.html#module-libs.hyperpocket.hyperpocket.server.tool.dto.script">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.server.tool.wasm
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/wasm/index.html#module-libs.hyperpocket.hyperpocket.server.tool.wasm">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.session
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/index.html#module-libs.hyperpocket.hyperpocket.session">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.session.in_memory
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/in_memory/index.html#module-libs.hyperpocket.hyperpocket.session.in_memory">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.session.interface
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#module-libs.hyperpocket.hyperpocket.session.interface">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.session.redis
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/redis/index.html#module-libs.hyperpocket.hyperpocket.session.redis">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/index.html#module-libs.hyperpocket.hyperpocket.tool">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.function
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/function/index.html#module-libs.hyperpocket.hyperpocket.tool.function">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.function.annotation
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/function/annotation/index.html#module-libs.hyperpocket.hyperpocket.tool.function.annotation">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.function.tool
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/function/tool/index.html#module-libs.hyperpocket.hyperpocket.tool.function.tool">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.tool
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#module-libs.hyperpocket.hyperpocket.tool.tool">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.wasm
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/index.html#module-libs.hyperpocket.hyperpocket.tool.wasm">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.wasm.browser
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/browser/index.html#module-libs.hyperpocket.hyperpocket.tool.wasm.browser">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.wasm.invoker
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/invoker/index.html#module-libs.hyperpocket.hyperpocket.tool.wasm.invoker">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.wasm.script
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/script/index.html#module-libs.hyperpocket.hyperpocket.tool.wasm.script">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.wasm.templates
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/templates/index.html#module-libs.hyperpocket.hyperpocket.tool.wasm.templates">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.wasm.templates.node
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/templates/node/index.html#module-libs.hyperpocket.hyperpocket.tool.wasm.templates.node">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.wasm.templates.python
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/templates/python/index.html#module-libs.hyperpocket.hyperpocket.tool.wasm.templates.python">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool.wasm.tool
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/tool/index.html#module-libs.hyperpocket.hyperpocket.tool.wasm.tool">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.tool_like
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool_like/index.html#module-libs.hyperpocket.hyperpocket.tool_like">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.util
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/index.html#module-libs.hyperpocket.hyperpocket.util">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/extract_func_param_desc_from_docstring/index.html#module-libs.hyperpocket.hyperpocket.util.extract_func_param_desc_from_docstring">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.util.find_all_leaf_class_in_package
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/find_all_leaf_class_in_package/index.html#module-libs.hyperpocket.hyperpocket.util.find_all_leaf_class_in_package">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.util.find_all_subclass_in_package
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/find_all_subclass_in_package/index.html#module-libs.hyperpocket.hyperpocket.util.find_all_subclass_in_package">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.util.flatten_json_schema
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/flatten_json_schema/index.html#module-libs.hyperpocket.hyperpocket.util.flatten_json_schema">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.util.function_to_model
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/function_to_model/index.html#module-libs.hyperpocket.hyperpocket.util.function_to_model">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.util.get_objects_from_subpackage
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/get_objects_from_subpackage/index.html#module-libs.hyperpocket.hyperpocket.util.get_objects_from_subpackage">module</a>
 </li>
       </ul></li>
       <li>
     libs.hyperpocket.hyperpocket.util.json_schema_to_model
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/json_schema_to_model/index.html#module-libs.hyperpocket.hyperpocket.util.json_schema_to_model">module</a>
 </li>
       </ul></li>
@@ -2098,18 +2182,19 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/settings/index.html#libs.hyperpocket.hyperpocket.config.settings.Config.log_level">log_level (libs.hyperpocket.hyperpocket.config.settings.Config attribute)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="M">M</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="M">M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/server/index.html#libs.hyperpocket.hyperpocket.server.server.PocketServer.main_server">main_server (libs.hyperpocket.hyperpocket.server.server.PocketServer attribute)</a>
 </li>
       <li><a href="autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/directory/index.html#libs.docks.hyperdock-fileio.hyperdock_fileio.directory.make_directory">make_directory() (in module libs.docks.hyperdock-fileio.hyperdock_fileio.directory)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler.make_request">make_request() (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler.make_request">(libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/token_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler.make_request">(libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler method)</a>
@@ -2144,7 +2229,7 @@
       <li>
     module
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/index.html#module-hyperdock_langchain">hyperdock_langchain</a>
 </li>
         <li><a href="autoapi/hyperdock_langchain/connector/index.html#module-hyperdock_langchain.connector">hyperdock_langchain.connector</a>
@@ -2461,18 +2546,19 @@
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/operations/index.html#libs.docks.hyperdock-fileio.hyperdock_fileio.operations.move_file">move_file() (in module libs.docks.hyperdock-fileio.hyperdock_fileio.operations)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="N">N</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="N">N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler.name">name (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler.name">(libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/token_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler.name">(libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler attribute)</a>
@@ -2501,7 +2587,7 @@
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/browser/index.html#libs.hyperpocket.hyperpocket.tool.wasm.browser.InvokerBrowser.new_page">new_page() (libs.hyperpocket.hyperpocket.tool.wasm.browser.InvokerBrowser method)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/pocket_auth/index.html#libs.hyperpocket.hyperpocket.pocket_auth.AuthState.NO_SESSION">NO_SESSION (libs.hyperpocket.hyperpocket.pocket_auth.AuthState attribute)</a>
@@ -2527,38 +2613,40 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/notion/token_schema/index.html#libs.hyperpocket.hyperpocket.auth.notion.token_schema.NotionTokenResponse">NotionTokenResponse (class in libs.hyperpocket.hyperpocket.auth.notion.token_schema)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="O">O</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="O">O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/slack/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response.ok">ok (libs.hyperpocket.hyperpocket.auth.slack.oauth2_schema.SlackOAuth2Response attribute)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.Tool.overridden_tool_vars">overridden_tool_vars (libs.hyperpocket.hyperpocket.tool.tool.Tool attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.overridden_tool_vars">(libs.hyperpocket.hyperpocket.tool.tool.ToolRequest attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/tool/index.html#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest.overridden_tool_vars">(libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest attribute)</a>
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.Tool.override_tool_variables">override_tool_variables() (libs.hyperpocket.hyperpocket.tool.tool.Tool method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.override_tool_variables">(libs.hyperpocket.hyperpocket.tool.tool.ToolRequest method)</a>
 </li>
       </ul></li>
   </ul></td>
-</tr></table>
-
-<h2 id="P">P</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="P">P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/dto/script/index.html#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint.package_name">package_name (libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptEntrypoint attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/script/index.html#libs.hyperpocket.hyperpocket.tool.wasm.script.Script.package_name">(libs.hyperpocket.hyperpocket.tool.wasm.script.Script property)</a>
 </li>
       </ul></li>
@@ -2566,7 +2654,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lockfile/index.html#libs.hyperpocket.hyperpocket.repository.lockfile.Lockfile.path">path (libs.hyperpocket.hyperpocket.repository.lockfile.Lockfile attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/dto/script/index.html#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileRequest.path">(libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileRequest attribute)</a>
 </li>
       </ul></li>
@@ -2602,7 +2690,7 @@
 </li>
       <li><a href="autoapi/hyperpocket_openai/index.html#hyperpocket_openai.PocketOpenAI">PocketOpenAI (class in hyperpocket_openai)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperpocket_openai/pocket_openai/index.html#hyperpocket_openai.pocket_openai.PocketOpenAI">(class in hyperpocket_openai.pocket_openai)</a>
 </li>
       </ul></li>
@@ -2618,7 +2706,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.Tool.postprocessings">postprocessings (libs.hyperpocket.hyperpocket.tool.tool.Tool attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.postprocessings">(libs.hyperpocket.hyperpocket.tool.tool.ToolRequest attribute)</a>
 </li>
       </ul></li>
@@ -2626,7 +2714,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler.prepare">prepare() (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler.prepare">(libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/token_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler.prepare">(libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler method)</a>
@@ -2651,7 +2739,7 @@
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/server/index.html#libs.hyperpocket.hyperpocket.server.server.PocketServerOperations.PREPARE_AUTH">PREPARE_AUTH (libs.hyperpocket.hyperpocket.server.server.PocketServerOperations attribute)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/pocket_core/index.html#libs.hyperpocket.hyperpocket.pocket_core.PocketCore.prepare_auth">prepare_auth() (libs.hyperpocket.hyperpocket.pocket_core.PocketCore method)</a>
@@ -2662,7 +2750,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler.provider">provider() (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler static method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler.provider">(libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler static method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/token_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler.provider">(libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler static method)</a>
@@ -2686,7 +2774,7 @@
       </ul></li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler.provider_default">provider_default() (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler static method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler.provider_default">(libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler static method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler.provider_default">(libs.hyperpocket.hyperpocket.auth.google.oauth2_handler.GoogleOAuth2AuthHandler static method)</a>
@@ -2718,7 +2806,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/pull/index.html#libs.hyperpocket.hyperpocket.cli.pull.pull">pull() (in module libs.hyperpocket.hyperpocket.cli.pull)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/repository/index.html#libs.hyperpocket.hyperpocket.repository.repository.pull">(in module libs.hyperpocket.hyperpocket.repository.repository)</a>
 </li>
       </ul></li>
@@ -2727,11 +2815,12 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/templates/python/index.html#libs.hyperpocket.hyperpocket.tool.wasm.templates.python.python_template">python_template (in module libs.hyperpocket.hyperpocket.tool.wasm.templates.python)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="R">R</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="R">R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/read/index.html#libs.docks.hyperdock-fileio.hyperdock_fileio.read.read_binary_file_and_encode_base64">read_binary_file_and_encode_base64() (in module libs.docks.hyperdock-fileio.hyperdock_fileio.read)</a>
 </li>
       <li><a href="autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/read/index.html#libs.docks.hyperdock-fileio.hyperdock_fileio.read.read_text_file">read_text_file() (in module libs.docks.hyperdock-fileio.hyperdock_fileio.read)</a>
@@ -2740,7 +2829,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler.recommended_scopes">recommended_scopes() (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler static method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler.recommended_scopes">(libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler static method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/token_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler.recommended_scopes">(libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler static method)</a>
@@ -2794,7 +2883,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler.refresh">refresh() (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler.refresh">(libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/token_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler.refresh">(libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler method)</a>
@@ -2817,10 +2906,10 @@
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response.refresh_token">refresh_token (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Response.refresh_token">(libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Response attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/oauth2_context/index.html#libs.hyperpocket.hyperpocket.auth.google.oauth2_context.GoogleOAuth2AuthContext.refresh_token">(libs.hyperpocket.hyperpocket.auth.google.oauth2_context.GoogleOAuth2AuthContext attribute)</a>
@@ -2840,7 +2929,7 @@
       </ul></li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/tool/index.html#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool.rel_path">rel_path (libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/tool/index.html#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest.rel_path">(libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest attribute)</a>
 </li>
       </ul></li>
@@ -2866,7 +2955,7 @@
 </li>
       <li><a href="autoapi/hyperdock_langchain/dictionary/index.html#hyperdock_langchain.dictionary.EnvDict.rules">rules (hyperdock_langchain.dictionary.EnvDict property)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/index.html#hyperdock_langchain.EnvDict.rules">(hyperdock_langchain.EnvDict property)</a>
 </li>
       </ul></li>
@@ -2874,21 +2963,22 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/script/index.html#libs.hyperpocket.hyperpocket.tool.wasm.script.Script.runtime">runtime (libs.hyperpocket.hyperpocket.tool.wasm.script.Script attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/tool/index.html#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool.runtime">(libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool attribute)</a>
 </li>
       </ul></li>
   </ul></td>
-</tr></table>
-
-<h2 id="S">S</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="S">S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.Tool.schema_model">schema_model() (libs.hyperpocket.hyperpocket.tool.tool.Tool method)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response.scope">scope (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Response.scope">(libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Response attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Response.scope">(libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Response attribute)</a>
@@ -2902,7 +2992,7 @@
       </ul></li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler.scoped">scoped (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_handler.CalendlyOAuth2AuthHandler attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler.scoped">(libs.hyperpocket.hyperpocket.auth.github.oauth2_handler.GitHubOAuth2AuthHandler attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/token_handler/index.html#libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler.scoped">(libs.hyperpocket.hyperpocket.auth.github.token_handler.GitHubTokenAuthHandler attribute)</a>
@@ -2930,7 +3020,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/dto/script/index.html#libs.hyperpocket.hyperpocket.server.tool.dto.script.Script">Script (class in libs.hyperpocket.hyperpocket.server.tool.dto.script)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/script/index.html#libs.hyperpocket.hyperpocket.tool.wasm.script.Script">(class in libs.hyperpocket.hyperpocket.tool.wasm.script)</a>
 </li>
       </ul></li>
@@ -2970,7 +3060,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/in_memory/index.html#libs.hyperpocket.hyperpocket.session.in_memory.InMemorySessionStorage.session_storage_type">session_storage_type() (libs.hyperpocket.hyperpocket.session.in_memory.InMemorySessionStorage class method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#libs.hyperpocket.hyperpocket.session.interface.SessionStorageInterface.session_storage_type">(libs.hyperpocket.hyperpocket.session.interface.SessionStorageInterface class method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/redis/index.html#libs.hyperpocket.hyperpocket.session.redis.RedisSessionStorage.session_storage_type">(libs.hyperpocket.hyperpocket.session.redis.RedisSessionStorage class method)</a>
@@ -2979,7 +3069,7 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/session/index.html#libs.hyperpocket.hyperpocket.config.session.SessionConfig.session_type">session_type (libs.hyperpocket.hyperpocket.config.session.SessionConfig attribute)</a>
 </li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/session/index.html#libs.hyperpocket.hyperpocket.config.session.SessionConfig">SessionConfig (class in libs.hyperpocket.hyperpocket.config.session)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/session/index.html#libs.hyperpocket.hyperpocket.config.session.SessionConfigInMemory">SessionConfigInMemory (class in libs.hyperpocket.hyperpocket.config.session)</a>
@@ -2994,7 +3084,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/in_memory/index.html#libs.hyperpocket.hyperpocket.session.in_memory.InMemorySessionStorage.set">set() (libs.hyperpocket.hyperpocket.session.in_memory.InMemorySessionStorage method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#libs.hyperpocket.hyperpocket.session.interface.SessionStorageInterface.set">(libs.hyperpocket.hyperpocket.session.interface.SessionStorageInterface method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/redis/index.html#libs.hyperpocket.hyperpocket.session.redis.RedisSessionStorage.set">(libs.hyperpocket.hyperpocket.session.redis.RedisSessionStorage method)</a>
@@ -3020,7 +3110,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/linear/index.html#libs.hyperpocket.hyperpocket.server.auth.linear.slack_token_callback">slack_token_callback() (in module libs.hyperpocket.hyperpocket.server.auth.linear)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/auth/slack/index.html#libs.hyperpocket.hyperpocket.server.auth.slack.slack_token_callback">(in module libs.hyperpocket.hyperpocket.server.auth.slack)</a>
 </li>
       </ul></li>
@@ -3060,7 +3150,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/cli/sync/index.html#libs.hyperpocket.hyperpocket.cli.sync.sync">sync() (in module libs.hyperpocket.hyperpocket.cli.sync)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/repository/index.html#libs.hyperpocket.hyperpocket.repository.repository.sync">(in module libs.hyperpocket.hyperpocket.repository.repository)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.GitLock.sync">(libs.hyperpocket.hyperpocket.repository.lock.GitLock method)</a>
@@ -3073,14 +3163,15 @@
 </li>
       </ul></li>
   </ul></td>
-</tr></table>
-
-<h2 id="T">T</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="T">T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/find_all_leaf_class_in_package/index.html#libs.hyperpocket.hyperpocket.util.find_all_leaf_class_in_package.T">T (in module libs.hyperpocket.hyperpocket.util.find_all_leaf_class_in_package)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/util/find_all_subclass_in_package/index.html#libs.hyperpocket.hyperpocket.util.find_all_subclass_in_package.T">(in module libs.hyperpocket.hyperpocket.util.find_all_subclass_in_package)</a>
 </li>
       </ul></li>
@@ -3090,7 +3181,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/server/index.html#libs.hyperpocket.hyperpocket.server.server.PocketServer.teardown">teardown() (libs.hyperpocket.hyperpocket.server.server.PocketServer method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/browser/index.html#libs.hyperpocket.hyperpocket.tool.wasm.browser.InvokerBrowser.teardown">(libs.hyperpocket.hyperpocket.tool.wasm.browser.InvokerBrowser method)</a>
 </li>
       </ul></li>
@@ -3100,7 +3191,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/context/index.html#libs.hyperpocket.hyperpocket.auth.calendly.context.CalendlyAuthContext.to_dict">to_dict() (libs.hyperpocket.hyperpocket.auth.calendly.context.CalendlyAuthContext method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext.to_dict">(libs.hyperpocket.hyperpocket.auth.context.AuthContext method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/context/index.html#libs.hyperpocket.hyperpocket.auth.github.context.GitHubAuthContext.to_dict">(libs.hyperpocket.hyperpocket.auth.github.context.GitHubAuthContext method)</a>
@@ -3120,7 +3211,7 @@
       </ul></li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/context/index.html#libs.hyperpocket.hyperpocket.auth.calendly.context.CalendlyAuthContext.to_profiled_dict">to_profiled_dict() (libs.hyperpocket.hyperpocket.auth.calendly.context.CalendlyAuthContext method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/context/index.html#libs.hyperpocket.hyperpocket.auth.context.AuthContext.to_profiled_dict">(libs.hyperpocket.hyperpocket.auth.context.AuthContext method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/context/index.html#libs.hyperpocket.hyperpocket.auth.github.context.GitHubAuthContext.to_profiled_dict">(libs.hyperpocket.hyperpocket.auth.github.context.GitHubAuthContext method)</a>
@@ -3144,7 +3235,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/calendly/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response.token_type">token_type (libs.hyperpocket.hyperpocket.auth.calendly.oauth2_schema.CalendlyOAuth2Response attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/github/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Response.token_type">(libs.hyperpocket.hyperpocket.auth.github.oauth2_schema.GitHubOAuth2Response attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/auth/google/oauth2_schema/index.html#libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Response.token_type">(libs.hyperpocket.hyperpocket.auth.google.oauth2_schema.GoogleOAuth2Response attribute)</a>
@@ -3157,12 +3248,12 @@
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.Tool">Tool (class in libs.hyperpocket.hyperpocket.tool.tool)</a>
 </li>
       <li><a href="autoapi/hyperdock_langchain/connector/index.html#hyperdock_langchain.connector.LangchainToolRequest.tool_args">tool_args (hyperdock_langchain.connector.LangchainToolRequest attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/index.html#hyperdock_langchain.LangchainToolRequest.tool_args">(hyperdock_langchain.LangchainToolRequest attribute)</a>
 </li>
       </ul></li>
@@ -3176,7 +3267,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.LocalLock.tool_path">tool_path (libs.hyperpocket.hyperpocket.repository.lock.LocalLock attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/script/index.html#libs.hyperpocket.hyperpocket.tool.wasm.script.Script.tool_path">(libs.hyperpocket.hyperpocket.tool.wasm.script.Script attribute)</a>
 </li>
       </ul></li>
@@ -3184,7 +3275,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.GitLock.tool_source">tool_source (libs.hyperpocket.hyperpocket.repository.lock.GitLock attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.LocalLock.tool_source">(libs.hyperpocket.hyperpocket.repository.lock.LocalLock attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.Lock.tool_source">(libs.hyperpocket.hyperpocket.repository.lock.Lock attribute)</a>
@@ -3194,19 +3285,19 @@
 </li>
       <li><a href="autoapi/hyperpocket_openai/util/index.html#hyperpocket_openai.util.tool_to_open_ai_spec">tool_to_open_ai_spec() (in module hyperpocket_openai.util)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperpocket_openai/util/tool_to_open_ai_spec/index.html#hyperpocket_openai.util.tool_to_open_ai_spec.tool_to_open_ai_spec">(in module hyperpocket_openai.util.tool_to_open_ai_spec)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/hyperdock_langchain/connector/index.html#hyperdock_langchain.connector.LangchainToolRequest.tool_type">tool_type (hyperdock_langchain.connector.LangchainToolRequest attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/index.html#hyperdock_langchain.LangchainToolRequest.tool_type">(hyperdock_langchain.LangchainToolRequest attribute)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/hyperdock_langchain/connector/index.html#hyperdock_langchain.connector.LangchainToolRequest.tool_vars">tool_vars (hyperdock_langchain.connector.LangchainToolRequest attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/hyperdock_langchain/index.html#hyperdock_langchain.LangchainToolRequest.tool_vars">(hyperdock_langchain.LangchainToolRequest attribute)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/settings/index.html#libs.hyperpocket.hyperpocket.config.settings.Config.tool_vars">(libs.hyperpocket.hyperpocket.config.settings.Config attribute)</a>
@@ -3222,7 +3313,7 @@
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.GitLock.toolpkg_path">toolpkg_path() (libs.hyperpocket.hyperpocket.repository.lock.GitLock method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.LocalLock.toolpkg_path">(libs.hyperpocket.hyperpocket.repository.lock.LocalLock method)</a>
 </li>
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/repository/lock/index.html#libs.hyperpocket.hyperpocket.repository.lock.Lock.toolpkg_path">(libs.hyperpocket.hyperpocket.repository.lock.Lock method)</a>
@@ -3239,37 +3330,40 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/tool/dto/script/index.html#libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileTree.tree">tree (libs.hyperpocket.hyperpocket.server.tool.dto.script.ScriptFileTree attribute)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="U">U</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="U">U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/auth/index.html#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.use_prebuilt_auth">use_prebuilt_auth (libs.hyperpocket.hyperpocket.config.auth.AuthConfig attribute)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/pocket_main/index.html#libs.hyperpocket.hyperpocket.pocket_main.Pocket.use_profile">use_profile (libs.hyperpocket.hyperpocket.pocket_main.Pocket attribute)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.Tool.use_profile">(libs.hyperpocket.hyperpocket.tool.tool.Tool attribute)</a>
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/config/auth/index.html#libs.hyperpocket.hyperpocket.config.auth.BaseAuthConfig.use_recommended_scope">use_recommended_scope (libs.hyperpocket.hyperpocket.config.auth.BaseAuthConfig attribute)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="V">V</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="V">V</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/session/interface/index.html#libs.hyperpocket.hyperpocket.session.interface.V">V (in module libs.hyperpocket.hyperpocket.session.interface)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="W">W</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  </tr>
+      </table>
+  
+  <h2 id="W">W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/server/server/index.html#libs.hyperpocket.hyperpocket.server.server.PocketServer.wait_initialized">wait_initialized() (libs.hyperpocket.hyperpocket.server.server.PocketServer method)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/pocket_main/index.html#libs.hyperpocket.hyperpocket.pocket_main.Pocket.wait_tool_auth">wait_tool_auth() (libs.hyperpocket.hyperpocket.pocket_main.Pocket method)</a>
@@ -3283,14 +3377,14 @@
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/tool/index.html#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmTool">WasmTool (class in libs.hyperpocket.hyperpocket.tool.wasm.tool)</a>
 </li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/wasm/tool/index.html#libs.hyperpocket.hyperpocket.tool.wasm.tool.WasmToolRequest">WasmToolRequest (class in libs.hyperpocket.hyperpocket.tool.wasm.tool)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.Tool.with_postprocessing">with_postprocessing() (libs.hyperpocket.hyperpocket.tool.tool.Tool method)</a>
 </li>
       <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.Tool.with_postprocessings">with_postprocessings() (libs.hyperpocket.hyperpocket.tool.tool.Tool method)</a>
 
-      <ul>
+      <ul style="list-style-type:none">
         <li><a href="autoapi/libs/hyperpocket/hyperpocket/tool/tool/index.html#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.with_postprocessings">(libs.hyperpocket.hyperpocket.tool.tool.ToolRequest method)</a>
 </li>
       </ul></li>
@@ -3301,35 +3395,33 @@
       <li><a href="autoapi/libs/docks/hyperdock-fileio/hyperdock_fileio/write/index.html#libs.docks.hyperdock-fileio.hyperdock_fileio.write.write_text_to_file">write_text_to_file() (in module libs.docks.hyperdock-fileio.hyperdock_fileio.write)</a>
 </li>
   </ul></td>
-</tr></table>
+  </tr>
+      </table>
+  
 
-
-
-           </div>
-          </div>
-          <footer>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2025, VESSL AI Inc..</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
-        </div>
+</div></div>
+<aside id="right-sidebar" class="hidden text-sm xl:block">
+<div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2">
+<a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#A">A</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#B">B</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#C">C</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#D">D</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#E">E</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#F">F</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#G">G</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#H">H</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#I">I</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#J">J</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#K">K</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#L">L</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#M">M</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#N">N</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#O">O</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#P">P</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#R">R</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#S">S</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#T">T</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#U">U</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#V">V</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#W">W</a>
+</div>
+</aside>
+        </main>
       </div>
-    </section>
+    </div><footer class="py-6 border-t border-border md:py-0">
+    <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+      <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+        <p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2025, VESSL AI Inc.&nbsp;Built with <a class="font-medium underline underline-offset-4"
+    href="https://www.sphinx-doc.org"
+    rel="noreferrer">Sphinx 8.1.3</a></p>
+</div>
+</div>
+</footer>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
+  
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script defer="defer" src="_static/theme.js?v=073f68d9"></script>
+  
 </body>
 </html>
