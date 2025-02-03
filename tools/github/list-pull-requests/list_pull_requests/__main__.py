@@ -1,7 +1,7 @@
 import json
 import os
 import sys
-from typing import List, Literal, Tuple
+from typing import List, Literal
 
 from github import Auth, Github
 from pydantic import BaseModel
@@ -25,7 +25,7 @@ class GithubPRListResponse(BaseModel):
     assignees: List[GithubAssignee]
 
 
-def list_pr(req: GithubPRListRequest) -> List[Tuple[int, str]]:
+def list_pr(req: GithubPRListRequest) -> List[GithubPRListResponse]:
     auth = Auth.Token(os.environ.get("GITHUB_TOKEN", ""))
     client = Github(auth=auth)
 
@@ -43,7 +43,8 @@ def main():
     req_typed = GithubPRListRequest.model_validate(req)
     response = list_pr(req_typed)
 
-    print(json.dumps(response))
+    output = [r.model_dump_json() for r in response]
+    print(output)
 
 
 if __name__ == "__main__":
