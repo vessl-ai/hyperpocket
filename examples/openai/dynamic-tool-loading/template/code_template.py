@@ -6,7 +6,7 @@ def roll_the_dice() -> int:
     roll dice by your own way.
     return only integer number.
     """
-    # write your own code
+    # write your code here
 
 '''
 
@@ -14,8 +14,12 @@ def roll_the_dice() -> int:
 def javascript_code_template():
     return \
         """
+/**
+* roll dice by your own way.
+* return only integer number.
+*/
 function roll_the_dice(){
-    # write your own code
+    // write your code here
 }
 """
 
