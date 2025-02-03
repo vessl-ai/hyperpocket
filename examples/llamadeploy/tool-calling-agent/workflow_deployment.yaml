@@ -1,0 +1,19 @@
+name: MyDeployment
+
+control-plane:
+  port: 8010
+
+message-queue:
+  type: simple
+  port: 8011
+
+default-service: agentic_workflow
+
+services:
+  agentic_workflow:
+    name: Agentic Workflow
+    source:
+      type: local
+      name: ./workflows
+    path: workflows:all_workflows
+    port: 8012
