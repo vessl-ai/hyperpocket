@@ -3,7 +3,6 @@ import os
 from llama_index.core.agent import AgentRunner, FunctionCallingAgent
 from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.llms.openai import OpenAI
-from hyperpocket.tool import from_git
 
 from hyperpocket_llamaindex import PocketLlamaindex
 
@@ -12,13 +11,13 @@ def build():
     llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     pocket = PocketLlamaindex(
         tools=[
-            "https://github.com/vessl-ai/hyperpocket/tree/maintools/slack/get-message",
-            "https://github.com/vessl-ai/hyperpocket/tree/maintools/slack/post-message",
-            "https://github.com/vessl-ai/hyperpocket/tree/maintools/linear/get-issues",
-            "https://github.com/vessl-ai/hyperpocket/tree/maintools/google/get-calendar-events",
-            "https://github.com/vessl-ai/hyperpocket/tree/maintools/google/get-calendar-list",
-            "https://github.com/vessl-ai/hyperpocket/tree/maintools/google/insert-calendar-events",
-            "https://github.com/vessl-ai/hyperpocket/tree/maintools/github/list-pull-requests",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
         ]
     )
     tools = pocket.get_tools()
