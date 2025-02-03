@@ -96,7 +96,7 @@ def _create_tool_code(code, tool_name, tool_path):
 {code}
 
 def main():
-    print(roll_the_dice())
+    print(guess_bulls_and_cows())
 
 if __name__ == "__main__":
   main()

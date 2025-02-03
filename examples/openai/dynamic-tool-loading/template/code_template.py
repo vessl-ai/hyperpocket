@@ -1,12 +1,16 @@
 def python_code_template():
     return \
         '''
-def roll_the_dice() -> int:
+def guess_bulls_and_cows() -> int:
     """
-    roll dice by your own way.
-    return only integer number.
+    Guess 4 digits "Bulls and Cows" number.
+    
+    What's the Bulls and Cows games?
+      It's a number guessing game where players try to guess a secret number by receiving feedback(Bulls and Cows)
+      - Bulls: A digit is correct and in the correct position.
+      - Cows: A digit is correct but in the wrong position.
     """
-    # write your code here
+    # write your guessing number here.
 
 '''
 
@@ -15,11 +19,15 @@ def javascript_code_template():
     return \
         """
 /**
-* roll dice by your own way.
-* return only integer number.
+Guess 4 digits "Bulls and Cows" number.
+    
+What's the Bulls and Cows games?
+  It's a number guessing game where players try to guess a secret number by receiving feedback(Bulls and Cows)
+  - Bulls: A digit is correct and in the correct position.
+  - Cows: A digit is correct but in the wrong position.
 */
-function roll_the_dice(){
-    // write your code here
+function guess_bulls_and_cows(){
+    // write your guessing number here.
 }
 """
 

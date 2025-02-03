@@ -14,6 +14,7 @@ from hyperpocket_openai.pocket_openai import handle_tool_call_async
 from template.code_template import get_template
 from utils.build_javascript_tool import build_javascript_tool
 from utils.build_python_tool import build_python_tool
+from utils.bulls_and_cows import bulls_and_cows
 from utils.upload_to_repo import upload_to_repo
 
 load_dotenv()
@@ -28,17 +29,23 @@ MODEL_NAME = "gpt-4o"
 with open(tools_cache_path, "r") as f:
     tools = json.load(f)
 
-tools = {}
 pocket: Optional[PocketOpenAI] = None
 llm: Optional[OpenAI] = None
 tool_specs: List[dict] = []
 messages = [
     {
         "role": "system",
-        "content": """You are an AI assistant that rolls dice based on custom logic for each user.
-Each user registers their own ‘roll_the_dice’ tool, which includes their name. When rolling a die, the user must use the tool they registered.
-So before rolling the dice user requested, you should check that you have registered tool about the users' dice already.
-If no tool is registered, the user must first register one.
+        "content": """You are an AI assistant that plays "Bulls and Cows" game with users.
+Each user should have their own "guess_bulls_and_cows" tool, which includes their name.
+So if a user wants to play "Bulls and Cows", you should check whether user's tool exists in the tools list and confirm that the username is correct.
+Of course, a user could be changed at any time. so if a user suddenly requests other name's guessing number, just keep going on. 
+To get the user's guess number, use the user's "guess_bulls_and_cows" tool.
+You must reject user's guessed number from the message, a user only can guess by calling their tool.
+After receiving the guessed number, use the "bulls_and_cows" tool to calculate the result.
+Finally, inform the user of only the result(the number of Bulls and Cows).
+If the user correctly guesses the number, congratulation them.
+
+The answer number is : 2437
 """
     }
 ]
@@ -51,7 +58,7 @@ def init_model():
         pocket._teardown_server()
 
     print("tools : ", tools)
-    pocket = PocketOpenAI(tools=list(tools.values()))
+    pocket = PocketOpenAI(tools=list(tools.values()) + [bulls_and_cows])
     tool_specs = pocket.get_open_ai_tool_specs()
     llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
@@ -107,9 +114,9 @@ def upload(
         dependencies = dependencies.split("\n")
 
     base_path = pathlib.Path(f"./tools/").resolve()
-    tool_name = f"{name}_roll_dice_tool"
+    tool_name = f"{name}_guess_bulls_and_cows"
     tool_path = base_path / tool_name
-    tool_description = f"roll {name}'s dice"
+    tool_description = f"{name}'s guessing of bulls and cows number"
 
     try:
         if language == "python":

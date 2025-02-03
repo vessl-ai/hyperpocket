@@ -93,7 +93,7 @@ def _create_tool_code(code, tool_path):
             f"""{code}
 
 async function main() {{
-    const result = roll_the_dice()
+    const result = guess_bulls_and_cows()
     console.log(result)
 }}
 
