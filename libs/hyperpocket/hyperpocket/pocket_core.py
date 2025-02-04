@@ -38,7 +38,7 @@ class PocketCore:
             if isinstance(tool_like, str):
                 if pathlib.Path(tool_like).exists():
                     lock = LocalLock(tool_like)
-                    req = WasmToolRequest(lock, "")
+                    req = WasmToolRequest(lock, "", {})
                 elif tool_like.startswith("https://github.com"):
                     base_repo_url, git_ref, rel_path = GitLock.parse_repo_url(
                         repo_url=tool_like

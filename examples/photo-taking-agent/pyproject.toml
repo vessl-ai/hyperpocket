@@ -1,0 +1,20 @@
+[project]
+name = "photo-taking-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "google-api-python-client>=2.160.0",
+    "google-auth-httplib2>=0.2.0",
+    "google-auth-oauthlib>=1.2.1",
+    "gradio>=5.14.0",
+    "hyperpocket",
+    "openai>=1.61.0",
+    "pyautogui>=0.9.54",
+    "python-dotenv>=1.0.1",
+    "requests>=2.32.3",
+]
+
+[tool.uv.sources]
+hyperpocket = { path = "../../libs/hyperpocket", editable = true }
