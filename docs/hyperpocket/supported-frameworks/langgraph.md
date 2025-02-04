@@ -6,14 +6,18 @@
 
 ```python
 from hyperpocket.tool import from_git
+from hyperpocket_langgraph import PocketLanggraph
 from langgraph import AgentGraph
 
 # Load tools with Hyperpocket
-tool = from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/schedule-message")
+pocket = PocketLanggraph(tools=[
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
+    ])
 
 # Define the LangGraph workflow
 graph = AgentGraph()
-graph.add_node("schedule_message", tool)
+graph.add_node("schedule_message", pocket.get_tool_node(should_interrupt=True))
 graph.connect("start", "schedule_message")
 graph.connect("schedule_message", "end")
 
