@@ -46,7 +46,7 @@ messages = [
 A user could be changed at any time. so if a user suddenly requests other name's guessing number, just keep going on.
 You must reject user's guessed number from the message, a user only can guess by calling their tool.
 If the user correctly guesses the number, congratulation them.
-Exceptionally, If a user ask you get slack message, get slack mesage and summarize it.
+Exceptionally, If a user ask you get slack message, get slack message and summarize it.
 
 The answer number is : 2437
 """

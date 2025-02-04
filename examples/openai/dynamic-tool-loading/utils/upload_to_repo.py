@@ -3,6 +3,7 @@ import pathlib
 from typing import Optional
 
 from github import Github
+import github
 import git
 
 
@@ -18,11 +19,23 @@ def upload_to_repo(
         client = Github(os.getenv("GITHUB_TOKEN"))
 
     user = client.get_user()
-    remote_repo = user.create_repo(
-        name=repo_name,
-        description=description,
-        private=private
-    )
+
+    try:
+        remote_repo = user.create_repo(
+            name=repo_name,
+            description=description,
+            private=private
+        )
+    except github.GithubException as e:
+        print(f"{repo_name} already exists. remove the repo and re-create it")
+        remote_repo = user.get_repo(name=repo_name)
+        remote_repo.delete()
+        remote_repo = user.create_repo(
+            name=repo_name,
+            description=description,
+            private=private
+        )
+
     print(f"create remote repo {remote_repo.full_name}")
 
     try:
