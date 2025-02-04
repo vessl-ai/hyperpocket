@@ -35,7 +35,7 @@ class Pocket(object):
         tools: list[ToolLike] = None,
         auth: PocketAuth = None,
         use_profile: bool = False,
-        server = Optional[PocketServer],
+        server_instance: Optional[PocketServer] = None,
     ):
         try:
             if auth is None:
