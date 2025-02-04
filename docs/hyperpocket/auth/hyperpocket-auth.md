@@ -18,7 +18,7 @@ Hyperpocket’s auth system supports a wide range of scenarios, including:
 - **OAuth 2.0 Flows:** Token issuance, callback handling, and multi-account support.
 - **Environment-Based Auth:** Tokens and static information passed securely as environment variables.
 
-## **Code Example: OAuth Integration**
+## Code Example: OAuth Integration
 
 Here’s an example of how Hyperpocket handles an OAuth-based tool with multi-turn authentication:
 
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     print(messages)
 ```
 
-## **Code Example: Initializing authentication in advance**
+## Code Example: Initializing authentication in advance
 
 Here’s an example of how to set up authentication in the initial phase, making it unnecessary for the user to proceed through complex authentication steps.
 

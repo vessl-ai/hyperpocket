@@ -11,7 +11,7 @@ OAuth is particularly useful for tools that require user authorization, such as 
 
 #### 1. Set the OAuth Configuration
 
-Set an OAuth configuration. it varies by OAuth Provider
+Set an OAuth configuration. It varies by OAuth Provider,
 
 Example(Slack):
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
 #### 1. Set the OAuth Configuration
 
-Set a OAuth configuration. it varies by OAuth Provider
+Set a OAuth configuration. It varies by OAuth Provider.
 
 Example(Slack):
 
