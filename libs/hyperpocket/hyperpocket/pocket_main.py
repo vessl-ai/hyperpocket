@@ -20,7 +20,7 @@ class Pocket(object):
         lockfile_path: Optional[str] = None,
         force_update: bool = False,
         use_profile: bool = False,
-        server = Optional[PocketServer],
+        server_instance: Optional[PocketServer] = None,
     ):
         self.use_profile = use_profile
         self.core = PocketCore(
@@ -29,8 +29,8 @@ class Pocket(object):
             lockfile_path=lockfile_path,
             force_update=force_update,
         )
-        if server is not None:
-            self.server = server
+        if server_instance is not None:
+            self.server = server_instance
         else:
             self.server = PocketServer()
         self.server.run(self.core)
