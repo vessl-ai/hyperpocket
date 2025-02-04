@@ -14,7 +14,8 @@ from hyperpocket.cli.codegen.auth import (
 
 @click.command()
 @click.argument("service_name", type=str)
-def create_token_auth_template(service_name):
+@click.option("--force", is_flag=True, default=False)
+def create_token_auth_template(service_name, force):
     ## Validate service_name
     if not service_name.islower() or not service_name.replace("_", "").isalpha():
         raise ValueError(
@@ -31,37 +32,39 @@ def create_token_auth_template(service_name):
     cwd = Path.cwd()
     parent_path = cwd.parent
 
-    generate_server_auth(service_name, parent_path)
-    generate_hyperpocket_auth_dir(service_name, parent_path)
-    generate_auth_context(service_name, capitliazed_service_name, parent_path)
-    generate_auth_token_context(service_name, capitliazed_service_name, parent_path)
-    generate_auth_token_handler(service_name, capitliazed_service_name, parent_path)
-    generate_auth_token_schema(service_name, capitliazed_service_name, parent_path)
+    generate_server_auth(service_name, parent_path, force)
+    generate_hyperpocket_auth_dir(service_name, parent_path, force)
+    generate_auth_context(service_name, capitliazed_service_name, parent_path, force)
+    generate_auth_token_context(service_name, capitliazed_service_name, parent_path, force)
+    generate_auth_token_handler(service_name, capitliazed_service_name, parent_path, force)
+    generate_auth_token_schema(service_name, capitliazed_service_name, parent_path, force)
     ##TODO: Add service to hyperpocket/auth/provider
 
 
-def generate_server_auth(service_name, parent_path):
+def generate_server_auth(service_name, parent_path, force):
     print(f"Generating server/auth for '{service_name}'.")
     output_from_parsed_template = get_server_auth_token_template().render(
         service_name=service_name
     )
     output_path = parent_path / f"hyperpocket/hyperpocket/server/auth/{service_name}.py"
-    with open(output_path, "w") as f:
-        f.write(output_from_parsed_template)
+    if not output_path.exists() or force:
+        with open(output_path, "w") as f:
+            f.write(output_from_parsed_template)
 
 
-def generate_hyperpocket_auth_dir(service_name, parent_path):
+def generate_hyperpocket_auth_dir(service_name, parent_path, force):
     if not os.path.exists(parent_path / f"hyperpocket/hyperpocket/auth/{service_name}"):
         os.makedirs(parent_path / f"hyperpocket/hyperpocket/auth/{service_name}")
 
     output_path = (
         parent_path / f"hyperpocket/hyperpocket/auth/{service_name}/__init__.py"
     )
-    with open(output_path, "w"):
-        pass
+    if not output_path.exists() or force:
+        with open(output_path, "w"):
+            pass
 
 
-def generate_auth_context(service_name, capitliazed_service_name, parent_path):
+def generate_auth_context(service_name, capitliazed_service_name, parent_path, force):
     print(f"Generating auth/context for '{service_name}'.")
     output_from_parsed_template = get_auth_context_template().render(
         caplitalized_service_name=capitliazed_service_name,
@@ -70,11 +73,12 @@ def generate_auth_context(service_name, capitliazed_service_name, parent_path):
     output_path = (
         parent_path / f"hyperpocket/hyperpocket/auth/{service_name}/context.py"
     )
-    with open(output_path, "w") as f:
-        f.write(output_from_parsed_template)
+    if not output_path.exists() or force:
+        with open(output_path, "w") as f:
+            f.write(output_from_parsed_template)
 
 
-def generate_auth_token_context(service_name, capitliazed_service_name, parent_path):
+def generate_auth_token_context(service_name, capitliazed_service_name, parent_path, force):
     print(f"Generating auth/token context for '{service_name}'.")
     output_from_parsed_template = get_auth_token_context_template().render(
         service_name=service_name,
@@ -83,11 +87,12 @@ def generate_auth_token_context(service_name, capitliazed_service_name, parent_p
     output_path = (
         parent_path / f"hyperpocket/hyperpocket/auth/{service_name}/token_context.py"
     )
-    with open(output_path, "w") as f:
-        f.write(output_from_parsed_template)
+    if not output_path.exists() or force:
+        with open(output_path, "w") as f:
+            f.write(output_from_parsed_template)
 
 
-def generate_auth_token_handler(service_name, capitliazed_service_name, parent_path):
+def generate_auth_token_handler(service_name, capitliazed_service_name, parent_path, force):
     print(f"Generating auth/token handler for '{service_name}'.")
     output_from_parsed_template = get_auth_token_handler_template().render(
         service_name=service_name,
@@ -98,11 +103,12 @@ def generate_auth_token_handler(service_name, capitliazed_service_name, parent_p
     output_path = (
         parent_path / f"hyperpocket/hyperpocket/auth/{service_name}/token_handler.py"
     )
-    with open(output_path, "w") as f:
-        f.write(output_from_parsed_template)
+    if not output_path.exists() or force:
+        with open(output_path, "w") as f:
+            f.write(output_from_parsed_template)
 
 
-def generate_auth_token_schema(service_name, capitliazed_service_name, parent_path):
+def generate_auth_token_schema(service_name, capitliazed_service_name, parent_path, force):
     print(f"Generating auth/token schema for '{service_name}'.")
     output_from_parsed_template = get_auth_token_schema_template().render(
         caplitalized_service_name=capitliazed_service_name,
@@ -110,5 +116,6 @@ def generate_auth_token_schema(service_name, capitliazed_service_name, parent_pa
     output_path = (
         parent_path / f"hyperpocket/hyperpocket/auth/{service_name}/token_schema.py"
     )
-    with open(output_path, "w") as f:
-        f.write(output_from_parsed_template)
+    if not output_path.exists() or force:
+        with open(output_path, "w") as f:
+            f.write(output_from_parsed_template)
