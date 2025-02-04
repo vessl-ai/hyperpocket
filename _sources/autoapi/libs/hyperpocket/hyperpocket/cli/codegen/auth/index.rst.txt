@@ -12,6 +12,9 @@ Submodules
    :maxdepth: 1
 
    /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_context_template/index
+   /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_oauth2_context_template/index
+   /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_oauth2_handler_template/index
+   /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_oauth2_schema_template/index
    /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_token_context_template/index
    /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_token_handler_template/index
    /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/auth_token_schema_template/index
@@ -24,16 +27,26 @@ Functions
 .. autoapisummary::
 
    libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_context_template
+   libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_context_template
+   libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_handler_template
+   libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_schema_template
    libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_context_template
    libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_handler_template
    libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_schema_template
    libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_token_template
+   libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_oauth2_template
 
 
 Package Contents
 ----------------
 
 .. py:function:: get_auth_context_template() -> jinja2.Template
+
+.. py:function:: get_auth_oauth2_context_template() -> jinja2.Template
+
+.. py:function:: get_auth_oauth2_handler_template() -> jinja2.Template
+
+.. py:function:: get_auth_oauth2_schema_template() -> jinja2.Template
 
 .. py:function:: get_auth_token_context_template() -> jinja2.Template
 
@@ -42,4 +55,6 @@ Package Contents
 .. py:function:: get_auth_token_schema_template() -> jinja2.Template
 
 .. py:function:: get_server_auth_token_template() -> jinja2.Template
+
+.. py:function:: get_server_auth_oauth2_template() -> jinja2.Template
 

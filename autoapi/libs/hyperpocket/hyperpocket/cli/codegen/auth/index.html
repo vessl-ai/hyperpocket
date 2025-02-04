@@ -137,6 +137,9 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="auth_context_template/index.html">libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_context_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auth_oauth2_context_template/index.html">libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_oauth2_context_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auth_oauth2_handler_template/index.html">libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_oauth2_handler_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auth_oauth2_schema_template/index.html">libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_oauth2_schema_template</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auth_token_context_template/index.html">libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_context_template</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auth_token_handler_template/index.html">libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_handler_template</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auth_token_schema_template/index.html">libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_token_schema_template</a></li>
@@ -151,16 +154,28 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_context_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_context_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_context_template</span></code></a>(→ jinja2.Template)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_context_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_context_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_token_context_template</span></code></a>(→ jinja2.Template)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_context_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_context_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_oauth2_context_template</span></code></a>(→ jinja2.Template)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_handler_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_handler_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_token_handler_template</span></code></a>(→ jinja2.Template)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_handler_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_handler_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_oauth2_handler_template</span></code></a>(→ jinja2.Template)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_schema_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_schema_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_token_schema_template</span></code></a>(→ jinja2.Template)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_schema_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_schema_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_oauth2_schema_template</span></code></a>(→ jinja2.Template)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_token_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_token_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_server_auth_token_template</span></code></a>(→ jinja2.Template)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_context_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_context_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_token_context_template</span></code></a>(→ jinja2.Template)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_handler_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_handler_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_token_handler_template</span></code></a>(→ jinja2.Template)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_schema_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_schema_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_token_schema_template</span></code></a>(→ jinja2.Template)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_token_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_token_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_server_auth_token_template</span></code></a>(→ jinja2.Template)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_oauth2_template" title="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_oauth2_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_server_auth_oauth2_template</span></code></a>(→ jinja2.Template)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -171,6 +186,18 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_context_template">
 <span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.cli.codegen.auth.</span></span><span class="sig-name descname"><span class="pre">get_auth_context_template</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">jinja2.Template</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_context_template" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_context_template'"><span>#</span></a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_context_template">
+<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.cli.codegen.auth.</span></span><span class="sig-name descname"><span class="pre">get_auth_oauth2_context_template</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">jinja2.Template</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_context_template" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_context_template'"><span>#</span></a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_handler_template">
+<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.cli.codegen.auth.</span></span><span class="sig-name descname"><span class="pre">get_auth_oauth2_handler_template</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">jinja2.Template</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_handler_template" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_handler_template'"><span>#</span></a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_schema_template">
+<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.cli.codegen.auth.</span></span><span class="sig-name descname"><span class="pre">get_auth_oauth2_schema_template</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">jinja2.Template</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_schema_template" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_schema_template'"><span>#</span></a></dt>
 <dd></dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_context_template">
@@ -188,6 +215,10 @@
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_token_template">
 <span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.cli.codegen.auth.</span></span><span class="sig-name descname"><span class="pre">get_server_auth_token_template</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">jinja2.Template</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_token_template" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_token_template'"><span>#</span></a></dt>
 <dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_oauth2_template">
+<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.cli.codegen.auth.</span></span><span class="sig-name descname"><span class="pre">get_server_auth_oauth2_template</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">jinja2.Template</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_oauth2_template" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_oauth2_template'"><span>#</span></a></dt>
+<dd></dd></dl>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
@@ -197,10 +228,14 @@
 <li><a :data-current="activeSection === '#functions'" class="reference internal" href="#functions">Functions</a></li>
 <li><a :data-current="activeSection === '#package-contents'" class="reference internal" href="#package-contents">Package Contents</a><ul>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_context_template'" class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_context_template"><code class="docutils literal notranslate"><span class="pre">get_auth_context_template()</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_context_template'" class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_context_template"><code class="docutils literal notranslate"><span class="pre">get_auth_oauth2_context_template()</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_handler_template'" class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_handler_template"><code class="docutils literal notranslate"><span class="pre">get_auth_oauth2_handler_template()</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_schema_template'" class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_oauth2_schema_template"><code class="docutils literal notranslate"><span class="pre">get_auth_oauth2_schema_template()</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_context_template'" class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_context_template"><code class="docutils literal notranslate"><span class="pre">get_auth_token_context_template()</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_handler_template'" class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_handler_template"><code class="docutils literal notranslate"><span class="pre">get_auth_token_handler_template()</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_schema_template'" class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_auth_token_schema_template"><code class="docutils literal notranslate"><span class="pre">get_auth_token_schema_template()</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_token_template'" class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_token_template"><code class="docutils literal notranslate"><span class="pre">get_server_auth_token_template()</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_oauth2_template'" class="reference internal" href="#libs.hyperpocket.hyperpocket.cli.codegen.auth.get_server_auth_oauth2_template"><code class="docutils literal notranslate"><span class="pre">get_server_auth_oauth2_template()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -11,10 +11,13 @@ Functions
 .. autoapisummary::
 
    libs.hyperpocket.hyperpocket.cli.codegen.auth.server_auth_template.get_server_auth_token_template
+   libs.hyperpocket.hyperpocket.cli.codegen.auth.server_auth_template.get_server_auth_oauth2_template
 
 
 Module Contents
 ---------------
 
 .. py:function:: get_server_auth_token_template() -> jinja2.Template
+
+.. py:function:: get_server_auth_oauth2_template() -> jinja2.Template
 

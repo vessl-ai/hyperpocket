@@ -1,0 +1,38 @@
+libs.hyperpocket.hyperpocket.cli.auth_oauth2
+============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.auth_oauth2
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.cli.auth_oauth2.create_oauth2_auth_template
+   libs.hyperpocket.hyperpocket.cli.auth_oauth2.generate_server_auth
+   libs.hyperpocket.hyperpocket.cli.auth_oauth2.generate_hyperpocket_auth_dir
+   libs.hyperpocket.hyperpocket.cli.auth_oauth2.generate_auth_context
+   libs.hyperpocket.hyperpocket.cli.auth_oauth2.generate_auth_oauth2_context
+   libs.hyperpocket.hyperpocket.cli.auth_oauth2.generate_auth_oauth2_handler
+   libs.hyperpocket.hyperpocket.cli.auth_oauth2.generate_auth_oauth2_schema
+
+
+Module Contents
+---------------
+
+.. py:function:: create_oauth2_auth_template(service_name, force)
+
+.. py:function:: generate_server_auth(service_name, parent_path, force)
+
+.. py:function:: generate_hyperpocket_auth_dir(service_name, parent_path, force)
+
+.. py:function:: generate_auth_context(service_name, capitliazed_service_name, parent_path, force)
+
+.. py:function:: generate_auth_oauth2_context(service_name, capitliazed_service_name, parent_path, force)
+
+.. py:function:: generate_auth_oauth2_handler(service_name, capitliazed_service_name, parent_path, force)
+
+.. py:function:: generate_auth_oauth2_schema(service_name, capitliazed_service_name, parent_path, force)
+

@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_oauth2_schema_template
+=========================================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_oauth2_schema_template
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.cli.codegen.auth.auth_oauth2_schema_template.get_auth_oauth2_schema_template
+
+
+Module Contents
+---------------
+
+.. py:function:: get_auth_oauth2_schema_template() -> jinja2.Template
+

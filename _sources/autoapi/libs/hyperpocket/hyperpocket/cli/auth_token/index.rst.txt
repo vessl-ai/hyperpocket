@@ -1,0 +1,38 @@
+libs.hyperpocket.hyperpocket.cli.auth_token
+===========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.auth_token
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.cli.auth_token.create_token_auth_template
+   libs.hyperpocket.hyperpocket.cli.auth_token.generate_server_auth
+   libs.hyperpocket.hyperpocket.cli.auth_token.generate_hyperpocket_auth_dir
+   libs.hyperpocket.hyperpocket.cli.auth_token.generate_auth_context
+   libs.hyperpocket.hyperpocket.cli.auth_token.generate_auth_token_context
+   libs.hyperpocket.hyperpocket.cli.auth_token.generate_auth_token_handler
+   libs.hyperpocket.hyperpocket.cli.auth_token.generate_auth_token_schema
+
+
+Module Contents
+---------------
+
+.. py:function:: create_token_auth_template(service_name, force)
+
+.. py:function:: generate_server_auth(service_name, parent_path, force)
+
+.. py:function:: generate_hyperpocket_auth_dir(service_name, parent_path, force)
+
+.. py:function:: generate_auth_context(service_name, capitliazed_service_name, parent_path, force)
+
+.. py:function:: generate_auth_token_context(service_name, capitliazed_service_name, parent_path, force)
+
+.. py:function:: generate_auth_token_handler(service_name, capitliazed_service_name, parent_path, force)
+
+.. py:function:: generate_auth_token_schema(service_name, capitliazed_service_name, parent_path, force)
+
