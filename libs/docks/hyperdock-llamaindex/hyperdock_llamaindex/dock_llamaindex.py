@@ -56,16 +56,22 @@ class DockLlamaindex:
         _kwargs = copy.deepcopy(kwargs)
         modified = {}
         for key, value in _kwargs.items():
+            # first off, check extended converter
             if key in env_dict_extends:
                 env_converter = env_dict_extends[key]
                 modified_key, modified_value = env_converter(key, value)
                 modified[modified_key] = modified_value
+
+                # converted environment is deleted from kwargs. because it will be injected to os env.
                 del kwargs[key]
 
-            if key in cls.env_map:
+            # and then, check default converter
+            elif key in cls.env_map:
                 env_converter = cls.env_map[key]
                 modified_key, modified_value = env_converter(key, value)
                 modified[modified_key] = modified_value
+
+                # converted environment is deleted from kwargs. because it will be injected to os env.
                 del kwargs[key]
 
         return modified
