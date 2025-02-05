@@ -1,0 +1,19 @@
+[project]
+name = "dynamic-tool-loading"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "gitpython>=3.1.44",
+    "gradio>=5.14.0",
+    "hyperpocket-openai",
+    "openai>=1.60.2",
+    "pygithub>=2.5.0",
+    "python-dotenv>=1.0.1",
+    "tomlkit>=0.13.2",
+]
+
+[tool.uv.sources]
+hyperpocket-openai = { path = "../../../libs/extensions/openai", editable = true }
+
