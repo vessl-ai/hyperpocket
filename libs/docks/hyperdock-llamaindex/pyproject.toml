@@ -10,6 +10,10 @@ dependencies = [
     "multiprocess>=0.70.17",
     "hyperpocket",
     "hyperpocket-llamaindex",
+    "llama-index-tools-duckduckgo",
+    "llama-index-tools-slack",
+    "llama-index-tools-google",
+    "slack-sdk",
 ]
 
 [tool.uv.sources]

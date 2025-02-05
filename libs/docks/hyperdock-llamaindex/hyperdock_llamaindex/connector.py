@@ -7,13 +7,11 @@ from typing import Any, Callable, Optional, Tuple, Type, Union
 import multiprocess
 from llama_index.core.tools.tool_spec.base import BaseToolSpec
 
-from hyperdock_llamaindex.dictionary import EnvDict
-
-
 class LlamaIndexToolRequest(object):
     tool_func: Callable
     tool_spec: Type[BaseToolSpec]
     tool_args: dict[str, Any]
+    tool_spec_args: dict[str, Any]
     env_dict_extends: dict[str, str]
     auth: Optional[dict[str, Any]]
     tool_vars: dict[str, str]
@@ -21,8 +19,8 @@ class LlamaIndexToolRequest(object):
     def __init__(
         self,
         tool_func: Callable,
-        tool_spec: Type[BaseToolSpec] = BaseToolSpec,
         tool_args: Optional[dict[str, Any]] = None,
+        tool_spec_args: Optional[dict[str, Any]] = None,
         env_dict_extends: Optional[dict[str, str]] = None,
         auth: Optional[dict[str, Any]] = None,
         tool_vars: Optional[dict[str, str]] = None,
@@ -34,6 +32,9 @@ class LlamaIndexToolRequest(object):
         self.tool_args = {}
         if tool_args is not None:
             self.tool_args = tool_args
+        self.tool_spec_args = {}
+        if tool_spec_args is not None:
+            self.tool_spec_args = tool_spec_args
         self.env_dict_extends = {}
         if env_dict_extends is not None:
             self.env_dict_extends = env_dict_extends
@@ -45,40 +46,19 @@ class LlamaIndexToolRequest(object):
 
 ToolType = Callable | LlamaIndexToolRequest
 
-
-def modify_environment(
-    environ: dict[str, str],
-    kwargs: dict[str, Any],
-    env_dict_extends: dict[str, Callable[[str, str], Tuple[str, str]]],
-) -> dict[str, str]:
-    default_rules = EnvDict.default().rules
-    for key, value in kwargs.items():
-        if key in env_dict_extends:
-            if (replacer := env_dict_extends.get(key)) is not None:
-                k, v = replacer(key, value)
-                environ[k] = v
-        elif key in default_rules:
-            if (replacer := default_rules.get(key)) is not None:
-                k, v = replacer(key, value)
-                environ[k] = v
-    return environ
-
 def _run(
     tool_func: Callable,
     tool_spec: Type[BaseToolSpec],
     envs: dict[str, str],
-    tool_kwargs: dict[str, Any],
+    tool_args: dict[str, Any],
+    tool_spec_args: dict[str, Any],
     pipe: multiprocess.Pipe,
     **kwargs,
 ) -> None:
     # must be called in a child process
     for key, value in envs.items():
         os.environ[key] = value
-    result = tool_func(tool_spec(), **tool_kwargs)
-    # config = {}
-    # if "config" in kwargs:
-    #     config = kwargs.pop("config")
-    # result = tool(input=kwargs, config=config)
+    result = tool_func(tool_spec(**tool_spec_args), **tool_args)
     _, conn = pipe
     conn.send(result)
 
@@ -92,17 +72,11 @@ def connect(
 
     def wrapper(**kwargs) -> str:
         try:
-            # replacement only happens when user uses pocket native auth
-            if tool_req.auth is not None:
-                child_env = modify_environment(
-                    os.environ.copy(), kwargs, tool_req.env_dict_extends
-                )
-            else:
-                child_env = os.environ.copy()
+            child_env = os.environ.copy()
             pipe = multiprocess.Pipe()
             process = multiprocess.Process(
                 target=_run,
-                args=(tool_req.tool_func, tool_req.tool_spec, child_env, tool_req.tool_args, pipe),
+                args=(tool_req.tool_func, tool_req.tool_spec, child_env, tool_req.tool_args, tool_req.tool_spec_args, pipe),
                 kwargs=kwargs,
             )
             process.start()
@@ -116,12 +90,15 @@ def connect(
             return result
         except Exception as e:
             return "\n".join(traceback.format_exception(e))
+
     if inspect.ismethod(tool_req.tool_func):
         wrapper = tool_req.tool_func.__func__
     else:
         wrapper = tool_req.tool_func
     wrapper.__auth__ = tool_req.auth
     wrapper.__vars__ = tool_req.tool_vars
-    wrapper = MethodType(wrapper, tool_req.tool_spec)  # This is to make the function a method of the tool_spec.
+    
+    tool_spec = tool_req.tool_spec(**tool_req.tool_spec_args) # tool_spec is a class, so we need to instantiate it
+    wrapper = MethodType(wrapper, tool_spec)  # This is to make the function a method of the tool_spec.
 
     return wrapper
