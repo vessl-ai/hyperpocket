@@ -1,5 +1,7 @@
 import tempfile
-from typing import Tuple
+from typing import Tuple, Callable
+
+CONVERTER_TYPE = Callable[[str, str], Tuple[str, str]]
 
 
 def slack_bot_token(_env_key: str, env_value: str) -> Tuple[str, str]:
