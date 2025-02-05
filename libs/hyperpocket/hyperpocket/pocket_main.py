@@ -89,6 +89,7 @@ class Pocket(object):
             *args,
             **kwargs,
         )
+        pocket_logger.debug(f"{tool_name} result: {result}")
         return result
 
     def invoke_with_state(

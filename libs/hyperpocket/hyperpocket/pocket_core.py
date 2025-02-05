@@ -17,6 +17,7 @@ from hyperpocket.tool_like import ToolLike
 class PocketCore:
     auth: PocketAuth
     tools: dict[str, Tool]
+    lockfile: Lockfile
 
     def __init__(
         self,
@@ -29,48 +30,30 @@ class PocketCore:
             auth = PocketAuth()
         self.auth = auth
 
+        # init lockfile
         if lockfile_path is None:
             lockfile_path = "./pocket.lock"
         lockfile_pathlib_path = pathlib.Path(lockfile_path)
-        lockfile = Lockfile(lockfile_pathlib_path)
+        self.lockfile = Lockfile(lockfile_pathlib_path)
+
+        # parse tool_likes and add lock of the tool like to the lockfile
         tool_likes = []
         for tool_like in tools:
-            if isinstance(tool_like, str):
-                if pathlib.Path(tool_like).exists():
-                    lock = LocalLock(tool_like)
-                    req = WasmToolRequest(lock, "")
-                elif tool_like.startswith("https://github.com"):
-                    base_repo_url, git_ref, rel_path = GitLock.parse_repo_url(
-                        repo_url=tool_like
-                    )
-                    lock = GitLock(repository_url=base_repo_url, git_ref=git_ref)
-                    req = WasmToolRequest(lock=lock, rel_path=rel_path, tool_vars={})
+            parsed_tool_like = self._parse_tool_like(tool_like)
+            tool_likes.append(parsed_tool_like)
+            self._add_tool_like_lock_to_lockfile(parsed_tool_like)
+        self.lockfile.sync(force_update=force_update, referenced_only=True)
 
-                lockfile.add_lock(lock)
-                tool_likes.append(req)
-            elif isinstance(tool_like, WasmToolRequest):
-                lockfile.add_lock(tool_like.lock)
-                tool_likes.append(tool_like)
-            elif isinstance(tool_like, ToolRequest):
-                raise ValueError(f"unreachable. tool_like:{tool_like}")
-            elif isinstance(tool_like, WasmTool):
-                raise ValueError("WasmTool should pass ToolRequest instance instead.")
-            else:
-                tool_likes.append(tool_like)
-        lockfile.sync(force_update=force_update, referenced_only=True)
-
+        # load tool from tool_like
         self.tools = dict()
         for tool_like in tool_likes:
-            tool = self._load_tool(tool_like, lockfile)
-            if tool.name in self.tools:
-                pocket_logger.error(f"Duplicate tool name: {tool.name}.")
-                raise ValueError(f"Duplicate tool name: {tool.name}")
-            self.tools[tool.name] = tool
+            self._load_tool(tool_like)
 
         pocket_logger.info(
             f"All Registered Tools Loaded successfully. total registered tools : {len(self.tools)}"
         )
 
+        # load builtin tool
         builtin_tools = get_builtin_tools(self.auth)
         for tool in builtin_tools:
             self.tools[tool.name] = tool
@@ -266,17 +249,60 @@ class PocketCore:
     def _tool_instance(self, tool_name: str) -> Tool:
         return self.tools[tool_name]
 
-    @staticmethod
-    def _load_tool(tool_like: ToolLike, lockfile: Lockfile) -> Tool:
+    def _load_tool(self, tool_like: ToolLike) -> Tool:
         pocket_logger.info(f"Loading Tool {tool_like}")
         if isinstance(tool_like, Tool):
             tool = tool_like
         elif isinstance(tool_like, ToolRequest):
-            tool = Tool.from_tool_request(tool_like, lockfile=lockfile)
+            tool = Tool.from_tool_request(tool_like, lockfile=self.lockfile)
         elif isinstance(tool_like, Callable):
             tool = from_func(tool_like)
         else:
             raise ValueError(f"Invalid tool type: {type(tool_like)}")
 
+        if tool.name in self.tools:
+            pocket_logger.error(f"Duplicate tool name: {tool.name}.")
+            raise ValueError(f"Duplicate tool name: {tool.name}")
+        self.tools[tool.name] = tool
+
         pocket_logger.info(f"Complete Loading Tool {tool.name}")
         return tool
+
+    def _add_tool_like_lock_to_lockfile(self, tool_like: ToolLike):
+        if isinstance(tool_like, WasmToolRequest):  # lock is only in WasmToolRequest
+            self.lockfile.add_lock(tool_like.lock)
+        return
+
+    @classmethod
+    def _parse_tool_like(cls, tool_like: ToolLike) -> ToolLike:
+        if isinstance(tool_like, str):
+            return cls._parse_str_tool_like(tool_like)
+
+        elif isinstance(tool_like, WasmToolRequest):
+            return tool_like
+
+        elif isinstance(tool_like, ToolRequest):
+            raise ValueError(f"unreachable. tool_like:{tool_like}")
+        elif isinstance(tool_like, WasmTool):
+            raise ValueError("WasmTool should pass ToolRequest instance instead.")
+        else:  # Callable, Tool
+            return tool_like
+
+    @classmethod
+    def _parse_str_tool_like(cls, tool_like: str) -> ToolLike:
+        if pathlib.Path(tool_like).exists():
+            lock = LocalLock(tool_like)
+            parsed_tool_like = WasmToolRequest(lock=lock, rel_path="", tool_vars={})
+        elif tool_like.startswith("https://github.com"):
+            base_repo_url, git_ref, rel_path = GitLock.parse_repo_url(
+                repo_url=tool_like
+            )
+            lock = GitLock(repository_url=base_repo_url, git_ref=git_ref)
+            parsed_tool_like = WasmToolRequest(lock=lock, rel_path=rel_path, tool_vars={})
+        else:
+            parsed_tool_like = None
+            RuntimeError(
+                f"Can't convert to ToolRequest. it might be wrong github url or local path. path: {tool_like}")
+
+        return parsed_tool_like
+
