@@ -86,6 +86,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../auth/hyperpocket-auth.html">Hyperpocket Auth</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auth/enabling-oauth-with-hyperpocket.html">Enabling OAuth with Hyperpocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auth/enabling-token-based-authentication-with-hyperpocket.html">Enabling Token-Based Authentication with Hyperpocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auth/create_auth_provider.html">Creating a new auth provider</a></li>
 </ul>
 </li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../supported-frameworks/index.html">Supported frameworks<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
@@ -250,6 +251,120 @@
 </span></code></pre></div>
 </div>
 </section>
+<section id="custom-tool-requirements">
+<h4>Custom Tool requirements<a class="headerlink" href="#custom-tool-requirements" title="Link to this heading"><span>#</span></a></h4>
+<p><strong>WASM Tool</strong></p>
+<ul>
+<li><p><strong>config.toml</strong> (Tool Metadata)</p>
+<ul class="simple">
+<li><p>name(str) : tool name</p></li>
+<li><p>description(str) : tool description</p></li>
+<li><p>auth_handlers(list[str]) : auth_handlers name list</p></li>
+<li><p>auth_scopes(dict[str, list[str]]) : auth_scopes per auth_handler</p></li>
+<li><p>tool_vars(dict[str, str]) : tool variables to use in tool</p></li>
+</ul>
+<p><strong>example</strong></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"slack_get_messages"</span>
+</span><span id="line-2"><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"get slack messages"</span>
+</span><span id="line-3"><span class="n">auth_handlers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"slack-oauth2"</span><span class="p">]</span>
+</span><span id="line-4"><span class="k">[auth_scopes]</span>
+</span><span id="line-5"><span class="n">slack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"channels:history"</span><span class="p">]</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="k">[tool_vars]</span>
+</span><span id="line-8"><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1"</span>
+</span><span id="line-9"><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"2"</span>
+</span></code></pre></div>
+</div>
+</li>
+<li><p><strong>schema.json</strong> (OpenAPI spec for tool request)</p>
+<p><strong>example</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="p">{</span>
+</span><span id="line-2"><span class="w">  </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-3"><span class="w">    </span><span class="nt">"channel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-4"><span class="w">      </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Channel"</span><span class="p">,</span>
+</span><span id="line-5"><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
+</span><span id="line-6"><span class="w">    </span><span class="p">},</span>
+</span><span id="line-7"><span class="w">    </span><span class="nt">"limit"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-8"><span class="w">      </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Limit"</span><span class="p">,</span>
+</span><span id="line-9"><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span>
+</span><span id="line-10"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-11"><span class="w">  </span><span class="p">},</span>
+</span><span id="line-12"><span class="w">  </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"channel"</span><span class="p">,</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">],</span>
+</span><span id="line-13"><span class="w">  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SlackGetMessageRequest"</span><span class="p">,</span>
+</span><span id="line-14"><span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span>
+</span><span id="line-15"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+</li>
+<li><p><strong>dist</strong> (Build &amp; package the tool for execution)</p>
+<p><strong>example</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># uv</span>
+</span><span id="line-2">uv<span class="w"> </span>build
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># poetry</span>
+</span><span id="line-5">poetry<span class="w"> </span>build
+</span></code></pre></div>
+</div>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">__main__.py</span></code></strong> (Main execution script)</p>
+<ul class="simple">
+<li><p>input : stdin</p></li>
+<li><p>output : stdout</p></li>
+<li><p>auth : environment variables</p></li>
+<li><p>should call your code in <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">'__main__':</span> <span class="pre">..</span></code></p></li>
+</ul>
+<p><strong>example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">  <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</span><span id="line-2">  <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="line-3">  <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+</span><span id="line-4">  <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+</span><span id="line-5">
+</span><span id="line-6">  <span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+</span><span id="line-7">  <span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+</span><span id="line-8">
+</span><span id="line-9">  <span class="n">token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'GOOGLE_TOKEN'</span><span class="p">)</span>
+</span><span id="line-10">
+</span><span id="line-11">
+</span><span id="line-12">  <span class="k">class</span><span class="w"> </span><span class="nc">GoogleGetCalendarListRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="line-13">      <span class="k">pass</span>
+</span><span id="line-14">
+</span><span id="line-15">
+</span><span id="line-16">  <span class="k">def</span><span class="w"> </span><span class="nf">get_calendar_list</span><span class="p">():</span>
+</span><span id="line-17">      <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="line-18">          <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">"https://www.googleapis.com/calendar/v3/users/me/calendarList"</span><span class="p">,</span>
+</span><span id="line-19">          <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-20">              <span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+</span><span id="line-21">          <span class="p">}</span>
+</span><span id="line-22">      <span class="p">)</span>
+</span><span id="line-23">
+</span><span id="line-24">      <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+</span><span id="line-25">          <span class="k">return</span> <span class="sa">f</span><span class="s2">"failed to get calendar list. error : </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="line-26">
+</span><span id="line-27">      <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span><span id="line-28">
+</span><span id="line-29">
+</span><span id="line-30">  <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span><span id="line-31">      <span class="n">req</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
+</span><span id="line-32">      <span class="n">response</span> <span class="o">=</span> <span class="n">get_calendar_list</span><span class="p">()</span>
+</span><span id="line-33">
+</span><span id="line-34">      <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</span><span id="line-35">
+</span><span id="line-36">
+</span><span id="line-37">  <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+</span><span id="line-38">      <span class="n">main</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">__init__.py</span></code></strong> (File defines the tool’s main function for execution)</p>
+<p><strong>example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">your_tool.__main__</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'main'</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+</li>
+</ul>
+</section>
 </section>
 </section>
 <section id="tool-categories-in-a-nutshell">
@@ -307,6 +422,9 @@
 </tr>
 </tbody>
 </table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
+</span></code></pre></div>
+</div>
 </section>
 </section>
 </section>
@@ -325,6 +443,7 @@
 <li><a :data-current="activeSection === '#built-in-tools'" class="reference internal" href="#built-in-tools">Built-in Tools</a></li>
 <li><a :data-current="activeSection === '#public-tools-open-source'" class="reference internal" href="#public-tools-open-source">Public Tools (open-source)</a></li>
 <li><a :data-current="activeSection === '#your-own-tools'" class="reference internal" href="#your-own-tools">Your own tools</a></li>
+<li><a :data-current="activeSection === '#custom-tool-requirements'" class="reference internal" href="#custom-tool-requirements">Custom Tool requirements</a></li>
 </ul>
 </li>
 </ul>

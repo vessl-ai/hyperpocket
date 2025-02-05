@@ -7,16 +7,16 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Auth | Hyperpocket  documentation</title>
-<meta content="Auth | Hyperpocket  documentation" property="og:title"/>
-<meta content="Auth | Hyperpocket  documentation" name="twitter:title"/>
+<title>Creating a new auth provider | Hyperpocket  documentation</title>
+<meta content="Creating a new auth provider | Hyperpocket  documentation" property="og:title"/>
+<meta content="Creating a new auth provider | Hyperpocket  documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../_static/graphviz.css?v=4ae1632d" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="hyperpocket-auth.html" rel="next" title="Hyperpocket Auth"/>
-<link href="../tools/tool-interfaces.html" rel="prev" title="Tool interfaces"/>
+<link href="../supported-frameworks/index.html" rel="next" title="Supported frameworks"/>
+<link href="enabling-token-based-authentication-with-hyperpocket.html" rel="prev" title="Enabling Token-Based Authentication with Hyperpocket"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -82,11 +82,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../tools/tool-interfaces.html">Tool interfaces</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="current reference internal expandable" href="#">Auth<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
+<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Auth<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
 <li class="toctree-l2"><a class="reference internal" href="hyperpocket-auth.html">Hyperpocket Auth</a></li>
 <li class="toctree-l2"><a class="reference internal" href="enabling-oauth-with-hyperpocket.html">Enabling OAuth with Hyperpocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="enabling-token-based-authentication-with-hyperpocket.html">Enabling Token-Based Authentication with Hyperpocket</a></li>
-<li class="toctree-l2"><a class="reference internal" href="create_auth_provider.html">Creating a new auth provider</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Creating a new auth provider</a></li>
 </ul>
 </li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../supported-frameworks/index.html">Supported frameworks<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
@@ -123,21 +123,116 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Auth</span>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">Auth</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Creating a new auth provider</span>
 </nav>
 <div id="content" role="main">
-<section id="auth">
-<h1>Auth<a class="headerlink" href="#auth" title="Link to this heading"><span>#</span></a></h1>
-<div class="toctree-wrapper compound">
+<section id="creating-a-new-auth-provider">
+<h1>Creating a new auth provider<a class="headerlink" href="#creating-a-new-auth-provider" title="Link to this heading"><span>#</span></a></h1>
+<p>User can easily create and integrate Auth Provider for tools.</p>
+<section id="creating-token-auth-provider">
+<h2>Creating Token Auth Provider<a class="headerlink" href="#creating-token-auth-provider" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#creating-token-auth-provider'"><span>#</span></a></h2>
+<ol class="arabic simple">
+<li><p>Generate boilerplate codes for token-based auth services. It will generate boilerplate code lines for a new token-based auth service.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># service_name should be lowercase including underscore</span>
+</span><span id="line-2"><span class="n">uv</span> <span class="n">run</span> <span class="n">hyperpocket</span> <span class="n">devtool</span> <span class="n">create</span><span class="o">-</span><span class="n">token</span><span class="o">-</span><span class="n">auth</span><span class="o">-</span><span class="n">template</span> <span class="p">{</span><span class="n">service_name</span><span class="p">}</span>
+</span></code></pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Extend AuthProvider enum to add your new auth provider.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">class</span><span class="w"> </span><span class="nc">AuthProvider</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="line-2">    <span class="n">SERVICE</span> <span class="o">=</span> <span class="s1">'service'</span>
+</span></code></pre></div>
+</div>
+<ol class="arabic" start="3">
+<li><p>Specify auth provider for tools.</p>
+<ol class="arabic simple">
+<li><p>github repo or local</p></li>
+</ol>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">[auth]</span>
+</span><span id="line-2"><span class="n">auth_provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{service_name}"</span>
+</span><span id="line-3"><span class="n">auth_handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{service_name}-token"</span>
+</span><span id="line-4"><span class="n">scopes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span>
+</span></code></pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>function_tool</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="nd">@function_tool</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">SERVICE</span>
+</span><span id="line-3"><span class="p">)</span>
+</span><span id="line-4"><span class="k">def</span><span class="w"> </span><span class="nf">my_function</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></code></pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="creating-oauth2-auth-provider">
+<h2>Creating OAuth2 Auth Provider<a class="headerlink" href="#creating-oauth2-auth-provider" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#creating-oauth2-auth-provider'"><span>#</span></a></h2>
+<ol class="arabic simple">
+<li><p>Generate boilerplate codes for oauth2-based auth services. It will generate boilerplate code lines for a new oauth2-based auth service.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># service_name should be lowercase including underscore</span>
+</span><span id="line-2"><span class="n">uv</span> <span class="n">run</span> <span class="n">hyperpocket</span> <span class="n">devtool</span> <span class="n">create</span><span class="o">-</span><span class="n">oauth2</span><span class="o">-</span><span class="n">auth</span><span class="o">-</span><span class="n">template</span> <span class="p">{</span><span class="n">service_name</span><span class="p">}</span>
+</span></code></pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Modify created files into your auth provider requirements.</p></li>
+</ol>
+<ul class="simple">
+<li><p>Files to be considered:</p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="hyperpocket-auth.html">Hyperpocket Auth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="enabling-oauth-with-hyperpocket.html">Enabling OAuth with Hyperpocket</a></li>
-<li class="toctree-l1"><a class="reference internal" href="enabling-token-based-authentication-with-hyperpocket.html">Enabling Token-Based Authentication with Hyperpocket</a></li>
-<li class="toctree-l1"><a class="reference internal" href="create_auth_provider.html">Creating a new auth provider</a></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hyperpocket/server/auth/{service_name}.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hyperpocket/auth/{service_name}/__init__.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hyperpocket/auth/{service_name}/context.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hyperpocket/auth/{service_name}/oauth2_context.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hyperpocket/auth/{service_name}/oauth2_handler.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hyperpocket/auth/{service_name}/oauth2_schema.py</span></code></p></li>
+</ul>
+</li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Extend AuthProvider enum to add your new auth provider.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">class</span><span class="w"> </span><span class="nc">AuthProvider</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="line-2">    <span class="n">SERVICE</span> <span class="o">=</span> <span class="s1">'service'</span>
+</span></code></pre></div>
+</div>
+<ol class="arabic" start="4">
+<li><p>Specify auth provider for tools.</p>
+<ol class="arabic simple">
+<li><p>github repo or local</p></li>
+</ol>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">[auth]</span>
+</span><span id="line-2"><span class="n">auth_provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{service_name}"</span>
+</span><span id="line-3"><span class="n">auth_handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{service_name}-oauth2"</span>
+</span><span id="line-4"><span class="n">scopes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span>
+</span></code></pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>function_tool</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="nd">@function_tool</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">SERVICE</span>
+</span><span id="line-3"><span class="p">)</span>
+</span><span id="line-4"><span class="k">def</span><span class="w"> </span><span class="nf">my_function</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="line-5"> <span class="o">...</span>
+</span></code></pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#creating-token-auth-provider'" class="reference internal" href="#creating-token-auth-provider">Creating Token Auth Provider</a></li>
+<li><a :data-current="activeSection === '#creating-oauth2-auth-provider'" class="reference internal" href="#creating-oauth2-auth-provider">Creating OAuth2 Auth Provider</a></li>
 </ul>
 </div>
-</section>
-</div></div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">

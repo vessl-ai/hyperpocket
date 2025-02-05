@@ -7,19 +7,35 @@
 ```python
 from anthropic import Anthropic
 from hyperpocket.tool import from_git
+from hyperpocket_anthropic import PocketAnthropic
 
 # Initialize Anthropic LLM
-anthropic = Anthropic(api_key="YOUR_ANTHROPIC_API_KEY")
+client = Anthropic(api_key="YOUR_ANTHROPIC_API_KEY")
 
 # Load a Hyperpocket tool
-tool = from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message")
+pocket = PocketAnthropic(
+    tools=[
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
+    ]
+)
 
-# Define the prompt with tool integration
-prompt = f"""
-You are a Slack assistant. Use the tool to fetch messages:
-Tool: {tool.name}
-Instructions: Fetch the last 5 messages from the 'general' channel.
-"""
-response = anthropic.completion(prompt=prompt)
-print(response)
+tool_specs = pocket.get_anthropic_tool_specs()
+
+messages = []
+while True:
+    user_input = input()
+    messages.append({"role": "user", "content": user_input})
+
+    while True:
+        response = client.messages.create(
+            model="claude-3-5-haiku-latest",
+            max_tokens=500,
+            messages=messages,
+            tools=tool_specs,
+        )
+
+        messages.append({"role": "assistant", "content": response.content})
+
+        print(response)
 ```

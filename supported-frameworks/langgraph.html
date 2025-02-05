@@ -86,6 +86,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../auth/hyperpocket-auth.html">Hyperpocket Auth</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auth/enabling-oauth-with-hyperpocket.html">Enabling OAuth with Hyperpocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auth/enabling-token-based-authentication-with-hyperpocket.html">Enabling Token-Based Authentication with Hyperpocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auth/create_auth_provider.html">Creating a new auth provider</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Supported frameworks<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
@@ -131,19 +132,23 @@
 <p><strong>LangGraph</strong> supports graph-based workflows for language models. With Hyperpocket, you can integrate tools for more structured and complex workflows.</p>
 <p><strong>Example: Using LangGraph with Slack Integration</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
-</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">langgraph</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentGraph</span>
-</span><span id="line-3">
-</span><span id="line-4"><span class="c1"># Load tools with Hyperpocket</span>
-</span><span id="line-5"><span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">"https://github.com/vessl-ai/hyperawesometools"</span><span class="p">,</span> <span class="s2">"main"</span><span class="p">,</span> <span class="s2">"managed-tools/slack/schedule-message"</span><span class="p">)</span>
-</span><span id="line-6">
-</span><span id="line-7"><span class="c1"># Define the LangGraph workflow</span>
-</span><span id="line-8"><span class="n">graph</span> <span class="o">=</span> <span class="n">AgentGraph</span><span class="p">()</span>
-</span><span id="line-9"><span class="n">graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">"schedule_message"</span><span class="p">,</span> <span class="n">tool</span><span class="p">)</span>
-</span><span id="line-10"><span class="n">graph</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"start"</span><span class="p">,</span> <span class="s2">"schedule_message"</span><span class="p">)</span>
-</span><span id="line-11"><span class="n">graph</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"schedule_message"</span><span class="p">,</span> <span class="s2">"end"</span><span class="p">)</span>
-</span><span id="line-12">
-</span><span id="line-13"><span class="c1"># Execute the workflow</span>
-</span><span id="line-14"><span class="n">graph</span><span class="o">.</span><span class="n">execute</span><span class="p">({</span><span class="s2">"channel"</span><span class="p">:</span> <span class="s2">"general"</span><span class="p">,</span> <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Team meeting at 3 PM"</span><span class="p">})</span>
+</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_langgraph</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLanggraph</span>
+</span><span id="line-3"><span class="kn">from</span><span class="w"> </span><span class="nn">langgraph</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentGraph</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="c1"># Load tools with Hyperpocket</span>
+</span><span id="line-6"><span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketLanggraph</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+</span><span id="line-7">        <span class="s2">"https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message"</span><span class="p">,</span>
+</span><span id="line-8">        <span class="s2">"https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests"</span><span class="p">,</span>
+</span><span id="line-9">    <span class="p">])</span>
+</span><span id="line-10">
+</span><span id="line-11"><span class="c1"># Define the LangGraph workflow</span>
+</span><span id="line-12"><span class="n">graph</span> <span class="o">=</span> <span class="n">AgentGraph</span><span class="p">()</span>
+</span><span id="line-13"><span class="n">graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">"schedule_message"</span><span class="p">,</span> <span class="n">pocket</span><span class="o">.</span><span class="n">get_tool_node</span><span class="p">(</span><span class="n">should_interrupt</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</span><span id="line-14"><span class="n">graph</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"start"</span><span class="p">,</span> <span class="s2">"schedule_message"</span><span class="p">)</span>
+</span><span id="line-15"><span class="n">graph</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"schedule_message"</span><span class="p">,</span> <span class="s2">"end"</span><span class="p">)</span>
+</span><span id="line-16">
+</span><span id="line-17"><span class="c1"># Execute the workflow</span>
+</span><span id="line-18"><span class="n">graph</span><span class="o">.</span><span class="n">execute</span><span class="p">({</span><span class="s2">"channel"</span><span class="p">:</span> <span class="s2">"general"</span><span class="p">,</span> <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Team meeting at 3 PM"</span><span class="p">})</span>
 </span></code></pre></div>
 </div>
 </section>

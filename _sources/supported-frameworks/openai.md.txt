@@ -5,18 +5,35 @@
 **Example: Using Hyperpocket with OpenAI**
 
 ```python
-from openai import ChatCompletion
+from openai import OpenAI
+from hyperpocket_openai import PocketOpenAI
 from hyperpocket.tool import from_git
 
 # Load a tool
-tool = from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message")
+pocket = PocketOpenAI(
+    tools=[
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
+    ]
+)
+tools = pocket.get_tools()
+model = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# Define the OpenAI prompt
-prompt = f"""
-You are an assistant. Use the tool below to post a message:
-Tool: {tool.name}
-Instructions: Post "Hello, team!" to the 'general' channel.
-"""
-response = ChatCompletion.create(model="gpt-4", messages=[{"role": "system", "content": prompt}])
-print(response["choices"][0]["message"]["content"])
+messages = []
+while True:
+    print("user input(q to quit) : ", end="")
+    user_input = input()
+    if user_input == "q":
+        break
+
+    user_message = {"content": user_input, "role": "user"}
+    messages.append(user_message)
+
+    while True:
+        response = model.chat.completions.create(
+            model="gpt-4o",
+            messages=messages,
+            tools=tool_specs,
+        )
+        print(response)
 ```

@@ -15,7 +15,7 @@
 <link href="../_static/graphviz.css?v=4ae1632d" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="../supported-frameworks/index.html" rel="next" title="Supported frameworks"/>
+<link href="create_auth_provider.html" rel="next" title="Creating a new auth provider"/>
 <link href="enabling-oauth-with-hyperpocket.html" rel="prev" title="Enabling OAuth with Hyperpocket"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
@@ -86,6 +86,7 @@
 <li class="toctree-l2"><a class="reference internal" href="hyperpocket-auth.html">Hyperpocket Auth</a></li>
 <li class="toctree-l2"><a class="reference internal" href="enabling-oauth-with-hyperpocket.html">Enabling OAuth with Hyperpocket</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Enabling Token-Based Authentication with Hyperpocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_auth_provider.html">Creating a new auth provider</a></li>
 </ul>
 </li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../supported-frameworks/index.html">Supported frameworks<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
@@ -128,8 +129,7 @@
 <div id="content" role="main">
 <section id="enabling-token-based-authentication-with-hyperpocket">
 <h1>Enabling Token-Based Authentication with Hyperpocket<a class="headerlink" href="#enabling-token-based-authentication-with-hyperpocket" title="Link to this heading"><span>#</span></a></h1>
-<p>Hyperpocket support token based authentication that is used in case user already have their own token, or you can’t
-choose OAuth flow.</p>
+<p>Hyperpocket support token based authentication that is used in case user already have their own token, or you can’t choose OAuth flow.</p>
 <p>This approach is simple and efficient, making it perfect for lightweight workflows.</p>
 <section id="how-to-apply-token-authentication">
 <h2><strong>How to Apply Token Authentication</strong><a class="headerlink" href="#how-to-apply-token-authentication" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#how-to-apply-token-authentication'"><span>#</span></a></h2>
@@ -156,10 +156,10 @@ choose OAuth flow.</p>
 </span><span id="line-11"><span class="k">def</span><span class="w"> </span><span class="nf">slack_get_messages</span><span class="p">(</span><span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 </span><span id="line-12"><span class="w">    </span><span class="sd">"""</span>
 </span><span id="line-13"><span class="sd">    Get recent messages from a Slack channel.</span>
-</span><span id="line-14"><span class="sd">    </span>
+</span><span id="line-14">
 </span><span id="line-15"><span class="sd">    Args:</span>
 </span><span id="line-16"><span class="sd">        channel(str): slack channel to be fetched</span>
-</span><span id="line-17"><span class="sd">        limit(int): maximum message limit </span>
+</span><span id="line-17"><span class="sd">        limit(int): maximum message limit</span>
 </span><span id="line-18"><span class="sd">    """</span>
 </span><span id="line-19">    <span class="n">client</span> <span class="o">=</span> <span class="n">WebClient</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">"SLACK_BOT_TOKEN"</span><span class="p">])</span>
 </span><span id="line-20">    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">conversations_history</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">)</span>

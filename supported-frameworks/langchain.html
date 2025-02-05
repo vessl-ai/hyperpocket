@@ -86,6 +86,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../auth/hyperpocket-auth.html">Hyperpocket Auth</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auth/enabling-oauth-with-hyperpocket.html">Enabling OAuth with Hyperpocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auth/enabling-token-based-authentication-with-hyperpocket.html">Enabling Token-Based Authentication with Hyperpocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auth/create_auth_provider.html">Creating a new auth provider</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Supported frameworks<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
@@ -128,7 +129,7 @@
 <div id="content" role="main">
 <section id="langchain">
 <h1>LangChain<a class="headerlink" href="#langchain" title="Link to this heading"><span>#</span></a></h1>
-<p><strong>LangChain</strong> is a popular framework for building applications powered by language models. Hyperpocket integrates easily with LangChain, allowing you to use tools dynamically within agents.</p>
+<p><strong>LangChain</strong> is a widely-used framework for creating applications driven by language models. Hyperpocket seamlessly integrates with LangChain, enabling dynamic tool usage within agents.</p>
 <p><strong>Example: Using Hyperpocket with LangChain</strong></p>
 <p><strong>Code Example: Tool Calling with LangChain</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.agents</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentExecutor</span><span class="p">,</span> <span class="n">create_tool_calling_agent</span>

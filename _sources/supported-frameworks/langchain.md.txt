@@ -1,6 +1,6 @@
 # LangChain
 
-**LangChain** is a popular framework for building applications powered by language models. Hyperpocket integrates easily with LangChain, allowing you to use tools dynamically within agents.
+**LangChain** is a widely-used framework for creating applications driven by language models. Hyperpocket seamlessly integrates with LangChain, enabling dynamic tool usage within agents.
 
 **Example: Using Hyperpocket with LangChain**
 

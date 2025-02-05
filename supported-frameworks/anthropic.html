@@ -86,6 +86,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../auth/hyperpocket-auth.html">Hyperpocket Auth</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auth/enabling-oauth-with-hyperpocket.html">Enabling OAuth with Hyperpocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auth/enabling-token-based-authentication-with-hyperpocket.html">Enabling Token-Based Authentication with Hyperpocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auth/create_auth_provider.html">Creating a new auth provider</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Supported frameworks<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
@@ -132,21 +133,37 @@
 <p><strong>Example: Using Anthropic with Tool Calling</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Anthropic</span>
 </span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
-</span><span id="line-3">
-</span><span id="line-4"><span class="c1"># Initialize Anthropic LLM</span>
-</span><span id="line-5"><span class="n">anthropic</span> <span class="o">=</span> <span class="n">Anthropic</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">"YOUR_ANTHROPIC_API_KEY"</span><span class="p">)</span>
-</span><span id="line-6">
-</span><span id="line-7"><span class="c1"># Load a Hyperpocket tool</span>
-</span><span id="line-8"><span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">"https://github.com/vessl-ai/hyperawesometools"</span><span class="p">,</span> <span class="s2">"main"</span><span class="p">,</span> <span class="s2">"managed-tools/slack/get-message"</span><span class="p">)</span>
-</span><span id="line-9">
-</span><span id="line-10"><span class="c1"># Define the prompt with tool integration</span>
-</span><span id="line-11"><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""</span>
-</span><span id="line-12"><span class="s2">You are a Slack assistant. Use the tool to fetch messages:</span>
-</span><span id="line-13"><span class="s2">Tool: </span><span class="si">{</span><span class="n">tool</span><span class="o">.</span><span class="n">name</span><span class="si">}</span>
-</span><span id="line-14"><span class="s2">Instructions: Fetch the last 5 messages from the 'general' channel.</span>
-</span><span id="line-15"><span class="s2">"""</span>
-</span><span id="line-16"><span class="n">response</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">completion</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
-</span><span id="line-17"><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</span><span id="line-3"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_anthropic</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketAnthropic</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="c1"># Initialize Anthropic LLM</span>
+</span><span id="line-6"><span class="n">client</span> <span class="o">=</span> <span class="n">Anthropic</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">"YOUR_ANTHROPIC_API_KEY"</span><span class="p">)</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># Load a Hyperpocket tool</span>
+</span><span id="line-9"><span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketAnthropic</span><span class="p">(</span>
+</span><span id="line-10">    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+</span><span id="line-11">        <span class="s2">"https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message"</span><span class="p">,</span>
+</span><span id="line-12">        <span class="s2">"https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events"</span><span class="p">,</span>
+</span><span id="line-13">    <span class="p">]</span>
+</span><span id="line-14"><span class="p">)</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="n">tool_specs</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">get_anthropic_tool_specs</span><span class="p">()</span>
+</span><span id="line-17">
+</span><span id="line-18"><span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="line-19"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="line-20">    <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+</span><span id="line-21">    <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">user_input</span><span class="p">})</span>
+</span><span id="line-22">
+</span><span id="line-23">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="line-24">        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+</span><span id="line-25">            <span class="n">model</span><span class="o">=</span><span class="s2">"claude-3-5-haiku-latest"</span><span class="p">,</span>
+</span><span id="line-26">            <span class="n">max_tokens</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+</span><span id="line-27">            <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+</span><span id="line-28">            <span class="n">tools</span><span class="o">=</span><span class="n">tool_specs</span><span class="p">,</span>
+</span><span id="line-29">        <span class="p">)</span>
+</span><span id="line-30">
+</span><span id="line-31">        <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"assistant"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">})</span>
+</span><span id="line-32">
+</span><span id="line-33">        <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 </section>
