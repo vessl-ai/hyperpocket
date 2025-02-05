@@ -11,7 +11,7 @@ OAuth is particularly useful for tools that require user authorization, such as 
 
 #### 1. Set the OAuth Configuration
 
-Set a oauth configuration. it varies by Oauth Provider
+Set an OAuth configuration. It varies by OAuth Provider,
 
 Example(Slack):
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
 #### 1. Set the OAuth Configuration
 
-Set a oauth configuration. it varies by Oauth Provider
+Set a OAuth configuration. It varies by OAuth Provider.
 
 Example(Slack):
 
@@ -136,10 +136,10 @@ from hyperpocket.tool import function_tool
 def slack_get_messages(channel: str, limit: int = 10, **kwargs) -> list:
     """
     Get recent messages from a Slack channel.
-    
+
     Args:
         channel(str): slack channel to be fetched
-        limit(int): maximum message limit 
+        limit(int): maximum message limit
     """
     client = WebClient(token=kwargs["SLACK_BOT_TOKEN"])
     response = client.conversations_history(channel=channel, limit=limit)
@@ -196,10 +196,10 @@ from hyperpocket.tool import function_tool
 def slack_get_messages(channel: str, limit: int = 10, **kwargs) -> list:
     """
     Get recent messages from a Slack channel.
-    
+
     Args:
         channel(str): slack channel to be fetched
-        limit(int): maximum message limit 
+        limit(int): maximum message limit
     """
     client = WebClient(token=kwargs["SLACK_BOT_TOKEN"])
     response = client.conversations_history(channel=channel, limit=limit)

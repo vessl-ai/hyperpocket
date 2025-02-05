@@ -1,7 +1,6 @@
 # Enabling Token-Based Authentication with Hyperpocket
 
-Hyperpocket support token based authentication that is used in case user already have their own token, or you can't
-choose OAuth flow.
+Hyperpocket support token based authentication that is used in case user already have their own token, or you can't choose OAuth flow.
 
 This approach is simple and efficient, making it perfect for lightweight workflows.
 
@@ -33,10 +32,10 @@ from hyperpocket.tool import function_tool
 def slack_get_messages(channel: str, limit: int = 10, **kwargs) -> list:
     """
     Get recent messages from a Slack channel.
-    
+
     Args:
         channel(str): slack channel to be fetched
-        limit(int): maximum message limit 
+        limit(int): maximum message limit
     """
     client = WebClient(token=kwargs["SLACK_BOT_TOKEN"])
     response = client.conversations_history(channel=channel, limit=limit)

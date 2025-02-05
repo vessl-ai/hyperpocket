@@ -125,6 +125,126 @@ def custom_task():
 tool = from_local(path="./local-tools/simple-echo-tool")
 ```
 
+#### Custom Tool requirements
+
+**WASM Tool**
+
+- **config.toml** (Tool Metadata)
+
+  - name(str) : tool name
+  - description(str) : tool description
+  - auth_handlers(list[str]) : auth_handlers name list
+  - auth_scopes(dict[str, list[str]]) : auth_scopes per auth_handler
+  - tool_vars(dict[str, str]) : tool variables to use in tool
+
+  **example**
+
+  ```toml
+  name = "slack_get_messages"
+  description = "get slack messages"
+  auth_handlers = ["slack-oauth2"]
+  [auth_scopes]
+  slack = ["channels:history"]
+
+  [tool_vars]
+  a = "1"
+  b = "2"
+  ```
+
+- **schema.json** (OpenAPI spec for tool request)
+
+  **example**
+
+  ```json
+  {
+    "properties": {
+      "channel": {
+        "title": "Channel",
+        "type": "string"
+      },
+      "limit": {
+        "title": "Limit",
+        "type": "integer"
+      }
+    },
+    "required": ["channel", "limit"],
+    "title": "SlackGetMessageRequest",
+    "type": "object"
+  }
+  ```
+
+- **dist** (Build & package the tool for execution)
+
+  **example**
+
+  ```shell
+  # uv
+  uv build
+
+  # poetry
+  poetry build
+  ```
+
+- **`__main__.py`** (Main execution script)
+
+  - input : stdin
+  - output : stdout
+  - auth : environment variables
+  - should call your code in `if __name__ == '__main__': ..`
+
+  **example**
+
+  ```python
+    import json
+    import os
+    import sys
+    from typing import Optional
+
+    import requests
+    from pydantic import BaseModel, Field
+
+    token = os.getenv('GOOGLE_TOKEN')
+
+
+    class GoogleGetCalendarListRequest(BaseModel):
+        pass
+
+
+    def get_calendar_list():
+        response = requests.get(
+            url=f"https://www.googleapis.com/calendar/v3/users/me/calendarList",
+            headers={
+                "Authorization": f"Bearer {token}",
+            }
+        )
+
+        if response.status_code != 200:
+            return f"failed to get calendar list. error : {response.text}"
+
+        return response.json()
+
+
+    def main():
+        req = json.load(sys.stdin.buffer)
+        response = get_calendar_list()
+
+        print(response)
+
+
+    if __name__ == "__main__":
+        main()
+  ```
+
+- **`__init__.py`** (File defines the tool's main function for execution)
+
+  **example**
+
+  ```python
+  from your_tool.__main__ import main
+
+  __all__ = ['main']
+  ```
+
 ## Tool categories in a nutshell
 
 ### By integration method
@@ -142,3 +262,7 @@ tool = from_local(path="./local-tools/simple-echo-tool")
 | Built-in Tools | Function       | Pre-installed tools ready for immediate use.      | Managed and predefined by Hyperpocket.                                     |
 | Public Tools   | WASM, Function | Community-developed tools, officially maintained. | Developed by community.                                                    |
 | Custom Tools   | WASM, Function | Personalized tools created and deployed by users. | Fully managed by the user, supporting inline and packaged implementations. |
+
+```
+
+```
