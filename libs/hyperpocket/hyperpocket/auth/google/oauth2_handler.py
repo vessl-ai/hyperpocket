@@ -1,6 +1,7 @@
 from typing import Optional
 from urllib.parse import urlencode, urljoin
 
+import json
 import httpx
 
 from hyperpocket.auth.context import AuthContext
@@ -82,7 +83,15 @@ class GoogleOAuth2AuthHandler(AuthHandlerInterface):
             raise Exception(f"failed to authenticate. status_code : {resp.status_code}")
 
         resp_json = resp.json()
+
         auth_response = GoogleOAuth2Response(**resp_json)
+        auth_response_dict = auth_response.model_dump(mode='json')
+        auth_response_dict['client_secret'] = auth_req.client_secret
+        auth_response_dict['client_id'] = auth_req.client_id
+        
+        with open('token.json', 'w') as f:
+            json.dump(auth_response_dict, f)
+        
         return GoogleOAuth2AuthContext.from_google_oauth2_response(auth_response)
 
     async def refresh(
