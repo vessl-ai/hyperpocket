@@ -26,6 +26,10 @@ Module Contents
       :type:  dict[str, hyperpocket.tool.Tool]
 
 
+   .. py:attribute:: lockfile
+      :type:  hyperpocket.repository.Lockfile
+
+
    .. py:method:: acall(tool_name: str, body: Any, thread_id: str = 'default', profile: str = 'default', *args, **kwargs) -> tuple[str, bool]
       :async:
 
