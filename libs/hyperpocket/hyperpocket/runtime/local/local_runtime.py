@@ -1,17 +1,19 @@
 import asyncio
-from typing import Coroutine
+from typing import Coroutine, Callable
 
 import multiprocess
 
 from hyperpocket.runtime.runtime import Runtime
 
+LocalRuntimeArg = Callable
+
 
 class LocalRuntime(Runtime):
-    def run(self, func, args, envs):
+    def run(self, run_arg: LocalRuntimeArg, args, envs):
         pipe = multiprocess.Pipe()
         process = multiprocess.Process(
             target=self._run,
-            args=(func, args, envs, pipe),
+            args=(run_arg, args, envs, pipe),
         )
         process.start()
         conn, _ = pipe

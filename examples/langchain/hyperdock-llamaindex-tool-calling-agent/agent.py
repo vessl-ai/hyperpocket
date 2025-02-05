@@ -57,12 +57,12 @@ def agent(pocket: PocketLangchain):
 
 
 if __name__ == "__main__":
+    llamaindex_dock = DockLlamaindex()
     llama_yahoo_finance_tools = [
-        DockLlamaindex.to_pocket_function_tool(
-            tool, auth=ToolAuth(auth_provider=AuthProvider.SLACK)) for tool in YahooFinanceToolSpec().to_tool_list()]
-
-    llama_duckduckgo_tools = [
-        DockLlamaindex.to_pocket_function_tool(tool) for tool in DuckDuckGoSearchToolSpec().to_tool_list()]
+        llamaindex_dock.dock(tool, auth=ToolAuth(auth_provider=AuthProvider.SLACK)) for tool in
+        YahooFinanceToolSpec().to_tool_list()
+    ]
+    llama_duckduckgo_tools = [llamaindex_dock.dock(tool) for tool in DuckDuckGoSearchToolSpec().to_tool_list()]
 
     with PocketLangchain(
             tools=[
