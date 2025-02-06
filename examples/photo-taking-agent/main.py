@@ -2,13 +2,12 @@ import asyncio
 import inspect
 import json
 import os
+import pathlib
 import re
 import uuid
 from typing import Optional, List
 
 import gradio as gr
-import pathlib
-from dotenv import load_dotenv
 from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageToolCall, ChatCompletion
 
@@ -19,8 +18,6 @@ from tools import send_mail, take_a_picture, call_diffusion_model
 from utils.build_javascript_tool import build_javascript_tool
 from utils.build_python_tool import build_python_tool
 from utils.upload_to_repo import upload_to_repo
-
-load_dotenv()
 
 cur_dir = pathlib.Path(os.getcwd())
 email_list = cur_dir / "email_list.txt"
@@ -60,7 +57,9 @@ at the first time, you introduce yourself to a user and the processes.
   - after taking a photo, ask the user if they want to transform their photos into sticker-style images. 
 2. ask for concrete style of the sticker and do transform by using the "call_diffusion_model" tool.
   - after transforming the photo, ask the user if they are satisfied with the result. if they say yes, ask if they would like the photo sent to their email.
-3. ask for their email address and send the photo accordingly.
+3. ask for their email address and after this, ask for username and then, send the photo accordingly.
+  - you do not ask their email and name simultaneously.
+  - and if you already know the user name, please double-check and be confirmed by the user.
 4. After doing all this processes, next user will be coming soon. so don't confuse previous user and next user. 
 """
 }]
@@ -138,6 +137,11 @@ def build_chat_ui(state):
 
         return gr.update(value=path, visible=True, elem_id=str(uuid.uuid4())), False
 
+    def _clear_messages():
+        messages.clear()
+        history.clear()
+        return gr.update(value=history), gr.update(value=None, visible=False, elem_id=str(uuid.uuid4()))
+
     with gr.Blocks() as ui:
         image = gr.Image(height=400, width=600, visible=False)
 
@@ -145,7 +149,15 @@ def build_chat_ui(state):
         text = gr.Text(submit_btn=True, lines=1, show_label=False)
 
         with gr.Blocks():
-            log_output = gr.Textbox(label="Log", lines=20, interactive=False)
+            log_output = gr.Textbox(label="Log", lines=20, interactive=False, autoscroll=False)
+
+        clear_messages = gr.Button("Clear Messages")
+
+        clear_messages.click(
+            _clear_messages,
+            inputs=[],
+            outputs=[chat_bot, image]
+        )
 
         text.submit(
             fn=append_user_message,
@@ -482,6 +494,7 @@ def init_model():
 if __name__ == "__main__":
     import os
     import pathlib
+    from dotenv import load_dotenv
 
     log_path = pathlib.Path(os.getcwd()) / ".log/pocket.log"
     log_history = []
@@ -490,6 +503,6 @@ if __name__ == "__main__":
     with open(log_path, "w") as f:
         f.write("")
 
-    load_dotenv()
+    load_dotenv(dotenv_path=".env", verbose=True)
     init_model()
     asyncio.run(ui())

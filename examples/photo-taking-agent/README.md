@@ -67,7 +67,10 @@ PHOTO_BOOTH_PICTURE_PATH=""
 DIFFUSION_MODEL_URL=""
 ```
 
-6. Run `main.py`
+6. set your google oauth `credentials.json`
+- ref [here](https://developers.google.com/gmail/api/quickstart/python#configure_the_oauth_consent_screen)
+
+7. Run `main.py`
 
 ```shell
 uv run python main.py

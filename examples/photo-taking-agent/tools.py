@@ -124,6 +124,7 @@ def call_diffusion_model(
 
 @function_tool
 def send_mail(
+        user_name: str,
         subject: str,
         to: str,
         image_path: str,
@@ -132,9 +133,10 @@ def send_mail(
     send mail with image.
 
     Args:
-         subject (str): subject of email.
-         to (str): recipient of email.
-         image_path (str): path to image to be attached to email.
+        user_name (str): username.
+        subject (str): subject of email.
+        to (str): recipient of email.
+        image_path (str): path to image to be attached to email.
     """
     SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
@@ -163,9 +165,22 @@ def send_mail(
 
         mime_message["From"] = "hyperpocket@vessl.ai"
         mime_message["To"] = to
-        mime_message["Subject"] = subject
+        mime_message["Subject"] = f"[Hyperpocket] {subject}"
 
-        mime_message.set_content("hyperpocket")
+        mime_message.set_content("""
+Thank you for stopping by the Hyperpocket booth!
+
+For more information about Hyperpocket, please check out the links:
+- GitHub Repository: https://github.com/vessl-ai/hyperpocket
+- Hyperpocket Documentation: https://vessl-ai.github.io/hyperpocket/index.html
+- LinkedIn: https://bit.ly/hyperpocket-linkedin
+
+We love hearing from our users. Any feedback, questions, or cool ideas are always welcomed!
+To chat with us: https://bit.ly/vesslai-hyperpocket
+
+Best, 
+Hyperpocket team
+""")
 
         # guessing the MIME type
         type_subtype, _ = mimetypes.guess_type(image_path)
