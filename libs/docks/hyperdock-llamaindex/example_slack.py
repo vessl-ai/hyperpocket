@@ -11,9 +11,12 @@ from hyperpocket_llamaindex import PocketLlamaindex
 
 def build():
     llm = OpenAI(model="gpt-4o")
+    tool_spec = SlackToolSpec()
     dock = llamaindex_dock(
         LlamaIndexToolRequest(
-            tool_func=SlackToolSpec.send_message,
+            tool_func=tool_spec.to_tool_list(
+                spec_functions=["send_message"]
+            ),
         )
     )
 
