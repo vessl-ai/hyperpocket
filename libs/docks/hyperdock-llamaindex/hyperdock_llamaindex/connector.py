@@ -2,14 +2,14 @@ import os
 import inspect
 import traceback
 from types import MethodType
-from typing import Any, Callable, Optional, Tuple, Type, Union
+from typing import Any, Callable, Optional, Tuple, Type, Union, List
 
 import multiprocess
 from llama_index.core.tools.tool_spec.base import BaseToolSpec
+from llama_index.core.tools.function_tool import FunctionTool
 
 class LlamaIndexToolRequest(object):
-    tool_func: Callable
-    tool_spec: Type[BaseToolSpec]
+    tool_func: FunctionTool
     tool_args: dict[str, Any]
     tool_spec_args: dict[str, Any]
     env_dict_extends: dict[str, str]
@@ -18,17 +18,14 @@ class LlamaIndexToolRequest(object):
 
     def __init__(
         self,
-        tool_func: Callable,
+        tool_func: FunctionTool,
         tool_args: Optional[dict[str, Any]] = None,
         tool_spec_args: Optional[dict[str, Any]] = None,
         env_dict_extends: Optional[dict[str, str]] = None,
         auth: Optional[dict[str, Any]] = None,
         tool_vars: Optional[dict[str, str]] = None,
     ):
-        if not issubclass(inspect._findclass(tool_func), BaseToolSpec):
-            raise ValueError("tool_func's class must be a LlamaIndex BaseToolSpec subclass")
         self.tool_func = tool_func
-        self.tool_spec = inspect._findclass(tool_func)
         self.tool_args = {}
         if tool_args is not None:
             self.tool_args = tool_args
@@ -44,21 +41,20 @@ class LlamaIndexToolRequest(object):
             self.tool_vars = tool_vars
 
 
-ToolType = Callable | LlamaIndexToolRequest
+ToolType = FunctionTool | LlamaIndexToolRequest
 
 def _run(
-    tool_func: Callable,
+    tool_func: FunctionTool,
     tool_spec: Type[BaseToolSpec],
     envs: dict[str, str],
     tool_args: dict[str, Any],
-    tool_spec_args: dict[str, Any],
     pipe: multiprocess.Pipe,
     **kwargs,
 ) -> None:
     # must be called in a child process
     for key, value in envs.items():
         os.environ[key] = value
-    result = tool_func(tool_spec(**tool_spec_args), **tool_args)
+    result = tool_func(tool_spec(), **tool_args)
     _, conn = pipe
     conn.send(result)
 
@@ -67,6 +63,7 @@ def connect(
     tool_type: ToolType,
 ) -> Callable[[...], str]:
     tool_req = tool_type
+    tool_spec = inspect._findclass(tool_req.tool_func._fn)
     if isinstance(tool_type, type):
         tool_req = LlamaIndexToolRequest(tool_type)
 
@@ -76,7 +73,7 @@ def connect(
             pipe = multiprocess.Pipe()
             process = multiprocess.Process(
                 target=_run,
-                args=(tool_req.tool_func, tool_req.tool_spec, child_env, tool_req.tool_args, tool_req.tool_spec_args, pipe),
+                args=(tool_req.tool_func, tool_spec, child_env, tool_req.tool_args, tool_req.tool_spec_args, pipe),
                 kwargs=kwargs,
             )
             process.start()
@@ -90,15 +87,8 @@ def connect(
             return result
         except Exception as e:
             return "\n".join(traceback.format_exception(e))
-
-    if inspect.ismethod(tool_req.tool_func):
-        wrapper = tool_req.tool_func.__func__
-    else:
-        wrapper = tool_req.tool_func
+    wrapper = tool_req.tool_func._fn.__func__    
     wrapper.__auth__ = tool_req.auth
     wrapper.__vars__ = tool_req.tool_vars
-    
-    tool_spec = tool_req.tool_spec(**tool_req.tool_spec_args) # tool_spec is a class, so we need to instantiate it
-    wrapper = MethodType(wrapper, tool_spec)  # This is to make the function a method of the tool_spec.
 
-    return wrapper
+    return MethodType(wrapper, tool_spec())

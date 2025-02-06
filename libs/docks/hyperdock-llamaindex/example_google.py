@@ -10,18 +10,21 @@ from hyperpocket_llamaindex import PocketLlamaindex
 
 def build():
     llm = OpenAI(model="gpt-4o")
+    tool_spec = GmailToolSpec()
     dock = llamaindex_dock(
         LlamaIndexToolRequest(
-            tool_func=GmailToolSpec.search_messages,
+            tool_func=tool_spec.to_tool_list(
+                spec_functions=["search_messages"]
+            ),
             tool_args={
                 "max_results": 10,
             },
-                auth={
+            auth={
                 "auth_provider": "google",
                 "scopes": [
                     'https://www.googleapis.com/auth/gmail.readonly',
                     'https://www.googleapis.com/auth/gmail.compose',
-                    ],
+                ],
             }
         )
     )
