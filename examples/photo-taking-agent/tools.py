@@ -124,7 +124,7 @@ def call_diffusion_model(
 
 @function_tool
 def send_mail(
-        user_name: str,
+        name: str,
         subject: str,
         to: str,
         image_path: str,
@@ -133,7 +133,7 @@ def send_mail(
     send mail with image.
 
     Args:
-        user_name (str): username.
+        name (str): name.
         subject (str): subject of email.
         to (str): recipient of email.
         image_path (str): path to image to be attached to email.

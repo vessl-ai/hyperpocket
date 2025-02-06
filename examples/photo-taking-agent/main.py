@@ -43,8 +43,7 @@ MODEL_NAME = "gpt-4o"
 pocket: Optional[PocketOpenAI] = None
 llm: Optional[OpenAI] = None
 tool_specs: List[dict] = []
-
-messages = [{
+system_prompt = {
     "role": "system",
     "content": """You are a photo-taking agent. you can take pictures of users and transform their photos into sticker-style images.
 If users want to receive their original or sticker photos, you can send them an email with the images.
@@ -57,12 +56,13 @@ at the first time, you introduce yourself to a user and the processes.
   - after taking a photo, ask the user if they want to transform their photos into sticker-style images. 
 2. ask for concrete style of the sticker and do transform by using the "call_diffusion_model" tool.
   - after transforming the photo, ask the user if they are satisfied with the result. if they say yes, ask if they would like the photo sent to their email.
-3. ask for their email address and after this, ask for username and then, send the photo accordingly.
+3. ask for their email address and after this, ask for name and then, send the photo accordingly.
   - you do not ask their email and name simultaneously.
-  - and if you already know the user name, please double-check and be confirmed by the user.
+  - and if you already know the name, please double-check and be confirmed by the user.
 4. After doing all this processes, next user will be coming soon. so don't confuse previous user and next user. 
 """
-}]
+}
+messages = [system_prompt]
 history = []
 
 
@@ -139,6 +139,7 @@ def build_chat_ui(state):
 
     def _clear_messages():
         messages.clear()
+        messages.append(system_prompt)
         history.clear()
         return gr.update(value=history), gr.update(value=None, visible=False, elem_id=str(uuid.uuid4()))
 
