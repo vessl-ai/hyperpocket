@@ -86,6 +86,7 @@ jobs:
             "libs/extensions/langgraph"
             "libs/extensions/llamaindex"
             "libs/extensions/openai"
+            "libs/extensions/crewai"
             "libs/docks/hyperdock-fileio"
             "libs/docks/hyperdock-langchain"
           )
