@@ -2,3 +2,4 @@ credentials.json
 token.json
 .tools_cache.json
 tools/
+email_list.txt
