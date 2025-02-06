@@ -183,7 +183,7 @@ jobs:
         working-directory: libs/docks/hyperdock-fileio
         run: |
           uv build
-          uv publish
+          uv publish --publish-url https://test.pypi.org/legacy/
 
       - name: Publish hyperdock-langchain package
         env:
@@ -191,7 +191,7 @@ jobs:
         working-directory: libs/docks/hyperdock-langchain
         run: |
           uv build
-          uv publish
+          uv publish --publish-url https://test.pypi.org/legacy/
 
 
   check-version-after:
