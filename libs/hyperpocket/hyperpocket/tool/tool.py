@@ -199,3 +199,6 @@ class Tool(BaseModel, abc.ABC):
         else:
             self.postprocessings.extend(postprocessings)
         return self
+
+    def __str__(self) -> str:
+        return self.name
