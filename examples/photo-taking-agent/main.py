@@ -23,6 +23,7 @@ from utils.upload_to_repo import upload_to_repo
 load_dotenv()
 
 cur_dir = pathlib.Path(os.getcwd())
+email_list = cur_dir / "email_list.txt"
 tools_cache_path = cur_dir / ".tools_cache.json"
 if not tools_cache_path.exists():
     with open(tools_cache_path, "w") as f:
@@ -117,7 +118,10 @@ def build_chat_ui(state):
                     if not "failed to" in tool_message["content"]:
                         if tool_call.function.name == "take_a_picture" or tool_call.function.name == "call_diffusion_model":
                             current_picture_path = tool_message["content"]
-                        is_picture_refresh_needed = True
+                            is_picture_refresh_needed = True
+                        elif tool_call.function.name == "send_mail":
+                            with open(email_list, "a") as f:
+                                f.write(f"{tool_call.function.arguments}\n")
 
                     messages.append(tool_message)
 
