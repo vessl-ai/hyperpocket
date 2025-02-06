@@ -5,6 +5,7 @@ import mimetypes
 import os
 import os.path
 import pathlib
+import time
 from ast import literal_eval
 from email.message import EmailMessage
 from time import sleep
@@ -16,7 +17,6 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 
 from hyperpocket.tool import function_tool
 
@@ -55,23 +55,30 @@ def take_a_picture():
     """
     take a picture
     """
-    pyautogui.hotkey("command", "space", interval=0.25)
-    sleep(0.5)
-    pyautogui.typewrite("Photo booth")
-    sleep(0.1)
-    pyautogui.press("enter")
-    sleep(3)
-    pyautogui.press("enter")
-    sleep(3)
+    try:
+        pyautogui.hotkey("command", "space", interval=0.25)
+        sleep(0.5)
+        pyautogui.typewrite("Photo booth")
+        sleep(0.1)
+        pyautogui.press("enter")
+        sleep(3)
+        pyautogui.press("enter")
+        sleep(3)
 
-    photo_dir = pathlib.Path(os.getenv("PHOTO_BOOTH_PICTURE_PATH"))
-    jpg_files = glob.glob(str(photo_dir / "*.jpg"), recursive=False)
+        photo_dir = pathlib.Path(os.getenv("PHOTO_BOOTH_PICTURE_PATH"))
+        jpg_files = glob.glob(str(photo_dir / "*.jpg"), recursive=False)
 
-    if len(jpg_files) == 0:
-        return
+        current_time = time.time()
+        recent_files = [file for file in jpg_files if current_time - os.path.getctime(file) <= 10]  # 10 seconds
 
-    recent_jpg_path = sorted(jpg_files, key=os.path.getmtime, reverse=True)[0]
-    return recent_jpg_path
+        if len(recent_files) == 0:
+            raise RuntimeError("can't find photo.")
+        elif len(recent_files) > 1:
+            return sorted(recent_files, key=os.path.getctime, reverse=True)[0]
+
+        return recent_files[0]
+    except Exception as e:
+        raise RuntimeError(f"failed to take a photo. error : {e}")
 
 
 @function_tool
@@ -88,29 +95,31 @@ def call_diffusion_model(
               Example: "Make this picture a cute sticker" → "cute, sticker, cel-shaded, outlined, vibrant colors".
         image_path (str): path to image to be sent to diffusion model.
     """
-    URL = os.getenv("DIFFUSION_MODEL_URL")
-    base, ext = os.path.splitext(image_path)
-    new_path = f"{base}_noised{ext}"
+    try:
+        URL = os.getenv("DIFFUSION_MODEL_URL")
+        base, ext = os.path.splitext(image_path)
+        new_path = f"{base}_noised{ext}"
 
-    with open(image_path, "rb") as img:
-        base64_encoded_string = base64.b64encode(img.read())
+        with open(image_path, "rb") as img:
+            base64_encoded_string = base64.b64encode(img.read())
 
-    payload = {
-        "prompt": prompt,
-        "negative_prompt": "nsfw",
-        "guidance_scale": 15,
-        "image_b64": str(base64_encoded_string)[1:-1]
-    }
+        payload = {
+            "prompt": prompt,
+            "negative_prompt": "nsfw",
+            "guidance_scale": 15,
+            "image_b64": str(base64_encoded_string)[1:-1]
+        }
 
-    # POST 요청 보내기
-    response = requests.post(URL, json=payload)
+        response = requests.post(URL, json=payload)
 
-    response.raise_for_status()
+        response.raise_for_status()
 
-    new_image = Image.open(io.BytesIO(response.content))
-    new_image.save(new_path, format="JPEG")
+        new_image = Image.open(io.BytesIO(response.content))
+        new_image.save(new_path, format="JPEG")
 
-    return new_path
+        return new_path
+    except Exception as e:
+        raise RuntimeError(f"failed to call diffusion model. error : {e}")
 
 
 @function_tool
@@ -178,7 +187,6 @@ def send_mail(
         )
 
         print(f'Message Id: {send_message["id"]}')
-    except HttpError as error:
-        print(f"An error occurred: {error}")
-        send_message = None
-    return send_message
+        return send_message
+    except Exception as e:
+        raise RuntimeError(f"failed to send email. error : {e}")

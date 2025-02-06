@@ -81,16 +81,7 @@ def _create_tool_metadata(auth_provider, auth_handler, language, scopes, tool_de
     # write schema.json
     with open(tool_path / "schema.json", "w") as f:
         json.dump({
-            "title": f"{tool_name}ReqeustSchema",
-            "type": "object",
-            "properties": {
-                "encoded_image": {
-                    "title": "encoded_image",
-                    "type": "string",
-                    "description": "base64 encoded image string."
-                }
-            },
-            "required": ["encoded_image"]
+            "title": f"{tool_name}ReqeustSchema"
         }, f)
 
     with open(tool_path / "README.md", "a") as f:
@@ -106,14 +97,11 @@ def _create_tool_code(code, tool_name, tool_path):
         full_code = f"""
 {code}
 
-def main(encoded_image):
-    print(flip_your_picture(encoded_image))
+def main():
+    print(get_user_email())
 
 if __name__ == "__main__":
-  import json
-  
-  req = json.load(sys.stdin.buffer)
-  main(req["encoded_image"])
+  main()
 """
         f.write(full_code)
     with open(code_path / "__init__.py", "w") as f:

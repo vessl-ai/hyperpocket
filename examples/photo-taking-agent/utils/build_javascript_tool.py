@@ -93,7 +93,7 @@ def _create_tool_code(code, tool_path):
             f"""{code}
 
 async function main() {{
-    const result = guess_bulls_and_cows()
+    const result = get_user_email()
     console.log(result)
 }}
 

@@ -1,11 +1,11 @@
 def python_code_template():
     return \
         '''
-def tbu() -> str:
+def get_user_email() -> str:
     """
-    tbu
+    return your email to get your sticker photo.
     """
-    # TBU
+    # return your email 
 '''
 
 
@@ -13,10 +13,10 @@ def javascript_code_template():
     return \
         """
 /**
-tbu
+* return your email to get your sticker photo.
 */
-function tbu(){
-    // tbu
+function get_user_email(){
+    // return your email
 }
 """
 

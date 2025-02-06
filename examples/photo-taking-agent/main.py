@@ -1,16 +1,18 @@
 import asyncio
+import inspect
 import json
 import os
-import pathlib
 import re
 import uuid
 from typing import Optional, List
 
 import gradio as gr
+import pathlib
 from dotenv import load_dotenv
 from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageToolCall, ChatCompletion
 
+from hyperpocket.tool.function import FunctionTool
 from hyperpocket_openai import PocketOpenAI
 from template.code_template import get_template
 from tools import send_mail, take_a_picture, call_diffusion_model
@@ -34,10 +36,9 @@ with open(tools_cache_path, "r") as f:
         tools = {}
 
 tools |= {
-    send_mail.name: send_mail,
-    take_a_picture.name: take_a_picture,
-    call_diffusion_model.name: call_diffusion_model,
-
+    send_mail.name: {"tool": send_mail},
+    take_a_picture.name: {"tool": take_a_picture},
+    call_diffusion_model.name: {"tool": call_diffusion_model},
 }
 
 MODEL_NAME = "gpt-4o"
@@ -50,121 +51,49 @@ messages = [{
     "content": """You are a photo-taking agent. you can take pictures of users and transform their photos into sticker-style images.
 If users want to receive their original or sticker photos, you can send them an email with the images.
 
-1. If a user wants to take a photo, use the "take_a_picture" tool.
+All users should follow below step one by one and they can't skip any step.
+at the first time, you introduce yourself to a user and the processes. 
+
+1. take a photo by using the "take_a_picture" tool.
   - you don't need to return the saved path of the picture. simply inform the user whether the photo was taken successfully or not.
   - after taking a photo, ask the user if they want to transform their photos into sticker-style images. 
-2. If a user wants to transform their photo into a sticker-style image, ask for concrete style of the sticker and do transform by using the "call_diffusion_model" tool.
+2. ask for concrete style of the sticker and do transform by using the "call_diffusion_model" tool.
   - after transforming the photo, ask the user if they are satisfied with the result. if they say yes, ask if they would like the photo sent to their email.
-3. If a user wants to receive their photo via email, ask for their email address and send the photo accordingly.
+3. ask for their email address and send the photo accordingly.
 4. After doing all this processes, next user will be coming soon. so don't confuse previous user and next user. 
 """
 }]
 history = []
 
 
-def add_tool(tool_name, tool_path):
-    tools[str(tool_name)] = str(tool_path)
+def add_tool(tool_name, tool_path, code):
+    tools[str(tool_name)] = {"tool": str(tool_path), "code": code}
     with open(tools_cache_path, "w") as f:
-        str_tools = {name: tool for name, tool in tools.items() if isinstance(tool, str)}
+        str_tools = {name: tool for name, tool in tools.items() if isinstance(tool["tool"], str)}
         json.dump(str_tools, f)
 
 
 def delete_tool(tool_path):
     target_name = None
     for name, tool in tools.items():
-        if isinstance(tool, str) and tool_path == tool:
+        if isinstance(tool["tool"], str) and tool_path == tool["tool"]:
             target_name = name
             break
 
     if target_name:
         del tools[target_name]
         with open(tools_cache_path, "w") as f:
-            str_tools = {name: tool for name, tool in tools.items() if isinstance(tool, str)}
+            str_tools = {name: tool for name, tool in tools.items() if isinstance(tool["tool"], str)}
             json.dump(str_tools, f)
     return
 
 
-def upload(
-        name: str, language: str, code: str, auth_provider: str = None, auth_handler: str = None, scopes=None,
-        dependencies: str = None, upload_to_github: bool = False, *args, **kwargs):
-    def _name_is_valid(_name):
-        return not bool(re.search(r'[^a-zA-Z_]', _name)) and _name is not None and _name != ""
-
-    if not _name_is_valid(name):
-        raise gr.Error(
-            message="Name isn't valid. shouldn't be empty and shouldn't include other characters except for (a-zA-Z_)",
-            duration=3)
-
-    if dependencies == "":
-        dependencies = None
-    elif dependencies is not None:
-        dependencies = dependencies.split("\n")
-
-    base_path = pathlib.Path(f"./tools/").resolve()
-    if not base_path.exists():
-        base_path.mkdir()
-    tool_name = f"{name}_filp_a_picture"
-    tool_path = base_path / tool_name
-    tool_description = f"flip {name}'s picture"
-
-    try:
-        if language == "python":
-            build_python_tool(
-                base_path=base_path,
-                tool_name=tool_name,
-                tool_description=tool_description,
-                language=language,
-                code=code,
-                auth_provider=auth_provider,
-                auth_handler=auth_handler,
-                scopes=scopes,
-                dependencies=dependencies
-            )
-        elif language == "javascript":
-            build_javascript_tool(
-                base_path=base_path,
-                tool_name=tool_name,
-                tool_description=tool_description,
-                language=language,
-                code=code,
-                auth_provider=auth_provider,
-                auth_handler=auth_handler,
-                scopes=scopes,
-                dependencies=dependencies
-            )
-    except Exception as e:
-        raise gr.Error(message=str(e), duration=10)
-
-    if upload_to_github:
-        github_repo_url = upload_to_repo(
-            directory_path=tool_path,
-            repo_name=tool_name,
-            description=tool_description
-        )
-
-        uploaded_tool_name, uploaded_tool_path = github_repo_url, github_repo_url
-    else:
-        uploaded_tool_name, uploaded_tool_path = tool_name, tool_path
-
-    add_tool(uploaded_tool_name, uploaded_tool_path)
-
-    try:
-        init_model()
-    except Exception as e:
-        delete_tool(uploaded_tool_name)
-        init_model()
-        raise gr.Error(f"failed to init model. {str(e)}", duration=5)
-
-    return True
-
-
 def build_chat_ui(state):
     def append_user_message(message):
-        user_message = {"content": message, "role": "user"}
+        user_message = {"role": "user", "content": message}
         messages.append(user_message)
         history.append(gr.ChatMessage(role="user", content=user_message["content"]))
-
-        return gr.update(value=history)
+        return gr.update(value=history), gr.update(interactive=False)
 
     async def _chat(current_picture_path,
                     is_picture_refresh_needed):  # user message is already appended in `append_user_message`
@@ -183,21 +112,20 @@ def build_chat_ui(state):
             elif choice.finish_reason == "tool_calls":
                 tool_calls: List[ChatCompletionMessageToolCall] = choice.message.tool_calls
                 for tool_call in tool_calls:
-                    print(f"[TOOL CALL] {tool_call}")
                     tool_message = await pocket.ainvoke(tool_call)
 
-                    if tool_call.function.name == "take_a_picture" or tool_call.function.name == "call_diffusion_model":
-                        current_picture_path = tool_message["content"]
+                    if not "failed to" in tool_message["content"]:
+                        if tool_call.function.name == "take_a_picture" or tool_call.function.name == "call_diffusion_model":
+                            current_picture_path = tool_message["content"]
                         is_picture_refresh_needed = True
 
                     messages.append(tool_message)
 
         history.append(gr.ChatMessage(role="assistant", content=messages[-1].content))
-
-        return gr.update(value=history), current_picture_path, is_picture_refresh_needed, gr.update(value=None)
+        return gr.update(value=history), current_picture_path, is_picture_refresh_needed, gr.update(value=None,
+                                                                                                    interactive=True)
 
     def _update_image(path: str, refresh: bool):
-        print("update image to ", path, refresh)
         if not refresh:
             return gr.update(), False
 
@@ -212,10 +140,13 @@ def build_chat_ui(state):
         chat_bot = gr.Chatbot(type="messages")
         text = gr.Text(submit_btn=True, lines=1, show_label=False)
 
+        with gr.Blocks():
+            log_output = gr.Textbox(label="Log", lines=20, interactive=False)
+
         text.submit(
             fn=append_user_message,
             inputs=[text],
-            outputs=[chat_bot],
+            outputs=[chat_bot, text],
         ).then(
             fn=_chat,
             inputs=[state["current_picture_path"], state["is_picture_refresh_needed"]],
@@ -232,6 +163,32 @@ def build_chat_ui(state):
             outputs=[chat_bot]
         )
 
+        def _stream_logs():
+            global log_offset, log_history
+            pattern = r'(\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\]) .*?(\[pocket_logger\])'
+
+            with open(log_path, "r") as f:
+                f.seek(log_offset)
+                new_lines = [re.sub(pattern, r'\1 \2', line) for line in f.readlines()]
+                log_history = list(reversed(new_lines)) + log_history
+                log_offset = f.tell()
+
+            log = "".join(log_history)
+            return gr.update(value=log, elem_id=str(uuid.uuid4()))
+
+        ui.load(
+            _stream_logs,
+            inputs=None,
+            outputs=[log_output]
+        )
+
+        timer = gr.Timer(value=1)
+        timer.tick(
+            _stream_logs,
+            inputs=None,
+            outputs=[log_output]
+        )
+
         state["is_picture_refresh_needed"].change(
             _update_image,
             inputs=[state["current_picture_path"], state["is_picture_refresh_needed"]],
@@ -240,6 +197,7 @@ def build_chat_ui(state):
 
 
 def build_tool_list_ui(state):
+    PREBUILT_TOOL_LIST_NUMBER = 100
     AUTH_PROVIDERS = [None, "google", "slack", "github"]
     AUTH_HANDLERS = {
         None: [],
@@ -248,69 +206,134 @@ def build_tool_list_ui(state):
         "github": ["github-oauth2", "github-token"],
     }
 
-    PRE_LOADED_TOOL_NUM = 100
+    def _upload(
+            name: str, language: str, code: str, auth_provider: str = None, auth_handler: str = None, scopes=None,
+            dependencies: str = None, upload_to_github: bool = False, *args, **kwargs):
+        def _name_is_valid(_name):
+            return not bool(re.search(r'[^a-zA-Z_]', _name)) and _name is not None and _name != ""
 
-    def _refresh_tool_list_ui(tool_path, is_tool_list_refresh_needed):
-        print(">> refresh tool list ui", "tool path :", tool_path, "is_tool_list_refresh_needed :",
-              is_tool_list_refresh_needed)
+        if not _name_is_valid(name):
+            raise gr.Error(
+                message="Name isn't valid. shouldn't be empty and shouldn't include other characters except for (a-zA-Z_)",
+                duration=3)
 
-        # tool_values = [tool for tool in tools.values() if isinstance(tool, str)]
-        tool_values = list(tools.items())
-        updated_tool_row = []
-        updated_tool_text = []
-        updated_tool_delete_button = []
-        updated_tool_path = None if is_tool_list_refresh_needed else tool_path
+        if dependencies == "":
+            dependencies = None
+        elif dependencies is not None:
+            dependencies = dependencies.split("\n")
 
-        if not is_tool_list_refresh_needed:
-            return tool_path, is_tool_list_refresh_needed, \
-                *([gr.update()] * PRE_LOADED_TOOL_NUM), \
-                *([gr.update()] * PRE_LOADED_TOOL_NUM), \
-                *([gr.update()] * PRE_LOADED_TOOL_NUM)
+        base_path = pathlib.Path(f"./tools/").resolve()
+        if not base_path.exists():
+            base_path.mkdir()
 
-        for i in range(PRE_LOADED_TOOL_NUM):
-            if i < len(tool_values):
-                name, tool = tool_values[i]
-                updated_tool_row.append(
-                    gr.update(visible=True)
+        tool_name = f"{name}_get_user_email"
+        tool_path = base_path / tool_name
+        tool_description = f"get {name}'s email to send sticker photo to the user."
+
+        try:
+            if language == "python":
+                build_python_tool(
+                    base_path=base_path,
+                    tool_name=tool_name,
+                    tool_description=tool_description,
+                    language=language,
+                    code=code,
+                    auth_provider=auth_provider,
+                    auth_handler=auth_handler,
+                    scopes=scopes,
+                    dependencies=dependencies
                 )
-                if not isinstance(tool, str):
-                    updated_tool_delete_button.append(gr.update(visible=False))
-                    updated_tool_text.append(gr.update(value=name))
-                else:
-                    updated_tool_delete_button.append(gr.update(visible=True))
-                    updated_tool_text.append(gr.update(value=name))
-            else:
-                updated_tool_row.append(gr.update(visible=False))
-                updated_tool_text.append(gr.update(value=None))
-                updated_tool_delete_button.append(gr.update())
+            elif language == "javascript":
+                build_javascript_tool(
+                    base_path=base_path,
+                    tool_name=tool_name,
+                    tool_description=tool_description,
+                    language=language,
+                    code=code,
+                    auth_provider=auth_provider,
+                    auth_handler=auth_handler,
+                    scopes=scopes,
+                    dependencies=dependencies
+                )
+        except Exception as e:
+            raise gr.Error(message=str(e), duration=10)
 
-        return updated_tool_path, False, *updated_tool_row, *updated_tool_text, *updated_tool_delete_button
+        if upload_to_github:
+            github_repo_url = upload_to_repo(
+                directory_path=tool_path,
+                repo_name=tool_name,
+                description=tool_description
+            )
 
-    def _add_tool(tool_path):
-        add_tool(tool_path, tool_path)
+            uploaded_tool_name, uploaded_tool_path = github_repo_url, github_repo_url
+        else:
+            uploaded_tool_name, uploaded_tool_path = tool_name, tool_path
+
+        add_tool(uploaded_tool_name, uploaded_tool_path, code)
         try:
             init_model()
         except Exception as e:
-            delete_tool(tool_path)
             init_model()
             raise gr.Error(f"failed to init model. {str(e)}", duration=5)
 
-    def _add_tool_action(tool_path):
-        _add_tool(tool_path)
-        updated_tool_path, _, *updated = _refresh_tool_list_ui(tool_path, True)
-        return updated_tool_path, *updated
+        return {
+            "tool_name": uploaded_tool_name,
+            "tool_path": uploaded_tool_path,
+            "tool_description": tool_description,
+            "code": code,
+            "index": len(tools) - 1
+        }
 
-    def _delete_tool_action(tool_path):
-        if str(tool_path) not in tools.values():
-            print(f"not found {tool_path} in tools. tools: {tools}")
-            is_tool_list_refresh_needed = False
-        else:
-            delete_tool(tool_path)
-            print(f"deleted {tool_path} in tools. tools: {tools}")
-            is_tool_list_refresh_needed = True
+    def _refresh_tool_list():
+        tool_detail_list = []
+        tool_code_list = []
+        tool_delete_button_list = []
+        tool_name_list = []
 
-        updated_tool_path, _, *updated = _refresh_tool_list_ui(tool_path, is_tool_list_refresh_needed)
-        return updated_tool_path, *updated
+        for tool_name, tool in tools.items():
+            tool_name_list.append(gr.update(value=tool_name))
+            if isinstance(tool["tool"], FunctionTool):
+                code = inspect.getsource(tool["tool"].func)
+
+                if tool_name == "send_mail":
+                    tool_name = f"✉️\t{tool_name}"
+                elif tool_name == "take_a_picture":
+                    tool_name = f"📷\t{tool_name}"
+                elif tool_name == "call_diffusion_model":
+                    tool_name = f"🤖\t{tool_name}"
+
+                tool_detail = gr.update(label=tool_name, visible=True)
+                tool_code = gr.update(value=code)
+                tool_delete_button = gr.update(interactive=False)
+
+            elif isinstance(tool["tool"], str):
+                code = tool["code"]
+
+                tool_detail = gr.update(label=f"⚒️\t{tool_name}", visible=True)
+                tool_code = gr.update(value=code)
+                tool_delete_button = gr.update(interactive=True)
+
+            else:
+                tool_detail = gr.update()
+                tool_code = gr.update()
+                tool_delete_button = gr.update()
+
+            tool_detail_list.append(tool_detail)
+            tool_code_list.append(tool_code)
+            tool_delete_button_list.append(tool_delete_button)
+
+        for _ in range(PREBUILT_TOOL_LIST_NUMBER - len(tools)):
+            tool_detail = gr.update(visible=False)
+            tool_name = gr.update(visible=False)
+            tool_code = gr.update()
+            tool_delete_button = gr.update()
+
+            tool_detail_list.append(tool_detail)
+            tool_name_list.append(tool_detail)
+            tool_code_list.append(tool_code)
+            tool_delete_button_list.append(tool_delete_button)
+
+        return *tool_detail_list, *tool_code_list, *tool_delete_button_list, *tool_name_list
 
     def _build_code_ui(language: str):
         return gr.Code(
@@ -323,47 +346,41 @@ def build_tool_list_ui(state):
         handler_list = AUTH_HANDLERS.get(selected_provider, [])
         return gr.update(choices=handler_list, value=handler_list[0] if len(handler_list) > 0 else None)
 
+    def _delete_tool(tool_name: str):
+        tool = tools.get(tool_name)
+        if tool is None:
+            print("not found tool :", tool_name)
+            return gr.update(visible=False), gr.update(), gr.update()
+
+        delete_tool(tool["tool"])
+        return gr.update(visible=False), gr.update(), gr.update()
+
     with gr.Blocks() as tool_list_ui:
         with gr.Accordion(label="Tool list", open=False):
             with gr.Column():
-                tool_row_list = []
-                tool_text_list = []
+                tool_detail_list = []
+                tool_name_list = []
+                tool_code_list = []
                 tool_delete_button_list = []
 
-                tool_values = [tool for tool in tools.values() if isinstance(tool, str)]
-                for i in range(PRE_LOADED_TOOL_NUM):
-                    if i < len(tool_values):
-                        with gr.Row(visible=True, equal_height=True) as tool_row:
-                            tool_text = gr.Text(value=tool_values[i], show_label=False, scale=1, container=False,
-                                                interactive=False)
-                            tool_delete_button = gr.Button("X", scale=0, size="lg", min_width=10)
-                    else:
-                        with gr.Row(visible=False, equal_height=True) as tool_row:
-                            tool_text = gr.Text(show_label=False, scale=1, container=False, interactive=False)
-                            tool_delete_button = gr.Button("X", scale=0, size="lg", min_width=10)
+                for _ in range(PREBUILT_TOOL_LIST_NUMBER):
+                    with gr.Accordion(open=False, visible=False) as tool_detail:
+                        tool_name = gr.Text(visible=False)
+                        tool_code = gr.Code(language="python")
+                        tool_delete_button = gr.Button("delete", scale=0, size="md", min_width=10)
 
-                    tool_row_list.append(tool_row)
-                    tool_text_list.append(tool_text)
+                        tool_delete_button.click(
+                            _delete_tool,
+                            inputs=[tool_name],
+                            outputs=[tool_detail, tool_code, tool_delete_button]
+                        ).then(
+                            init_model
+                        )
+
+                    tool_detail_list.append(tool_detail)
+                    tool_name_list.append(tool_name)
+                    tool_code_list.append(tool_code)
                     tool_delete_button_list.append(tool_delete_button)
-
-                add_tool_button = gr.Textbox(placeholder="write your tool path down here to add tool manually",
-                                             label="Add existing tool")
-
-            for tool_text, tool_delete_button in zip(tool_text_list, tool_delete_button_list):
-                tool_delete_button.click(
-                    _delete_tool_action,
-                    inputs=[tool_text],
-                    outputs=[tool_text, *tool_row_list, *tool_text_list, *tool_delete_button_list]
-                )
-
-            add_tool_button.submit(_add_tool_action, inputs=[add_tool_button],
-                                   outputs=[add_tool_button, *tool_row_list, *tool_text_list, *tool_delete_button_list])
-            state["is_tool_list_refresh_needed"].change(
-                _refresh_tool_list_ui,
-                inputs=[add_tool_button, state["is_tool_list_refresh_needed"]],
-                outputs=[add_tool_button, state["is_tool_list_refresh_needed"], *tool_row_list, *tool_text_list,
-                         *tool_delete_button_list],
-            )
 
         with gr.Column():
             selected_langauge = gr.Radio(["python", "javascript"], value="python", label="language")
@@ -397,22 +414,25 @@ def build_tool_list_ui(state):
                 upload_to_github = gr.Checkbox(label="upload to github", scale=1)
 
             tool_register_button.click(
-                upload,
+                _upload,
                 inputs=[name, selected_langauge, code_ui, auth_provider_ui, auth_handler_ui, scopes, dependencies_ui,
-                        upload_to_github, state["is_tool_list_refresh_needed"]],
-                outputs=[state["is_tool_list_refresh_needed"]]
+                        upload_to_github, state["uploaded_tool_info"]],
+                outputs=[state["uploaded_tool_info"]]
+            ).then(
+                _refresh_tool_list,
+                inputs=[],
+                outputs=[*tool_detail_list, *tool_code_list, *tool_delete_button_list, *tool_name_list]
+            )
+
+            tool_list_ui.load(
+                _refresh_tool_list,
+                outputs=[*tool_detail_list, *tool_code_list, *tool_delete_button_list, *tool_name_list]
             )
 
             selected_langauge.change(
                 _build_code_ui, selected_langauge, code_ui,
             )
 
-        tool_list_ui.load(
-            lambda x: _refresh_tool_list_ui(x, True),
-            inputs=[add_tool_button],
-            outputs=[add_tool_button, state["is_tool_list_refresh_needed"], *tool_row_list, *tool_text_list,
-                     *tool_delete_button_list],
-        )
     return tool_list_ui
 
 
@@ -425,13 +445,17 @@ def ui():
             "current_picture_path": gr.State(value=None),
             "is_picture_refresh_needed": gr.State(value=False),
             "is_tool_list_refresh_needed": gr.State(value=True),
-
+            "uploaded_tool_info": gr.State(value={}),
         }
 
         with gr.Tab("chatbot"):
+            gr.Markdown("# Hyperpocket: Plug & Play Tools for Agent, Fully Open Source")
+
             build_chat_ui(state)
 
-        with gr.Tab("Too list"):
+        with gr.Tab("Tool list"):
+            gr.Markdown("# Hyperpocket: Plug & Play Tools for Agent, Fully Open Source")
+
             build_tool_list_ui(state)
 
     ui.launch(
@@ -445,13 +469,23 @@ def init_model():
     if pocket:
         pocket._teardown_server()
 
-    print("tools : ", tools)
-    pocket = PocketOpenAI(tools=list(tools.values()))
+    tool_list = [tool["tool"] for tool in tools.values()]
+    pocket = PocketOpenAI(tools=tool_list)
     tool_specs = pocket.get_open_ai_tool_specs()
     llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 if __name__ == "__main__":
+    import os
+    import pathlib
+
+    log_path = pathlib.Path(os.getcwd()) / ".log/pocket.log"
+    log_history = []
+    log_offset = 0
+
+    with open(log_path, "w") as f:
+        f.write("")
+
     load_dotenv()
     init_model()
     asyncio.run(ui())

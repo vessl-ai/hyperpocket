@@ -652,6 +652,27 @@ dev = [
 ]
 
 [[package]]
+name = "hyperpocket-openai"
+version = "0.2.1"
+source = { editable = "../../libs/extensions/openai" }
+dependencies = [
+    { name = "hyperpocket" },
+    { name = "openai" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "hyperpocket", editable = "../../libs/hyperpocket" },
+    { name = "openai", specifier = ">=1.57.3" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=8.3.4" },
+    { name = "ruff", specifier = ">=0.8.6" },
+]
+
+[[package]]
 name = "idna"
 version = "3.10"
 source = { registry = "https://pypi.org/simple" }
@@ -979,6 +1000,7 @@ dependencies = [
     { name = "google-auth-oauthlib" },
     { name = "gradio" },
     { name = "hyperpocket" },
+    { name = "hyperpocket-openai" },
     { name = "openai" },
     { name = "pyautogui" },
     { name = "python-dotenv" },
@@ -992,6 +1014,7 @@ requires-dist = [
     { name = "google-auth-oauthlib", specifier = ">=1.2.1" },
     { name = "gradio", specifier = ">=5.14.0" },
     { name = "hyperpocket", editable = "../../libs/hyperpocket" },
+    { name = "hyperpocket-openai", editable = "../../libs/extensions/openai" },
     { name = "openai", specifier = ">=1.61.0" },
     { name = "pyautogui", specifier = ">=0.9.54" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
