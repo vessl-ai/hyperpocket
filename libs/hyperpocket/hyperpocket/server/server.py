@@ -10,7 +10,6 @@ from uvicorn import Config, Server
 from hyperpocket.config import config, pocket_logger
 from hyperpocket.pocket_core import PocketCore
 from hyperpocket.server.auth import auth_router
-from hyperpocket.server.tool import tool_router
 
 
 class PocketServerOperations(enum.Enum):
@@ -212,6 +211,7 @@ class PocketServer(object):
             port=self.internal_server_port,
             log_level=config().log_level,
         )
+        # TODO: add dock routers
         app.include_router(tool_router)
         app.include_router(auth_router)
         app.add_api_route("/health", lambda: {"status": "ok"}, methods=["GET"])

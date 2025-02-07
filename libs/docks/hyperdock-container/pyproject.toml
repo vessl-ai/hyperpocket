@@ -1,0 +1,18 @@
+[project]
+name = "hyperdock-container"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "hyperpocket",
+    "pydantic>=2.10.6",
+]
+
+[project.optional-dependencies]
+docker = [
+    "docker>=7.1.0",
+]
+
+[tool.uv.sources]
+hyperpocket = { path = "../../hyperpocket", editable = true }

@@ -6,19 +6,29 @@ from urllib.parse import urljoin
 
 from hyperpocket.config import config
 from hyperpocket.futures import FutureStore
-from hyperpocket.tool.wasm.browser import InvokerBrowser
-from hyperpocket.tool.wasm.script import Script, ScriptRuntime, ScriptStore
-from hyperpocket.tool.wasm.templates import render
+from hyperdock_wasm.runtime.browser.invoker_browser import InvokerBrowser
+from hyperdock_wasm.runtime.browser.script import Script, ScriptRuntime, ScriptStore
+from hyperdock_wasm.runtime.browser.templates import render
 
 
-class WasmInvoker(object):
+class Invoker(object):
+    browser: InvokerBrowser
+    
+    def __init__(self, browser: InvokerBrowser):
+        self.browser = browser
+
     def invoke(
         self, tool_path: str, runtime: ScriptRuntime, body: Any, envs: dict, **kwargs
     ) -> str:
-        loop = asyncio.get_running_loop()
-        return loop.run_until_complete(
-            self.ainvoke(tool_path, runtime, body, envs, **kwargs)
-        )
+        try:
+            loop = asyncio.get_running_loop()
+            return loop.run_until_complete(
+                self.ainvoke(tool_path, runtime, body, envs, **kwargs)
+            )
+        except RuntimeError:
+            asyncio.run(self.ainvoke(tool_path, runtime, body, envs, **kwargs))
+        except Exception as e:
+            return "There was an error while executing the tool: " + str(e)
 
     async def ainvoke(
         self, tool_path: str, runtime: ScriptRuntime, body: Any, envs: dict, **kwargs
@@ -30,8 +40,7 @@ class WasmInvoker(object):
         )
         ScriptStore.add_script(script=script)
         future_data = FutureStore.create_future(uid=uid)
-        browser = await InvokerBrowser.get_instance()
-        page = await browser.new_page()
+        page = await self.browser.new_page()
         url = urljoin(
             config().internal_base_url + "/", f"tools/wasm/scripts/{uid}/browse"
         )

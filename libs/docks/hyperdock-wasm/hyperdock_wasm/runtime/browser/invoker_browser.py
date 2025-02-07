@@ -10,33 +10,21 @@ from playwright.async_api import (
 
 
 class InvokerBrowser(object):
-    _instance: "InvokerBrowser" = None
-    _lock = asyncio.Lock()
     playwright: Playwright
     browser_context: BrowserContext
 
-    def __init__(self):
-        raise RuntimeError("Use InvokerBrowser.get_instance() instead")
-
-    async def _async_init(self):
-        self.playwright = await async_playwright().start()
-        self.browser_context = await self.playwright.chromium.launch_persistent_context(
+    @classmethod
+    async def async_init(cls):
+        instance = cls.__new__()
+        instance.playwright = await async_playwright().start()
+        instance.browser_context = await instance.playwright.chromium.launch_persistent_context(
             headless=True,
             args=[
                 "--disable-web-security=True",
             ],
             user_data_dir="/tmp/chrome_dev_user",
         )
-
-    @classmethod
-    async def get_instance(cls):
-        if not cls._instance:
-            async with cls._lock:
-                if cls._instance is None:
-                    instance = cls.__new__(cls)
-                    await instance._async_init()
-                    cls._instance = instance
-        return cls._instance
+        return instance
 
     async def new_page(self) -> Page:
         page = await self.browser_context.new_page()

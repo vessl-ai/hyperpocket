@@ -17,12 +17,20 @@ class FunctionTool(Tool):
 
     func: Optional[Callable[..., str]]
     afunc: Optional[Callable[..., Coroutine[Any, Any, str]]]
+    keep_structured_arguments: bool = False
 
     def invoke(self, **kwargs) -> str:
         binding_args = self._get_binding_args(kwargs)
         if self.func is None:
             if self.afunc is None:
                 raise ValueError("Both func and afunc are None")
+            try:
+                loop = asyncio.get_running_loop()
+                return str(loop.run_until_complete(self.afunc(**binding_args)))
+            except RuntimeError:
+                pass
+            except Exception as e:
+                return "There was an error while executing the tool: " + str(e)
             try:
                 return str(asyncio.run(self.afunc(**binding_args)))
             except Exception as e:
@@ -42,6 +50,10 @@ class FunctionTool(Tool):
             return "There was an error while executing the tool: " + str(e)
 
     def _get_binding_args(self, kwargs):
+        if self.keep_structured_arguments:
+            if kwargs.get("envs") is not None:
+                kwargs["envs"] |= self.tool_vars
+            return kwargs
         _kwargs = copy.deepcopy(kwargs)
 
         # make body args to model
@@ -94,6 +106,7 @@ class FunctionTool(Tool):
         afunc: Callable[..., Coroutine[Any, Any, str]] | "FunctionTool" = None,
         auth: Optional[ToolAuth] = None,
         tool_vars: dict[str, str] = None,
+        keep_structured_arguments: bool = False,
     ) -> "FunctionTool":
         if tool_vars is None:
             tool_vars = dict()
@@ -108,18 +121,33 @@ class FunctionTool(Tool):
             return afunc
         elif not callable(func) and not callable(afunc):
             raise ValueError("FunctionTool can only be created from a callable")
-
-        model = function_to_model(func)
-        argument_json_schema = flatten_json_schema(model.model_json_schema())
-
+        
+        if func is None:
+            if (_model := afunc.__dict__.get("__model__")) is not None:
+                model = _model
+            else:
+                model = function_to_model(afunc)
+            argument_json_schema = flatten_json_schema(model.model_json_schema())
+            name = afunc.__name__
+            description = afunc.__doc__ if afunc.__doc__ is not None else ""
+        else:
+            if (_model := func.__dict__.get("__model__")) is not None:
+                model = _model
+            else:
+                model = function_to_model(func)
+            argument_json_schema = flatten_json_schema(model.model_json_schema())
+            name = func.__name__
+            description = func.__doc__ if func.__doc__ is not None else ""
+            
         return cls(
             func=func,
             afunc=afunc,
-            name=func.__name__,
-            description=func.__doc__ if func.__doc__ is not None else "",
+            name=name,
+            description=description,
             argument_json_schema=argument_json_schema,
             auth=auth,
             default_tool_vars=tool_vars,
+            keep_structured_arguments=keep_structured_arguments,
         )
 
     @classmethod
