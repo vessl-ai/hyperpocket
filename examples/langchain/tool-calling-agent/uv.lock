@@ -578,7 +578,7 @@ wheels = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.1.10"
+version = "0.2.1"
 source = { editable = "../../../libs/hyperpocket" }
 dependencies = [
     { name = "click" },
@@ -626,7 +626,7 @@ dev = [
 
 [[package]]
 name = "hyperpocket-langchain"
-version = "0.1.10"
+version = "0.2.1"
 source = { editable = "../../../libs/extensions/langchain" }
 dependencies = [
     { name = "hyperpocket" },

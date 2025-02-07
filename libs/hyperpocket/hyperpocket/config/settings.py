@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 from dynaconf import Dynaconf
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, Extra
 
 from hyperpocket.config.auth import AuthConfig, DefaultAuthConfig
 from hyperpocket.config.session import DefaultSessionConfig, SessionConfig
@@ -47,6 +47,7 @@ class Config(BaseModel):
     auth: AuthConfig = DefaultAuthConfig
     session: SessionConfig = DefaultSessionConfig
     tool_vars: dict[str, str] = Field(default_factory=dict)
+    docks: dict[str, dict] = Field(default_factory=dict)
 
     @property
     def internal_base_url(self):
