@@ -1,0 +1,15 @@
+[project]
+name = "hyperdock-wasm"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.8",
+    "gitpython>=3.1.44",
+    "hyperpocket",
+    "pydantic>=2.10.6",
+]
+
+[tool.uv.sources]
+hyperpocket = { path = "../../hyperpocket", editable = true }

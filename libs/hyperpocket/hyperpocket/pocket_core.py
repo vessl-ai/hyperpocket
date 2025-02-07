@@ -6,7 +6,6 @@ from hyperpocket.builtin import get_builtin_tools
 from hyperpocket.config import pocket_logger
 from hyperpocket.pocket_auth import PocketAuth
 from hyperpocket.repository import Lockfile
-from hyperpocket.repository.lock import GitLock, LocalLock
 from hyperpocket.tool import Tool, ToolRequest
 from hyperpocket.tool.function import from_func
 from hyperpocket.tool.wasm import WasmTool
@@ -18,6 +17,9 @@ class PocketCore:
     auth: PocketAuth
     tools: dict[str, Tool]
     lockfile: Lockfile
+    
+    _wasm_paths: list[str]
+    _container_images: list[str]
 
     def __init__(
         self,

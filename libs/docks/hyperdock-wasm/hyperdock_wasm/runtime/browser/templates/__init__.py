@@ -3,8 +3,8 @@ import json
 
 from jinja2 import DictLoader, Environment
 
-from hyperpocket.tool.wasm.templates.node import node_template
-from hyperpocket.tool.wasm.templates.python import python_template
+from hyperdock_wasm.runtime.browser.templates.node import node_template
+from hyperdock_wasm.runtime.browser.templates.python import python_template
 
 TemplateEnvironments = Environment(
     loader=DictLoader(
