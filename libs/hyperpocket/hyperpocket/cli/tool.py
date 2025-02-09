@@ -112,9 +112,10 @@ def build_tool(tool_path):
 
     # Build the tool
     print(f"Building tool in {cwd}")
-    if (cwd / 'poetry.lock').exists():
-        subprocess.run(["poetry", "build"], cwd=cwd, check=True)
-    elif (cwd / 'uv.lock').exists():
+    if shutil.which("uv"):
         subprocess.run(["uv", "build"], cwd=cwd, check=True)
+        os.remove(cwd / "dist/.gitignore")
+    elif shutil.which("poetry"):
+        subprocess.run(["poetry", "build"], cwd=cwd, check=True)
     else:
         raise ValueError("Tool must be a poetry or uv project")
