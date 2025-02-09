@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 from pathlib import Path
 import click
@@ -26,12 +27,21 @@ def create_tool_template(tool_name):
     print(f"Generating tool module directory for {tool_name}")
     tool_module_path = tool_path / tool_name
     tool_module_path.mkdir(parents=True, exist_ok=True)
+    
+    # Create uv or poetry init
+    print(f"Generating pyproject.toml file for {tool_name}")
+    if shutil.which("uv"):
+        subprocess.run(["uv", "init"], cwd=tool_path, check=True)
+    elif shutil.which("poetry"):
+        subprocess.run(["poetry", "init", "--no-interaction"], cwd=tool_path, check=True)
+    else:
+        raise ValueError("uv or poetry must be installed to generate tool project")
 
     # Create __init__.py file
     init_file = tool_module_path / '__init__.py'
     if not init_file.exists():
         init_file.write_text(f'''
-from {tool_name}.__main__ import main
+from .__main__ import main
 
 __all__ = ["main"]
 ''')
@@ -75,7 +85,7 @@ scopes = []
     # Create schema.json
     print(f"Generating schema.json file for {tool_name}")
     schema_file = tool_path / 'schema.json'
-    schema_file.touch()
+    schema_file.touch()    
 
 @click.command()
 @click.argument('tool_path', type=str, required=False)
