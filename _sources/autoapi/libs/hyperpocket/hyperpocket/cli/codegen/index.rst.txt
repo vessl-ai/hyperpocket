@@ -12,5 +12,6 @@ Submodules
    :maxdepth: 1
 
    /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/auth/index
+   /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/tool/index
 
 

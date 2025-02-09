@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.cli.codegen.tool.tool_main_template
+================================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.codegen.tool.tool_main_template
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.cli.codegen.tool.tool_main_template.get_tool_main_template
+
+
+Module Contents
+---------------
+
+.. py:function:: get_tool_main_template() -> jinja2.Template
+

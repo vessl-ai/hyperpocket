@@ -17,5 +17,6 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/cli/eject/index
    /autoapi/libs/hyperpocket/hyperpocket/cli/pull/index
    /autoapi/libs/hyperpocket/hyperpocket/cli/sync/index
+   /autoapi/libs/hyperpocket/hyperpocket/cli/tool/index
 
 

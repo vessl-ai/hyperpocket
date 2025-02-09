@@ -1,0 +1,29 @@
+libs.hyperpocket.hyperpocket.cli.tool
+=====================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.tool
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.cli.tool.create_tool_template
+   libs.hyperpocket.hyperpocket.cli.tool.build_tool
+
+
+Module Contents
+---------------
+
+.. py:function:: create_tool_template(tool_name, language='python')
+
+   Create a tool template with the specified tool name.
+
+
+.. py:function:: build_tool(tool_path)
+
+   Build the tool at the specified path or current directory.
+
+

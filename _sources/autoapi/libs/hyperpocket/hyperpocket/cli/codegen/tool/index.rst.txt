@@ -1,0 +1,29 @@
+libs.hyperpocket.hyperpocket.cli.codegen.tool
+=============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.codegen.tool
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/tool/tool_main_template/index
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.cli.codegen.tool.get_tool_main_template
+
+
+Package Contents
+----------------
+
+.. py:function:: get_tool_main_template() -> jinja2.Template
+
