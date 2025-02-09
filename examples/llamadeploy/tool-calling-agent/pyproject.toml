@@ -1,0 +1,18 @@
+[project]
+name = "tool-calling-agent"
+version = "0.1.0"
+description = "Tool calling agent with hyperpocket and LlamaDeploy"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "hyperdock-llamaindex",
+    "hyperpocket_llamaindex>=0.0.3",
+    "llama_deploy>=0.5.1",
+    "llama-index-tools-yahoo-finance",
+    "llama-index-tools-duckduckgo",
+]
+
+[tool.uv.sources]
+hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
+hyperpocket_llamaindex = { path = "../../../libs/extensions/llamaindex", editable = true }
+hyperdock-llamaindex = { path = "../../../libs/docks/hyperdock-llamaindex" }
