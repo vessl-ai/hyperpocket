@@ -117,8 +117,8 @@ from_git('https://github.com/your-organization/your-repository/tree/main',tool_v
 })
 ```
 
-2. Injecting envvars by settings.toml
-   If there are remaining envvars, Hyperpocket checks the `settings.toml` from the agent code directory.
+2. Injecting tool_vars by settings.toml
+   Hyperpocket checks the `settings.toml` from the agent code directory.
 
 ## WasmTool
 
