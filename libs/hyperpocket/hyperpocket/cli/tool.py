@@ -2,12 +2,15 @@ import os
 import shutil
 import subprocess
 from pathlib import Path
+
 import click
+
 from hyperpocket.cli.codegen.tool import get_tool_main_template
+
 
 @click.command()
 @click.argument('tool_name', type=str)
-def create_tool_template(tool_name):
+def create_tool_template(tool_name, language="python"):
     """Create a tool template with the specified tool name."""
 
     # Validate tool_name
@@ -27,11 +30,12 @@ def create_tool_template(tool_name):
     print(f"Generating tool module directory for {tool_name}")
     tool_module_path = tool_path / tool_name
     tool_module_path.mkdir(parents=True, exist_ok=True)
-    
+
     # Create uv or poetry init
     print(f"Generating pyproject.toml file for {tool_name}")
     if shutil.which("uv"):
         subprocess.run(["uv", "init"], cwd=tool_path, check=True)
+        os.remove(tool_path / "hello.py")
     elif shutil.which("poetry"):
         subprocess.run(["poetry", "init", "--no-interaction"], cwd=tool_path, check=True)
     else:
@@ -40,8 +44,7 @@ def create_tool_template(tool_name):
     # Create __init__.py file
     init_file = tool_module_path / '__init__.py'
     if not init_file.exists():
-        init_file.write_text(f'''
-from .__main__ import main
+        init_file.write_text(f'''from .__main__ import main
 
 __all__ = ["main"]
 ''')
@@ -60,10 +63,9 @@ __all__ = ["main"]
     print(f"Generating config.toml file for {tool_name}")
     config_file = tool_path / 'config.toml'
     if not config_file.exists():
-        config_file.write_text(f'''
-name = "{tool_name}"
+        config_file.write_text(f'''name = "{tool_name}"
 description = ""
-language = ""
+language = "{language}"
 
 [auth]
 auth_provider = ""
@@ -85,7 +87,8 @@ scopes = []
     # Create schema.json
     print(f"Generating schema.json file for {tool_name}")
     schema_file = tool_path / 'schema.json'
-    schema_file.touch()    
+    schema_file.touch()
+
 
 @click.command()
 @click.argument('tool_path', type=str, required=False)

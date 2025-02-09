@@ -1,12 +1,10 @@
 from jinja2 import Template
 
 def get_tool_main_template() -> Template:
-    return Template('''
-import json
+    return Template('''import json
 import os
 import sys
 
-import requests
 from pydantic import BaseModel, Field
 
 token = os.getenv('AUTH_PROVIDER_TOKEN')
