@@ -1,17 +1,16 @@
 import ast
 import copy
+import os
 from unittest.async_case import IsolatedAsyncioTestCase
 
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel
 
-from hyperpocket.config import config, secret
-from hyperpocket.tool import from_git
+from hyperpocket.config import config
 from hyperpocket_langchain.pocket_langchain import PocketLangchain
 
 
 class TestPocketLangchainUseProfile(IsolatedAsyncioTestCase):
-
     async def asyncSetUp(self):
         config.public_server_port = "https"
         config.public_hostname = "localhost"
@@ -21,24 +20,23 @@ class TestPocketLangchainUseProfile(IsolatedAsyncioTestCase):
 
         self.pocket = PocketLangchain(
             tools=[
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
-                         "managed-tools/none/simple-echo-tool"),
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/none/simple-echo-tool",
                 self.add,
-                self.sub_pydantic_args
+                self.sub_pydantic_args,
             ],
         )
-        self.llm_use_profile = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"]).bind_tools(
-            tools=self.pocket.get_tools(use_profile=True))
+        self.llm_use_profile = ChatOpenAI(
+            model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY")
+        ).bind_tools(tools=self.pocket.get_tools(use_profile=True))
 
     async def asyncTearDown(self):
         self.pocket._teardown_server()
 
     async def test_function_tool_no_profile(self):
         # when
-        response = await self.llm_use_profile.ainvoke([{
-            "role": "user",
-            "content": "add 1, 2"
-        }])
+        response = await self.llm_use_profile.ainvoke(
+            [{"role": "user", "content": "add 1, 2"}]
+        )
 
         kwargs = copy.deepcopy(response.tool_calls[0]["args"])
         thread_id = kwargs.pop("thread_id", "default")
@@ -49,7 +47,7 @@ class TestPocketLangchainUseProfile(IsolatedAsyncioTestCase):
             tool_name=response.tool_calls[0]["name"],
             body=body,
             thread_id=thread_id,
-            profile=profile
+            profile=profile,
         )
 
         # then
@@ -60,10 +58,9 @@ class TestPocketLangchainUseProfile(IsolatedAsyncioTestCase):
 
     async def test_pydantic_function_tool_no_profile(self):
         # when
-        response = await self.llm_use_profile.ainvoke([{
-            "role": "user",
-            "content": "sub 1, 2"
-        }])
+        response = await self.llm_use_profile.ainvoke(
+            [{"role": "user", "content": "sub 1, 2"}]
+        )
 
         kwargs = copy.deepcopy(response.tool_calls[0]["args"])
         thread_id = kwargs.pop("thread_id", "default")
@@ -74,7 +71,7 @@ class TestPocketLangchainUseProfile(IsolatedAsyncioTestCase):
             tool_name=response.tool_calls[0]["name"],
             body=body,
             thread_id=thread_id,
-            profile=profile
+            profile=profile,
         )
 
         # then
@@ -85,10 +82,9 @@ class TestPocketLangchainUseProfile(IsolatedAsyncioTestCase):
 
     async def test_wasm_tool_no_profile(self):
         # when
-        response = await self.llm_use_profile.ainvoke([{
-            "role": "user",
-            "content": "echo 'hello world'"
-        }])
+        response = await self.llm_use_profile.ainvoke(
+            [{"role": "user", "content": "echo 'hello world'"}]
+        )
 
         kwargs = copy.deepcopy(response.tool_calls[0]["args"])
         thread_id = kwargs.pop("thread_id", "default")
@@ -99,7 +95,7 @@ class TestPocketLangchainUseProfile(IsolatedAsyncioTestCase):
             tool_name=response.tool_calls[0]["name"],
             body=body,
             thread_id=thread_id,
-            profile=profile
+            profile=profile,
         )
         output = ast.literal_eval(result)
 

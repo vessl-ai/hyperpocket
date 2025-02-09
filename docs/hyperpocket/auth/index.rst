@@ -4,6 +4,7 @@ Auth
 .. toctree::
    :maxdepth: 1
 
-   supported-auth-flows.md
+   hyperpocket-auth.md
    enabling-oauth-with-hyperpocket.md
    enabling-token-based-authentication-with-hyperpocket.md
+   create_auth_provider.md

@@ -3,14 +3,14 @@
 ### Get Pocket Anthropic Tool Spec
 
 ```python
-from hyperpocket.tool import from_git
+
 
 from hyperpocket_anthropic import PocketAnthropic
 
 pocket = PocketAnthropic(tools=[
     "https://github.com/my-org/some-awesome-tool",
-    from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-    from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ]
 )
 
@@ -77,14 +77,13 @@ response_after_tool_call = llm.messages.create(
 import os
 
 from anthropic import Anthropic
-from hyperpocket.tool import from_git
 
 from hyperpocket_anthropic import PocketAnthropic
 
 pocket = PocketAnthropic(tools=[
     "https://github.com/my-org/some-awesome-tool",
-    from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-    from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ]
 )
 
@@ -129,15 +128,14 @@ response_after_tool_call = llm.messages.create(
 import os
 
 from anthropic import Anthropic
-from hyperpocket.tool import from_git
 
 from hyperpocket_anthropic import PocketAnthropic
 
 client = Anthropic()
 pocket = PocketAnthropic(tools=[
     "https://github.com/my-org/some-awesome-tool",
-    from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-    from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ]
 )
 

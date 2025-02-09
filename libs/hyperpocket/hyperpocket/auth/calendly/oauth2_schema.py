@@ -1,6 +1,8 @@
 from typing import Optional
-from hyperpocket.auth.handler import AuthenticateRequest
+
 from pydantic import BaseModel
+
+from hyperpocket.auth.handler import AuthenticateRequest
 
 
 class CalendlyOAuth2Request(AuthenticateRequest):

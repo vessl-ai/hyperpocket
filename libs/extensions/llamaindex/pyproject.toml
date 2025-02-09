@@ -1,7 +1,7 @@
 
 [project]
 name = "hyperpocket-llamaindex"
-version = "0.1.9"
+version = "0.3.1"
 description = ""
 authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 requires-python = ">=3.10"
@@ -18,19 +18,5 @@ dev = ["pytest>=8.3.4", "ruff>=0.8.6"]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.ruff.lint]
-select = [
-    "E", # pycodestyle errors,
-    "F", # pyflakes errors,
-    "I", # isort errors,
-]
-ignore = [
-    "E501", # line too long, handled by formatting
-]
-
 [tool.ruff]
-line-length = 88
-target-version = "py310"
-
-[tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F401"]
+extend = "../../../.ruff.toml"

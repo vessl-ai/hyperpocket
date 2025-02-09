@@ -1,4 +1,3 @@
-
 from hyperpocket.auth.schema import AuthenticateRequest, AuthenticateResponse
 
 

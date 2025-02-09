@@ -1,6 +1,6 @@
 import datetime
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, List, Set, Optional, Iterable
+from typing import Generic, Iterable, List, Optional, Set, TypeVar
 
 from pydantic import BaseModel, Field
 
@@ -15,28 +15,37 @@ SESSION_KEY_DELIMITER = "__"
 
 class BaseSessionValue(BaseModel):
     auth_provider_name: str = Field(
-        description="The name of the authentication provider used to authenticate the current session")
+        description="The name of the authentication provider used to authenticate the current session"
+    )
     auth_context: Optional[AuthContext] = Field(
         default=None,
-        description="The authentication context containing the actual session details")
-    scoped: bool = Field(description="Indicates whether the current session is a scoped session")
+        description="The authentication context containing the actual session details",
+    )
+    scoped: bool = Field(
+        description="Indicates whether the current session is a scoped session"
+    )
     auth_scopes: Optional[Set[str]] = Field(
         default=None,
-        description="The authentication scopes of the current session, present only for scoped sessions")
+        description="The authentication scopes of the current session, present only for scoped sessions",
+    )
     auth_resolve_uid: Optional[str] = Field(
         default=None,
-        description="A UID used to asynchronously verify whether the user has completed the authentication process")
+        description="A UID used to asynchronously verify whether the user has completed the authentication process",
+    )
 
     def make_superset_auth_scope(
-            self,
-            other_scopes: Optional[Iterable[str]] = None) -> set[str]:
+        self, other_scopes: Optional[Iterable[str]] = None
+    ) -> set[str]:
         auth_scopes = self.auth_scopes or set()
         other_scopes = other_scopes or set()
         return auth_scopes.union(other_scopes)
 
-    def is_auth_applicable(self, auth_provider_name: str, auth_req: AuthenticateRequest) -> bool:
-        return self.auth_provider_name == auth_provider_name \
-            and (not self.scoped or self.auth_scopes.issuperset(auth_req.auth_scopes))
+    def is_auth_applicable(
+        self, auth_provider_name: str, auth_req: AuthenticateRequest
+    ) -> bool:
+        return self.auth_provider_name == auth_provider_name and (
+            not self.scoped or self.auth_scopes.issuperset(auth_req.auth_scopes)
+        )
 
     def is_near_expires(self) -> bool:
         if self.auth_context.expires_at is not None:
@@ -48,13 +57,15 @@ class BaseSessionValue(BaseModel):
         return False
 
 
-K = TypeVar('K')
-V = TypeVar('V', bound=BaseSessionValue)
+K = TypeVar("K")
+V = TypeVar("V", bound=BaseSessionValue)
 
 
 class SessionStorageInterface(ABC, Generic[K, V]):
     @abstractmethod
-    def get(self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs) -> V:
+    def get(
+        self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs
+    ) -> V:
         """
         Get session
 
@@ -69,7 +80,9 @@ class SessionStorageInterface(ABC, Generic[K, V]):
         raise NotImplementedError
 
     @abstractmethod
-    def get_by_thread_id(self, thread_id: str, auth_provider: Optional[AuthProvider] = None, **kwargs) -> List[V]:
+    def get_by_thread_id(
+        self, thread_id: str, auth_provider: Optional[AuthProvider] = None, **kwargs
+    ) -> List[V]:
         """
         Get session list by thread id
 
@@ -83,14 +96,17 @@ class SessionStorageInterface(ABC, Generic[K, V]):
         raise NotImplementedError
 
     @abstractmethod
-    def set(self,
-            auth_provider: AuthProvider,
-            thread_id: str,
-            profile: str,
-            auth_scopes: List[str],
-            auth_resolve_uid: Optional[str],
-            auth_context: Optional[AuthContext],
-            is_auth_scope_universal: bool, **kwargs) -> V:
+    def set(
+        self,
+        auth_provider: AuthProvider,
+        thread_id: str,
+        profile: str,
+        auth_scopes: List[str],
+        auth_resolve_uid: Optional[str],
+        auth_context: Optional[AuthContext],
+        is_auth_scope_universal: bool,
+        **kwargs,
+    ) -> V:
         """
         Set session, if a session doesn't exist, create new session
         If set auth_resolve_uid is None and auth_context is not None, created session is regarded as active session.
@@ -112,7 +128,9 @@ class SessionStorageInterface(ABC, Generic[K, V]):
         raise NotImplementedError
 
     @abstractmethod
-    def delete(self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs) -> bool:
+    def delete(
+        self, auth_provider: AuthProvider, thread_id: str, profile: str, **kwargs
+    ) -> bool:
         """
         Delete session
 

@@ -22,7 +22,8 @@ class FutureStore(object):
     def create_future(self, uid: str, data: dict = None) -> FutureData:
         if future := self.get_future(uid) is not None:
             pocket_logger.info(
-                f"the future already exists. the existing future is returned. uid: {uid}")
+                f"the future already exists. the existing future is returned. uid: {uid}"
+            )
             return future
 
         loop = asyncio.get_running_loop()
@@ -39,7 +40,7 @@ class FutureStore(object):
     def resolve_future(self, uid: str, value: Any):
         future_data = self.futures.get(uid)
         if not future_data:
-            raise ValueError(f'Future not found for uid={uid}')
+            raise ValueError(f"Future not found for uid={uid}")
         if not future_data.future.done():
             future_data.future.set_result(value)
 

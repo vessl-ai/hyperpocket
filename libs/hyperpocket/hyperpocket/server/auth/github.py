@@ -15,6 +15,7 @@ async def github_oauth2_callback(request: Request, state: str, code: str):
 
     return HTMLResponse(content="success")
 
+
 @github_auth_router.get("/token/callback")
 async def github_token_callback(request: Request, state: str, token: str):
     try:

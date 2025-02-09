@@ -1,7 +1,8 @@
 from jinja2 import Template
 
+
 def get_auth_context_template() -> Template:
-    return Template('''
+    return Template("""
 from hyperpocket.auth.context import AuthContext
 class {{ caplitalized_service_name }}AuthContext(AuthContext):
     _ACCESS_TOKEN_KEY: str = "{{ upper_service_name }}_TOKEN"
@@ -13,4 +14,4 @@ class {{ caplitalized_service_name }}AuthContext(AuthContext):
         return {
             f"{profile.upper()}_{self._ACCESS_TOKEN_KEY}": self.access_token,
         }
-''')
+""")

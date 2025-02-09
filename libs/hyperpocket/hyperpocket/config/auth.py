@@ -20,10 +20,12 @@ class GoogleAuthConfig(BaseAuthConfig):
 class GithubAuthConfig(BaseAuthConfig):
     client_id: str
     client_secret: str
-    
+
+
 class CalendlyAuthConfig(BaseAuthConfig):
     client_id: str
     client_secret: str
+
 
 class AuthConfig(BaseModel):
     slack: Optional[SlackAuthConfig] = None

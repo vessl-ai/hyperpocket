@@ -1,10 +1,9 @@
 from typing import List, Optional
 
-from langchain_core.tools import BaseTool, StructuredTool
-from pydantic import BaseModel
-
 from hyperpocket import Pocket
 from hyperpocket.tool import Tool
+from langchain_core.tools import BaseTool, StructuredTool
+from pydantic import BaseModel
 
 
 class PocketLangchain(Pocket):
@@ -29,11 +28,16 @@ class PocketLangchain(Pocket):
             if isinstance(body, BaseModel):
                 body = body.model_dump()
 
-            result, interrupted = self.invoke_with_state(pocket_tool.name, body=body, thread_id=thread_id,
-                                                         profile=profile, **kwargs)
+            result, interrupted = self.invoke_with_state(
+                pocket_tool.name,
+                body=body,
+                thread_id=thread_id,
+                profile=profile,
+                **kwargs,
+            )
             say = result
             if interrupted:
-                say = f'{say}\n\nThe tool execution interrupted. Please talk to me to resume.'
+                say = f"{say}\n\nThe tool execution interrupted. Please talk to me to resume."
             return say
 
         async def _ainvoke(**kwargs) -> str:
@@ -49,11 +53,12 @@ class PocketLangchain(Pocket):
             if isinstance(body, BaseModel):
                 body = body.model_dump()
 
-            result, interrupted = await self.ainvoke_with_state(pocket_tool.name, body=body, thread_id=thread_id,
-                                                                profile=profile)
+            result, interrupted = await self.ainvoke_with_state(
+                pocket_tool.name, body=body, thread_id=thread_id, profile=profile
+            )
             say = result
             if interrupted:
-                say = f'{say}\n\nThe tool execution interrupted. Please talk to me to resume.'
+                say = f"{say}\n\nThe tool execution interrupted. Please talk to me to resume."
             return say
 
         return StructuredTool.from_function(

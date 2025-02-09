@@ -1,7 +1,6 @@
 import base64
-from os import access
 from typing import Optional
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urlencode, urljoin
 
 import httpx
 
@@ -10,8 +9,8 @@ from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.handler import AuthHandlerInterface
 from hyperpocket.auth.reddit.oauth2_context import RedditOAuth2AuthContext
 from hyperpocket.auth.reddit.oauth2_schema import (
-    RedditOAuth2Response,
     RedditOAuth2Request,
+    RedditOAuth2Response,
 )
 from hyperpocket.config import config as config
 from hyperpocket.futures import FutureStore
@@ -35,7 +34,7 @@ class RedditOAuth2AuthHandler(AuthHandlerInterface):
 
     @staticmethod
     def recommended_scopes() -> set[str]:
-        if config.auth.reddit.use_recommended_scope:
+        if config().auth.reddit.use_recommended_scope:
             recommended_scopes = {"account", "identity", "read"}
         else:
             recommended_scopes = {}
@@ -51,10 +50,10 @@ class RedditOAuth2AuthHandler(AuthHandlerInterface):
         **kwargs,
     ) -> str:
         redirect_uri = urljoin(
-            config.public_base_url + "/",
-            f"{config.callback_url_rewrite_prefix}/auth/reddit/oauth2/callback",
+            config().public_base_url + "/",
+            f"{config().callback_url_rewrite_prefix}/auth/reddit/oauth2/callback",
         )
-        print(f"redirect_uri: {redirect_uri}")
+
         auth_url = self._make_auth_url(
             req=auth_req, redirect_uri=redirect_uri, state=future_uid
         )
@@ -108,8 +107,8 @@ class RedditOAuth2AuthHandler(AuthHandlerInterface):
             resp = await client.post(
                 url=self._REDDIT_TOKEN_URL,
                 data={
-                    "client_id": config.auth.reddit.client_id,
-                    "client_secret": config.auth.reddit.client_secret,
+                    "client_id": config().auth.reddit.client_id,
+                    "client_secret": config().auth.reddit.client_secret,
                     "grant_type": "refresh_token",
                     "refresh_token": refresh_token,
                 },
@@ -146,6 +145,6 @@ class RedditOAuth2AuthHandler(AuthHandlerInterface):
     ) -> RedditOAuth2Request:
         return RedditOAuth2Request(
             auth_scopes=auth_scopes,
-            client_id=config.auth.reddit.client_id,
-            client_secret=config.auth.reddit.client_secret,
+            client_id=config().auth.reddit.client_id,
+            client_secret=config().auth.reddit.client_secret,
         )

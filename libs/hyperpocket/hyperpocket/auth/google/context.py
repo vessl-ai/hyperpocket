@@ -5,9 +5,7 @@ class GoogleAuthContext(AuthContext):
     _ACCESS_TOKEN_KEY: str = "GOOGLE_TOKEN"
 
     def to_dict(self) -> dict[str, str]:
-        return {
-            self._ACCESS_TOKEN_KEY: self.access_token
-        }
+        return {self._ACCESS_TOKEN_KEY: self.access_token}
 
     def to_profiled_dict(self, profile: str) -> dict[str, str]:
         return {

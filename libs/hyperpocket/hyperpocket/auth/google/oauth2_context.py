@@ -12,7 +12,7 @@ class GoogleOAuth2AuthContext(GoogleAuthContext):
 
     @classmethod
     def from_google_oauth2_response(
-            cls, response: GoogleOAuth2Response
+        cls, response: GoogleOAuth2Response
     ) -> "GoogleOAuth2AuthContext":
         description = f"Google OAuth2 Context logged in with {response.scope} scopes"
         now = datetime.now(tz=timezone.utc)

@@ -24,12 +24,14 @@ class SessionConfigRedis(BaseModel):
 
 class SessionConfig(BaseModel):
     session_type: SessionType
-    in_memory: Optional[SessionConfigInMemory] = Field(default_factory=SessionConfigInMemory)
+    in_memory: Optional[SessionConfigInMemory] = Field(
+        default_factory=SessionConfigInMemory
+    )
     redis: Optional[SessionConfigRedis] = Field(default_factory=SessionConfigRedis)
 
 
 DefaultSessionConfig = SessionConfig(
     session_type=SessionType.IN_MEMORY,
     in_memory=SessionConfigInMemory(),
-    redis=SessionConfigRedis()
+    redis=SessionConfigRedis(),
 )

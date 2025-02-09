@@ -1,10 +1,12 @@
+import hyperdock_fileio.directory as directory_functions
+import hyperdock_fileio.operations as operation_functions
 import hyperdock_fileio.read as read_functions
 import hyperdock_fileio.write as write_functions
-import hyperdock_fileio.operations as operation_functions
-import hyperdock_fileio.directory as directory_functions
+
 
 def initialize_dock(
-    *_, **__,
+    *_,
+    **__,
 ) -> list[callable]:
     return [
         read_functions.read_text_file,

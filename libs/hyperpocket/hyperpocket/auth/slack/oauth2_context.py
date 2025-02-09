@@ -12,7 +12,9 @@ class SlackOAuth2AuthContext(SlackAuthContext):
 
     @classmethod
     def from_slack_oauth2_response(cls, response: SlackOAuth2Response):
-        description = f'Slack OAuth2 Context logged in as a user {response.authed_user.id}'
+        description = (
+            f"Slack OAuth2 Context logged in as a user {response.authed_user.id}"
+        )
         now = datetime.now(tz=timezone.utc)
 
         # user token

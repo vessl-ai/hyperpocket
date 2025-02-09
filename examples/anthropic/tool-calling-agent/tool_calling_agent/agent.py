@@ -1,5 +1,6 @@
+import os
+
 from anthropic import Anthropic
-from hyperpocket.config import secret
 from hyperpocket.tool import from_git
 from hyperpocket_anthropic import PocketAnthropic
 
@@ -11,16 +12,15 @@ def agent():
 
 
 async def _agent():
-    client = Anthropic(api_key=secret["ANTHROPIC_API_KEY"])
+    client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
     pocket = PocketAnthropic(
         tools=[
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-events"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-list"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/insert-calendar-events"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/github/pr-list"),
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
         ]
     )
 

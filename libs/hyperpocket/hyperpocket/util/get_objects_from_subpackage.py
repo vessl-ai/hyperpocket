@@ -1,6 +1,6 @@
 import importlib
 import pkgutil
-from typing import Type, Optional
+from typing import Optional, Type
 
 
 def get_objects_from_subpackage(package_name, interface_type: Optional[Type] = None):

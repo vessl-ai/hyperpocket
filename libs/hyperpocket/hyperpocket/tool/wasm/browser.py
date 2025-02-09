@@ -1,11 +1,16 @@
 import asyncio
-import os
 
-from playwright.async_api import async_playwright, Page, Playwright, BrowserContext, Route
+from playwright.async_api import (
+    BrowserContext,
+    Page,
+    Playwright,
+    Route,
+    async_playwright,
+)
 
 
 class InvokerBrowser(object):
-    _instance: 'InvokerBrowser' = None
+    _instance: "InvokerBrowser" = None
     _lock = asyncio.Lock()
     playwright: Playwright
     browser_context: BrowserContext
@@ -18,9 +23,9 @@ class InvokerBrowser(object):
         self.browser_context = await self.playwright.chromium.launch_persistent_context(
             headless=True,
             args=[
-                '--disable-web-security=True',
+                "--disable-web-security=True",
             ],
-            user_data_dir='/tmp/chrome_dev_user',
+            user_data_dir="/tmp/chrome_dev_user",
         )
 
     @classmethod
@@ -44,13 +49,13 @@ class InvokerBrowser(object):
                 body=body,
                 headers={
                     **response.headers,
-                    'Cross-Origin-Opener-Policy': 'same-origin',
-                    'Cross-Origin-Embedder-Policy': 'require-corp',
-                    'Cross-Origin-Resource-Policy': 'cross-origin',
-                }
+                    "Cross-Origin-Opener-Policy": "same-origin",
+                    "Cross-Origin-Embedder-Policy": "require-corp",
+                    "Cross-Origin-Resource-Policy": "cross-origin",
+                },
             )
 
-        await page.route('**/*', _hijack_route)
+        await page.route("**/*", _hijack_route)
         return page
 
     async def teardown(self):

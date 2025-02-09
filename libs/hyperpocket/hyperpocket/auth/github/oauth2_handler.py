@@ -5,7 +5,10 @@ import httpx
 
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.github.oauth2_context import GitHubOAuth2AuthContext
-from hyperpocket.auth.github.oauth2_schema import GitHubOAuth2Request, GitHubOAuth2Response
+from hyperpocket.auth.github.oauth2_schema import (
+    GitHubOAuth2Request,
+    GitHubOAuth2Response,
+)
 from hyperpocket.auth.handler import AuthHandlerInterface, AuthProvider
 from hyperpocket.config import config
 from hyperpocket.futures import FutureStore
@@ -41,8 +44,8 @@ class GitHubOAuth2AuthHandler(AuthHandlerInterface):
         **kwargs,
     ) -> str:
         redirect_uri = urljoin(
-            config.public_base_url + "/",
-            f"{config.callback_url_rewrite_prefix}/auth/github/oauth2/callback",
+            config().public_base_url + "/",
+            f"{config().callback_url_rewrite_prefix}/auth/github/oauth2/callback",
         )
         auth_url = self._make_auth_url(auth_req, redirect_uri, future_uid)
 
@@ -60,7 +63,7 @@ class GitHubOAuth2AuthHandler(AuthHandlerInterface):
     async def authenticate(
         self, auth_req: GitHubOAuth2Request, future_uid: str, *args, **kwargs
     ) -> AuthContext:
-        future_data = FutureStore.get_future( future_uid)
+        future_data = FutureStore.get_future(future_uid)
         auth_code = await future_data.future
 
         async with httpx.AsyncClient() as client:
@@ -124,7 +127,9 @@ class GitHubOAuth2AuthHandler(AuthHandlerInterface):
             response = GitHubOAuth2Response(**resp_json)
             return GitHubOAuth2AuthContext.from_github_oauth2_response(response)
 
-    def _make_auth_url(self, auth_req: GitHubOAuth2Request, redirect_uri: str, state: str):
+    def _make_auth_url(
+        self, auth_req: GitHubOAuth2Request, redirect_uri: str, state: str
+    ):
         params = {
             "client_id": auth_req.client_id,
             "redirect_uri": redirect_uri,
@@ -132,12 +137,12 @@ class GitHubOAuth2AuthHandler(AuthHandlerInterface):
             "state": state,
         }
         return f"{self._GITHUB_AUTH_URL}?{urlencode(params)}"
-        
+
     def make_request(
         self, auth_scopes: Optional[list[str]] = None, **kwargs
     ) -> GitHubOAuth2Request:
         return GitHubOAuth2Request(
             auth_scopes=auth_scopes,
-            client_id=config.auth.github.client_id,
-            client_secret=config.auth.github.client_secret,
+            client_id=config().auth.github.client_id,
+            client_secret=config().auth.github.client_secret,
         )

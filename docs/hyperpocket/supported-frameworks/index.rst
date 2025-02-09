@@ -12,3 +12,4 @@ Hyperpocket supports the following frameworks:
    llamaindex.md
    openai.md
    anthropic.md
+   crewai.md

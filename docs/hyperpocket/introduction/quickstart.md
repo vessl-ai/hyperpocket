@@ -8,20 +8,22 @@ Before we begin, install the required dependencies.
 
 **Python Version**
 
-python 3.10 to python 3.13 is required
+Python >= 3.10
 
 **Install Required Packages**
 
-Run the following commands to install Hyperpocket and LangChain dependencies
+Run the following commands to install Hyperpocket and LangChain dependencies.
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
 pip install hyperpocket_langchain
 pip install langchain_openai
 ```
 
-**Install Playwright (if not already installed)**
+**Install Chromium for Playwright (if not already installed)**
 
-Playwright is required to run the WASM environment. Install it using
+Chromium is used as a runtime for WASM environment and is required to execute WASM tools. You can install and integrate chromium with playwright by:
 
 ```bash
 playwright install
@@ -33,35 +35,31 @@ To use Hyperpocket, you need to create configuration files for storing credentia
 
 **Set Up Hyperpocket Configuration**
 
-Create a configuration file at `<repository-root>/.pocket/settings.toml` and add the following
+Create a configuration file at `<repository-root>/settings.toml` and add the following
 
 ```toml
 log_level = "debug"
+```
 
-[git]
-[git.github]
-github_token = "<GITHUB_TOKEN>"
+For sensitive values like Slack OAuth2 client secret, you might want to keep those values in `<repository-root>/.secrets.toml` and gitignore it.
+Both files will be merged into one configuration object.
 
+In this tutorial, you are going to use Slack App OAuth2 feature to use slack related tools. First, visit [Slack apps page](https://api.slack.com/apps/) and create new app.
+If you have a proper manifest, you may use it to build the new slack app. Or you can just build the slack app from the scratch.
+
+You'll find Client ID and Client Secret from the **Settings > Basic Information** of the app dashboard. Copy them, and paste into the `.secrets.toml` file like:
+
+```toml
 [auth.slack]
 client_id = "<SLACK_CLIENT_ID>"
 client_secret = "<SLACK_CLIENT_SECRET>"
 ```
 
-This configuration allows Hyperpocket to fetch tools from GitHub and authenticate with Slack.
+This configuration allows Hyperpocket to authenticate with Slack.
 
-**Set Up Secret Keys**
-
-Create a file at `<repository-root>~/.pocket/.secret.toml` and store sensitive API keys:
-
-```toml
-OPENAI_API_KEY = "<OPENAI_API_KEY>"
-```
-
-Alternatively, you can set this directly in your environment:
-
-```toml
-export OPENAI_API_KEY="<YOUR_OPENAI_API_KEY>"
-```
+In this tutorial, you are going to try get and post some slack messages. To do so, you have to allow the slack application to get or post one.
+Visit **Features > OAuth & Permissions** of the app dashboard. In the `Scopes` section, you have to add `channels:history`, `chat:write` as bot token scopes.
+Configuration is done for the app side. Now, install your app into your workspace by following [this Slack guideline](https://slack.com/help/articles/202035138-Add-apps-to-your-Slack-workspace).
 
 ## **3️⃣ Writing the Code**
 
@@ -72,7 +70,8 @@ Below is a breakdown of the code to set up and run the AI agent.
 Import the necessary libraries for integrating Hyperpocket and LangChain.
 
 ```python
-from hyperpocket.config import secret
+import os
+
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.memory import ConversationBufferMemory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -101,7 +100,7 @@ Configure the OpenAI language model (LLM) for use with LangChain.
 
 ```python
 # Initialize OpenAI LLM
-llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"])
+llm = ChatOpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"))
 llm_with_tools = llm.bind_tools(tools)
 ```
 
@@ -113,8 +112,8 @@ Create a prompt template and initialize memory to manage conversation history.
 # Define the conversation prompt
 prompt = ChatPromptTemplate.from_messages(
     [
-        ("placeholder", "{chat_history}"),
         ("system", "You are a tool-calling assistant. You can help the user by calling proper tools."),
+        ("placeholder", "{chat_history}"),
         ("user", "{input}"),
         MessagesPlaceholder(variable_name="agent_scratchpad"),
     ]
@@ -190,55 +189,48 @@ user (q to quit) :
 
 ## **5️⃣ Example Usage**
 
-### Step 1 : Set Up Slack API Permissions
-
-Before using Slack-related functionalities, make sure your Slack app has the proper permissions to post and retrieve messages from channels. Follow these steps:
-
-1.	Go to the [Slack API Dashboard](https://api.slack.com/).
-
-2.	Navigate to **Your Apps** and select your app.
-
-3.	Under the **OAuth & Permissions** section, ensure your app has the following scopes:
-
-- channels:history (for retrieving messages)
-- channels:write (for posting messages)
-
-4.	Save your changes and reinstall the app to apply the updated permissions.
-
-### Step2 : Authenticate via Slack
-
 When entering a Slack-related query for the first time, the system will provide an authentication link. Follow these steps to authenticate:
 
-1. Enter a query, such as retrieving or posting a message.
-2. The agent will respond with an **authentication link** in the form of a URL. Example:
+- Enter a query, such as retrieving or posting a message.
+- The agent will respond with an authentication link in the form of a URL. Example:
+- Open the provided link in your browser and complete the authentication process.
+- After authenticating, return to the interface and talk to your agent that you've done with the authentication. The agent will now be ready to perform Slack actions.
 
-```bash
-INFO:     127.0.0.1:51151 - "GET /auth/slack/oauth2/callback?code=****&state=**** HTTP/1.1" 200 OK
 ```
+user(q to quit) : Get some slack messages from engr-test.
 
-1. Open the provided link in your browser and complete the authentication process.
-2. After authenticating, return to the interface and enter **any message** to confirm the setup. The agent will now be ready to perform Slack actions.
+> Entering new AgentExecutor chain...
 
-### **Example Commands**
+Invoking: `slack_get_messages` with `{'channel': 'engr-test', 'limit': 5}`
 
-**Retrieve the Last Message from Slack Channel**
 
-```python
-user (q to quit) : Retrieve the last message from #general
-agent : "Please authenticate using this link: [Slack Authentication Link]"
-INFO:     127.0.0.1:51151 - "GET /auth/slack/oauth2/callback?code=****&state=**** HTTP/1.1" 200 OK
-user (q to quit) : Okay
-agent : "The last message in #general is: 'Hello, world!'"
-```
+redirect_uri: https://localhost:8001/proxy/auth/slack/oauth2/callback
+User needs to authenticate using the following URL: https://slack.com/oauth/v2/authorize?<some url parameters>
 
-**Post a message to Slack**
+The tool execution interrupted. Please talk to me to resume.It looks like you need to authenticate in order to access the Slack messages from the "engr-test" channel. Please [click here to authenticate with Slack](https://slack.com/oauth/v2/authorize?<some url parameters>). After you've done that, let me know!
 
-```bash
-user (q to quit) : Post 'Good morning' to #random
-agent : "Please authenticate using this link: [Slack Authentication Link]"
-INFO:     127.0.0.1:51149 - "GET /auth/slack/oauth2/callback?code=****&state=**** HTTP/1.1" 200 OK
-user (q to quit) : Okay
-agent : "Message successfully posted to #random"
+> Finished chain.
+slack agent :  It looks like you need to authenticate in order to access the Slack messages from the "engr-test" channel. Please [click here to authenticate with Slack](https://slack.com/oauth/v2/authorize?<some url parameters>). After you've done that, let me know!
+
+user(q to quit) : I'm done.
+
+> Entering new AgentExecutor chain...
+
+Invoking: `slack_get_messages` with `{'channel': 'engr-test', 'limit': 10}`
+
+> Finished chain.
+slack agent :  Here are some recent messages from the "engr-test" Slack channel:
+
+1. **User Message:**
+   - **User:** ASDFASDF
+   - **Text:** "Hey, the HyperPocket project is awesome!"
+   - **Reactions:** :+1: (123 reactions)
+
+2. **User Message:**
+   - **User:** ASDFASDF2
+   - **Text:** "Hey, it's so true!"
+   - **Reactions:** :+1: (456 reactions)
+...
 ```
 
 ## Full code

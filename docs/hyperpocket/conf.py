@@ -63,7 +63,7 @@ html_context = {
     "github_user": "vessl-ai",  # Username
     "github_repo": "hyperpocket",  # Repo name
     "github_version": "main",  # Version
-    "conf_py_path": "/docs/",  # Path in the checkout to the docs root
+    "conf_py_path": "/docs/hyperpocket/",  # Path in the checkout to the docs root
 }
 
 
@@ -138,5 +138,6 @@ def setup(sphinx: Sphinx):
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = "sphinx_rtd_theme"
+html_permalinks_icon = '<span>#</span>'
+html_theme = 'sphinxawesome_theme'
 html_static_path = ["_static"]

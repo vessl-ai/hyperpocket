@@ -30,9 +30,11 @@ class PocketServer(object):
     future_store: dict[str, asyncio.Future]
     torn_down: bool = False
 
-    def __init__(self,
-                 internal_server_port: int = config.internal_server_port,
-                 proxy_port: int = config.public_server_port):
+    def __init__(
+        self,
+        internal_server_port: int = config().internal_server_port,
+        proxy_port: int = config().public_server_port,
+    ):
         self.internal_server_port = internal_server_port
         self.proxy_port = proxy_port
         self.future_store = dict()
@@ -49,7 +51,9 @@ class PocketServer(object):
         try:
             await asyncio.gather(
                 self.main_server.serve(),
-                self.proxy_server.serve() if self.proxy_server is not None else asyncio.sleep(0),
+                self.proxy_server.serve()
+                if self.proxy_server is not None
+                else asyncio.sleep(0),
                 self.poll_in_child(),
             )
         except Exception as e:
@@ -75,7 +79,9 @@ class PocketServer(object):
                 result = self.pocket_core.prepare_auth(*a, **kw)
                 error = None
             except Exception as e:
-                pocket_logger.error(f"failed to prepare in pocket subprocess. error: {e}")
+                pocket_logger.error(
+                    f"failed to prepare in pocket subprocess. error: {e}"
+                )
                 result = None
                 error = e
 
@@ -86,7 +92,9 @@ class PocketServer(object):
                 result = await self.pocket_core.authenticate(*a, **kw)
                 error = None
             except Exception as e:
-                pocket_logger.error(f"failed to authenticate in pocket subprocess. error: {e}")
+                pocket_logger.error(
+                    f"failed to authenticate in pocket subprocess. error: {e}"
+                )
                 result = None
                 error = e
 
@@ -97,7 +105,9 @@ class PocketServer(object):
                 result = await self.pocket_core.tool_call(*a, **kw)
                 error = None
             except Exception as e:
-                pocket_logger.error(f"failed to tool_call in pocket subprocess. error: {e}")
+                pocket_logger.error(
+                    f"failed to tool_call in pocket subprocess. error: {e}"
+                )
                 result = None
                 error = e
 
@@ -119,10 +129,7 @@ class PocketServer(object):
             else:
                 await asyncio.sleep(0)
 
-    def send_in_parent(self,
-                       op: PocketServerOperations,
-                       args: tuple,
-                       kwargs: dict):
+    def send_in_parent(self, op: PocketServerOperations, args: tuple, kwargs: dict):
         conn, _ = self.pipe
         uid = str(uuid.uuid4())
         message = (op.value, uid, args, kwargs)
@@ -145,10 +152,9 @@ class PocketServer(object):
             else:
                 await asyncio.sleep(0)
 
-    async def call_in_subprocess(self,
-                                 op: PocketServerOperations,
-                                 args: tuple,
-                                 kwargs: dict):
+    async def call_in_subprocess(
+        self, op: PocketServerOperations, args: tuple, kwargs: dict
+    ):
         uid = self.send_in_parent(op, args, kwargs)
         loop = asyncio.get_running_loop()
         loop.create_task(self.poll_in_parent())
@@ -157,21 +163,52 @@ class PocketServer(object):
     def run(self, pocket_core: PocketCore):
         self._set_mp_start_method()
 
+        error_queue = mp.Queue()
         self.pipe = mp.Pipe()
-        self.process = mp.Process(target=self._run, args=(pocket_core,))
-        self.process.start()
+        self.process = mp.Process(
+            target=self._run, args=(pocket_core, )
+        )
+        self.process.start()  # process start
+
+        if not error_queue.empty():
+            error_message = error_queue.get()
+            raise error_message
+    
+    def _report_initialized(self, error: Optional[Exception] = None):
+        _, conn = self.pipe
+        conn.send(('server-initialization', error,))
+    
+    def wait_initialized(self):
+        conn, _ = self.pipe
+        while True:
+            if conn.poll():
+                _, error = conn.recv()
+                if error:
+                    raise error
+                return
 
     def _run(self, pocket_core):
-        self.pocket_core = pocket_core
-        self.main_server = self._create_main_server()
-        self.proxy_server = self._create_https_proxy_server()
-        loop = asyncio.new_event_loop()
-        loop.run_until_complete(self._run_async())
-        loop.close()
+        try:
+            # init process
+            self.pocket_core = pocket_core
+            self.main_server = self._create_main_server()
+            self.proxy_server = self._create_https_proxy_server()
+            self._report_initialized()
+
+            loop = asyncio.new_event_loop()
+            loop.run_until_complete(self._run_async())
+            loop.close()
+        except Exception as error:
+            self._report_initialized(error)
 
     def _create_main_server(self) -> Server:
         app = FastAPI()
-        _config = Config(app, host="0.0.0.0", port=self.internal_server_port)
+        _config = Config(
+            app,
+            host="0.0.0.0",
+            port=self.internal_server_port,
+            log_level=config().log_level,
+        )
         app.include_router(tool_router)
         app.include_router(auth_router)
         app.add_api_route("/health", lambda: {"status": "ok"}, methods=["GET"])
@@ -180,20 +217,25 @@ class PocketServer(object):
         return app
 
     def _create_https_proxy_server(self) -> Optional[Server]:
-        if not config.enable_local_callback_proxy:
+        if not config().enable_local_callback_proxy:
             return None
-        from hyperpocket.server.proxy import _generate_ssl_certificates
-        from hyperpocket.server.proxy import https_proxy_app
-
         from hyperpocket.config.settings import POCKET_ROOT
+        from hyperpocket.server.proxy import _generate_ssl_certificates, https_proxy_app
+
         ssl_keypath = POCKET_ROOT / "callback_server.key"
         ssl_certpath = POCKET_ROOT / "callback_server.crt"
 
         if not ssl_keypath.exists() or not ssl_certpath.exists():
             _generate_ssl_certificates(ssl_keypath, ssl_certpath)
 
-        _config = Config(https_proxy_app, host="0.0.0.0", port=self.proxy_port, ssl_keyfile=ssl_keypath,
-                         ssl_certfile=ssl_certpath)
+        _config = Config(
+            https_proxy_app,
+            host="0.0.0.0",
+            port=self.proxy_port,
+            ssl_keyfile=ssl_keypath,
+            ssl_certfile=ssl_certpath,
+            log_level=config().log_level,
+        )
         proxy_server = Server(_config)
         return proxy_server
 
@@ -211,4 +253,6 @@ class PocketServer(object):
             mp.set_start_method("fork", force=True)
             pocket_logger.debug("Process start method set to 'fork' for Linux.")
         else:
-            pocket_logger.debug(f"Unrecognized OS: {os_name}. Default start method will be used.")
+            pocket_logger.debug(
+                f"Unrecognized OS: {os_name}. Default start method will be used."
+            )

@@ -1,0 +1,16 @@
+line-length = 88
+target-version = "py310"
+
+[lint]
+select = [
+    "E", # pycodestyle errors,
+    "F", # pyflakes errors,
+    "I", # isort errors,
+]
+ignore = [
+    "E501", # line too long, handled by formatting
+    "E741", # ambiguous variable name, distinguishable by modern monospace fonts
+]
+
+[lint.per-file-ignores]
+"__init__.py" = ["F401"]

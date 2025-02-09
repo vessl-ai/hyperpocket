@@ -1,0 +1,30 @@
+[project]
+name = "schedule_summarizer"
+version = "0.1.0"
+description = "schedule-summarizer using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.100.0,<1.0.0",
+    "hyperpocket-crewai",
+]
+
+[project.scripts]
+schedule_summarizer = "schedule_summarizer.main:run"
+run_crew = "schedule_summarizer.main:run"
+train = "schedule_summarizer.main:train"
+replay = "schedule_summarizer.main:replay"
+test = "schedule_summarizer.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
+
+[tool.uv.workspace]
+members = ["schedule-summarizer"]
+
+[tool.uv.sources]
+hyperpocket-crewai = { path = "../../../libs/extensions/crewai", editable = true }

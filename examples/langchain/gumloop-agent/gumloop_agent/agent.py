@@ -1,17 +1,18 @@
+import os
+
 from hyperpocket_langchain import PocketLangchain
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.memory import ConversationBufferMemory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
-from hyperpocket.config import secret
 from hyperpocket.tool import from_git
 
 
 def agent(pocket: PocketLangchain):
     tools = pocket.get_tools()
 
-    llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"])
+    llm = ChatOpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"))
 
     prompt = ChatPromptTemplate.from_messages(
         [
@@ -36,7 +37,7 @@ def agent(pocket: PocketLangchain):
     )
 
     print("\n\n\n")
-    print("Hello, this is langchain slack agent.")
+    print("Hello, this is langchain gumloop agent.")
     while True:
         print("user(q to quit) : ", end="")
         user_input = input()
@@ -45,19 +46,16 @@ def agent(pocket: PocketLangchain):
             break
 
         response = agent_executor.invoke({"input": user_input})
-        print("slack agent : ", response["output"])
+        print("gumloop agent : ", response["output"])
         print()
 
 
 if __name__ == "__main__":
     with PocketLangchain(
             tools=[
-                from_git("https://github.com/vessl-ai/hyperawesometools", ref="main",
-                         rel_path="managed-tools/gumloop/start-flow-run"),
-                from_git("https://github.com/vessl-ai/hyperawesometools", ref="main",
-                         rel_path="managed-tools/gumloop/list-saved-flows"),
-                from_git("https://github.com/vessl-ai/hyperawesometools", ref="main",
-                         rel_path="managed-tools/gumloop/retrieve-input-schema"),
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/gumloop/start-flow-run",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/gumloop/list-saved-flows",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/gumloop/retrieve-input-schema",
             ],
     ) as pocket:
         agent(pocket)

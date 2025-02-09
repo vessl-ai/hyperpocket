@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from slack_sdk.web.async_client import AsyncWebClient
 from slack_sdk.signature import SignatureVerifier
 from hyperpocket.server import add_callback_proxy
-from pocket_langchain import PocketLangchain
+from hyperpocket_langchain import PocketLangchain
 from langchain.memory import ConversationBufferMemory
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -29,16 +29,19 @@ signature_verifier = SignatureVerifier(signing_secret=SLACK_SIGNING_SECRET)
 agents = {}
 agent_factory = None
 
+
 @tool
 def now():
     """Get current date and time in ISO-8601 format."""
     from datetime import datetime
     return datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
+
 def agent_generator(pocket: PocketLangchain):
     tools = pocket.get_tools() + [now]
 
     llm = ChatOpenAI(model="gpt-4o", api_key=OPENAI_API_KEY)
+
     def _agent(thread_id: str):
         prompt = ChatPromptTemplate.from_messages(
             [
@@ -79,7 +82,9 @@ def agent_generator(pocket: PocketLangchain):
             handle_parsing_errors=True,
         )
         return agent_executor
+
     return _agent
+
 
 async def handle_message(thread_id: str, user: str, text: str):
     if thread_id not in agents:
@@ -92,8 +97,8 @@ async def handle_message(thread_id: str, user: str, text: str):
     message = result["output"]
     if message != "N/A":
         await slack_client.chat_postMessage(channel=thread_id, text=message)
-    
-        
+
+
 @app.post("/slack/events")
 async def handle_slack_events(request: Request):
     # Verify Slack request signature
@@ -122,21 +127,23 @@ async def handle_slack_events(request: Request):
                     text = event.get("text")
                     loop = asyncio.get_event_loop()
                     loop.create_task(handle_message(thread_id=channel, user=user, text=text))
-                    
+
     return JSONResponse(content={"status": "ok"})
+
 
 if __name__ == "__main__":
     with PocketLangchain(
             tools=[
-                "https://github.com/vessl-ai/tool-calling/tree/main/examples/slack-get-message",
-                "https://github.com/vessl-ai/tool-calling/tree/main/examples/slack-post-message",
-                "https://github.com/vessl-ai/tool-calling/tree/main/examples/linear-get-issues",
-                "https://github.com/vessl-ai/tool-calling/tree/main/examples/google-get-calendar-events",
-                "https://github.com/vessl-ai/tool-calling/tree/main/examples/google-get-calendar-list",
-                "https://github.com/vessl-ai/tool-calling/tree/main/examples/google-insert-calendar-events",
-                "https://github.com/vessl-ai/tool-calling/tree/main/examples/github-pr-list",
-                "https://github.com/vessl-ai/tool-calling/tree/main/examples/github-search",
-                "https://github.com/vessl-ai/tool-calling/tree/main/examples/github-read-pull-request",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/search-user",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/search-commit",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/read-pull-request",
             ]
     ) as pk:
         agent_factory = agent_generator(pk)

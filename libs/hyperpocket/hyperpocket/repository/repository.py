@@ -1,6 +1,6 @@
 import pathlib
 
-from hyperpocket.repository.lock import LocalLock, GitLock
+from hyperpocket.repository.lock import GitLock, LocalLock
 from hyperpocket.repository.lockfile import Lockfile
 
 

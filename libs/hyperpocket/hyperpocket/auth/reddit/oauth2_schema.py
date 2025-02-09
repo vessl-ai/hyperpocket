@@ -1,7 +1,5 @@
 from typing import Optional
 
-from pydantic import BaseModel
-
 from hyperpocket.auth.schema import AuthenticateRequest, AuthenticateResponse
 
 

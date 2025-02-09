@@ -1,9 +1,10 @@
+import os
+
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.memory import ConversationBufferMemory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
-from hyperpocket.config import secret
 from hyperpocket.tool import from_git
 from hyperpocket_langchain import PocketLangchain
 
@@ -11,7 +12,7 @@ from hyperpocket_langchain import PocketLangchain
 def agent(pocket: PocketLangchain):
     tools = pocket.get_tools()
 
-    llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"])
+    llm = ChatOpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"))
 
     prompt = ChatPromptTemplate.from_messages(
         [

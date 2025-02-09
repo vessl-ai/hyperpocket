@@ -1,5 +1,6 @@
 import asyncio
 from datetime import datetime
+import os
 
 import pytz
 import uvicorn
@@ -16,15 +17,12 @@ from slack_sdk.errors import SlackApiError
 from slack_sdk.signature import SignatureVerifier
 from starlette.responses import JSONResponse
 
-from hyperpocket.config import secret
 from hyperpocket.server import add_callback_proxy
-from hyperpocket.tool import from_git
-
 from hyperpocket_langgraph import PocketLanggraph
 from .local_tools import fetch_user_prs_from_organization, get_user_slack_threads
 
-slack_client = WebClient(secret["SLACK_BOT_TOKEN"])
-verifier = SignatureVerifier(signing_secret=secret["SLACK_SIGNING_SECRET"])
+slack_client = WebClient(os.getenv("SLACK_BOT_TOKEN"))
+verifier = SignatureVerifier(signing_secret=os.getenv("SLACK_SIGNING_SECRET"))
 
 
 def send_slack_message(channel, text):
@@ -48,18 +46,18 @@ def get_current_utc_time() -> str:
 
 def build():
     pocket = PocketLanggraph(tools=[
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-events"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-list"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/insert-calendar-events"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/github/read-pull-request-py"),
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/read-pull-requests",
         get_user_slack_threads,
         fetch_user_prs_from_organization
     ])
 
-    llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"], streaming=True)
+    llm = ChatOpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"), streaming=True)
     llm_with_tools = llm.bind_tools(pocket.get_tools())
 
     graph_builder = StateGraph(MessagesState)

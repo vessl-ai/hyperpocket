@@ -43,7 +43,7 @@ class Config(BaseModel):
     public_server_protocol: str = "https"
     public_server_port: int = 8001
     callback_url_rewrite_prefix: str = "proxy"  # should not start with a slash
-    log_level: str = "INFO"
+    log_level: str = "info"
     auth: AuthConfig = DefaultAuthConfig
     session: SessionConfig = DefaultSessionConfig
     tool_vars: dict[str, str] = Field(default_factory=dict)
@@ -61,4 +61,21 @@ class Config(BaseModel):
         return f"{self.public_server_protocol}://{self.public_hostname}:{self.public_server_port}"
 
 
-config: Config = Config.model_validate({k.lower(): v for k, v in settings.items()})
+def _dynaconf_to_config(s) -> dict:
+    values = dict()
+    for k, v in s.items():
+        if getattr(v, "items", None) is not None:
+            values[str(k).lower()] = _dynaconf_to_config(v)
+        else:
+            values[str(k).lower()] = v
+    return values
+
+
+_config = None
+
+
+def config() -> Config:
+    global _config
+    if _config is None:
+        _config = Config.model_validate(_dynaconf_to_config(settings))
+    return _config

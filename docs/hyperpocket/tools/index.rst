@@ -5,6 +5,6 @@ Tools
    :maxdepth: 2
 
    what-are-tools.md
-   apply-function-tools.md
-   apply-local-tools.md
-   integration-from-github.md
+   using-wasm-tools.md
+   using-function-tools.md
+   tool-interfaces.md

@@ -1,11 +1,11 @@
 import ast
+import os
 from unittest.async_case import IsolatedAsyncioTestCase
 
 from anthropic import Anthropic
 from pydantic import BaseModel
 
-from hyperpocket.config import config, secret
-from hyperpocket.tool import from_git
+from hyperpocket.config import config
 from hyperpocket_anthropic import PocketAnthropic
 
 
@@ -49,24 +49,27 @@ class TestPocketAnthropicNoProfile(IsolatedAsyncioTestCase):
 
         self.pocket = PocketAnthropic(
             tools=[
-                from_git("https://github.com/vessl-ai/hyperawesometools", "main",
-                         "managed-tools/none/simple-echo-tool"),
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/none/simple-echo-tool",
                 self.add,
-                self.sub_pydantic_args
+                self.sub_pydantic_args,
             ],
         )
-        self.tool_specs_no_profile = self.pocket.get_anthropic_tool_specs(use_profile=False)
-        self.client = Anthropic(api_key=secret["ANTHROPIC_API_KEY"])
+        self.tool_specs_no_profile = self.pocket.get_anthropic_tool_specs(
+            use_profile=False
+        )
+        self.client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
     async def asyncTearDown(self):
         self.pocket._teardown_server()
 
     def test_get_tools_from_pocket_no_profile(self):
         # given
-        pocket = PocketAnthropic(tools=[
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-            from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-        ])
+        pocket = PocketAnthropic(
+            tools=[
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/get-message",
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/post-message",
+            ]
+        )
 
         # when
         specs = pocket.get_anthropic_tool_specs()
@@ -74,12 +77,12 @@ class TestPocketAnthropicNoProfile(IsolatedAsyncioTestCase):
 
         # then
         self.assertIsInstance(get_tool, dict)
-        self.assertEqual(get_tool["name"], 'slack_get_messages')
+        self.assertEqual(get_tool["name"], "slack_get_messages")
         self.assertTrue("channel" in get_tool["input_schema"]["properties"])
         self.assertTrue("limit" in get_tool["input_schema"]["properties"])
 
         self.assertIsInstance(send_tool, dict)
-        self.assertEqual(send_tool["name"], 'slack_send_messages')
+        self.assertEqual(send_tool["name"], "slack_send_messages")
         self.assertTrue("channel" in send_tool["input_schema"]["properties"])
         self.assertTrue("text" in send_tool["input_schema"]["properties"])
 
@@ -87,10 +90,7 @@ class TestPocketAnthropicNoProfile(IsolatedAsyncioTestCase):
         response = self.client.messages.create(
             model="claude-3-5-haiku-latest",
             max_tokens=500,
-            messages=[{
-                "role": "user",
-                "content": "add 1, 2"
-            }],
+            messages=[{"role": "user", "content": "add 1, 2"}],
             tools=self.tool_specs_no_profile,
         )
 
@@ -108,10 +108,7 @@ class TestPocketAnthropicNoProfile(IsolatedAsyncioTestCase):
         response = self.client.messages.create(
             model="claude-3-5-haiku-latest",
             max_tokens=500,
-            messages=[{
-                "role": "user",
-                "content": "sub 1, 2"
-            }],
+            messages=[{"role": "user", "content": "sub 1, 2"}],
             tools=self.tool_specs_no_profile,
         )
 
@@ -129,10 +126,7 @@ class TestPocketAnthropicNoProfile(IsolatedAsyncioTestCase):
         response = self.client.messages.create(
             model="claude-3-5-haiku-latest",
             max_tokens=500,
-            messages=[{
-                "role": "user",
-                "content": "echo 'hello world'"
-            }],
+            messages=[{"role": "user", "content": "echo 'hello world'"}],
             tools=self.tool_specs_no_profile,
         )
 

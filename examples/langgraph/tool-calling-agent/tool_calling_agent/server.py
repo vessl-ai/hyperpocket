@@ -1,3 +1,4 @@
+import os
 import traceback
 import uuid
 from typing import Optional
@@ -14,7 +15,6 @@ from langgraph.types import Command
 from pydantic import BaseModel
 from starlette.responses import StreamingResponse
 
-from hyperpocket.config import secret
 from hyperpocket.tool import from_git
 
 from hyperpocket_langgraph import PocketLanggraph
@@ -22,17 +22,16 @@ from hyperpocket_langgraph import PocketLanggraph
 
 def build():
     pocket = PocketLanggraph(tools=[
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/linear/get-issues"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-events"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/google/get-calendar-list"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main",
-                 "managed-tools/google/insert-calendar-events"),
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/github/pr-list"),
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
     ])
 
-    llm = ChatOpenAI(model="gpt-4o", api_key=secret["OPENAI_API_KEY"], streaming=True)
+    llm = ChatOpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"), streaming=True)
     llm_with_tools = llm.bind_tools(pocket.get_tools())
 
     graph_builder = StateGraph(MessagesState)

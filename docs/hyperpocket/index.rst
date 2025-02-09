@@ -1,9 +1,7 @@
 Hyperpocket
 ===========
 
-Welcome to the Hyperpocket documentation!
-
-.. include:: overview.md
+.. include:: introduction/overview.md
    :parser: myst_parser.sphinx_
 
 .. toctree::
@@ -14,5 +12,5 @@ Welcome to the Hyperpocket documentation!
    tools/index
    auth/index
    supported-frameworks/index
-   contribute/index
+   Contributing <contribute/contribute-to-hyperpocket>
    API References </autoapi/libs/index>

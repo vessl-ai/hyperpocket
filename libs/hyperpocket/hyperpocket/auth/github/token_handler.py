@@ -1,7 +1,7 @@
 from typing import Optional
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urlencode, urljoin
 
-from hyperpocket.auth import AuthProvider, AuthHandlerInterface
+from hyperpocket.auth import AuthHandlerInterface, AuthProvider
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.github.token_context import GitHubTokenAuthContext
 from hyperpocket.auth.github.token_schema import GitHubTokenRequest, GitHubTokenResponse
@@ -17,7 +17,10 @@ class GitHubTokenAuthHandler(AuthHandlerInterface):
     )
     scoped: bool = False
 
-    _TOKEN_URL: str = urljoin(config.public_base_url + "/", f"{config.callback_url_rewrite_prefix}/auth/token")
+    _TOKEN_URL: str = urljoin(
+        config().public_base_url + "/",
+        f"{config().callback_url_rewrite_prefix}/auth/token",
+    )
 
     @staticmethod
     def provider() -> AuthProvider:
@@ -28,19 +31,21 @@ class GitHubTokenAuthHandler(AuthHandlerInterface):
         return set()
 
     def prepare(
-            self,
-            auth_req: AuthenticateRequest,
-            thread_id: str,
-            profile: str,
-            future_uid: str,
-            *args,
-            **kwargs,
+        self,
+        auth_req: AuthenticateRequest,
+        thread_id: str,
+        profile: str,
+        future_uid: str,
+        *args,
+        **kwargs,
     ) -> str:
         redirect_uri = urljoin(
-            config.public_base_url + "/",
-            f"{config.callback_url_rewrite_prefix}/auth/github/token/callback",
+            config().public_base_url + "/",
+            f"{config().callback_url_rewrite_prefix}/auth/github/token/callback",
         )
-        auth_url = self._make_auth_url(auth_req=auth_req, redirect_uri=redirect_uri, state=future_uid)
+        auth_url = self._make_auth_url(
+            auth_req=auth_req, redirect_uri=redirect_uri, state=future_uid
+        )
         FutureStore.create_future(
             future_uid,
             data={
@@ -53,7 +58,7 @@ class GitHubTokenAuthHandler(AuthHandlerInterface):
         return f"User needs to authenticate using the following URL: {auth_url}"
 
     async def authenticate(
-            self, auth_req: GitHubTokenRequest, future_uid: str, *args, **kwargs
+        self, auth_req: GitHubTokenRequest, future_uid: str, *args, **kwargs
     ) -> GitHubTokenAuthContext:
         future_data = FutureStore.get_future(future_uid)
         access_token = await future_data.future
@@ -64,16 +69,17 @@ class GitHubTokenAuthHandler(AuthHandlerInterface):
         return context
 
     async def refresh(
-            self, auth_req: GitHubTokenRequest, context: AuthContext, *args, **kwargs
+        self, auth_req: GitHubTokenRequest, context: AuthContext, *args, **kwargs
     ) -> AuthContext:
         raise Exception("GitHub token doesn't support refresh")
 
-    def _make_auth_url(self, auth_req: GitHubTokenRequest, redirect_uri: str, state: str):
-        params = {
-            "redirect_uri": redirect_uri,
-            "state": state
-        }
+    def _make_auth_url(
+        self, auth_req: GitHubTokenRequest, redirect_uri: str, state: str
+    ):
+        params = {"redirect_uri": redirect_uri, "state": state}
         return f"{self._TOKEN_URL}?{urlencode(params)}"
 
-    def make_request(self, auth_scopes: Optional[list[str]] = None, **kwargs) -> GitHubTokenRequest:
+    def make_request(
+        self, auth_scopes: Optional[list[str]] = None, **kwargs
+    ) -> GitHubTokenRequest:
         return GitHubTokenRequest()
