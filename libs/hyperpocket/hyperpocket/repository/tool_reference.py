@@ -4,7 +4,7 @@ import pathlib
 from pydantic import BaseModel
 
 
-class Lock(BaseModel, abc.ABC):
+class ToolReference(BaseModel, abc.ABC):
     tool_source: str = None
 
     @abc.abstractmethod

@@ -30,14 +30,23 @@ class FunctionTool(Tool):
             except RuntimeError:
                 pass
             except Exception as e:
+                import traceback
+                traceback.print_exc()
+                traceback.print_stack()
                 return "There was an error while executing the tool: " + str(e)
             try:
                 return str(asyncio.run(self.afunc(**binding_args)))
             except Exception as e:
+                import traceback
+                traceback.print_exc()
+                traceback.print_stack()
                 return "There was an error while executing the tool: " + str(e)
         try:
             return str(self.func(**binding_args))
         except Exception as e:
+            import traceback
+            traceback.print_exc()
+            traceback.print_stack()
             return "There was an error while executing the tool: " + str(e)
 
     async def ainvoke(self, **kwargs) -> str:
@@ -47,6 +56,9 @@ class FunctionTool(Tool):
             binding_args = self._get_binding_args(kwargs)
             return str(await self.afunc(**binding_args))
         except Exception as e:
+            import traceback
+            traceback.print_exc()
+            traceback.print_stack()
             return "There was an error while executing the tool: " + str(e)
 
     def _get_binding_args(self, kwargs):
@@ -124,18 +136,18 @@ class FunctionTool(Tool):
         
         if func is None:
             if (_model := afunc.__dict__.get("__model__")) is not None:
-                model = _model
+                schema = _model
             else:
-                model = function_to_model(afunc)
-            argument_json_schema = flatten_json_schema(model.model_json_schema())
+                schema = function_to_model(afunc).model_json_schema()
+            argument_json_schema = flatten_json_schema(schema)
             name = afunc.__name__
             description = afunc.__doc__ if afunc.__doc__ is not None else ""
         else:
             if (_model := func.__dict__.get("__model__")) is not None:
-                model = _model
+                schema = _model
             else:
-                model = function_to_model(func)
-            argument_json_schema = flatten_json_schema(model.model_json_schema())
+                schema = function_to_model(func).model_json_schema()
+            argument_json_schema = flatten_json_schema(schema)
             name = func.__name__
             description = func.__doc__ if func.__doc__ is not None else ""
             

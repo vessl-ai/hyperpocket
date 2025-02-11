@@ -21,11 +21,13 @@ async def get_file_tree(script_id: str) -> scriptdto.BrowserScriptFileTree:
     script = ScriptStore.get_script(script_id)
     return scriptdto.BrowserScriptFileTree(tree=script.load_file_tree())
 
-async def get_entrypoint(script_id: str) -> scriptdto.BrowserScriptEntrypoint:
-    script = ScriptStore.get_script(script_id)
-    package_name = script.package_name
-    entrypoint = f"/tools/wasm/scripts/{script_id}/file/{script.entrypoint}"
-    return scriptdto.BrowserScriptEntrypoint(package_name=package_name, entrypoint=entrypoint)
+def get_entrypoint(prefix: str):
+    async def _get_entrypoint(script_id: str) -> scriptdto.BrowserScriptEntrypoint:
+        script = ScriptStore.get_script(script_id)
+        package_name = script.package_name
+        entrypoint = f"/{prefix}/scripts/{script_id}/file/{script.entrypoint}"
+        return scriptdto.BrowserScriptEntrypoint(package_name=package_name, entrypoint=entrypoint)
+    return _get_entrypoint
 
 async def get_dist_file(script_id: str, file_name: str):
     script = ScriptStore.get_script(script_id)

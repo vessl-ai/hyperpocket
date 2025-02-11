@@ -1,15 +1,17 @@
 import asyncio
 import enum
 import uuid
-from typing import Optional
+from typing import Optional, Union
 
 import multiprocess as mp
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from uvicorn import Config, Server
 
+from hyperpocket import PocketAuth
 from hyperpocket.config import config, pocket_logger
 from hyperpocket.pocket_core import PocketCore
 from hyperpocket.server.auth import auth_router
+from hyperpocket.session import SessionStorageInterface, SESSION_STORAGE_LIST
 
 
 class PocketServerOperations(enum.Enum):
@@ -17,10 +19,11 @@ class PocketServerOperations(enum.Enum):
     PREPARE_AUTH = "prepare_auth"
     AUTHENTICATE = "authenticate"
     TOOL_CALL = "tool_call"
-
+    PLUG_CORE = "plug_core"
 
 class PocketServer(object):
-    main_server: Server
+    fastapi_app: Optional[FastAPI]
+    main_server: Optional[Server]
     internal_server_port: int
     proxy_server: Optional[Server]
     proxy_port: int
@@ -28,15 +31,83 @@ class PocketServer(object):
     process: mp.Process
     future_store: dict[str, asyncio.Future]
     torn_down: bool = False
+    _uidset: set
+    _cores: dict[str, PocketCore]
+    _auth_session_storage: SessionStorageInterface
 
-    def __init__(
-        self,
-        internal_server_port: int = config().internal_server_port,
-        proxy_port: int = config().public_server_port,
-    ):
-        self.internal_server_port = internal_server_port
-        self.proxy_port = proxy_port
+    def __init__(self):
+        self._initialized = False
+        self.internal_server_port = config().internal_server_port
+        self.proxy_port = config().public_server_port
+        self._uidset = set()
         self.future_store = dict()
+        self.fastapi_app = None
+        self.main_server = None
+        self._cores = dict()
+        self._auth_session_storage = None
+    
+    @property
+    def _session_storage(self):
+        if self._auth_session_storage is None:
+            for session_type in SESSION_STORAGE_LIST:
+                if session_type.session_storage_type() == config().session.session_type:
+                    session_config = getattr(
+                        config().session, config().session.session_type.value
+                    )
+
+                    pocket_logger.info(
+                        f"init {session_type.session_storage_type()} session storage.."
+                    )
+                    self._auth_session_storage = session_type(session_config)
+                    break
+
+            if self._auth_session_storage is None:
+                pocket_logger.error(
+                    f"not supported session type({config().session.session_type})"
+                )
+                raise RuntimeError(
+                    f"Not Supported Session Type({config().session.session_type})"
+                )
+
+        return self._auth_session_storage
+    
+    # should be called in child process
+    def _plug_core(self, pocket_uid: str, pocket_core: PocketCore, *_a, **_kw):
+        # extend http routers from each docks
+        for dock in pocket_core.docks:
+            self.fastapi_app.include_router(dock.router)
+        # keep pocket core
+        pocket_core.auth.plug_storage(self._session_storage)
+        self._cores[pocket_uid] = pocket_core
+    
+    # should be called in parent process
+    async def plug_core(self, pocket_uid: str, pocket_core: PocketCore):
+        await self.call_in_subprocess(
+            PocketServerOperations.PLUG_CORE,
+            pocket_uid,
+            tuple(),
+            {
+                "pocket_uid": pocket_uid,
+                "pocket_core": pocket_core,
+            },
+        )
+    
+    @classmethod
+    def get_instance_and_refcnt_up(cls, uid: str):
+        if cls.__dict__.get("_instance") is None:
+            cls._instance = cls()
+            cls._instance.run()
+        cls._instance.refcnt_up(uid)
+        return cls._instance
+    
+    def refcnt_up(self, uid: str):
+        self._uidset.add(uid)
+
+    def refcnt_down(self, uid: str):
+        if uid in self._uidset:
+            self._uidset.remove(uid)
+            if len(self._uidset) == 0:
+                self._instance.teardown()
 
     def teardown(self):
         # @XXX(seokju) is it ok to call this method both in __del__ and __exit__?
@@ -61,21 +132,22 @@ class PocketServer(object):
     async def poll_in_child(self):
         loop = asyncio.get_running_loop()
         _, conn = self.pipe
-
-        async def _acall(_conn, _op, _uid, a, kw):
+        
+        async def _acall(_conn, _future_uid, _core_uid, _args, _kwargs):
             try:
-                result = await self.pocket_core.acall(*a, **kw)
+                core = self._cores[_core_uid]
+                result = await core.acall(*_args, **_kwargs)
                 error = None
             except Exception as e:
-                pocket_logger.error(f"failed to acall in pocket subprocess. error: {e}")
+                pocket_logger.error(f"failed in pocket subprocess. error: {e}")
                 result = None
                 error = e
+            _conn.send((_future_uid, result, error))
 
-            _conn.send((_op, _uid, result, error))
-
-        async def _prepare(_conn, _op, _uid, a, kw):
+        async def _prepare(_conn, _future_uid, _core_uid, a, kw):
             try:
-                result = self.pocket_core.prepare_auth(*a, **kw)
+                core = self._cores[_core_uid]
+                result = core.prepare_auth(*a, **kw)
                 error = None
             except Exception as e:
                 pocket_logger.error(
@@ -84,11 +156,12 @@ class PocketServer(object):
                 result = None
                 error = e
 
-            _conn.send((_op, _uid, result, error))
+            _conn.send((_future_uid, result, error))
 
-        async def _authenticate(_conn, _op, _uid, a, kw):
+        async def _authenticate(_conn, _future_uid, _core_uid, a, kw):
             try:
-                result = await self.pocket_core.authenticate(*a, **kw)
+                core = self._cores[_core_uid]
+                result = await core.authenticate(*a, **kw)
                 error = None
             except Exception as e:
                 pocket_logger.error(
@@ -97,11 +170,12 @@ class PocketServer(object):
                 result = None
                 error = e
 
-            _conn.send((_op, _uid, result, error))
+            _conn.send((_future_uid, result, error))
 
-        async def _tool_call(_conn, _op, _uid, a, kw):
+        async def _tool_call(_conn, _future_uid, _core_uid, a, kw):
             try:
-                result = await self.pocket_core.tool_call(*a, **kw)
+                core = self._cores[_core_uid]
+                result = await core.tool_call(*a, **kw)
                 error = None
             except Exception as e:
                 pocket_logger.error(
@@ -110,38 +184,50 @@ class PocketServer(object):
                 result = None
                 error = e
 
-            _conn.send((_op, _uid, result, error))
+            _conn.send((_future_uid, result, error))
+        
+        async def _plug_core(_conn, _future_uid, _core_uid, a, kw):
+            try:
+                self._plug_core(*a, **kw)
+                _conn.send((_future_uid, None, None))
+            except Exception as e:
+                pocket_logger.error(
+                    f"failed to plug_core in pocket subprocess. error: {e}"
+                )
+                _conn.send((_future_uid, None, e))
 
         while True:
             if conn.poll():
-                op, uid, args, kwargs = conn.recv()
-                if op == PocketServerOperations.CALL.value:
-                    loop.create_task(_acall(conn, op, uid, args, kwargs))
-                elif op == PocketServerOperations.PREPARE_AUTH.value:
-                    loop.create_task(_prepare(conn, op, uid, args, kwargs))
-                elif op == PocketServerOperations.AUTHENTICATE.value:
-                    loop.create_task(_authenticate(conn, op, uid, args, kwargs))
-                elif op == PocketServerOperations.TOOL_CALL.value:
-                    loop.create_task(_tool_call(conn, op, uid, args, kwargs))
+                op, future_uid, core_uid, args, kwargs = conn.recv()
+                if op == PocketServerOperations.CALL:
+                    loop.create_task(_acall(conn, future_uid, core_uid, args, kwargs))
+                elif op == PocketServerOperations.PREPARE_AUTH:
+                    loop.create_task(_prepare(conn, future_uid, core_uid, args, kwargs))
+                elif op == PocketServerOperations.AUTHENTICATE:
+                    loop.create_task(_authenticate(conn, future_uid, core_uid, args, kwargs))
+                elif op == PocketServerOperations.TOOL_CALL:
+                    loop.create_task(_tool_call(conn, future_uid, core_uid, args, kwargs))
+                elif op == PocketServerOperations.PLUG_CORE:
+                    loop.create_task(_plug_core(conn, future_uid, core_uid, args, kwargs))
                 else:
-                    raise AttributeError(f"Can't find operations. op:{op}")
+                    raise ValueError(f"Unknown operation: {op}")
             else:
                 await asyncio.sleep(0)
 
-    def send_in_parent(self, op: PocketServerOperations, args: tuple, kwargs: dict):
+    def send_in_parent(self, op: PocketServerOperations, pocket_uid: str, args: tuple, kwargs: dict):
         conn, _ = self.pipe
-        uid = str(uuid.uuid4())
-        message = (op.value, uid, args, kwargs)
+        future_uid = str(uuid.uuid4())
+        message = (op, future_uid, pocket_uid, args, kwargs)
         future = asyncio.Future()
-        self.future_store[uid] = future
+        self.future_store[future_uid] = future
         conn.send(message)
-        return uid
+        return future_uid
 
     async def poll_in_parent(self):
         conn, _ = self.pipe
         while True:
             if conn.poll():
-                op, uid, result, error = conn.recv()
+                uid, result, error = conn.recv()
                 future = self.future_store[uid]
                 if error:
                     future.set_exception(error)
@@ -152,48 +238,48 @@ class PocketServer(object):
                 await asyncio.sleep(0)
 
     async def call_in_subprocess(
-        self, op: PocketServerOperations, args: tuple, kwargs: dict
+        self, op: PocketServerOperations, pocket_uid: str, args: tuple, kwargs: dict
     ):
-        uid = self.send_in_parent(op, args, kwargs)
+        uid = self.send_in_parent(op, pocket_uid, args, kwargs)
         loop = asyncio.get_running_loop()
         loop.create_task(self.poll_in_parent())
         return await self.future_store[uid]
 
-    def run(self, pocket_core: PocketCore):
+    def run(self):
         self._set_mp_start_method()
 
         error_queue = mp.Queue()
         self.pipe = mp.Pipe()
-        self.process = mp.Process(target=self._run, args=(pocket_core,))
+        self.process = mp.Process(
+            target=self._run
+        )
         self.process.start()  # process start
 
         if not error_queue.empty():
             error_message = error_queue.get()
             raise error_message
-
+    
     def _report_initialized(self, error: Optional[Exception] = None):
         _, conn = self.pipe
-        conn.send(
-            (
-                "server-initialization",
-                error,
-            )
-        )
-
+        conn.send(('server-initialization', error,))
+    
     def wait_initialized(self):
+        if self._initialized:
+            return
         conn, _ = self.pipe
         while True:
             if conn.poll():
                 _, error = conn.recv()
                 if error:
                     raise error
-                return
+                break
+        self._initialized = True
 
-    def _run(self, pocket_core):
+    def _run(self):
         try:
             # init process
-            self.pocket_core = pocket_core
-            self.main_server = self._create_main_server()
+            self.fastapi_app = self._create_fastapi_app()
+            self.main_server = self._create_main_server(self.fastapi_app)
             self.proxy_server = self._create_https_proxy_server()
             self._report_initialized()
 
@@ -202,22 +288,22 @@ class PocketServer(object):
             loop.close()
         except Exception as error:
             self._report_initialized(error)
-
-    def _create_main_server(self) -> Server:
+    
+    def _create_fastapi_app(self) -> FastAPI:
         app = FastAPI()
+        app.include_router(auth_router)
+        app.add_api_route("/health", lambda: {"status": "ok"}, methods=["GET"])
+        return app
+
+    def _create_main_server(self, app: FastAPI) -> Server:
         _config = Config(
             app,
             host="0.0.0.0",
             port=self.internal_server_port,
             log_level=config().log_level,
         )
-        # TODO: add dock routers
-        app.include_router(tool_router)
-        app.include_router(auth_router)
-        app.add_api_route("/health", lambda: {"status": "ok"}, methods=["GET"])
-
-        app = Server(_config)
-        return app
+        server = Server(_config)
+        return server
 
     def _create_https_proxy_server(self) -> Optional[Server]:
         if not config().enable_local_callback_proxy:

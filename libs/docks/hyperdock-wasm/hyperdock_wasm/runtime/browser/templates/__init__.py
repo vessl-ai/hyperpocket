@@ -18,7 +18,7 @@ TemplateEnvironments = Environment(
 
 
 def render(
-    language: str, script_id: str, env: dict[str, str], body: str, **kwargs
+    language: str, script_id: str, router_prefix: str, env: dict[str, str], body: str, **kwargs
 ) -> str:
     env_json = json.dumps(env)
     template = TemplateEnvironments.get_template(f"{language.lower()}.html")
@@ -27,6 +27,7 @@ def render(
     body_b64 = body_b64_bytes.decode("ascii")
     return template.render(
         **{
+            "ROUTER_PREFIX": router_prefix,
             "SCRIPT_ID": script_id,
             "ENV_JSON": env_json,
             "BODY_JSON_B64": body_b64,

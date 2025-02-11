@@ -1,58 +1,51 @@
 import abc
-from concurrent.futures import ThreadPoolExecutor
+import string, random
 from typing import Callable, Coroutine, Any
 
 from fastapi import APIRouter
 
-from hyperpocket.repository import Lock, LockSection, SerializedLockSection
 from hyperpocket.tool import ToolRequest
 from hyperpocket.tool.function import FunctionTool
+from hyperpocket.util.generate_slug import generate_slug
 
 CallbackExtends = Callable[..., Coroutine[Any, Any, Any]]
 
 class Dock(abc.ABC):
     _identifier: str
-    _locks: dict[str, Lock]
     _tool_requests: list[ToolRequest]
+    _dock_http_router: APIRouter
     _dock_vars: dict[str, str]
     
     def __init__(self, identifier: str, dock_vars: dict[str, str] = None):
         self._identifier = identifier
-        self._dock_http_router = APIRouter()
+        dock_slug = generate_slug()
+        self._unique_identifier = f"{identifier}-{dock_slug}"
+        self._dock_http_router = APIRouter(prefix=f"/{self._unique_identifier}")
         self._tool_requests = []
         self._locks = dict()
         self._dock_vars = dock_vars if dock_vars is not None else {}
     
     @property
+    def router(self):
+        return self._dock_http_router
+    
+    @property
     def identifier(self):
         return self._identifier
+    
+    @property
+    def unique_identifier(self):
+        return self._unique_identifier
     
     def dock_http_router(self) -> APIRouter:
         return self._dock_http_router
     
-    def locks(self) -> dict[str, Lock]:
-        return self._locks
-    
-    def sync(self, parallel=True, **kwargs):
-        if parallel:
-            with ThreadPoolExecutor(
-                max_workers=min(len(self._locks) + 1, 100), thread_name_prefix="repository_loader"
-            ) as executor:
-                executor.map(lambda k: self._locks[k].sync(**kwargs), self._locks.keys())
-        else:
-            for key in self._locks.keys():
-                self._locks[key].sync(**kwargs)
-
-    def load_lock_section(self, serialized_lock_section: SerializedLockSection):
-        for key, lock in serialized_lock_section.items():
-            self._locks[key] = self.deserialize_lock(key, lock)
-
     @abc.abstractmethod
-    def deserialize_lock(self, lock_key: str, serialized_lock: dict) -> Lock:
+    def sync(self, parallel: bool, **kwargs):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def plug(self, **kwargs):
+    def plug(self, req_like=Any, **kwargs):
         raise NotImplementedError
     
     @abc.abstractmethod

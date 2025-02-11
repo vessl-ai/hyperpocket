@@ -1,5 +1,3 @@
-import asyncio
-
 from playwright.async_api import (
     BrowserContext,
     Page,
@@ -15,7 +13,7 @@ class InvokerBrowser(object):
 
     @classmethod
     async def async_init(cls):
-        instance = cls.__new__()
+        instance = cls()
         instance.playwright = await async_playwright().start()
         instance.browser_context = await instance.playwright.chromium.launch_persistent_context(
             headless=True,

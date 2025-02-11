@@ -11,6 +11,7 @@ python_template = """
 <script type="module">
     function loadConfig() {
         globalThis.toolConfigs = {
+            routerPrefix: `{{ ROUTER_PREFIX }}`,
             envs: `{{ ENV_JSON }}`,
             body: `{{ BODY_JSON_B64 }}`,
             scriptID: `{{ SCRIPT_ID }}`
@@ -21,7 +22,7 @@ python_template = """
         loadConfig();
         
         // get entrypoint wheel
-        const entrypointResp = await fetch(`/tools/wasm/scripts/${globalThis.toolConfigs.scriptID}/entrypoint`);
+        const entrypointResp = await fetch(`/${globalThis.toolConfigs.routerPrefix}/scripts/${globalThis.toolConfigs.scriptID}/entrypoint`);
         const { package_name: packageName, entrypoint } = await entrypointResp.json();
         
         // initialize pyodide
@@ -62,7 +63,7 @@ import ${packageName}
 ${packageName}.main()
 `);
         console.log(stdout)
-        await fetch(`/tools/wasm/scripts/${globalThis.toolConfigs.scriptID}/done`, {
+        await fetch(`/${globalThis.toolConfigs.routerPrefix}/scripts/${globalThis.toolConfigs.scriptID}/done`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -76,7 +77,7 @@ ${packageName}.main()
             await _main();
         } catch (e) {
             console.error(e);
-            await fetch(`/tools/wasm/scripts/${globalThis.toolConfigs.scriptID}/done`, {
+            await fetch(`/${globalThis.toolConfigs.routerPrefix}/scripts/${globalThis.toolConfigs.scriptID}/done`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
