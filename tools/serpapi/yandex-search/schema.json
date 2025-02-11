@@ -1,0 +1,131 @@
+{
+  "properties": {
+    "text": {
+      "description": "Search query for Yandex.",
+      "title": "Text",
+      "type": "string"
+    },
+    "yandex_domain": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "yandex.com",
+      "description": "Yandex domain to use (default: 'yandex.com').",
+      "title": "Yandex Domain"
+    },
+    "lang": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "en",
+      "description": "Language for Yandex search (default: 'en' for yandex.com). Use comma-separated values for multiple languages.",
+      "title": "Lang"
+    },
+    "lr": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Country or region ID to limit search results. Defaults to matching location of selected yandex_domain.",
+      "title": "Lr"
+    },
+    "rstr": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Enable additional filtering to include specified location in text snippets/titles.",
+      "title": "Rstr"
+    },
+    "p": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 0,
+      "description": "Page number for pagination (default: 0).",
+      "title": "P"
+    },
+    "no_cache": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Force fetching new results instead of cached results.",
+      "title": "No Cache"
+    },
+    "async": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Submit search asynchronously.",
+      "title": "Async"
+    },
+    "zero_trace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Enterprise-only: Enable ZeroTrace mode.",
+      "title": "Zero Trace"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "json",
+      "description": "Output format ('json' or 'html').",
+      "title": "Output"
+    }
+  },
+  "required": [
+    "text"
+  ],
+  "title": "YandexSearchRequest",
+  "type": "object"
+}

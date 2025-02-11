@@ -1,0 +1,6 @@
+name = "apple_app_store"
+description = "serp api apple app store search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

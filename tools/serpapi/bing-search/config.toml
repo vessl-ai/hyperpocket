@@ -1,0 +1,6 @@
+name = "bing_search"
+description = "serp api bing search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

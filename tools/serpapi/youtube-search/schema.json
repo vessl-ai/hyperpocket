@@ -1,0 +1,105 @@
+{
+  "properties": {
+    "search_query": {
+      "description": "Search query for YouTube.",
+      "title": "Search Query",
+      "type": "string"
+    },
+    "gl": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Country code for search localization (e.g., 'us', 'uk', 'fr').",
+      "title": "Gl"
+    },
+    "hl": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Language code for search localization (e.g., 'en', 'es', 'fr').",
+      "title": "Hl"
+    },
+    "sp": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Parameter for pagination or filtering search results. Accepts encoded filter values.",
+      "title": "Sp"
+    },
+    "no_cache": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Force fetching new results instead of cached results.",
+      "title": "No Cache"
+    },
+    "async": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Submit search asynchronously.",
+      "title": "Async"
+    },
+    "zero_trace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Enterprise-only: Enable ZeroTrace mode.",
+      "title": "Zero Trace"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "json",
+      "description": "Output format ('json' or 'html').",
+      "title": "Output"
+    }
+  },
+  "required": [
+    "search_query"
+  ],
+  "title": "YoutubeSearchRequest",
+  "type": "object"
+}

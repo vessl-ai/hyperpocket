@@ -1,0 +1,199 @@
+{
+  "properties": {
+    "q": {
+      "description": "Search query including all Bing search operators",
+      "title": "Q",
+      "type": "string"
+    },
+    "location": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Location to originate search from",
+      "title": "Location"
+    },
+    "lat": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "GPS latitude for search origin",
+      "title": "Lat"
+    },
+    "lon": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "GPS longitude for search origin",
+      "title": "Lon"
+    },
+    "mkt": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Market where the results come from (e.g., en-US)",
+      "title": "Mkt"
+    },
+    "cc": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Country to search from (ISO 3166-1 format, e.g., 'us', 'de', 'gb')",
+      "title": "Cc"
+    },
+    "first": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 1,
+      "description": "Offset of organic results (default: 1)",
+      "title": "First"
+    },
+    "count": {
+      "anyOf": [
+        {
+          "maximum": 50,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 10,
+      "description": "Number of results per page (default: 10, max: 50)",
+      "title": "Count"
+    },
+    "safeSearch": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "Moderate",
+      "description": "Filtering level for adult content ('Off', 'Moderate', 'Strict')",
+      "title": "Safesearch"
+    },
+    "filters": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Complex filtering options for results",
+      "title": "Filters"
+    },
+    "device": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "desktop",
+      "description": "Device type ('desktop', 'tablet', or 'mobile')",
+      "title": "Device"
+    },
+    "no_cache": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Force fetching new results instead of cached results",
+      "title": "No Cache"
+    },
+    "async": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Submit search asynchronously",
+      "title": "Async"
+    },
+    "zero_trace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Enterprise-only: Enable ZeroTrace mode",
+      "title": "Zero Trace"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "json",
+      "description": "Output format: 'json' (default) or 'html'",
+      "title": "Output"
+    }
+  },
+  "required": [
+    "q"
+  ],
+  "title": "BingSearchRequest",
+  "type": "object"
+}

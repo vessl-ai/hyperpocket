@@ -1,0 +1,255 @@
+{
+  "properties": {
+    "q": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Search query for Google Scholar. Can't be used with cluster parameter.",
+      "title": "Q"
+    },
+    "cites": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Unique ID for an article to trigger Cited By searches. Can't be used with cluster.",
+      "title": "Cites"
+    },
+    "as_ylo": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Year from which results should be included.",
+      "title": "As Ylo"
+    },
+    "as_yhi": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Year until which results should be included.",
+      "title": "As Yhi"
+    },
+    "scisbd": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 0,
+      "description": "Sort articles by date (1: Abstracts only, 2: Everything, 0: Sorted by relevance).",
+      "title": "Scisbd"
+    },
+    "cluster": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Unique ID for an article to trigger All Versions searches. Can't be used with q or cites.",
+      "title": "Cluster"
+    },
+    "hl": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "en",
+      "description": "Language code for Google Scholar search (default: 'en').",
+      "title": "Hl"
+    },
+    "lr": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Languages to limit search to (e.g., 'lang_fr|lang_de').",
+      "title": "Lr"
+    },
+    "start": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 0,
+      "description": "Result offset for pagination (default: 0).",
+      "title": "Start"
+    },
+    "num": {
+      "anyOf": [
+        {
+          "maximum": 20,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 10,
+      "description": "Maximum number of results to return (default: 10, max: 20).",
+      "title": "Num"
+    },
+    "as_sdt": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "0",
+      "description": "Search type or filter (0: Exclude patents, 7: Include patents, 4: Select case law).",
+      "title": "As Sdt"
+    },
+    "safe": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "off",
+      "description": "Filtering level for adult content ('active' or 'off').",
+      "title": "Safe"
+    },
+    "filter": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 1,
+      "description": "Enable filters for 'Similar Results' and 'Omitted Results' (1: On, 0: Off).",
+      "title": "Filter"
+    },
+    "as_vis": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 0,
+      "description": "Include citations in results (1: Exclude, 0: Include).",
+      "title": "As Vis"
+    },
+    "as_rr": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 0,
+      "description": "Show only review articles (1: Yes, 0: No).",
+      "title": "As Rr"
+    },
+    "no_cache": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Force fetching new results instead of cached results.",
+      "title": "No Cache"
+    },
+    "async": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Submit search asynchronously.",
+      "title": "Async"
+    },
+    "zero_trace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Enterprise-only: Enable ZeroTrace mode.",
+      "title": "Zero Trace"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "json",
+      "description": "Output format: 'json' (default) or 'html'.",
+      "title": "Output"
+    }
+  },
+  "title": "GoogleScholarRequest",
+  "type": "object"
+}
