@@ -4,10 +4,10 @@ from typing import ClassVar, Optional
 
 import git
 from hyperpocket.config import pocket_logger, settings
-from hyperpocket.repository import Lock
+from hyperpocket.repository import ToolReference
 
 
-class GitWasmLock(Lock):
+class WasmGitToolReference(ToolReference):
     _remote_cache: ClassVar[dict[str, dict[str, str]]]
     tool_source: str = "git"
     repository_url: str
@@ -17,8 +17,8 @@ class GitWasmLock(Lock):
     def __str__(self):
         return f"GitWasmLock(repository_url={self.repository_url}, git_ref={self.git_ref})"
 
-    def key(self) -> str:
-        return f'git#{self.repository_url.rstrip("/")}#{self.git_ref}'
+    def key(self) -> tuple[str, ...]:
+        return "git", self.repository_url, self.git_ref
 
     def toolpkg_path(self) -> pathlib.Path:
         if not self.ref_sha:

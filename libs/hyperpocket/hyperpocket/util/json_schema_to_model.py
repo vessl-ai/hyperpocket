@@ -60,13 +60,17 @@ def json_schema_to_model(
             fields["additional_properties"] = (dict[str, additional_model], {})
 
     # Create the model
-    model = create_model(model_name, **fields)
+    model = create_model(f"{model_name}", **fields)
 
     # Add custom Config class to handle extra properties
     class Config:
         extra = config_extra
 
     model.Config = Config
+    
+    # workaround for pickling dynamic classes
+    model.__module__ = "__main__"
+    model.__qualname__ = model.__name__.split('.')[-1]
 
     return model
 

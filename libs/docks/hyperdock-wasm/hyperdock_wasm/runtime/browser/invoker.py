@@ -12,9 +12,11 @@ from hyperdock_wasm.runtime.browser.templates import render
 
 
 class Invoker(object):
+    router_prefix: str
     browser: InvokerBrowser
     
-    def __init__(self, browser: InvokerBrowser):
+    def __init__(self, router_prefix: str, browser: InvokerBrowser):
+        self.router_prefix = router_prefix
         self.browser = browser
 
     def invoke(
@@ -33,16 +35,16 @@ class Invoker(object):
     async def ainvoke(
         self, tool_path: str, runtime: ScriptRuntime, body: Any, envs: dict, **kwargs
     ) -> str:
-        uid = str(uuid.uuid4())
-        html = render(runtime.value, uid, envs, json.dumps(body))
+        script_future_uid = str(uuid.uuid4())
+        html = render(runtime.value, script_future_uid, self.router_prefix, envs, json.dumps(body))
         script = Script(
-            id=uid, tool_path=tool_path, rendered_html=html, runtime=runtime
+            id=script_future_uid, tool_path=tool_path, rendered_html=html, runtime=runtime
         )
         ScriptStore.add_script(script=script)
-        future_data = FutureStore.create_future(uid=uid)
+        future_data = FutureStore.create_future(uid=script_future_uid)
         page = await self.browser.new_page()
         url = urljoin(
-            config().internal_base_url + "/", f"tools/wasm/scripts/{uid}/browse"
+            config().internal_base_url + "/", f"{self.router_prefix}/scripts/{script_future_uid}/browse"
         )
         await page.goto(url)
         stdout = await future_data.future

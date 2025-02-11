@@ -1,0 +1,29 @@
+{
+  "tool": {
+    "name": "slack_get_messages",
+    "description": "get slack messages",
+    "inputSchema": {
+      "properties": {
+        "channel": {
+          "title": "Channel",
+          "type": "string"
+        },
+        "limit": {
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "channel",
+        "limit"
+      ],
+      "title": "SlackGetMessageRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "slack",
+    "scopes": ["channels:history"]
+  }
+}

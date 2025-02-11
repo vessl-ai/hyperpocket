@@ -5,7 +5,7 @@ from typing import Callable
 from unittest import IsolatedAsyncioTestCase
 
 from hyperpocket.pocket_core import PocketCore
-from hyperpocket.repository.lock import LocalLock, GitLock
+from hyperpocket.repository.tool_reference import LocalLock, GitLock
 from hyperpocket.tool import from_func, Tool
 from hyperpocket.tool.wasm.tool import WasmToolRequest
 
