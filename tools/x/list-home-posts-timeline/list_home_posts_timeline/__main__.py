@@ -25,9 +25,7 @@ def list_home_posts(req: XListUserPostRequest):
     }
 
     try:
-        url = (
-            X_API_ENDPOINT + f"/{req.id}/timelines/reverse_chronological",
-        )  # TODO: add queryparams
+        url = f"https://api.x.com/2/users/{req.id}/timelines/reverse_chronological"  # TODO: add queryparams
 
         print(url)
         response = requests.get(
