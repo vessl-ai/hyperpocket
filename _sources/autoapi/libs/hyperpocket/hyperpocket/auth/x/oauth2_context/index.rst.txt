@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.auth.x.oauth2_context
+==================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.x.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.x.oauth2_context.XOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: XOAuth2AuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.x.context.XAuthContext`
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+
+   .. py:method:: from_x_oauth2_response(response: hyperpocket.auth.x.oauth2_schema.XOAuth2Response) -> XOAuth2AuthContext
+      :classmethod:
+
+
+

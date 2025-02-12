@@ -7,16 +7,16 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>libs.hyperpocket.hyperpocket.auth.slack.token_schema | Hyperpocket  documentation</title>
-<meta content="libs.hyperpocket.hyperpocket.auth.slack.token_schema | Hyperpocket  documentation" property="og:title"/>
-<meta content="libs.hyperpocket.hyperpocket.auth.slack.token_schema | Hyperpocket  documentation" name="twitter:title"/>
+<title>libs.hyperpocket.hyperpocket.auth.x.context | Hyperpocket  documentation</title>
+<meta content="libs.hyperpocket.hyperpocket.auth.x.context | Hyperpocket  documentation" property="og:title"/>
+<meta content="libs.hyperpocket.hyperpocket.auth.x.context | Hyperpocket  documentation" name="twitter:title"/>
 <link href="../../../../../../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../../_static/graphviz.css?v=4ae1632d" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../../search.html" rel="search" title="Search"/>
 <link href="../../../../../../../genindex.html" rel="index" title="Index"/>
-<link href="../../x/index.html" rel="next" title="libs.hyperpocket.hyperpocket.auth.x"/>
-<link href="../token_handler/index.html" rel="prev" title="libs.hyperpocket.hyperpocket.auth.slack.token_handler"/>
+<link href="../oauth2_context/index.html" rel="next" title="libs.hyperpocket.hyperpocket.auth.x.oauth2_context"/>
+<link href="../index.html" rel="prev" title="libs.hyperpocket.hyperpocket.auth.x"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -128,20 +128,17 @@
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../../../index.html">libs.hyperpocket</a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../../index.html">libs.hyperpocket.hyperpocket</a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../index.html">libs.hyperpocket.hyperpocket.auth</a>
-<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">libs.hyperpocket.hyperpocket.auth.slack</a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">libs.hyperpocket.hyperpocket.auth.slack.token_schema</span>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">libs.hyperpocket.hyperpocket.auth.x</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">libs.hyperpocket.hyperpocket.auth.x.context</span>
 </nav>
 <div id="content" role="main">
-<section id="module-libs.hyperpocket.hyperpocket.auth.slack.token_schema">
-<span id="libs-hyperpocket-hyperpocket-auth-slack-token-schema"></span><h1>libs.hyperpocket.hyperpocket.auth.slack.token_schema<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.auth.slack.token_schema" title="Link to this heading"><span>#</span></a></h1>
+<section id="module-libs.hyperpocket.hyperpocket.auth.x.context">
+<span id="libs-hyperpocket-hyperpocket-auth-x-context"></span><h1>libs.hyperpocket.hyperpocket.auth.x.context<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.auth.x.context" title="Link to this heading"><span>#</span></a></h1>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#classes'"><span>#</span></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenRequest" title="libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenRequest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SlackTokenRequest</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse" title="libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SlackTokenResponse</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext" title="libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XAuthContext</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -150,17 +147,16 @@
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#module-contents'"><span>#</span></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenRequest">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.auth.slack.token_schema.</span></span><span class="sig-name descname"><span class="pre">SlackTokenRequest</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenRequest" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenRequest'"><span>#</span></a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperpocket.auth.schema.AuthenticateRequest</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.auth.slack.token_schema.</span></span><span class="sig-name descname"><span class="pre">SlackTokenResponse</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse'"><span>#</span></a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperpocket.auth.schema.AuthenticateResponse</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse.access_token">
-<span class="sig-name descname"><span class="pre">access_token</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse.access_token" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse.access_token'"><span>#</span></a></dt>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.auth.x.context.</span></span><span class="sig-name descname"><span class="pre">XAuthContext</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext'"><span>#</span></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperpocket.auth.context.AuthContext</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext.to_dict" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext.to_dict'"><span>#</span></a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext.to_profiled_dict">
+<span class="sig-name descname"><span class="pre">to_profiled_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext.to_profiled_dict" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext.to_profiled_dict'"><span>#</span></a></dt>
 <dd></dd></dl>
 </dd></dl>
 </section>
@@ -170,9 +166,9 @@
 <ul>
 <li><a :data-current="activeSection === '#classes'" class="reference internal" href="#classes">Classes</a></li>
 <li><a :data-current="activeSection === '#module-contents'" class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenRequest'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenRequest"><code class="docutils literal notranslate"><span class="pre">SlackTokenRequest</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse"><code class="docutils literal notranslate"><span class="pre">SlackTokenResponse</span></code></a><ul>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse.access_token'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.slack.token_schema.SlackTokenResponse.access_token"><code class="docutils literal notranslate"><span class="pre">SlackTokenResponse.access_token</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext"><code class="docutils literal notranslate"><span class="pre">XAuthContext</span></code></a><ul>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext.to_dict'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext.to_dict"><code class="docutils literal notranslate"><span class="pre">XAuthContext.to_dict()</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext.to_profiled_dict'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.x.context.XAuthContext.to_profiled_dict"><code class="docutils literal notranslate"><span class="pre">XAuthContext.to_profiled_dict()</span></code></a></li>
 </ul>
 </li>
 </ul>

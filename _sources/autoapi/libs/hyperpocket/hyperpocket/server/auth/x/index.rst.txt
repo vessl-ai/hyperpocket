@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.x
+==========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.x
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.x.x_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.x.x_oauth2_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: x_auth_router
+
+.. py:function:: x_oauth2_callback(request: fastapi.Request, state: str, code: str)
+   :async:
+
+
