@@ -1,5 +1,7 @@
+import base64
+import traceback
 from typing import Optional
-from urllib.parse import urlencode, urljoin
+from urllib.parse import urlencode, urljoin, quote
 from uuid import uuid4
 
 import httpx
@@ -17,7 +19,7 @@ from hyperpocket.futures import FutureStore
 
 class XOAuth2AuthHandler(AuthHandlerInterface):
     _X_AUTH_URL = "https://x.com/i/oauth2/authorize"
-    _X_TOKEN_URL = "https://api.x.com/oauth2/token"
+    _X_TOKEN_URL = "https://api.x.com/2/oauth2/token"
 
     name: str = "x-oauth2"
     description: str = "This handler is used to authenticate users using X OAuth."
@@ -48,7 +50,7 @@ class XOAuth2AuthHandler(AuthHandlerInterface):
             config().public_base_url + "/",
             f"{config().callback_url_rewrite_prefix}/auth/x/oauth2/callback",
         )
-        code_verifier = uuid4().hex
+        code_verifier = "challenge"  # TODO: implement code_verifier
         code_challenge = code_verifier  # TODO: implement code_challenge with sha256
         auth_url = self._make_auth_url(
             auth_req, redirect_uri, future_uid, code_challenge, "plain"
@@ -73,20 +75,28 @@ class XOAuth2AuthHandler(AuthHandlerInterface):
         auth_code = await future_data.future
 
         async with httpx.AsyncClient() as client:
+            basic_token = f"{auth_req.client_id}:{auth_req.client_secret}"
+            basic_token_encoded = base64.b64encode(basic_token.encode()).decode()
             resp = await client.post(
                 url=self._X_TOKEN_URL,
                 data={
                     "code": auth_code,
-                    "client_id": auth_req.client_id,
+                    # "client_id": auth_req.client_id,
                     # "client_secret": auth_req.client_secret,
                     "redirect_uri": future_data.data["redirect_uri"],
                     "code_verifier": future_data.data["code_verifier"],
                     "grant_type": "authorization_code",
                 },
+                headers={
+                    "Authorization": f"Basic {basic_token_encoded}",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
             )
 
         if resp.status_code != 200:
-            raise Exception(f"failed to authenticate. status_code : {resp.status_code}")
+            raise Exception(
+                f"failed to authenticate. status_code : {resp.status_code}, {resp.json()}"
+            )
 
         resp_json = resp.json()
         auth_response = XOAuth2Response(**resp_json)
@@ -150,6 +160,6 @@ class XOAuth2AuthHandler(AuthHandlerInterface):
     ) -> XOAuth2Request:
         return XOAuth2Request(
             auth_scopes=auth_scopes,
-            client_id=config().auth.google.client_id,
-            client_secret=config().auth.google.client_secret,
+            client_id=config().auth.x.client_id,
+            client_secret=config().auth.x.client_secret,
         )

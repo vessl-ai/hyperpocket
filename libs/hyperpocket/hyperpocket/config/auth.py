@@ -27,11 +27,17 @@ class CalendlyAuthConfig(BaseAuthConfig):
     client_secret: str
 
 
+class XAuthConfig(BaseAuthConfig):
+    client_id: str
+    client_secret: str
+
+
 class AuthConfig(BaseModel):
     slack: Optional[SlackAuthConfig] = None
     google: Optional[GoogleAuthConfig] = None
     github: Optional[GithubAuthConfig] = None
     calendly: Optional[CalendlyAuthConfig] = None
+    x: Optional[XAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
 
 
