@@ -14,7 +14,17 @@ cd backend
 uv sync
 ```
 
-### create `.secret.toml`
+### create `.secrets.toml` in `web/backend/`
+      
+    
+    
+      
+    
+      
+    
+    
+      
+    
 ```toml
 [auth.github]
 client_id = ""
