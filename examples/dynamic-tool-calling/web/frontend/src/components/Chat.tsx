@@ -1,5 +1,5 @@
-import { useState, FormEvent, useEffect } from 'react';
-import { FaCamera, FaImage, FaEnvelope, FaSpinner, FaSlack, FaRobot, FaCheck } from 'react-icons/fa';
+import {FormEvent, useEffect, useState} from 'react';
+import {FaCamera, FaEnvelope, FaGithub, FaGoogle, FaImage, FaRobot, FaSlack, FaSpinner} from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
 
 // Types
@@ -32,12 +32,13 @@ interface Tool {
 
 // Tool Icons Mapping
 const TOOL_ICONS: Record<string, JSX.Element> = {
-  'take_a_picture': <FaCamera />,
-  'call_diffusion_model': <FaImage />,
-  'send_mail': <FaEnvelope />,
-  'get_slack_messages': <FaSlack />,
-  'post_slack_message': <FaSlack />,
-  'get_channel_members': <FaSlack />,
+  'take_a_picture': <FaCamera/>,
+  'call_diffusion_model': <FaImage/>,
+  'send_mail': <FaEnvelope/>,
+  'get_slack_messages': <FaSlack/>,
+  'post_slack_message': <FaSlack/>,
+  'slack_send_messages': <FaSlack/>,
+  'get_channel_members': <FaSlack/>,
 };
 
 interface ChatProps {
@@ -47,7 +48,7 @@ interface ChatProps {
   setToolCalls: (toolCalls: ToolCall[]) => void;
 }
 
-function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
+function Chat({messages, setMessages, toolCalls, setToolCalls}: ChatProps) {
   const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -69,11 +70,11 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
     setError('');
     setToolCalls([]);
 
-    const newMessage: Message = { text: prompt, role: 'user' };
+    const newMessage: Message = {text: prompt, role: 'user'};
     const updatedMessages = [...messages, newMessage];
     setMessages(updatedMessages);
     setPrompt('');
-    
+
     // Show typing indicator
     setIsTyping(true);
 
@@ -104,8 +105,8 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
   const sendChatRequest = async (messages: Message[]): Promise<ApiResponse> => {
     const res = await fetch('http://localhost:3001/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages }),
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({messages}),
     });
 
     if (!res.ok) {
@@ -118,13 +119,13 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
 
   // Helper Functions
   const handleChatResponse = (data: ApiResponse) => {
-    setMessages(prev => [...prev, { 
-      text: data.response, 
+    setMessages(prev => [...prev, {
+      text: data.response,
       role: 'assistant',
       thoughts: data.debug_logs || [],
       toolCalls: data.tool_calls || []
     }]);
-    
+
     // Update used tools
     if (data.tool_calls) {
       setUsedTools(prev => {
@@ -141,7 +142,19 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
   };
 
   const getToolIcon = (toolName: string) => {
-    return TOOL_ICONS[toolName] || <FaRobot />;
+    let toolIcon = TOOL_ICONS[toolName];
+    if (toolIcon !== undefined) {
+      return toolIcon
+    }
+    if (toolName.toLowerCase().includes("github")) {
+      return <FaGithub/>
+    } else if (toolName.toLowerCase().includes("slack")) {
+      return <FaSlack/>
+    } else if (toolName.toLowerCase().includes("google")) {
+      return <FaGoogle/>
+    }
+
+    return <FaRobot/>;
   };
 
   // Add a helper function to format debug logs
@@ -151,18 +164,18 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
     if (matches) {
       // Get the message part
       let message = matches[2];
-      
+
       // Remove common prefixes
       message = message
-        .replace(/\[MainProcess\(\d+\):MainThread\(\d+\)\]\s+/, '')
-        .replace(/\[pocket_logger\]\s+/, '')
-        .replace(/\[thread_id\(default\):profile\(default\)\]\s+/, '');
-      
+          .replace(/\[MainProcess\(\d+\):MainThread\(\d+\)\]\s+/, '')
+          .replace(/\[pocket_logger\]\s+/, '')
+          .replace(/\[thread_id\(default\):profile\(default\)\]\s+/, '');
+
       // Truncate if too long
       if (message.length > 100) {
         message = message.substring(0, 97) + '...';
       }
-      
+
       return message;
     }
     return log;
@@ -170,127 +183,127 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
 
   // Render Functions
   const renderMessages = () => (
-    <div className="messages-container">
-      {messages.length > 0 ? (
-        <>
-          {messages.map((message, index) => (
-            <div key={index} className={`message ${message.role}`}>
-              <div className="message-content">
-                <ReactMarkdown
-                  components={{
-                    a: ({ node, ...props }) => (
-                      <a 
-                        {...props} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                      />
-                    )
-                  }}
-                >
-                  {message.text}
-                </ReactMarkdown>
-              </div>
-              {message.role === 'assistant' && (message.thoughts?.length > 0 || message.toolCalls?.length > 0) && (
-                <div className="thought-process">
-                  {message.toolCalls && message.toolCalls.length > 0 && (
-                    <div className="thought-actions">
-                      <h4>Actions taken:</h4>
-                      <ul>
-                        {message.toolCalls.map((call, idx) => (
-                          <li key={call.id || idx}>
-                            {call.function.name.replace(/_/g, ' ')}
-                          </li>
-                        ))}
-                      </ul>
+      <div className="messages-container">
+        {messages.length > 0 ? (
+            <>
+              {messages.map((message, index) => (
+                  <div key={index} className={`message ${message.role}`}>
+                    <div className="message-content">
+                      <ReactMarkdown
+                          components={{
+                            a: ({node, ...props}) => (
+                                <a
+                                    {...props}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                />
+                            )
+                          }}
+                      >
+                        {message.text}
+                      </ReactMarkdown>
                     </div>
-                  )}
-                  {message.thoughts?.length > 0 && (
-                    <div className="thought-logs">
-                      <h4>Thought process:</h4>
-                      <pre>
+                    {message.role === 'assistant' && (message.thoughts?.length > 0 || message.toolCalls?.length > 0) && (
+                        <div className="thought-process">
+                          {message.toolCalls && message.toolCalls.length > 0 && (
+                              <div className="thought-actions">
+                                <h4>Actions taken:</h4>
+                                <ul>
+                                  {message.toolCalls.map((call, idx) => (
+                                      <li key={call.id || idx}>
+                                        {call.function.name.replace(/_/g, ' ')}
+                                      </li>
+                                  ))}
+                                </ul>
+                              </div>
+                          )}
+                          {message.thoughts?.length > 0 && (
+                              <div className="thought-logs">
+                                <h4>Thought process:</h4>
+                                <pre>
                         {message.thoughts.map((thought, idx) => (
-                          <div key={idx}>{formatDebugLog(thought)}</div>
+                            <div key={idx}>{formatDebugLog(thought)}</div>
                         ))}
                       </pre>
+                              </div>
+                          )}
+                        </div>
+                    )}
+                  </div>
+              ))}
+              {isTyping && (
+                  <div className="message assistant typing">
+                    <div className="message-content">
+                      <div className="typing-dots">
+                        <div className="typing-dot"/>
+                        <div className="typing-dot"/>
+                        <div className="typing-dot"/>
+                      </div>
                     </div>
-                  )}
-                </div>
+                  </div>
               )}
+            </>
+        ) : (
+            <div className="empty-chat">
+              Start a conversation by sending a message
             </div>
-          ))}
-          {isTyping && (
-            <div className="message assistant typing">
-              <div className="message-content">
-                <div className="typing-dots">
-                  <div className="typing-dot" />
-                  <div className="typing-dot" />
-                  <div className="typing-dot" />
-                </div>
-              </div>
-            </div>
-          )}
-        </>
-      ) : (
-        <div className="empty-chat">
-          Start a conversation by sending a message
-        </div>
-      )}
-    </div>
+        )}
+      </div>
   );
 
   const renderToolsSection = () => (
-    <div className="tools-section">
-      <span className="tools-label">Tools integrated:</span>
-      <div className="tools">
-        {tools.map((tool) => (
-          <div 
-            key={tool.name} 
-            className="tool-wrapper" 
-            data-tooltip={`${tool.name.replace(/_/g, ' ')}\n${tool.description}`}
-          >
+      <div className="tools-section">
+        <span className="tools-label">Tools integrated:</span>
+        <div className="tools">
+          {tools.map((tool) => (
+              <div
+                  key={tool.name}
+                  className="tool-wrapper"
+                  data-tooltip={`${tool.name.replace(/_/g, ' ')}\n${tool.description}`}
+              >
             <span className="tool-icon">
               {getToolIcon(tool.name)}
               <div className={`check-icon ${usedTools.has(tool.name) ? 'active' : ''}`}>
                 ✓
               </div>
             </span>
-          </div>
-        ))}
+              </div>
+          ))}
+        </div>
       </div>
-    </div>
   );
 
   return (
-    <div className="chat-wrapper">
-      <div className="chat-container">
-        {renderMessages()}
-        <form onSubmit={handleSubmit} className="prompt-form">
-          <div className="prompt-input-wrapper">
-            <input
-              type="text"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Take my photo, make it funny, and send it to me"
-              className="prompt-input"
-              disabled={loading}
-            />
-            <button type="submit" className="submit-button" disabled={loading}>
-              {loading ? <FaSpinner className="spinner" /> : 'Send'}
-            </button>
-          </div>
-        </form>
-      </div>
-      
-      {renderToolsSection()}
-
-      {loading && (
-        <div className="loading">
-          <FaSpinner className="spinner" />
-          Processing...
+      <div className="chat-wrapper">
+        <div className="chat-container">
+          {renderMessages()}
+          <form onSubmit={handleSubmit} className="prompt-form">
+            <div className="prompt-input-wrapper">
+              <input
+                  type="text"
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  placeholder="Take my photo, make it funny, and send it to me"
+                  className="prompt-input"
+                  disabled={loading}
+              />
+              <button type="submit" className="submit-button" disabled={loading}>
+                {loading ? <FaSpinner className="spinner"/> : 'Send'}
+              </button>
+            </div>
+          </form>
         </div>
-      )}
-      {error && <div className="error">{error}</div>}
-    </div>
+
+        {renderToolsSection()}
+
+        {loading && (
+            <div className="loading">
+              <FaSpinner className="spinner"/>
+              Processing...
+            </div>
+        )}
+        {error && <div className="error">{error}</div>}
+      </div>
   );
 }
 

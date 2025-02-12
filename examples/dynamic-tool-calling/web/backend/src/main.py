@@ -79,7 +79,7 @@ class AIService:
             take_a_picture.name: {"tool": take_a_picture},
             call_diffusion_model.name: {"tool": call_diffusion_model},
             get_slack_messages.name: {"tool": get_slack_messages},
-            post_slack_message.name: {"tool": post_slack_message},
+            # post_slack_message.name: {"tool": post_slack_message},
             get_channel_members.name: {"tool": get_channel_members},
             **self.custom_tools
         }
@@ -231,10 +231,10 @@ def main():
         try:
             # Create a temporary module to execute the code
             module_code = """
-    from hyperpocket.tool import function_tool
-    from hyperpocket.auth import AuthProvider
+from hyperpocket.tool import function_tool
+from hyperpocket.auth import AuthProvider
     
-    {}
+{}
         """.format(request.code)
 
             # Basic validation
