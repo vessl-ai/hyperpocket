@@ -38,7 +38,6 @@ class JiraOAuth2AuthHandler(AuthHandlerInterface):
             config().public_base_url + "/",
             f"{config().callback_url_rewrite_prefix}/auth/jira/oauth2/callback",
         )
-        print(f"redirect_uri: {redirect_uri}")
         auth_url = self._make_auth_url(req=auth_req, redirect_uri=redirect_uri, state=future_uid)
 
         FutureStore.create_future(future_uid, data={
@@ -71,7 +70,6 @@ class JiraOAuth2AuthHandler(AuthHandlerInterface):
 
     async def refresh(self, auth_req: JiraOAuth2Request, context: AuthContext, *args, **kwargs) -> AuthContext:
         jira_context: JiraOAuth2AuthContext = context
-        last_oauth2_resp: JiraOAuth2Response = jira_context.detail
         refresh_token = jira_context.refresh_token
 
         async with httpx.AsyncClient() as client:
@@ -100,7 +98,7 @@ class JiraOAuth2AuthHandler(AuthHandlerInterface):
         params = {
             "audience": "api.atlassian.com",
             "client_id": req.client_id,
-            "user_scope": ' '.join(req.auth_scopes),
+            "scope": ' '.join(req.auth_scopes),
             "redirect_uri": redirect_uri,
             "state": state,
             "response_code": "code",

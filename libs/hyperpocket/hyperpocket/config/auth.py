@@ -35,6 +35,9 @@ class JiraAuthConfig(BaseAuthConfig):
     client_id: str
     client_secret: str
 
+class HubspotAuthConfig(BaseAuthConfig):
+    client_id: str
+    client_secret: str
 
 class AuthConfig(BaseModel):
     slack: Optional[SlackAuthConfig] = None
@@ -43,6 +46,7 @@ class AuthConfig(BaseModel):
     calendly: Optional[CalendlyAuthConfig] = None
     x: Optional[XAuthConfig] = None
     jira: Optional[JiraAuthConfig] = None
+    hubspot: Optional[HubspotAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
 
 
