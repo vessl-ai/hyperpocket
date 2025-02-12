@@ -15,16 +15,7 @@ uv sync
 ```
 
 ### create `.secrets.toml` in `web/backend/`
-      
-    
-    
-      
-    
-      
-    
-    
-      
-    
+
 ```toml
 [auth.github]
 client_id = ""
@@ -58,5 +49,7 @@ uv run ./start.sh
 ### run frontend
 ```shell
 cd ../frontend
+yarn add -D @vitejs/plugin-react
+yarn add react-syntax-highlighter
 vite
 ```
