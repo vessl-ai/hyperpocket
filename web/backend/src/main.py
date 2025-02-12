@@ -31,6 +31,13 @@ class ChatResponse(BaseModel):
     response: str = Field(..., description="AI response")
     tool_calls: Optional[List[Dict]] = Field(None, description="Tool calls made during processing")
 
+class AddToolRequest(BaseModel):
+    code: str = Field(..., description="Python code for the new tool")
+
+class AddToolResponse(BaseModel):
+    name: str = Field(..., description="Name of the added tool")
+    message: str = Field(..., description="Success message")
+
 class AIService:
     def __init__(self):
         self.pocket = None
@@ -148,6 +155,59 @@ async def chat(request: ChatRequest):
         raise HTTPException(
             status_code=500,
             detail=f"Internal server error: {str(e)}"
+        )
+
+@app.post("/api/tools/add", response_model=AddToolResponse)
+async def add_tool(request: AddToolRequest):
+    """
+    Add a new custom tool from provided Python code.
+    
+    Args:
+        request: AddToolRequest containing the tool code
+        
+    Returns:
+        AddToolResponse with tool name and success message
+    """
+    try:
+        # Create a temporary module to execute the code
+        module_code = request.code
+        
+        # Basic validation
+        if "@function_tool" not in module_code:
+            raise ValueError("Tool must be decorated with @function_tool")
+        
+        # Execute the code in a new namespace
+        namespace = {}
+        exec(module_code, namespace)
+        
+        # Find the function decorated with @function_tool
+        tool_function = None
+        for item in namespace.values():
+            if callable(item) and hasattr(item, "_is_tool"):
+                tool_function = item
+                break
+                
+        if not tool_function:
+            raise ValueError("No function_tool found in the code")
+            
+        # Get the function name
+        tool_name = tool_function.__name__
+        
+        # Add to tools dictionary
+        ai_service.tools[tool_name] = {"tool": tool_function}
+        
+        # Reinitialize the service to update tools
+        ai_service.initialize()
+        
+        return AddToolResponse(
+            name=tool_name,
+            message=f"Successfully added tool: {tool_name}"
+        )
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Failed to add tool: {str(e)}"
         )
 
 if __name__ == "__main__":
