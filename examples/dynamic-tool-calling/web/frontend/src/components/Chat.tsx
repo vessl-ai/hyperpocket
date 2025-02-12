@@ -176,7 +176,17 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
           {messages.map((message, index) => (
             <div key={index} className={`message ${message.role}`}>
               <div className="message-content">
-                <ReactMarkdown>
+                <ReactMarkdown
+                  components={{
+                    a: ({ node, ...props }) => (
+                      <a 
+                        {...props} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      />
+                    )
+                  }}
+                >
                   {message.text}
                 </ReactMarkdown>
               </div>

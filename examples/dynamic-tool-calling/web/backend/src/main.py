@@ -1,12 +1,13 @@
 import inspect
+import logging
 import os
+from io import StringIO
 from typing import Dict, List, Optional
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from openai import OpenAI
-from openai.types.chat import ChatCompletionMessageToolCall
 from pydantic import BaseModel, Field
 
 from hyperpocket.tool.function import FunctionTool
@@ -15,12 +16,6 @@ from src.tools import (
     send_mail, take_a_picture, call_diffusion_model,
     get_slack_messages, post_slack_message, get_channel_members
 )
-import os
-from typing import Dict, List, Optional
-import inspect
-import logging
-from io import StringIO
-import sys
 
 # Load environment variables
 load_dotenv()
@@ -35,6 +30,7 @@ ALLOWED_ORIGINS = [
 debug_logger = logging.getLogger('pocket_logger')
 debug_logger.setLevel(logging.DEBUG)
 
+
 class Message(BaseModel):
     text: str = Field(..., description="Message text")
 
@@ -47,6 +43,7 @@ class ChatResponse(BaseModel):
     response: str = Field(..., description="AI response")
     tool_calls: Optional[List[Dict]] = Field(None, description="Tool calls made during processing")
     debug_logs: List[str] = Field(default_factory=list, description="Debug logs from processing")
+
 
 class AddToolRequest(BaseModel):
     code: str = Field(..., description="Python code for the new tool")
@@ -132,7 +129,7 @@ class AIService:
 
     async def process_chat(self, messages: List[Message]) -> ChatResponse:
         """Process chat request and return response with debug logs."""
-        
+
         with self.LogCapture() as log_capture:
             # Convert messages to OpenAI format
             openai_messages = []
@@ -169,7 +166,7 @@ class AIService:
                         }
                         for tc in response.choices[0].message.tool_calls
                     ]
-                    
+
                     for tool_call in response.choices[0].message.tool_calls:
                         tool_message = await self.pocket.ainvoke(tool_call)
                         openai_messages.append(tool_message)
@@ -201,15 +198,15 @@ def main():
     # Initialize AI service
     ai_service = AIService()
 
-@app.post("/api/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
-    """Process chat request and return AI response with debug logs."""
-    try:
-        if not request.messages:
-            raise HTTPException(
-                status_code=400, 
-                detail="Messages array is required"
-            )
+    @app.post("/api/chat", response_model=ChatResponse)
+    async def chat(request: ChatRequest):
+        """Process chat request and return AI response with debug logs."""
+        try:
+            if not request.messages:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Messages array is required"
+                )
 
             return await ai_service.process_chat(request.messages)
 
@@ -234,11 +231,11 @@ async def chat(request: ChatRequest):
         try:
             # Create a temporary module to execute the code
             module_code = """
-from hyperpocket.tool import function_tool
-from hyperpocket.auth import AuthProvider
-
-{}
-    """.format(request.code)
+    from hyperpocket.tool import function_tool
+    from hyperpocket.auth import AuthProvider
+    
+    {}
+        """.format(request.code)
 
             # Basic validation
             if "@function_tool" not in module_code:
@@ -420,36 +417,36 @@ from hyperpocket.auth import AuthProvider
         try:
             messages = [
                 {"role": "system", "content": """You are a Python code generator. Generate code for a tool function that follows these rules:
-    1. Must use the @function_tool decorator (no need to import it)
-    2. Must have a clear docstring with Args section
-    3. Must have type hints for all parameters and return value
-    4. Must be a single function
-    5. Must be production-ready code (not just example code, but actual production code. use official sdk if available)
-    6. If the tool requires authentication:
-       - Use auth_provider parameter in @function_tool decorator
-       - The auth token will be automatically provided as a keyword argument
-       - Do not manually handle authentication in the function
-       
-    Available auth providers and their token names (also no need to import AuthProvider):
-    - Slack: auth_provider=AuthProvider.SLACK (token provided as SLACK_BOT_TOKEN)
-    - Gmail: auth_provider=AuthProvider.GOOGLE (token provided as SLACK_BOT_TOKEN)
-    - GitHub: auth_provider=AuthProvider.GITHUB (token provided as GITHUB_TOKEN)
-    - Notion: auth_provider=AuthProvider.NOTION (token provided as NOTION_TOKEN)
-    - And many more...
-    
-    Example:
-    @function_tool(auth_provider=AuthProvider.SLACK)
-    def post_message(channel: str, message: str, **kwargs) -> str:
-        '''Post a message to Slack channel
+        1. Must use the @function_tool decorator (no need to import it)
+        2. Must have a clear docstring with Args section
+        3. Must have type hints for all parameters and return value
+        4. Must be a single function
+        5. Must be production-ready code (not just example code, but actual production code. use official sdk if available)
+        6. If the tool requires authentication:
+           - Use auth_provider parameter in @function_tool decorator
+           - The auth token will be automatically provided as a keyword argument
+           - Do not manually handle authentication in the function
+           
+        Available auth providers and their token names (also no need to import AuthProvider):
+        - Slack: auth_provider=AuthProvider.SLACK (token provided as SLACK_BOT_TOKEN)
+        - Gmail: auth_provider=AuthProvider.GOOGLE (token provided as SLACK_BOT_TOKEN)
+        - GitHub: auth_provider=AuthProvider.GITHUB (token provided as GITHUB_TOKEN)
+        - Notion: auth_provider=AuthProvider.NOTION (token provided as NOTION_TOKEN)
+        - And many more...
         
-        Args:
-            channel: The channel to post to
-            message: The message to post
-            SLACK_BOT_TOKEN: Automatically provided by the auth provider
-        '''
-        SLACK_BOT_TOKEN = kwargs["SLACK_BOT_TOKEN"]
-        ...
-    """},
+        Example:
+        @function_tool(auth_provider=AuthProvider.SLACK)
+        def post_message(channel: str, message: str, **kwargs) -> str:
+            '''Post a message to Slack channel
+            
+            Args:
+                channel: The channel to post to
+                message: The message to post
+                SLACK_BOT_TOKEN: Automatically provided by the auth provider
+            '''
+            SLACK_BOT_TOKEN = kwargs["SLACK_BOT_TOKEN"]
+            ...
+        """},
                 {"role": "user",
                  "content": f"Generate only the Python code without any markdown or additional text for: {request.prompt}"}
             ]
@@ -489,6 +486,7 @@ from hyperpocket.auth import AuthProvider
             )
 
     import uvicorn
+
     uvicorn.run(
         app,
         host="0.0.0.0",
