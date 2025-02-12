@@ -1,4 +1,4 @@
-name = "x_list_home_posts"
+name = "x_user_lookup_me"
 description = "list x home posts in user timeline"
 language = "python"
 
