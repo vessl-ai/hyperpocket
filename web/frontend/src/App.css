@@ -660,4 +660,29 @@ body {
 
 .view-code-button:hover {
   background: #e5e7eb;
+}
+
+.tool-badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tool-badge.custom {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.tool-badge.builtin {
+  background-color: #6b7280;
+  color: white;
+}
+
+.registered-tool-item h3 {
+  display: flex;
+  align-items: center;
 } 

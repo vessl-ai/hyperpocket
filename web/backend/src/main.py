@@ -13,6 +13,7 @@ from src.tools import (
 import os
 from typing import Dict, List, Optional
 import inspect
+from src import tools as tools_module
 
 # Load environment variables
 load_dotenv()
@@ -71,10 +72,13 @@ class AIService:
         self.tool_specs = self.pocket.get_open_ai_tool_specs()
         self.llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-    def add_tool(self, name: str, tool_function: callable):
+    def add_tool(self, name: str, tool_function: callable, code: str = None):
         """Add a new tool to the service."""
-        self.custom_tools[name] = {"tool": tool_function}
-        self.initialize()  # Reinitialize with the new tool
+        self.custom_tools[name] = {
+            "tool": tool_function,
+            "code": code  # Store the original code
+        }
+        self.initialize()
 
     async def process_chat(self, messages: List[Message]) -> ChatResponse:
         """
@@ -210,7 +214,7 @@ from hyperpocket.auth import AuthProvider
             raise ValueError("No function_tool found in the code. Make sure you're using the @function_tool decorator.")
             
         # Add the tool using the new method
-        ai_service.add_tool(function_name, tool_function)
+        ai_service.add_tool(function_name, tool_function, request.code)
         
         return AddToolResponse(
             name=function_name,
@@ -230,12 +234,10 @@ async def get_tools():
         tools_info = []
         for name, tool_data in ai_service.tools.items():
             tool = tool_data["tool"]
-            # Get the original function from the FunctionTool instance
             func = tool.func if isinstance(tool, FunctionTool) else tool
             
             # Get docstring
             docstring = func.__doc__ or "No description available"
-            # Clean up docstring
             docstring = inspect.cleandoc(docstring)
             
             # Split docstring into description and args sections
@@ -243,39 +245,21 @@ async def get_tools():
             description = parts[0].strip()
             args_section = parts[1].strip() if len(parts) > 1 else ""
             
-            # Parse args section into a dict
-            param_descriptions = {}
-            if args_section:
-                current_param = None
-                current_desc = []
-                
-                for line in args_section.split("\n"):
-                    line = line.strip()
-                    if not line:
-                        continue
-                        
-                    if ":" in line and not line.startswith(" "):
-                        # Save previous parameter
-                        if current_param:
-                            param_descriptions[current_param] = " ".join(current_desc).strip()
-                        
-                        # Start new parameter
-                        param_name, desc = line.split(":", 1)
-                        current_param = param_name.strip()
-                        current_desc = [desc.strip()]
-                    else:
-                        # Continue previous parameter description
-                        if current_param:
-                            current_desc.append(line)
-                
-                # Save last parameter
-                if current_param:
-                    param_descriptions[current_param] = " ".join(current_desc).strip()
+            # Check if tool is custom by checking if it's in custom_tools
+            is_custom = name in ai_service.custom_tools
+            
+            # Check if tool is built-in by checking if it's one of the imported tools
+            builtin_tools = [
+                send_mail, take_a_picture, call_diffusion_model,
+                get_slack_messages, post_slack_message, get_channel_members
+            ]
+            is_builtin = tool_data["tool"] in builtin_tools
             
             tool_info = {
                 "name": name,
                 "description": description,
-                "parameters": []
+                "parameters": [],
+                "isCustom": not is_builtin  # Custom if it's not a built-in tool
             }
             
             # Get parameters from function signature
@@ -284,8 +268,8 @@ async def get_tools():
                     if param_name != "return":
                         param_info = {
                             "name": param_name,
-                            "type": str(param_type).replace("typing.", ""),  # Clean up type string
-                            "description": param_descriptions.get(param_name, ""),
+                            "type": str(param_type).replace("typing.", ""),
+                            "description": args_section.split("\n")[0].strip() if param_name in args_section else "",
                             "required": True
                         }
                         tool_info["parameters"].append(param_info)
@@ -313,15 +297,22 @@ async def get_tool_code(tool_name: str):
             )
             
         tool = tool_data["tool"]
-        func = tool.func if isinstance(tool, FunctionTool) else tool
         
-        # Get the source code
-        import inspect
+        # For custom tools, return the original code used to create the tool
+        if tool_name in ai_service.custom_tools:
+            return {"code": ai_service.custom_tools[tool_name]["code"]}
+        
+        # For built-in tools, get the source from the original function
+        if isinstance(tool, FunctionTool):
+            func = tool.func
+        else:
+            func = tool
+            
         code = inspect.getsource(func)
-        
         return {"code": code}
         
     except Exception as e:
+        print(f"Error getting tool code: {str(e)}")
         raise HTTPException(
             status_code=500,
             detail=f"Failed to get tool code: {str(e)}"

@@ -20,6 +20,7 @@ interface RegisteredTool {
     description?: string;
     required?: boolean;
   }[];
+  isCustom?: boolean;
 }
 
 interface ToolCode {
@@ -54,7 +55,15 @@ function CustomTools() {
         throw new Error('Failed to fetch tools');
       }
       const data = await res.json();
-      setRegisteredTools(data.tools);
+      
+      // Sort tools - custom tools first
+      const sortedTools = [...data.tools].sort((a: RegisteredTool, b: RegisteredTool) => {
+        if (a.isCustom && !b.isCustom) return -1;
+        if (!a.isCustom && b.isCustom) return 1;
+        return 0;
+      });
+      
+      setRegisteredTools(sortedTools);
     } catch (error) {
       console.error('Error fetching tools:', error);
     }
@@ -150,7 +159,12 @@ function CustomTools() {
                 onClick={() => toggleTool(tool.name)}
               >
                 {expandedTools[tool.name] ? <FaChevronDown /> : <FaChevronRight />}
-                <h3>{tool.name}</h3>
+                <h3>
+                  {tool.name}
+                  <span className={`tool-badge ${tool.isCustom ? 'custom' : 'builtin'}`}>
+                    {tool.isCustom ? 'Custom' : 'Built-in'}
+                  </span>
+                </h3>
                 <button 
                   className="view-code-button"
                   onClick={(e) => {
