@@ -36,7 +36,7 @@ def list_home_posts(req: XListUserPostRequest):
         )
 
         return response.json()
-    except requests.exceptions.RequestException as e:
+    except Exception as e:
         traceback.print_exc()
         return {
             "error": str(e),
