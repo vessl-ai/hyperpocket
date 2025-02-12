@@ -1,6 +1,6 @@
 [project]
 name = "hyperpocket-crewai"
-version = "0.3.1"
+version = "0.3.3"
 description = ""
 readme = "README.md"
 requires-python = ">=3.10"
