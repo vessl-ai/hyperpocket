@@ -30,7 +30,7 @@ def user_lookup_me(req: XUserLookupMeRequest):
         url_with_query += f"?user.fields={','.join(req.user_fields)}"
 
     try:
-        response = requests.post(
+        response = requests.get(
             X_API_ENDPOINT,
             headers=headers,
         )

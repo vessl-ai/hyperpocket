@@ -1,5 +1,5 @@
 [project]
-name = "list-home-posts-timeline"
+name = "user-lookup-me"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
