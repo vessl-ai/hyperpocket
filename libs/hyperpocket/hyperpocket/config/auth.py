@@ -6,38 +6,38 @@ from pydantic import BaseModel, Field
 class BaseAuthConfig(BaseModel):
     use_recommended_scope: bool = Field(default=True)
 
-
-class SlackAuthConfig(BaseAuthConfig):
+class OAuth2AuthConfig(BaseAuthConfig):
     client_id: str
     client_secret: str
 
 
-class GoogleAuthConfig(BaseAuthConfig):
-    client_id: str
-    client_secret: str
+class SlackAuthConfig(OAuth2AuthConfig):
+    pass
 
 
-class GithubAuthConfig(BaseAuthConfig):
-    client_id: str
-    client_secret: str
+class GoogleAuthConfig(OAuth2AuthConfig):
+    pass
 
 
-class CalendlyAuthConfig(BaseAuthConfig):
-    client_id: str
-    client_secret: str
+class GithubAuthConfig(OAuth2AuthConfig):
+    pass
 
 
-class XAuthConfig(BaseAuthConfig):
-    client_id: str
-    client_secret: str
+class CalendlyAuthConfig(OAuth2AuthConfig):
+    pass
 
-class JiraAuthConfig(BaseAuthConfig):
-    client_id: str
-    client_secret: str
 
-class HubspotAuthConfig(BaseAuthConfig):
-    client_id: str
-    client_secret: str
+class XAuthConfig(OAuth2AuthConfig):
+    pass
+
+class JiraAuthConfig(OAuth2AuthConfig):
+    pass
+
+class HubspotAuthConfig(OAuth2AuthConfig):
+    pass
+
+class DiscordAuthConfig(OAuth2AuthConfig):
+    pass
 
 class AuthConfig(BaseModel):
     slack: Optional[SlackAuthConfig] = None
@@ -47,6 +47,7 @@ class AuthConfig(BaseModel):
     x: Optional[XAuthConfig] = None
     jira: Optional[JiraAuthConfig] = None
     hubspot: Optional[HubspotAuthConfig] = None
+    discord: Optional[DiscordAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
 
 

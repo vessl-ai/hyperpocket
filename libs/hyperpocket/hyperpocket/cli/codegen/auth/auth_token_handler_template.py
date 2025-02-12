@@ -2,7 +2,7 @@ from jinja2 import Template
 
 
 def get_auth_token_handler_template() -> Template:
-    return Template("""
+    return Template("""\
 from typing import Optional
 from urllib.parse import urljoin, urlencode
 
