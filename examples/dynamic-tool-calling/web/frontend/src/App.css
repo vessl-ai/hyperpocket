@@ -331,6 +331,7 @@ body {
   flex: 1;
   background: var(--color-background-default);
   padding: var(--space-4);
+  overflow: hidden;  /* Contain scrolling */
 }
 
 .messages-container {
@@ -343,6 +344,8 @@ body {
   padding: var(--space-4);
   margin-bottom: var(--space-4);
   overflow-y: auto;
+  position: relative;
+  z-index: 0;
 }
 
 /* Empty chat state */
@@ -1083,4 +1086,133 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Assistant message with thought process */
+.message.assistant {
+  position: relative;
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  z-index: 1;
+}
+
+.message-content {
+  flex: 1;
+  min-width: 0;
+  position: relative;  /* For positioning the indicator */
+}
+
+/* Thought process tooltip */
+.thought-process {
+  position: absolute;
+  left: calc(100% + var(--space-4));
+  top: 0;
+  width: 240px;  /* Reduced width */
+  padding: var(--space-3);
+  background: var(--color-background-highest);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  font-size: 11px;  /* Smaller font */
+  color: var(--color-text-secondary);
+  opacity: 0;
+  visibility: hidden;
+  max-height: 200px;  /* Reduced max height */
+  overflow-y: auto;
+  box-shadow: var(--shadow-medium);
+  z-index: 2;
+  transition: all 0.2s ease;
+}
+
+/* Sections in tooltip */
+.thought-actions,
+.thought-logs {
+  padding-bottom: var(--space-2);
+}
+
+.thought-actions:not(:last-child) {
+  border-bottom: 1px solid var(--color-border-default);
+  margin-bottom: var(--space-2);
+}
+
+.thought-process h4 {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-default);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.thought-actions ul {
+  margin: 0;
+  padding-left: var(--space-4);
+}
+
+.thought-actions li {
+  margin: var(--space-1) 0;
+  color: var(--color-text-secondary);
+}
+
+.thought-logs pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;  /* Changed from break-all for better readability */
+  font-family: 'SF Mono', monospace;
+  font-size: 10px;  /* Smaller font for logs */
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+}
+
+.thought-logs pre > div {
+  margin-bottom: var(--space-1);
+}
+
+.thought-logs pre > div:last-child {
+  margin-bottom: 0;
+}
+
+/* Add hover indicator */
+.message.assistant .message-content::after {
+  content: '💭';
+  position: absolute;
+  right: -24px;  /* Position to the right of content */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.message.assistant:hover .message-content::after {
+  opacity: 1;
+}
+
+/* Show tooltip on hover */
+.message.assistant:hover .thought-process {
+  opacity: 0.9;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* Scrollbar styling for thought process */
+.thought-process::-webkit-scrollbar {
+  width: 6px;
+}
+
+.thought-process::-webkit-scrollbar-track {
+  background: var(--color-background-default);
+  border-radius: 3px;
+}
+
+.thought-process::-webkit-scrollbar-thumb {
+  background: var(--color-surface-primary);
+  border-radius: 3px;
+}
+
+/* Ensure messages don't overflow container */
+.messages-container {
+  overflow: visible;  /* Allow tooltips to show outside */
+}
+
+.chat-container {
+  overflow: hidden;  /* Contain scrolling */
 } 

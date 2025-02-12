@@ -15,6 +15,12 @@ from src.tools import (
     send_mail, take_a_picture, call_diffusion_model,
     get_slack_messages, post_slack_message, get_channel_members
 )
+import os
+from typing import Dict, List, Optional
+import inspect
+import logging
+from io import StringIO
+import sys
 
 # Load environment variables
 load_dotenv()
@@ -25,6 +31,9 @@ ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React dev server
 ]
 
+# Add debug logger
+debug_logger = logging.getLogger('pocket_logger')
+debug_logger.setLevel(logging.DEBUG)
 
 class Message(BaseModel):
     text: str = Field(..., description="Message text")
@@ -37,7 +46,7 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str = Field(..., description="AI response")
     tool_calls: Optional[List[Dict]] = Field(None, description="Tool calls made during processing")
-
+    debug_logs: List[str] = Field(default_factory=list, description="Debug logs from processing")
 
 class AddToolRequest(BaseModel):
     code: str = Field(..., description="Python code for the new tool")
@@ -101,47 +110,75 @@ class AIService:
             self.github_tools.append(url)
             self.initialize()
 
+    class LogCapture:
+        def __init__(self):
+            self.log_stream = StringIO()
+            self.handler = logging.StreamHandler(self.log_stream)
+            self.handler.setLevel(logging.DEBUG)
+            formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+            self.handler.setFormatter(formatter)
+
+        def __enter__(self):
+            debug_logger.addHandler(self.handler)
+            return self
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            debug_logger.removeHandler(self.handler)
+            self.handler.close()
+
+        def get_logs(self) -> List[str]:
+            logs = self.log_stream.getvalue().strip().split('\n')
+            return [log for log in logs if log]  # Filter out empty lines
+
     async def process_chat(self, messages: List[Message]) -> ChatResponse:
-        """
-        Process chat request and return response.
+        """Process chat request and return response with debug logs."""
         
-        Args:
-            messages: List of message texts
-            
-        Returns:
-            ChatResponse object containing AI response and tool calls
-        """
-        # Convert messages to OpenAI format
-        openai_messages = []
-        for i, msg in enumerate(messages):
-            role = "user" if i % 2 == 0 else "assistant"
-            openai_messages.append({
-                "role": role,
-                "content": msg.text
-            })
+        with self.LogCapture() as log_capture:
+            # Convert messages to OpenAI format
+            openai_messages = []
+            for i, msg in enumerate(messages):
+                role = "user" if i % 2 == 0 else "assistant"
+                openai_messages.append({
+                    "role": role,
+                    "content": msg.text
+                })
 
-        while True:
-            response = self.llm.chat.completions.create(
-                model=MODEL_NAME,
-                messages=openai_messages,
-                tools=self.tool_specs,
+            tool_calls = []
+            while True:
+                response = self.llm.chat.completions.create(
+                    model=MODEL_NAME,
+                    messages=openai_messages,
+                    tools=self.tool_specs,
+                )
+                choice = response.choices[0]
+                openai_messages.append(choice.message)
+
+                if choice.finish_reason == "stop":
+                    break
+
+                elif response.choices[0].finish_reason == "tool_calls":
+                    # Convert tool calls to dictionaries
+                    tool_calls = [
+                        {
+                            "id": tc.id,
+                            "type": tc.type,
+                            "function": {
+                                "name": tc.function.name,
+                                "arguments": tc.function.arguments
+                            }
+                        }
+                        for tc in response.choices[0].message.tool_calls
+                    ]
+                    
+                    for tool_call in response.choices[0].message.tool_calls:
+                        tool_message = await self.pocket.ainvoke(tool_call)
+                        openai_messages.append(tool_message)
+
+            return ChatResponse(
+                response=response.choices[0].message.content,
+                tool_calls=tool_calls,
+                debug_logs=log_capture.get_logs()
             )
-            choice = response.choices[0]
-            openai_messages.append(choice.message)
-
-            if choice.finish_reason == "stop":
-                break
-
-            elif response.choices[0].finish_reason == "tool_calls":
-                tool_calls: List[ChatCompletionMessageToolCall] = response.choices[0].message.tool_calls
-                for tool_call in tool_calls:
-                    tool_message = await self.pocket.ainvoke(tool_call)
-                    openai_messages.append(tool_message)
-
-        return ChatResponse(
-            response=response.choices[0].message.content,
-            tool_calls=response.choices[0].message.tool_calls
-        )
 
 
 def main():
@@ -164,26 +201,15 @@ def main():
     # Initialize AI service
     ai_service = AIService()
 
-    @app.post("/api/chat", response_model=ChatResponse)
-    async def chat(request: ChatRequest):
-        """
-        Process chat request and return AI response.
-
-        Args:
-            request: ChatRequest object containing chat history
-
-        Returns:
-            ChatResponse object containing AI response and tool calls
-
-        Raises:
-            HTTPException: If messages array is empty
-        """
-        try:
-            if not request.messages:
-                raise HTTPException(
-                    status_code=400,
-                    detail="Messages array is required"
-                )
+@app.post("/api/chat", response_model=ChatResponse)
+async def chat(request: ChatRequest):
+    """Process chat request and return AI response with debug logs."""
+    try:
+        if not request.messages:
+            raise HTTPException(
+                status_code=400, 
+                detail="Messages array is required"
+            )
 
             return await ai_service.process_chat(request.messages)
 

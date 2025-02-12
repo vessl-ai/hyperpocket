@@ -6,6 +6,8 @@ import ReactMarkdown from 'react-markdown';
 interface Message {
   text: string;
   role?: 'user' | 'assistant';
+  thoughts?: string[];  // Add thoughts array to store debug logs
+  toolCalls?: ToolCall[];  // Add tool calls to each message
 }
 
 interface ToolCall {
@@ -20,6 +22,7 @@ interface ToolCall {
 interface ApiResponse {
   response: string;
   tool_calls?: ToolCall[];
+  debug_logs?: string[];  // Add debug_logs field to store debug logs
 }
 
 interface Tool {
@@ -50,6 +53,7 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
   const [error, setError] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [tools, setTools] = useState<Tool[]>([]);
+  const [usedTools, setUsedTools] = useState<Set<string>>(new Set());  // Track used tools
 
   // Effects
   useEffect(() => {
@@ -114,8 +118,21 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
 
   // Helper Functions
   const handleChatResponse = (data: ApiResponse) => {
-    setMessages(prev => [...prev, { text: data.response, role: 'assistant' }]);
-    if (data.tool_calls) setToolCalls(data.tool_calls);
+    setMessages(prev => [...prev, { 
+      text: data.response, 
+      role: 'assistant',
+      thoughts: data.debug_logs || [],
+      toolCalls: data.tool_calls || []
+    }]);
+    
+    // Update used tools
+    if (data.tool_calls) {
+      setUsedTools(prev => {
+        const newSet = new Set(prev);
+        data.tool_calls?.forEach(call => newSet.add(call.function.name));
+        return newSet;
+      });
+    }
   };
 
   const handleError = (error: unknown) => {
@@ -125,6 +142,30 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
 
   const getToolIcon = (toolName: string) => {
     return TOOL_ICONS[toolName] || <FaRobot />;
+  };
+
+  // Add a helper function to format debug logs
+  const formatDebugLog = (log: string): string => {
+    // Remove timestamp and log level
+    const matches = log.match(/\[(DEBUG|INFO|WARNING|ERROR)\]\s+(.+)$/);
+    if (matches) {
+      // Get the message part
+      let message = matches[2];
+      
+      // Remove common prefixes
+      message = message
+        .replace(/\[MainProcess\(\d+\):MainThread\(\d+\)\]\s+/, '')
+        .replace(/\[pocket_logger\]\s+/, '')
+        .replace(/\[thread_id\(default\):profile\(default\)\]\s+/, '');
+      
+      // Truncate if too long
+      if (message.length > 100) {
+        message = message.substring(0, 97) + '...';
+      }
+      
+      return message;
+    }
+    return log;
   };
 
   // Render Functions
@@ -139,16 +180,30 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
                   {message.text}
                 </ReactMarkdown>
               </div>
-              {message.role === 'assistant' && toolCalls.length > 0 && (
-                <div className="tool-calls">
-                  <h4>Actions taken:</h4>
-                  <ul>
-                    {toolCalls.map((call, idx) => (
-                      <li key={call.id || idx}>
-                        {call.function.name.replace(/_/g, ' ')}
-                      </li>
-                    ))}
-                  </ul>
+              {message.role === 'assistant' && (message.thoughts?.length > 0 || message.toolCalls?.length > 0) && (
+                <div className="thought-process">
+                  {message.toolCalls && message.toolCalls.length > 0 && (
+                    <div className="thought-actions">
+                      <h4>Actions taken:</h4>
+                      <ul>
+                        {message.toolCalls.map((call, idx) => (
+                          <li key={call.id || idx}>
+                            {call.function.name.replace(/_/g, ' ')}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {message.thoughts?.length > 0 && (
+                    <div className="thought-logs">
+                      <h4>Thought process:</h4>
+                      <pre>
+                        {message.thoughts.map((thought, idx) => (
+                          <div key={idx}>{formatDebugLog(thought)}</div>
+                        ))}
+                      </pre>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -185,7 +240,7 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
           >
             <span className="tool-icon">
               {getToolIcon(tool.name)}
-              <div className={`check-icon ${toolCalls.some(call => call.function.name === tool.name) ? 'active' : ''}`}>
+              <div className={`check-icon ${usedTools.has(tool.name) ? 'active' : ''}`}>
                 ✓
               </div>
             </span>
