@@ -170,7 +170,12 @@ async def add_tool(request: AddToolRequest):
     """
     try:
         # Create a temporary module to execute the code
-        module_code = request.code
+        module_code = """
+from hyperpocket.tool import function_tool
+from hyperpocket.auth import AuthProvider
+
+{}
+""".format(request.code)
         
         # Basic validation
         if "@function_tool" not in module_code:
@@ -183,7 +188,7 @@ async def add_tool(request: AddToolRequest):
         # Find the function decorated with @function_tool
         tool_function = None
         for item in namespace.values():
-            if callable(item) and hasattr(item, "_is_tool"):
+            if callable(item):
                 tool_function = item
                 break
                 
