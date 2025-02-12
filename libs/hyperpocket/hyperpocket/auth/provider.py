@@ -10,6 +10,7 @@ class AuthProvider(Enum):
     NOTION = "notion"
     REDDIT = "reddit"
     GUMLOOP = "gumloop"
+    X = "x"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":
