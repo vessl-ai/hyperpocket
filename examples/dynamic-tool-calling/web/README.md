@@ -49,7 +49,6 @@ uv run ./start.sh
 ### run frontend
 ```shell
 cd ../frontend
-yarn add -D @vitejs/plugin-react
-yarn add react-syntax-highlighter
+npm install
 vite
 ```
