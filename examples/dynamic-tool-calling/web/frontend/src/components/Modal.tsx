@@ -15,9 +15,9 @@ function Modal({ isOpen, onClose, title, children }: ModalProps) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
-          <h3>{title}</h3>
+          <h2>{title.replace(' Source Code', '')}</h2>
           <button className="modal-close" onClick={onClose}>
-            <FaTimes />
+            ✕
           </button>
         </div>
         <div className="modal-body">

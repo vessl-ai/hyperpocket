@@ -307,7 +307,7 @@ function CustomTools() {
       </form>
 
       <form onSubmit={handleSubmit} className="form-container tool-form">
-        <div className="code-editor">
+        <div className="code-editor-container">
           <CodeEditor
             value={newToolCode || DEFAULT_TOOL_CODE}
             onChange={(value) => setNewToolCode(value)}
@@ -380,9 +380,9 @@ function CustomTools() {
       <Modal
         isOpen={!!selectedTool}
         onClose={() => setSelectedTool(null)}
-        title={selectedTool ? `${selectedTool.name} Source Code` : ''}
+        title={selectedTool ? `${selectedTool.name}` : ''}
       >
-        <div style={{ height: '500px' }}>
+        <div className="code-editor-container">
           <CodeEditor
             value={selectedTool?.code || ''}
             onChange={() => {}}

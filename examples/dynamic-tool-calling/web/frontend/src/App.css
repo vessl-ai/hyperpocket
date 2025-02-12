@@ -237,7 +237,7 @@ body {
 /* Forms */
 .form-container, .prompt-form, .git-form, .tool-form {
   border-radius: var(--radius-lg);
-  padding: var(--space-4);
+  padding: var(--space-4) 0;
   margin-bottom: var(--space-4);
 }
 
@@ -548,12 +548,13 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: var(--space-4);
 }
 
 .modal-content {
@@ -562,22 +563,64 @@ body {
   border-radius: var(--radius-xl);
   width: 90%;
   max-width: 800px;
-  max-height: 90vh;
-  animation: slideUp 0.2s ease;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: modalSlideUp 0.2s ease;
+  position: relative;
+  z-index: 1001;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
 }
 
 .modal-header {
-  padding: var(--space-4);
+  padding: var(--space-3) var(--space-4);  /* Reduced padding */
   border-bottom: 1px solid var(--color-border-default);
   background: var(--color-background-higher);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.modal-header h2 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--color-surface-primary);
+  color: var(--color-text-default);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: var(--color-surface-primary-hover);
 }
 
 .modal-body {
-  padding: var(--space-4);
-  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Editor specific styles */
+.modal-body .monaco-editor {
+  flex: 1;
+  min-height: 0;
 }
 
 /* Utilities */
@@ -877,4 +920,48 @@ body {
 .github-link:hover {
   color: var(--color-text-default);
   transform: translateY(-1px);
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Code editor styles */
+.code-editor-container {
+  flex: 1;
+  min-height: 300px;  /* Minimum height for better UX */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.code-editor-container > div {  /* Monaco editor wrapper */
+  flex: 1;
+  min-height: 0;
+  position: absolute;
+  inset: 0;
+}
+
+/* Tool form specific editor */
+.tool-form .code-editor-container {
+  min-height: 300px;
+  margin-bottom: 0;
+}
+
+/* Keep submit button aligned */
+.tool-form .submit-button {
+  align-self: flex-start;
+}
+
+/* Modal specific editor */
+.modal-body .code-editor-container {
+  flex: 1;  /* Take all available space in modal */
+  min-height: 0;  /* Allow container to shrink */
 } 
