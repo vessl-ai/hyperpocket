@@ -53,9 +53,9 @@ def agent(pocket: PocketLangchain):
 if __name__ == "__main__":
     with PocketLangchain(
         tools=[
-            "https://github.com/vessl-ai/hyperpocket/tree/kyle/x-tool/tools/x/create-post",
-            "https://github.com/vessl-ai/hyperpocket/tree/kyle/x-tool/tools/x/list-home-posts-timeline",
-            "https://github.com/vessl-ai/hyperpocket/tree/kyle/x-tool/tools/x/user-lookup-me",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/x/create-post",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/x/list-home-posts-timeline",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/x/user-lookup-me",
         ],
     ) as pocket:
         agent(pocket)
