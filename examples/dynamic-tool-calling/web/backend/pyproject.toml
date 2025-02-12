@@ -1,0 +1,23 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.8",
+    "google-api-python-client>=2.160.0",
+    "google-auth-httplib2>=0.2.0",
+    "google-auth-oauthlib>=1.2.1",
+    "hyperpocket-openai",
+    "openai>=1.62.0",
+    "pillow>=11.1.0",
+    "pyautogui>=0.9.54",
+    "python-dotenv>=1.0.1",
+    "requests>=2.32.3",
+    "slack-sdk>=3.34.0",
+    "uvicorn[standard]>=0.34.0",
+]
+
+[tool.uv.sources]
+hyperpocket-openai = { path = "../../../../libs/extensions/openai", editable = true }

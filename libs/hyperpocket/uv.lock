@@ -451,7 +451,7 @@ wheels = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.1.8"
+version = "0.3.3"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
