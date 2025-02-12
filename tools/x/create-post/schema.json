@@ -20,34 +20,6 @@
       "default": false
     },
     "geo": {
-      "$ref": "#/$defs/XGeo"
-    },
-    "media": {
-      "$ref": "#/$defs/XMedia"
-    },
-    "nullcast": {
-      "type": "boolean",
-      "description": "Nullcasted (promoted-only) Posts do not appear in the public timeline and are not served to followers.",
-      "default": false
-    },
-    "poll": {
-      "$ref": "#/$defs/XPoll"
-    },
-    "quote_tweet_id": {
-      "type": "string",
-      "description": "Unique identifier of this Tweet. This is returned as a string in order to avoid complications with languages and tools that cannot handle large integers."
-    },
-    "text": {
-      "type": "string",
-      "description": "The content of the Tweet."
-    }
-  },
-  "required": [
-    "text"
-  ],
-  "$defs": {
-    "XGeo": {
-      "title": "XGeo",
       "type": "object",
       "properties": {
         "place_id": {
@@ -56,8 +28,7 @@
         }
       }
     },
-    "XMedia": {
-      "title": "XMedia",
+    "media": {
       "type": "object",
       "properties": {
         "media_ids": {
@@ -79,8 +50,12 @@
         "media_ids"
       ]
     },
-    "XPoll": {
-      "title": "XPoll",
+    "nullcast": {
+      "type": "boolean",
+      "description": "Nullcasted (promoted-only) Posts do not appear in the public timeline and are not served to followers.",
+      "default": false
+    },
+    "poll": {
       "type": "object",
       "properties": {
         "duration_minutes": {
@@ -103,6 +78,17 @@
         "duration_minutes",
         "options"
       ]
+    },
+    "quote_tweet_id": {
+      "type": "string",
+      "description": "Unique identifier of this Tweet. This is returned as a string in order to avoid complications with languages and tools that cannot handle large integers."
+    },
+    "text": {
+      "type": "string",
+      "description": "The content of the Tweet."
     }
-  }
+  },
+  "required": [
+    "text"
+  ]
 }
