@@ -94,7 +94,8 @@ body {
 
 .tools {
   display: flex;
-  gap: 0.75rem;
+  flex-wrap: wrap;
+  gap: 8px;
   align-items: center;
 }
 
@@ -102,31 +103,75 @@ body {
   position: relative;
   display: inline-flex;
   align-items: center;
-  margin: 0 0.5rem;
+  padding: 8px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.tool-wrapper::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  background: #1a202c;
+  color: white;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  white-space: pre-line;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  width: max-content;
+  max-width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.tool-wrapper:hover::before {
+  opacity: 1;
+  visibility: visible;
+  bottom: calc(100% + 10px);
 }
 
 .tool-icon {
-  margin-right: 0.25rem;
+  font-size: 1.2rem;
+  color: #4b5563;
+  position: relative;
+}
+
+.tool-check {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  font-size: 0.7rem;
+  color: #22c55e;
+  background: white;
+  border-radius: 50%;
+  padding: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .check-icon {
   position: absolute;
   top: -4px;
   right: -4px;
+  width: 12px;
+  height: 12px;
   background: #22c55e;
-  color: white;
   border-radius: 50%;
-  padding: 2px;
-  font-size: 0.75rem;
   border: 2px solid white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  opacity: 0.3;
-  transition: opacity 0.3s ease;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .check-icon.active {
   opacity: 1;
-  color: #4CAF50;
 }
 
 .response-section {
@@ -685,4 +730,10 @@ body {
 .registered-tool-item h3 {
   display: flex;
   align-items: center;
+}
+
+.tool-check {
+  font-size: 0.8rem;
+  color: #22c55e;
+  margin-left: 2px;
 } 

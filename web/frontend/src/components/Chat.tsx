@@ -1,5 +1,11 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { FaCamera, FaImage, FaEnvelope, FaCheck, FaSpinner } from 'react-icons/fa';
+import { FaSlack, FaRobot } from 'react-icons/fa';
+
+interface Tool {
+  name: string;
+  description: string;
+}
 
 interface ToolCall {
   id: string;
@@ -19,6 +25,16 @@ interface Message {
   text: string;
 }
 
+// Map tool names to icons
+const TOOL_ICONS: Record<string, JSX.Element> = {
+  'take_a_picture': <FaCamera />,
+  'call_diffusion_model': <FaImage />,
+  'send_mail': <FaEnvelope />,
+  'get_slack_messages': <FaSlack />,
+  'post_slack_message': <FaSlack />,
+  'get_channel_members': <FaSlack />,
+};
+
 function Chat() {
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState(false);
@@ -26,6 +42,29 @@ function Chat() {
   const [toolCalls, setToolCalls] = useState<ToolCall[]>([]);
   const [error, setError] = useState<string>('');
   const [messages, setMessages] = useState<Message[]>([]);
+  const [tools, setTools] = useState<Tool[]>([]);
+  const [usedTools, setUsedTools] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    fetchTools();
+  }, []);
+
+  const fetchTools = async () => {
+    try {
+      const res = await fetch('http://localhost:3001/api/tools');
+      if (!res.ok) {
+        throw new Error('Failed to fetch tools');
+      }
+      const data = await res.json();
+      setTools(data.tools);
+    } catch (error) {
+      console.error('Error fetching tools:', error);
+    }
+  };
+
+  const getToolIcon = (toolName: string) => {
+    return TOOL_ICONS[toolName] || <FaRobot />;  // Default icon for custom tools
+  };
 
   const convertLinksToHtml = (text: string) => {
     const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
@@ -48,11 +87,10 @@ function Chat() {
     );
     return (
       <div className="tool-wrapper">
-        {toolName === 'camera' && <FaCamera className="tool-icon" title="Camera" />}
-        {toolName === 'image' && <FaImage className="tool-icon" title="Image Editor" />}
-        {toolName === 'mail' && <FaEnvelope className="tool-icon" title="Email" />}
-        {isToolUsed && <FaCheck className="check-icon active" />}
-        {!isToolUsed && <FaCheck className="check-icon" />}
+        <span className="tool-icon">
+          {getToolIcon(toolName)}
+        </span>
+        <div className={`check-icon ${usedTools.has(toolName) ? 'active' : ''}`} />
       </div>
     );
   };
@@ -160,9 +198,18 @@ function Chat() {
       <div className="tools-section">
         <span className="tools-label">Tools integrated:</span>
         <div className="tools">
-          {renderToolStatus('camera')}
-          {renderToolStatus('image')}
-          {renderToolStatus('mail')}
+          {tools.map((tool) => (
+            <div 
+              key={tool.name} 
+              className="tool-wrapper" 
+              data-tooltip={`${tool.name}\n${tool.description}`}
+            >
+              <span className="tool-icon">
+                {getToolIcon(tool.name)}
+              </span>
+              <FaCheck className="tool-check" />
+            </div>
+          ))}
         </div>
       </div>
 
