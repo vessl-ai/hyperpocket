@@ -26,30 +26,40 @@ body {
 }
 
 .prompt-form {
+  margin-bottom: 24px;
+  width: 100%;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.prompt-input-wrapper {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 12px;
+  margin-bottom: 12px;
+  width: 100%;
 }
 
 .prompt-input {
   flex: 1;
-  padding: 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  background: #f0f0f0;
-  color: #333;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.prompt-input::placeholder {
-  color: #666;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: white;
+  color: #1a202c;
+  width: 100%;
 }
 
 .prompt-input:focus {
   outline: none;
-  background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.prompt-input:disabled {
+  background: #f3f4f6;
+  cursor: not-allowed;
 }
 
 .submit-button {

@@ -1,10 +1,10 @@
 import { useState, FormEvent, useEffect } from 'react';
-import { FaCamera, FaImage, FaEnvelope, FaCheck, FaSpinner } from 'react-icons/fa';
-import { FaSlack, FaRobot } from 'react-icons/fa';
+import { FaCamera, FaImage, FaEnvelope, FaSpinner, FaSlack, FaRobot } from 'react-icons/fa';
 
-interface Tool {
-  name: string;
-  description: string;
+// Types
+interface Message {
+  text: string;
+  role?: 'user' | 'assistant';
 }
 
 interface ToolCall {
@@ -21,11 +21,12 @@ interface ApiResponse {
   tool_calls?: ToolCall[];
 }
 
-interface Message {
-  text: string;
+interface Tool {
+  name: string;
+  description: string;
 }
 
-// Map tool names to icons
+// Tool Icons Mapping
 const TOOL_ICONS: Record<string, JSX.Element> = {
   'take_a_picture': <FaCamera />,
   'call_diffusion_model': <FaImage />,
@@ -36,25 +37,48 @@ const TOOL_ICONS: Record<string, JSX.Element> = {
 };
 
 function Chat() {
-  const [prompt, setPrompt] = useState<string>('');
+  // State
+  const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState<string>('');
-  const [toolCalls, setToolCalls] = useState<ToolCall[]>([]);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [tools, setTools] = useState<Tool[]>([]);
-  const [usedTools, setUsedTools] = useState<Set<string>>(new Set());
+  const [toolCalls, setToolCalls] = useState<ToolCall[]>([]);
 
+  // Effects
   useEffect(() => {
     fetchTools();
   }, []);
 
+  // Handlers
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!prompt.trim()) return;
+
+    setLoading(true);
+    setError('');
+    setToolCalls([]);
+
+    const newMessage: Message = { text: prompt, role: 'user' };
+    const updatedMessages = [...messages, newMessage];
+    setMessages(updatedMessages);
+
+    try {
+      const response = await sendChatRequest(updatedMessages);
+      handleChatResponse(response);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setLoading(false);
+      setPrompt('');
+    }
+  };
+
+  // API Calls
   const fetchTools = async () => {
     try {
       const res = await fetch('http://localhost:3001/api/tools');
-      if (!res.ok) {
-        throw new Error('Failed to fetch tools');
-      }
+      if (!res.ok) throw new Error('Failed to fetch tools');
       const data = await res.json();
       setTools(data.tools);
     } catch (error) {
@@ -62,8 +86,34 @@ function Chat() {
     }
   };
 
+  const sendChatRequest = async (messages: Message[]): Promise<ApiResponse> => {
+    const res = await fetch('http://localhost:3001/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages }),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.detail || 'Failed to get response');
+    }
+
+    return res.json();
+  };
+
+  // Helper Functions
+  const handleChatResponse = (data: ApiResponse) => {
+    setMessages(prev => [...prev, { text: data.response, role: 'assistant' }]);
+    if (data.tool_calls) setToolCalls(data.tool_calls);
+  };
+
+  const handleError = (error: unknown) => {
+    console.error('Error:', error);
+    setError(error instanceof Error ? error.message : 'An error occurred');
+  };
+
   const getToolIcon = (toolName: string) => {
-    return TOOL_ICONS[toolName] || <FaRobot />;  // Default icon for custom tools
+    return TOOL_ICONS[toolName] || <FaRobot />;
   };
 
   const convertLinksToHtml = (text: string) => {
@@ -74,112 +124,67 @@ function Chat() {
       (match, text, url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`
     );
     
-    processedText = processedText.replace(urlRegex, 
+    return processedText.replace(urlRegex, 
       (match, url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
     );
-
-    return processedText;
   };
 
-  const renderToolStatus = (toolName: string) => {
-    const isToolUsed = toolCalls.some(
-      call => call.function.name.toLowerCase().includes(toolName.toLowerCase())
-    );
-    return (
-      <div className="tool-wrapper">
-        <span className="tool-icon">
-          {getToolIcon(toolName)}
-        </span>
-        <div className={`check-icon ${usedTools.has(toolName) ? 'active' : ''}`} />
-      </div>
-    );
-  };
-
-  const renderMessages = () => {
-    return messages.map((message, index) => (
-      <div 
-        key={index} 
-        className={`message ${index % 2 === 0 ? 'user' : 'assistant'}`}
-      >
-        <div 
-          className="message-content"
-          dangerouslySetInnerHTML={{ 
-            __html: convertLinksToHtml(message.text) 
-          }}
-        />
-        {index % 2 === 1 && toolCalls.length > 0 && (
-          <div className="tool-calls">
-            <h4>Actions taken:</h4>
-            <ul>
-              {toolCalls.map((call, idx) => (
-                <li key={call.id || idx}>
-                  {call.function.name.replace(/_/g, ' ')}
-                </li>
-              ))}
-            </ul>
+  // Render Functions
+  const renderMessages = () => (
+    <div className="messages-container">
+      {messages.length > 0 ? (
+        messages.map((message, index) => (
+          <div key={index} className={`message ${message.role}`}>
+            <div 
+              className="message-content"
+              dangerouslySetInnerHTML={{ __html: convertLinksToHtml(message.text) }}
+            />
+            {message.role === 'assistant' && toolCalls.length > 0 && (
+              <div className="tool-calls">
+                <h4>Actions taken:</h4>
+                <ul>
+                  {toolCalls.map((call, idx) => (
+                    <li key={call.id || idx}>
+                      {call.function.name.replace(/_/g, ' ')}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
-        )}
+        ))
+      ) : (
+        <div className="empty-chat">
+          Start a conversation by sending a message
+        </div>
+      )}
+    </div>
+  );
+
+  const renderToolsSection = () => (
+    <div className="tools-section">
+      <span className="tools-label">Tools integrated:</span>
+      <div className="tools">
+        {tools.map((tool) => (
+          <div 
+            key={tool.name} 
+            className="tool-wrapper" 
+            data-tooltip={`${tool.name}\n${tool.description}`}
+          >
+            <span className="tool-icon">
+              {getToolIcon(tool.name)}
+            </span>
+            <div className={`check-icon ${toolCalls.some(call => call.function.name === tool.name) ? 'active' : ''}`} />
+          </div>
+        ))}
       </div>
-    ));
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    setResponse('');
-    setToolCalls([]);
-
-    // Add new user message to history
-    const newMessage: Message = { text: prompt };
-    const updatedMessages = [...messages, newMessage];
-    setMessages(updatedMessages);
-
-    try {
-      const res = await fetch('http://localhost:3001/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ messages: updatedMessages }),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.detail || 'Failed to get response');
-      }
-
-      const data: ApiResponse = await res.json();
-      setResponse(data.response);
-      
-      // Add assistant's response to message history
-      setMessages(prev => [...prev, { text: data.response }]);
-      
-      if (data.tool_calls) {
-        setToolCalls(data.tool_calls);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setError(error instanceof Error ? error.message : 'An error occurred');
-    } finally {
-      setLoading(false);
-      setPrompt(''); // Clear input after submission
-    }
-  };
+    </div>
+  );
 
   return (
     <>
       <div className="chat-container">
-        <div className="messages-container">
-          {messages.length > 0 ? (
-            renderMessages()
-          ) : (
-            <div className="empty-chat">
-              Start a conversation by sending a message
-            </div>
-          )}
-        </div>
-
+        {renderMessages()}
         <form onSubmit={handleSubmit} className="prompt-form">
           <input
             type="text"
@@ -195,23 +200,7 @@ function Chat() {
         </form>
       </div>
       
-      <div className="tools-section">
-        <span className="tools-label">Tools integrated:</span>
-        <div className="tools">
-          {tools.map((tool) => (
-            <div 
-              key={tool.name} 
-              className="tool-wrapper" 
-              data-tooltip={`${tool.name}\n${tool.description}`}
-            >
-              <span className="tool-icon">
-                {getToolIcon(tool.name)}
-              </span>
-              <FaCheck className="tool-check" />
-            </div>
-          ))}
-        </div>
-      </div>
+      {renderToolsSection()}
 
       {loading && (
         <div className="loading">

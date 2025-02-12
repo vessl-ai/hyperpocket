@@ -32,6 +32,11 @@ interface ToolCode {
   code: string;
 }
 
+const DEFAULT_TOOL_CODE = `@function_tool
+def my_custom_tool(param1: str, param2: int) -> str:
+    """Your tool description"""
+    # Your code here`;
+
 function CustomTools() {
   const [tools, setTools] = useState<Tool[]>([]);
   const [registeredTools, setRegisteredTools] = useState<RegisteredTool[]>([]);
@@ -43,6 +48,9 @@ function CustomTools() {
   const [gitError, setGitError] = useState('');
   const [expandedTools, setExpandedTools] = useState<Record<string, boolean>>({});
   const [selectedTool, setSelectedTool] = useState<ToolCode | null>(null);
+  const [promptInput, setPromptInput] = useState('');
+  const [promptLoading, setPromptLoading] = useState(false);
+  const [promptError, setPromptError] = useState('');
 
   useEffect(() => {
     fetchRegisteredTools();
@@ -55,15 +63,75 @@ function CustomTools() {
     }));
   };
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!newToolCode.trim()) return;
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await addCustomTool(newToolCode);
+      handleToolResponse(response);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGitSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!gitUrl.trim()) return;
+
+    setGitLoading(true);
+    setGitError('');
+
+    try {
+      const response = await addGitTool(gitUrl);
+      handleGitToolResponse(response);
+    } catch (error) {
+      handleGitError(error);
+    } finally {
+      setGitLoading(false);
+    }
+  };
+
+  const handlePromptSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!promptInput.trim()) return;
+
+    setPromptLoading(true);
+    setPromptError('');
+
+    try {
+      const res = await fetch('http://localhost:3001/api/tools/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: promptInput }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.detail || 'Failed to generate code');
+      }
+
+      const data = await res.json();
+      setNewToolCode(data.code);
+    } catch (error) {
+      console.error('Error:', error);
+      setPromptError(error instanceof Error ? error.message : 'An error occurred');
+    } finally {
+      setPromptLoading(false);
+    }
+  };
+
   const fetchRegisteredTools = async () => {
     try {
       const res = await fetch('http://localhost:3001/api/tools');
-      if (!res.ok) {
-        throw new Error('Failed to fetch tools');
-      }
-      const data = await res.json();
+      if (!res.ok) throw new Error('Failed to fetch tools');
       
-      // Sort tools - custom tools first
+      const data = await res.json();
       const sortedTools = [...data.tools].sort((a: RegisteredTool, b: RegisteredTool) => {
         if (a.isCustom && !b.isCustom) return -1;
         if (!a.isCustom && b.isCustom) return 1;
@@ -76,46 +144,41 @@ function CustomTools() {
     }
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+  const addCustomTool = async (code: string) => {
+    const res = await fetch('http://localhost:3001/api/tools/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code }),
+    });
 
-    try {
-      const res = await fetch('http://localhost:3001/api/tools/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code: newToolCode }),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.detail || 'Failed to add tool');
-      }
-
-      const data = await res.json();
-      setTools(prev => [...prev, {
-        name: data.name,
-        code: newToolCode,
-        status: 'active'
-      }]);
-      setNewToolCode('');
-    } catch (error) {
-      console.error('Error:', error);
-      setError(error instanceof Error ? error.message : 'An error occurred');
-    } finally {
-      setLoading(false);
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.detail || 'Failed to add tool');
     }
+
+    return res.json();
   };
 
-  const handleViewCode = async (toolName: string) => {
+  const addGitTool = async (url: string) => {
+    const res = await fetch('http://localhost:3001/api/tools/from-git', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url }),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.detail || 'Failed to add tool from git');
+    }
+
+    return res.json();
+  };
+
+  const fetchToolCode = async (toolName: string) => {
     try {
       const res = await fetch(`http://localhost:3001/api/tools/${toolName}/code`);
-      if (!res.ok) {
-        throw new Error('Failed to fetch tool code');
-      }
+      if (!res.ok) throw new Error('Failed to fetch tool code');
+      
       const data = await res.json();
       setSelectedTool({ name: toolName, code: data.code });
     } catch (error) {
@@ -123,198 +186,186 @@ function CustomTools() {
     }
   };
 
-  const handleGitSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setGitLoading(true);
-    setGitError('');
-
-    try {
-      const res = await fetch('http://localhost:3001/api/tools/from-git', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url: gitUrl }),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.detail || 'Failed to add tool from git');
-      }
-
-      const data = await res.json();
-      setTools(prev => [...prev, {
-        name: data.name,
-        code: data.code,
-        status: 'active'
-      }]);
-      setGitUrl('');
-      fetchRegisteredTools();  // Refresh the tools list
-    } catch (error) {
-      console.error('Error:', error);
-      setGitError(error instanceof Error ? error.message : 'An error occurred');
-    } finally {
-      setGitLoading(false);
-    }
+  const handleToolResponse = (data: { name: string; message: string }) => {
+    setTools(prev => [...prev, {
+      name: data.name,
+      code: newToolCode,
+      status: 'active'
+    }]);
+    setNewToolCode('');
   };
 
-  return (
-    <div className="custom-tools">
-      <section className="from-git-section">
-        <h2>From Git</h2>
-        <form onSubmit={handleGitSubmit} className="git-form">
-          <div className="git-input-wrapper">
-            <input
-              type="text"
-              value={gitUrl}
-              onChange={(e) => setGitUrl(e.target.value)}
-              placeholder="Enter GitHub URL (e.g., https://github.com/user/repo/blob/main/tool.py)"
-              className="git-input"
-              disabled={gitLoading}
-            />
-            <button type="submit" className="submit-button" disabled={gitLoading}>
-              {gitLoading ? <FaSpinner className="spinner" /> : 'Add from Git'}
-            </button>
-          </div>
-          {gitError && <div className="error">{gitError}</div>}
-        </form>
-      </section>
+  const handleGitToolResponse = (data: { name: string; message: string }) => {
+    setTools(prev => [...prev, {
+      name: data.name,
+      code: '',
+      status: 'active'
+    }]);
+    setGitUrl('');
+    fetchRegisteredTools();
+  };
 
-      <section className="add-tool-section">
-        <h2>Add Custom Tool</h2>
-        <form onSubmit={handleSubmit} className="tool-form">
-          <div className="code-editor">
-            <SyntaxHighlighter
-              language="python"
-              style={vscDarkPlus}
-              customStyle={{
-                margin: 0,
-                padding: '16px',
-                background: '#1e1e1e',
-                fontSize: '14px',
-                minHeight: '200px',
-              }}
-            >
-              {newToolCode || `@function_tool\ndef my_custom_tool(param1: str, param2: int) -> str:\n    """Your tool description"""\n    # Your code here`}
-            </SyntaxHighlighter>
-            <textarea
-              value={newToolCode}
-              onChange={(e) => setNewToolCode(e.target.value)}
-              className="code-input"
-              disabled={loading}
-            />
-          </div>
-          <button type="submit" className="submit-button" disabled={loading}>
-            {loading ? <FaSpinner className="spinner" /> : 'Add Tool'}
+  const handleError = (error: unknown) => {
+    console.error('Error:', error);
+    setError(error instanceof Error ? error.message : 'An error occurred');
+  };
+
+  const handleGitError = (error: unknown) => {
+    console.error('Error:', error);
+    setGitError(error instanceof Error ? error.message : 'An error occurred');
+  };
+
+  const renderGitSection = () => (
+    <section className="from-git-section">
+      <h2>From Git</h2>
+      <form onSubmit={handleGitSubmit} className="git-form">
+        <div className="git-input-wrapper">
+          <input
+            type="text"
+            value={gitUrl}
+            onChange={(e) => setGitUrl(e.target.value)}
+            placeholder="Enter GitHub URL (e.g., https://github.com/user/repo/blob/main/tool.py)"
+            className="git-input"
+            disabled={gitLoading}
+          />
+          <button type="submit" className="submit-button" disabled={gitLoading}>
+            {gitLoading ? <FaSpinner className="spinner" /> : 'Add from Git'}
           </button>
-        </form>
-        {error && <div className="error">{error}</div>}
-      </section>
-
-      <section className="registered-tools-section">
-        <h2>Registered Tools</h2>
-        <div className="registered-tools-list">
-          {registeredTools.map((tool, index) => (
-            <div key={index} className="registered-tool-item">
-              <button 
-                className="tool-header" 
-                onClick={() => toggleTool(tool.name)}
-              >
-                {expandedTools[tool.name] ? <FaChevronDown /> : <FaChevronRight />}
-                <h3>
-                  {tool.name}
-                  <span className={`tool-badge ${
-                    tool.isGitHub ? 'github' : 
-                    tool.isCustom ? 'custom' : 
-                    'builtin'
-                  }`}>
-                    {tool.isGitHub ? 'GitHub' : 
-                     tool.isCustom ? 'Custom' : 
-                     'Built-in'}
-                  </span>
-                </h3>
-                {tool.isGitHub ? (
-                  <a 
-                    href={tool.url}
-                    className="github-link-button"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <FaCode /> View on GitHub
-                  </a>
-                ) : (
-                  <button 
-                    className="view-code-button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleViewCode(tool.name);
-                    }}
-                  >
-                    <FaCode /> View Code
-                  </button>
-                )}
-              </button>
-              {expandedTools[tool.name] && !tool.isGitHub && (
-                <div className="tool-details">
-                  <p className="tool-description">{tool.description}</p>
-                  {tool.parameters.length > 0 && (
-                    <div className="tool-parameters">
-                      <h4>Parameters:</h4>
-                      <ul>
-                        {tool.parameters.map((param, idx) => (
-                          <li key={idx}>
-                            <span className="param-name">{param.name}</span>
-                            <span className="param-type">{param.type}</span>
-                            {param.description && (
-                              <p className="param-description">{param.description}</p>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          ))}
         </div>
-      </section>
+        {gitError && <div className="error">{gitError}</div>}
+      </form>
+    </section>
+  );
 
-      {tools.length > 0 && (
-        <section className="custom-tools-section">
-          <h2>Added Custom Tools</h2>
-          <div className="tools-list">
-            {tools.map((tool, index) => (
-              <div key={index} className={`tool-item ${tool.status}`}>
-                <button 
-                  className="tool-header" 
-                  onClick={() => toggleTool(`custom-${tool.name}`)}
+  const renderCustomToolForm = () => (
+    <section className="add-tool-section">
+      <h2>Add Custom Tool</h2>
+      
+      <form onSubmit={handlePromptSubmit} className="prompt-form">
+        <div className="prompt-input-wrapper">
+          <input
+            type="text"
+            value={promptInput}
+            onChange={(e) => setPromptInput(e.target.value)}
+            placeholder="Describe your tool (e.g., 'Create a tool that sends an email')"
+            className="prompt-input"
+            disabled={promptLoading}
+          />
+          <button type="submit" className="submit-button" disabled={promptLoading}>
+            {promptLoading ? <FaSpinner className="spinner" /> : 'Generate Code'}
+          </button>
+        </div>
+        {promptError && <div className="error">{promptError}</div>}
+      </form>
+
+      <form onSubmit={handleSubmit} className="tool-form">
+        <div className="code-editor">
+          <SyntaxHighlighter
+            language="python"
+            style={vscDarkPlus}
+            customStyle={{
+              margin: 0,
+              padding: '16px',
+              background: '#1e1e1e',
+              fontSize: '14px',
+              minHeight: '200px',
+            }}
+          >
+            {newToolCode || DEFAULT_TOOL_CODE}
+          </SyntaxHighlighter>
+          <textarea
+            value={newToolCode}
+            onChange={(e) => setNewToolCode(e.target.value)}
+            className="code-input"
+            disabled={loading}
+          />
+        </div>
+        <button type="submit" className="submit-button" disabled={loading}>
+          {loading ? <FaSpinner className="spinner" /> : 'Add Tool'}
+        </button>
+      </form>
+      {error && <div className="error">{error}</div>}
+    </section>
+  );
+
+  const renderRegisteredTools = () => (
+    <section className="registered-tools-section">
+      <h2>Registered Tools</h2>
+      <div className="registered-tools-list">
+        {registeredTools.map((tool) => (
+          <div key={tool.name} className="registered-tool-item">
+            <button 
+              className="tool-header" 
+              onClick={() => toggleTool(tool.name)}
+            >
+              {expandedTools[tool.name] ? <FaChevronDown /> : <FaChevronRight />}
+              <h3>
+                {tool.name}
+                <span className={`tool-badge ${
+                  tool.isGitHub ? 'github' : 
+                  tool.isCustom ? 'custom' : 
+                  'builtin'
+                }`}>
+                  {tool.isGitHub ? 'GitHub' : 
+                   tool.isCustom ? 'Custom' : 
+                   'Built-in'}
+                </span>
+              </h3>
+              {tool.isGitHub ? (
+                <a 
+                  href={tool.url}
+                  className="github-link-button"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  {expandedTools[`custom-${tool.name}`] ? <FaChevronDown /> : <FaChevronRight />}
-                  <h4>{tool.name}</h4>
+                  <FaCode /> View on GitHub
+                </a>
+              ) : (
+                <button 
+                  className="view-code-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    fetchToolCode(tool.name);
+                  }}
+                >
+                  <FaCode /> View Code
                 </button>
-                {expandedTools[`custom-${tool.name}`] && (
-                  <div className="tool-details">
-                    <SyntaxHighlighter
-                      language="python"
-                      style={vscDarkPlus}
-                      customStyle={{
-                        margin: 0,
-                        borderRadius: '4px',
-                      }}
-                    >
-                      {tool.code}
-                    </SyntaxHighlighter>
-                    {tool.error && <div className="error">{tool.error}</div>}
+              )}
+            </button>
+            {expandedTools[tool.name] && !tool.isGitHub && (
+              <div className="tool-details">
+                <p className="tool-description">{tool.description}</p>
+                {tool.parameters.length > 0 && (
+                  <div className="tool-parameters">
+                    <h4>Parameters:</h4>
+                    <ul>
+                      {tool.parameters.map((param, idx) => (
+                        <li key={idx}>
+                          <span className="param-name">{param.name}</span>
+                          <span className="param-type">{param.type}</span>
+                          {param.description && (
+                            <p className="param-description">{param.description}</p>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
               </div>
-            ))}
+            )}
           </div>
-        </section>
-      )}
+        ))}
+      </div>
+    </section>
+  );
 
+  return (
+    <div className="custom-tools">
+      {renderGitSection()}
+      {renderCustomToolForm()}
+      {renderRegisteredTools()}
+      
       <Modal
         isOpen={!!selectedTool}
         onClose={() => setSelectedTool(null)}

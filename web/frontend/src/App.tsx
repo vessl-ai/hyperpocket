@@ -4,24 +4,6 @@ import './App.css';
 import Chat from './components/Chat';
 import CustomTools from './components/CustomTools';
 
-interface ToolCall {
-  id: string;
-  type: string;
-  function: {
-    name: string;
-    arguments: string;
-  };
-}
-
-interface ApiResponse {
-  response: string;
-  tool_calls?: ToolCall[];
-}
-
-interface Message {
-  text: string;
-}
-
 type TabType = 'chat' | 'tools';
 
 function App() {
