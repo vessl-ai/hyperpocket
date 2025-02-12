@@ -194,7 +194,7 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
             type="text"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Take my photo, make it funny, and send it to me"
+            placeholder="Example) Take my photo, make it funny, and send it to me"
             className="prompt-input"
             disabled={loading}
           />
