@@ -26,18 +26,19 @@ type TabType = 'chat' | 'tools';
 
 function App() {
   const [activeTab, setActiveTab] = useState<TabType>('chat');
+  const [messages, setMessages] = useState<Message[]>([]);
 
   return (
     <div className="container">
       <div className="content">
         <div className="tabs">
-          <button 
+          <button
             className={`tab ${activeTab === 'chat' ? 'active' : ''}`}
             onClick={() => setActiveTab('chat')}
           >
             <FaComment /> Chat
           </button>
-          <button 
+          <button
             className={`tab ${activeTab === 'tools' ? 'active' : ''}`}
             onClick={() => setActiveTab('tools')}
           >
@@ -45,7 +46,11 @@ function App() {
           </button>
         </div>
 
-        {activeTab === 'chat' ? <Chat /> : <CustomTools />}
+        {activeTab === 'chat' ? (
+          <Chat messages={messages} setMessages={setMessages} />
+        ) : (
+          <CustomTools />
+        )}
       </div>
     </div>
   );
