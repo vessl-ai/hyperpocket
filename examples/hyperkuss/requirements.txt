@@ -1,0 +1,5 @@
+slack-bolt>=1.18.0
+python-dotenv>=1.0.0
+openai>=1.0.0
+watchdog>=3.0.0
+-e ../../libs/hyperpocket  # Install the root project (hyperpocket) in edita

@@ -1,0 +1,56 @@
+I am building an Agent-Building Assistant and need possible use case scenarios. I will provide the role of the assistant and the providers it will use. Based on this, please generate five different scenarios for that assistant.
+
+Each scenario should include:
+	•	Goal: The primary objective of the workflow.
+	•	Providers: Relevant platforms (e.g., HubSpot, Gmail, Salesforce).
+	•	Workflow: A step-by-step breakdown of how the agent achieves the goal.
+	•	Tools: Functions that perform specific tasks in the workflow.
+
+For each workflow, please:
+	•	Provide a detailed step-by-step breakdown of actions, ensuring each action corresponds to a real Python function.
+	•	Include actual Python code for each function, covering API calls, data processing, and logic implementation.
+	•	Leverage real client's SDKs and OpenAI’s capabilities as much as possible instead of manually implementation or parsing structures.
+
+For each tool, please:
+    1. Must use the @function_tool decorator (no need to import it)
+    2. Must have a clear docstring with Args section
+    3. Must have type hints for all parameters and return value
+    4. Must be a single function
+    5. Must be production-ready code (not just example code, but actual production code. use official sdk if available)
+    6. If the tool requires authentication:
+       - Use auth_provider parameter in @function_tool decorator
+       - The auth token will be automatically provided as a keyword argument
+       - Do not manually handle authentication in the function
+       
+    Available auth providers and their token names (also no need to import AuthProvider):
+    - Slack: auth_provider=AuthProvider.SLACK (token provided as SLACK_BOT_TOKEN)
+
+Example Scenario
+	•	Goal: Automatically qualify leads based on predefined criteria.
+	•	Providers: HubSpot, Gmail.
+	•	Workflow:
+	1.	Pull prospect data from HubSpot.
+	2.	Analyze past interactions (emails, meetings, calls).
+	3.	Score leads based on BANT (Budget, Authority, Need, Timeline) and engagement history.
+	4.	Recommend priority leads for outreach.
+	•	Tools:
+	•	get_emails_from_hubspot(deal_id): Fetch emails related to a specific deal.
+	•	get_meetings_from_hubspot(deal_id): Retrieve meeting details for the deal.
+	•	get_calls_from_hubspot(deal_id): Extract call history for the deal.
+	•	merge_interaction_data(emails, meetings, calls): Combine all interaction data.
+	•	score_lead_based_on_BANT(data): Apply scoring logic.
+	•	recommend_priority_leads(scored_leads): Identify top leads for outreach.
+
+
+Example Tool
+    @function_tool(auth_provider=AuthProvider.SLACK)
+    def post_message(channel: str, message: str, **kwargs) -> str:
+        '''Post a message to Slack channel
+        
+        Args:
+            channel: The channel to post to
+            message: The message to post
+            SLACK_BOT_TOKEN: Automatically provided by the auth provider
+        '''
+        SLACK_BOT_TOKEN = kwargs["SLACK_BOT_TOKEN"]
+        ...

@@ -24,11 +24,12 @@ oauth_config:
       - reactions:write
 
 settings:
+  interactivity:
+    is_enabled: true
+    request_url: your-app-url/slack/events  # Replace with your app's URL
   event_subscriptions:
     bot_events:
       - app_mention
       - message.channels
       - message.im
-  socket_mode_enabled: true
-  interactivity:
-    is_enabled: true 
+  socket_mode_enabled: true 
