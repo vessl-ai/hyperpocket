@@ -1,5 +1,5 @@
 import { useState, FormEvent, useEffect } from 'react';
-import { FaCamera, FaImage, FaEnvelope, FaSpinner, FaSlack, FaRobot } from 'react-icons/fa';
+import { FaCamera, FaImage, FaEnvelope, FaSpinner, FaSlack, FaRobot, FaCheck } from 'react-icons/fa';
 
 // Types
 interface Message {
@@ -173,12 +173,14 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
           <div 
             key={tool.name} 
             className="tool-wrapper" 
-            data-tooltip={`${tool.name}\n${tool.description}`}
+            data-tooltip={`${tool.name.replace(/_/g, ' ')}\n${tool.description}`}
           >
             <span className="tool-icon">
               {getToolIcon(tool.name)}
+              <div className={`check-icon ${toolCalls.some(call => call.function.name === tool.name) ? 'active' : ''}`}>
+                ✓
+              </div>
             </span>
-            <div className={`check-icon ${toolCalls.some(call => call.function.name === tool.name) ? 'active' : ''}`} />
           </div>
         ))}
       </div>
@@ -186,21 +188,23 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
   );
 
   return (
-    <>
+    <div className="chat-wrapper">
       <div className="chat-container">
         {renderMessages()}
         <form onSubmit={handleSubmit} className="prompt-form">
-          <input
-            type="text"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Example) Take my photo, make it funny, and send it to me"
-            className="prompt-input"
-            disabled={loading}
-          />
-          <button type="submit" className="submit-button" disabled={loading}>
-            {loading ? <FaSpinner className="spinner" /> : 'Send'}
-          </button>
+          <div className="prompt-input-wrapper">
+            <input
+              type="text"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="Take my photo, make it funny, and send it to me"
+              className="prompt-input"
+              disabled={loading}
+            />
+            <button type="submit" className="submit-button" disabled={loading}>
+              {loading ? <FaSpinner className="spinner" /> : 'Send'}
+            </button>
+          </div>
         </form>
       </div>
       
@@ -213,7 +217,7 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
         </div>
       )}
       {error && <div className="error">{error}</div>}
-    </>
+    </div>
   );
 }
 

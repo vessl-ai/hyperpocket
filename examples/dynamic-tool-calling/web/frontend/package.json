@@ -10,6 +10,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@linear/sdk": "^38.0.0",
     "@monaco-editor/react": "^4.6.0",
     "@types/react": "^18.2.0",
     "react": "^18.2.0",

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaComment, FaTools } from 'react-icons/fa';
+import { FaComment, FaTools, FaGithub } from 'react-icons/fa';
 import './App.css';
 import Chat from './components/Chat';
 import CustomTools from './components/CustomTools';
@@ -29,6 +29,24 @@ function App() {
   return (
     <div className="container">
       <div className="content">
+        <div className="title-section">
+          <div className="title-content">
+            <h1 className="title-main">
+              Hyperpocket
+              <a 
+                href="https://github.com/vessl-ai/hyperpocket" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="github-link"
+              >
+                <FaGithub />
+              </a>
+            </h1>
+            <p className="title-description">
+              Open-source tools for AI agents
+            </p>
+          </div>
+        </div>
         <div className="tabs">
           <button 
             className={`tab ${activeTab === 'chat' ? 'active' : ''}`}

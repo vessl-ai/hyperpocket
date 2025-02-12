@@ -57,7 +57,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ value, onChange, language = "py
       theme="vs-dark"
       options={{
         minimap: { enabled: false },
-        fontSize: 14,
+        fontSize: 13,
         lineNumbers: "on",
         roundedSelection: false,
         scrollBeyondLastLine: false,
@@ -65,6 +65,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ value, onChange, language = "py
         wordWrap: "on",
         readOnly: readOnly,
         domReadOnly: readOnly,
+        theme: "vs-dark",
+        backgroundColor: "rgb(24, 24, 24)",
       }}
     />
   );
@@ -248,20 +250,33 @@ function CustomTools() {
     setGitError(error instanceof Error ? error.message : 'An error occurred');
   };
 
+  const handleToolClick = (toolName: string) => {
+    if (selectedTool?.name === toolName) {
+      setSelectedTool(null);
+    } else {
+      fetchToolCode(toolName);
+    }
+  };
+
+  const handleViewCodeClick = (e: React.MouseEvent, toolName: string) => {
+    e.stopPropagation();
+    fetchToolCode(toolName);
+  };
+
   const renderGitSection = () => (
     <section className="from-git-section">
       <h2>From Git</h2>
-      <form onSubmit={handleGitSubmit} className="git-form">
-        <div className="git-input-wrapper">
+      <form onSubmit={handleGitSubmit} className="form-container git-form">
+        <div className="input-group git-input-wrapper">
           <input
             type="text"
             value={gitUrl}
             onChange={(e) => setGitUrl(e.target.value)}
             placeholder="Enter GitHub URL (e.g., https://github.com/user/repo/blob/main/tool.py)"
-            className="git-input"
+            className="input-base git-input"
             disabled={gitLoading}
           />
-          <button type="submit" className="submit-button" disabled={gitLoading}>
+          <button type="submit" className="button-primary submit-button" disabled={gitLoading}>
             {gitLoading ? <FaSpinner className="spinner" /> : 'Add from Git'}
           </button>
         </div>
@@ -274,24 +289,24 @@ function CustomTools() {
     <section className="add-tool-section">
       <h2>Add Custom Tool</h2>
       
-      <form onSubmit={handlePromptSubmit} className="prompt-form">
-        <div className="prompt-input-wrapper">
+      <form onSubmit={handlePromptSubmit} className="form-container prompt-form">
+        <div className="input-group prompt-input-wrapper">
           <input
             type="text"
             value={promptInput}
             onChange={(e) => setPromptInput(e.target.value)}
             placeholder="Describe your tool (e.g., 'Create a tool that sends an email')"
-            className="prompt-input"
+            className="input-base prompt-input"
             disabled={promptLoading}
           />
-          <button type="submit" className="submit-button" disabled={promptLoading}>
+          <button type="submit" className="button-primary submit-button" disabled={promptLoading}>
             {promptLoading ? <FaSpinner className="spinner" /> : 'Generate Code'}
           </button>
         </div>
         {promptError && <div className="error">{promptError}</div>}
       </form>
 
-      <form onSubmit={handleSubmit} className="tool-form">
+      <form onSubmit={handleSubmit} className="form-container tool-form">
         <div className="code-editor">
           <CodeEditor
             value={newToolCode || DEFAULT_TOOL_CODE}
@@ -299,7 +314,7 @@ function CustomTools() {
             language="python"
           />
         </div>
-        <button type="submit" className="submit-button" disabled={loading}>
+        <button type="submit" className="button-primary submit-button" disabled={loading}>
           {loading ? <FaSpinner className="spinner" /> : 'Add Tool'}
         </button>
       </form>
@@ -313,64 +328,41 @@ function CustomTools() {
       <div className="registered-tools-list">
         {registeredTools.map((tool) => (
           <div key={tool.name} className="registered-tool-item">
-            <button 
-              className="tool-header" 
-              onClick={() => toggleTool(tool.name)}
-            >
-              {expandedTools[tool.name] ? <FaChevronDown /> : <FaChevronRight />}
-              <h3>
-                {tool.name}
-                <span className={`tool-badge ${
-                  tool.isGitHub ? 'github' : 
-                  tool.isCustom ? 'custom' : 
-                  'builtin'
-                }`}>
-                  {tool.isGitHub ? 'GitHub' : 
-                   tool.isCustom ? 'Custom' : 
-                   'Built-in'}
-                </span>
-              </h3>
-              {tool.isGitHub ? (
-                <a 
-                  href={tool.url}
-                  className="github-link-button"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <FaCode /> View on GitHub
-                </a>
-              ) : (
+            <div className="tool-header" onClick={() => handleToolClick(tool.name)}>
+              <div className="tool-info">
+                <div className="tool-name">
+                  {tool.name.replace(/_/g, ' ')}
+                  <span className={`tool-badge ${tool.isGitHub ? 'github' : 'custom'}`}>
+                    {tool.isGitHub ? 'github' : 'custom'}
+                  </span>
+                </div>
+                <div className="tool-description">{tool.description}</div>
+              </div>
+              <div className="tool-actions">
                 <button 
                   className="view-code-button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    fetchToolCode(tool.name);
-                  }}
+                  onClick={(e) => handleViewCodeClick(e, tool.name)}
                 >
                   <FaCode /> View Code
                 </button>
-              )}
-            </button>
-            {expandedTools[tool.name] && !tool.isGitHub && (
-              <div className="tool-details">
-                <p className="tool-description">{tool.description}</p>
-                {tool.parameters.length > 0 && (
-                  <div className="tool-parameters">
-                    <h4>Parameters:</h4>
-                    <ul>
-                      {tool.parameters.map((param, idx) => (
-                        <li key={idx}>
-                          <span className="param-name">{param.name}</span>
-                          <span className="param-type">{param.type}</span>
-                          {param.description && (
-                            <p className="param-description">{param.description}</p>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+              </div>
+            </div>
+            {selectedTool?.name === tool.name && (
+              <div className="tool-parameters">
+                <h4>Parameters</h4>
+                <div className="parameters-list">
+                  {tool.parameters.map((param, idx) => (
+                    <div key={idx} className="parameter-item">
+                      <div>
+                        <span className="parameter-name">{param.name}</span>
+                        <span className="parameter-type">{param.type}</span>
+                      </div>
+                      {param.description && (
+                        <div className="parameter-description">{param.description}</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
