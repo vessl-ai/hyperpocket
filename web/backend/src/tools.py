@@ -40,9 +40,6 @@ Best,
 Hyperpocket team
 """
 
-SLACK_TOKEN = os.getenv("SLACK_BOT_TOKEN")
-slack_client = WebClient(token=SLACK_TOKEN)
-
 class ImageUtils:
     @staticmethod
     def encode_image(image_data: bytes) -> str:
@@ -219,7 +216,7 @@ def send_mail(name: str, subject: str, to: str, image_path: str):
         raise RuntimeError(f"Failed to send email. Error: {e}")
 
 @function_tool(auth_provider=AuthProvider.SLACK)
-def get_slack_messages(channel_id: str, limit: int = 10) -> str:
+def get_slack_messages(channel_id: str, limit: int = 10, **kwargs) -> str:
     """
     Get recent messages from a Slack channel.
 
@@ -228,7 +225,8 @@ def get_slack_messages(channel_id: str, limit: int = 10) -> str:
         limit (int): Maximum number of messages to retrieve (default: 10)
     """
     try:
-        response = slack_client.conversations_history(
+        client = WebClient(token=kwargs["SLACK_BOT_TOKEN"])
+        response = client.conversations_history(
             channel=channel_id,
             limit=limit
         )
@@ -249,7 +247,8 @@ def get_slack_messages(channel_id: str, limit: int = 10) -> str:
 def post_slack_message(
     channel_id: str,
     message: str,
-    thread_ts: str = None
+    thread_ts: str = None,
+    **kwargs
 ) -> str:
     """
     Post a message to a Slack channel.
@@ -260,6 +259,7 @@ def post_slack_message(
         thread_ts (str, optional): Thread timestamp to reply to a thread
     """
     try:
+        client = WebClient(token=kwargs["SLACK_BOT_TOKEN"])
         kwargs = {
             "channel": channel_id,
             "text": message
@@ -268,7 +268,7 @@ def post_slack_message(
         if thread_ts:
             kwargs["thread_ts"] = thread_ts
             
-        response = slack_client.chat_postMessage(**kwargs)
+        response = client.chat_postMessage(**kwargs)
         
         if not response["ok"]:
             raise RuntimeError(f"Failed to post message: {response['error']}")

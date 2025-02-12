@@ -8,4 +8,5 @@ pyautogui
 requests
 google-auth-oauthlib
 google-api-python-client
--e ../..  # Install the root project (hyperpocket) in editable mode 
+slack-sdk
+-e ../../libs/hyperpocket  # Install the root project (hyperpocket) in edita

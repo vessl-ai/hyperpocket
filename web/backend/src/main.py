@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from openai.types.chat import ChatCompletionMessageToolCall, ChatCompletion
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 from hyperpocket_openai import PocketOpenAI
@@ -20,8 +21,11 @@ ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React dev server
 ]
 
+class Message(BaseModel):
+    text: str = Field(..., description="Message text")
+
 class ChatRequest(BaseModel):
-    prompt: str = Field(..., description="User input prompt")
+    messages: List[Message] = Field(..., description="Chat history")
 
 class ChatResponse(BaseModel):
     response: str = Field(..., description="AI response")
@@ -55,24 +59,43 @@ class AIService:
         self.tool_specs = self.pocket.get_open_ai_tool_specs()
         self.llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-    async def process_chat(self, prompt: str) -> ChatResponse:
+    async def process_chat(self, messages: List[Message]) -> ChatResponse:
         """
         Process chat request and return response.
         
         Args:
-            prompt: User input prompt
+            messages: List of message texts
             
         Returns:
             ChatResponse object containing AI response and tool calls
         """
-        messages = [{"role": "user", "content": prompt}]
-        
-        response = self.llm.chat.completions.create(
-            model=MODEL_NAME,
-            messages=messages,
-            tools=self.tool_specs,
-        )
-        
+        # Convert messages to OpenAI format
+        openai_messages = []
+        for i, msg in enumerate(messages):
+            role = "user" if i % 2 == 0 else "assistant"
+            openai_messages.append({
+                "role": role,
+                "content": msg.text
+            })
+
+        while True:
+            response = self.llm.chat.completions.create(
+                model=MODEL_NAME,
+                messages=openai_messages,
+                tools=self.tool_specs,
+            )
+            choice = response.choices[0]
+            openai_messages.append(choice.message)
+
+            if choice.finish_reason == "stop":
+                break
+
+            elif response.choices[0].finish_reason == "tool_calls":
+                tool_calls: List[ChatCompletionMessageToolCall] = response.choices[0].message.tool_calls
+                for tool_call in tool_calls:
+                    tool_message = await self.pocket.ainvoke(tool_call)
+                    openai_messages.append(tool_message)
+
         return ChatResponse(
             response=response.choices[0].message.content,
             tool_calls=response.choices[0].message.tool_calls
@@ -103,22 +126,22 @@ async def chat(request: ChatRequest):
     Process chat request and return AI response.
     
     Args:
-        request: ChatRequest object containing user prompt
+        request: ChatRequest object containing chat history
         
     Returns:
         ChatResponse object containing AI response and tool calls
         
     Raises:
-        HTTPException: If prompt is empty or processing fails
+        HTTPException: If messages array is empty
     """
     try:
-        if not request.prompt:
+        if not request.messages:
             raise HTTPException(
                 status_code=400, 
-                detail="Prompt is required"
+                detail="Messages array is required"
             )
 
-        return await ai_service.process_chat(request.prompt)
+        return await ai_service.process_chat(request.messages)
 
     except Exception as e:
         print(f"Error in chat endpoint: {str(e)}")

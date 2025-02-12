@@ -16,12 +16,17 @@ interface ApiResponse {
   tool_calls?: ToolCall[];
 }
 
+interface Message {
+  text: string;
+}
+
 function App() {
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<string>('');
   const [toolCalls, setToolCalls] = useState<ToolCall[]>([]);
   const [error, setError] = useState<string>('');
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,13 +35,18 @@ function App() {
     setResponse('');
     setToolCalls([]);
 
+    // Add new user message to history
+    const newMessage: Message = { text: prompt };
+    const updatedMessages = [...messages, newMessage];
+    setMessages(updatedMessages);
+
     try {
       const res = await fetch('http://localhost:3001/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ messages: updatedMessages }),
       });
 
       if (!res.ok) {
@@ -46,6 +56,10 @@ function App() {
 
       const data: ApiResponse = await res.json();
       setResponse(data.response);
+      
+      // Add assistant's response to message history
+      setMessages(prev => [...prev, { text: data.response }]);
+      
       if (data.tool_calls) {
         setToolCalls(data.tool_calls);
       }
@@ -54,6 +68,7 @@ function App() {
       setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setLoading(false);
+      setPrompt(''); // Clear input after submission
     }
   };
 
@@ -72,22 +87,81 @@ function App() {
     );
   };
 
+  const convertLinksToHtml = (text: string) => {
+    // Match URLs in text: [text](url) or regular URLs
+    const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    // Updated URL regex to avoid matching partial URLs
+    const urlRegex = /(?<![[\]])\b(https?:\/\/[^\s<>"']+)(?![^<]*>|[^<>]*<\/)/g;
+
+    // First replace markdown style links
+    let processedText = text.replace(markdownLinkRegex, 
+      (match, text, url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`
+    );
+    
+    // Then replace plain URLs
+    processedText = processedText.replace(urlRegex, 
+      (match, url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
+    );
+
+    return processedText;
+  };
+
+  const renderMessages = () => {
+    return messages.map((message, index) => (
+      <div 
+        key={index} 
+        className={`message ${index % 2 === 0 ? 'user' : 'assistant'}`}
+      >
+        <div 
+          className="message-content"
+          dangerouslySetInnerHTML={{ 
+            __html: convertLinksToHtml(message.text) 
+          }}
+        />
+        {index % 2 === 1 && toolCalls.length > 0 && (
+          <div className="tool-calls">
+            <h4>Actions taken:</h4>
+            <ul>
+              {toolCalls.map((call, idx) => (
+                <li key={call.id || idx}>
+                  {call.function.name.replace(/_/g, ' ')}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    ));
+  };
+
   return (
     <div className="container">
       <div className="content">
-        <form onSubmit={handleSubmit} className="prompt-form">
-          <input
-            type="text"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Take my photo, make it funny, and send it to me"
-            className="prompt-input"
-            disabled={loading}
-          />
-          <button type="submit" className="submit-button" disabled={loading}>
-            {loading ? <FaSpinner className="spinner" /> : 'Enter'}
-          </button>
-        </form>
+        <div className="chat-container">
+          <div className="messages-container">
+            {messages.length > 0 ? (
+              renderMessages()
+            ) : (
+              <div className="empty-chat">
+                Start a conversation by sending a message
+              </div>
+            )}
+          </div>
+
+          <form onSubmit={handleSubmit} className="prompt-form">
+            <input
+              type="text"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="Take my photo, make it funny, and send it to me"
+              className="prompt-input"
+              disabled={loading}
+            />
+            <button type="submit" className="submit-button" disabled={loading}>
+              {loading ? <FaSpinner className="spinner" /> : 'Send'}
+            </button>
+          </form>
+        </div>
         
         <div className="tools-section">
           <span className="tools-label">Tools integrated:</span>
@@ -98,34 +172,13 @@ function App() {
           </div>
         </div>
 
-        {(loading || response || error || toolCalls.length > 0) && (
-          <div className="response-section">
-            {loading && (
-              <div className="loading">
-                <FaSpinner className="spinner" />
-                Processing...
-              </div>
-            )}
-            {error && <div className="error">{error}</div>}
-            {response && (
-              <>
-                <div className="response">{response}</div>
-                {toolCalls.length > 0 && (
-                  <div className="tool-calls">
-                    <h4>Actions taken:</h4>
-                    <ul>
-                      {toolCalls.map((call, index) => (
-                        <li key={call.id || index}>
-                          {call.function.name.replace(/_/g, ' ')}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </>
-            )}
+        {loading && (
+          <div className="loading">
+            <FaSpinner className="spinner" />
+            Processing...
           </div>
         )}
+        {error && <div className="error">{error}</div>}
       </div>
     </div>
   );
