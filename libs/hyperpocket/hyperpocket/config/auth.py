@@ -31,6 +31,10 @@ class XAuthConfig(BaseAuthConfig):
     client_id: str
     client_secret: str
 
+class JiraAuthConfig(BaseAuthConfig):
+    client_id: str
+    client_secret: str
+
 
 class AuthConfig(BaseModel):
     slack: Optional[SlackAuthConfig] = None
@@ -38,6 +42,7 @@ class AuthConfig(BaseModel):
     github: Optional[GithubAuthConfig] = None
     calendly: Optional[CalendlyAuthConfig] = None
     x: Optional[XAuthConfig] = None
+    jira: Optional[JiraAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
 
 
