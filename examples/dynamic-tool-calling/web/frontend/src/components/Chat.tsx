@@ -1,5 +1,6 @@
 import { useState, FormEvent, useEffect } from 'react';
 import { FaCamera, FaImage, FaEnvelope, FaSpinner, FaSlack, FaRobot, FaCheck } from 'react-icons/fa';
+import ReactMarkdown from 'react-markdown';
 
 // Types
 interface Message {
@@ -47,6 +48,7 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
   const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const [tools, setTools] = useState<Tool[]>([]);
 
   // Effects
@@ -66,15 +68,20 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
     const newMessage: Message = { text: prompt, role: 'user' };
     const updatedMessages = [...messages, newMessage];
     setMessages(updatedMessages);
+    setPrompt('');
+    
+    // Show typing indicator
+    setIsTyping(true);
 
     try {
       const response = await sendChatRequest(updatedMessages);
+      setIsTyping(false);
       handleChatResponse(response);
     } catch (error) {
+      setIsTyping(false);
       handleError(error);
     } finally {
       setLoading(false);
-      setPrompt('');
     }
   };
 
@@ -120,43 +127,44 @@ function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
     return TOOL_ICONS[toolName] || <FaRobot />;
   };
 
-  const convertLinksToHtml = (text: string) => {
-    // First, replace newlines with <br> tags
-    let formattedText = text.replace(/\n/g, '<br>');
-    
-    // Then handle URLs
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    formattedText = formattedText.replace(urlRegex, (url) => {
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-    });
-
-    return formattedText;
-  };
-
   // Render Functions
   const renderMessages = () => (
     <div className="messages-container">
       {messages.length > 0 ? (
-        messages.map((message, index) => (
-          <div key={index} className={`message ${message.role}`}>
-            <div 
-              className="message-content"
-              dangerouslySetInnerHTML={{ __html: convertLinksToHtml(message.text) }}
-            />
-            {message.role === 'assistant' && toolCalls.length > 0 && (
-              <div className="tool-calls">
-                <h4>Actions taken:</h4>
-                <ul>
-                  {toolCalls.map((call, idx) => (
-                    <li key={call.id || idx}>
-                      {call.function.name.replace(/_/g, ' ')}
-                    </li>
-                  ))}
-                </ul>
+        <>
+          {messages.map((message, index) => (
+            <div key={index} className={`message ${message.role}`}>
+              <div className="message-content">
+                <ReactMarkdown>
+                  {message.text}
+                </ReactMarkdown>
               </div>
-            )}
-          </div>
-        ))
+              {message.role === 'assistant' && toolCalls.length > 0 && (
+                <div className="tool-calls">
+                  <h4>Actions taken:</h4>
+                  <ul>
+                    {toolCalls.map((call, idx) => (
+                      <li key={call.id || idx}>
+                        {call.function.name.replace(/_/g, ' ')}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ))}
+          {isTyping && (
+            <div className="message assistant typing">
+              <div className="message-content">
+                <div className="typing-dots">
+                  <div className="typing-dot" />
+                  <div className="typing-dot" />
+                  <div className="typing-dot" />
+                </div>
+              </div>
+            </div>
+          )}
+        </>
       ) : (
         <div className="empty-chat">
           Start a conversation by sending a message

@@ -500,6 +500,7 @@ body {
   margin-left: auto;  /* Push user messages to the right */
 }
 
+/* Markdown styles */
 .message-content {
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-lg);
@@ -508,10 +509,72 @@ body {
   color: var(--color-text-default);
 }
 
+.message-content > *:first-child {
+  margin-top: 0;
+}
+
+.message-content > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Markdown elements */
+.message-content p {
+  margin: var(--space-2) 0;
+}
+
+.message-content a {
+  color: var(--color-accent-primary);
+  text-decoration: none;
+}
+
+.message-content a:hover {
+  text-decoration: underline;
+}
+
+.message-content code {
+  background: var(--color-background-default);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Droid Sans Mono', 'Source Code Pro', monospace;
+}
+
+.message-content pre {
+  background: var(--color-background-default);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin: var(--space-3) 0;
+}
+
+.message-content pre code {
+  background: none;
+  padding: 0;
+  font-size: 12px;
+}
+
+.message-content ul, 
+.message-content ol {
+  margin: var(--space-2) 0;
+  padding-left: var(--space-4);
+}
+
+.message-content li {
+  margin: var(--space-1) 0;
+}
+
 .message.user .message-content {
   background: var(--color-accent-primary);
   border: none;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 var(--radius-lg);  /* Unique shape for user messages */
+}
+
+.message.user .message-content code {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.message.user .message-content a {
+  color: white;
+  text-decoration: underline;
 }
 
 /* Assistant message specific style */
@@ -964,4 +1027,60 @@ body {
 .modal-body .code-editor-container {
   flex: 1;  /* Take all available space in modal */
   min-height: 0;  /* Allow container to shrink */
+}
+
+/* Message typing animation */
+.message.typing .message-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 24px;
+}
+
+.typing-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.typing-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-text-secondary);
+  animation: typingDot 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingDot {
+  0%, 60%, 100% { 
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% { 
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* Fade in animation for messages */
+.message {
+  animation: messageAppear 0.3s ease;
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 } 
