@@ -1,2 +1,3 @@
 #!/bin/bash
-uvicorn src.main:app --reload --port 3001 
+export PYTHONPATH=$PYTHONPATH:$(pwd)/src
+uvicorn src.main:app --host 0.0.0.0 --port 3001 --reload 
