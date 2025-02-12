@@ -23,6 +23,7 @@ Classes
    libs.hyperpocket.hyperpocket.config.auth.GoogleAuthConfig
    libs.hyperpocket.hyperpocket.config.auth.GithubAuthConfig
    libs.hyperpocket.hyperpocket.config.auth.CalendlyAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.XAuthConfig
    libs.hyperpocket.hyperpocket.config.auth.AuthConfig
 
 
@@ -90,6 +91,19 @@ Module Contents
       :type:  str
 
 
+.. py:class:: XAuthConfig
+
+   Bases: :py:obj:`BaseAuthConfig`
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
 .. py:class:: AuthConfig
 
    Bases: :py:obj:`pydantic.BaseModel`
@@ -115,6 +129,12 @@ Module Contents
 
    .. py:attribute:: calendly
       :type:  Optional[CalendlyAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: x
+      :type:  Optional[XAuthConfig]
       :value: None
 
 

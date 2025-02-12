@@ -162,7 +162,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.CalendlyAuthConfig" title="libs.hyperpocket.hyperpocket.config.auth.CalendlyAuthConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalendlyAuthConfig</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig" title="libs.hyperpocket.hyperpocket.config.auth.AuthConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AuthConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig" title="libs.hyperpocket.hyperpocket.config.auth.XAuthConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XAuthConfig</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig" title="libs.hyperpocket.hyperpocket.config.auth.AuthConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AuthConfig</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -232,6 +235,19 @@
 <dd></dd></dl>
 </dd></dl>
 <dl class="py class">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.config.auth.XAuthConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.config.auth.</span></span><span class="sig-name descname"><span class="pre">XAuthConfig</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig'"><span>#</span></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.BaseAuthConfig" title="libs.hyperpocket.hyperpocket.config.auth.BaseAuthConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseAuthConfig</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.config.auth.XAuthConfig.client_id">
+<span class="sig-name descname"><span class="pre">client_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig.client_id" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig.client_id'"><span>#</span></a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.config.auth.XAuthConfig.client_secret">
+<span class="sig-name descname"><span class="pre">client_secret</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig.client_secret" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig.client_secret'"><span>#</span></a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py class">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.config.auth.AuthConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.config.auth.</span></span><span class="sig-name descname"><span class="pre">AuthConfig</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.config.auth.AuthConfig'"><span>#</span></a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pydantic.BaseModel</span></code></p>
@@ -250,6 +266,10 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.config.auth.AuthConfig.calendly">
 <span class="sig-name descname"><span class="pre">calendly</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.CalendlyAuthConfig" title="libs.hyperpocket.hyperpocket.config.auth.CalendlyAuthConfig"><span class="pre">CalendlyAuthConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.calendly" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.calendly'"><span>#</span></a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.config.auth.AuthConfig.x">
+<span class="sig-name descname"><span class="pre">x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig" title="libs.hyperpocket.hyperpocket.config.auth.XAuthConfig"><span class="pre">XAuthConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.x" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.x'"><span>#</span></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.config.auth.AuthConfig.use_prebuilt_auth">
@@ -292,11 +312,17 @@
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.config.auth.CalendlyAuthConfig.client_secret'" class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.CalendlyAuthConfig.client_secret"><code class="docutils literal notranslate"><span class="pre">CalendlyAuthConfig.client_secret</span></code></a></li>
 </ul>
 </li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig'" class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig"><code class="docutils literal notranslate"><span class="pre">XAuthConfig</span></code></a><ul>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig.client_id'" class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig.client_id"><code class="docutils literal notranslate"><span class="pre">XAuthConfig.client_id</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig.client_secret'" class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.XAuthConfig.client_secret"><code class="docutils literal notranslate"><span class="pre">XAuthConfig.client_secret</span></code></a></li>
+</ul>
+</li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.config.auth.AuthConfig'" class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig"><code class="docutils literal notranslate"><span class="pre">AuthConfig</span></code></a><ul>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.slack'" class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.slack"><code class="docutils literal notranslate"><span class="pre">AuthConfig.slack</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.google'" class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.google"><code class="docutils literal notranslate"><span class="pre">AuthConfig.google</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.github'" class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.github"><code class="docutils literal notranslate"><span class="pre">AuthConfig.github</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.calendly'" class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.calendly"><code class="docutils literal notranslate"><span class="pre">AuthConfig.calendly</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.x'" class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.x"><code class="docutils literal notranslate"><span class="pre">AuthConfig.x</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.use_prebuilt_auth'" class="reference internal" href="#libs.hyperpocket.hyperpocket.config.auth.AuthConfig.use_prebuilt_auth"><code class="docutils literal notranslate"><span class="pre">AuthConfig.use_prebuilt_auth</span></code></a></li>
 </ul>
 </li>

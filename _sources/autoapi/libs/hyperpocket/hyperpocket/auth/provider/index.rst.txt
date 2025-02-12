@@ -61,6 +61,11 @@ Module Contents
 
 
 
+   .. py:attribute:: X
+      :value: 'x'
+
+
+
    .. py:method:: get_auth_provider(auth_provider_name: str) -> AuthProvider
       :classmethod:
 
