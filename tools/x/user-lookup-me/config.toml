@@ -1,5 +1,5 @@
 name = "x_user_lookup_me"
-description = "list x home posts in user timeline"
+description = "get my user data"
 language = "python"
 
 [auth]
