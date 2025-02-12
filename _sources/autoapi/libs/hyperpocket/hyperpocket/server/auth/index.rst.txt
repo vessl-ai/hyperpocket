@@ -20,7 +20,6 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/reddit/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/slack/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/token/index
-   /autoapi/libs/hyperpocket/hyperpocket/server/auth/x/index
 
 
 Attributes

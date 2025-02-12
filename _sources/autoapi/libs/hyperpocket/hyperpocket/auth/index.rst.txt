@@ -23,7 +23,6 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/auth/reddit/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/schema/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/slack/index
-   /autoapi/libs/hyperpocket/hyperpocket/auth/x/index
 
 
 Attributes
