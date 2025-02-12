@@ -4,7 +4,7 @@
 
 ### install vite, uv 
 ```shell
-brew install vite
+brew install vite, tsc
 brew install uv
 ```
 
