@@ -310,6 +310,8 @@ body {
   border-radius: 12px;
   background: white;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .message.user .message-content {
@@ -373,13 +375,12 @@ body {
 }
 
 .message-content a {
-  color: inherit;
-  text-decoration: underline;
-  word-break: break-all;
+  color: #3b82f6;
+  text-decoration: none;
 }
 
 .message-content a:hover {
-  opacity: 0.8;
+  text-decoration: underline;
 }
 
 .message.user .message-content a {
@@ -807,4 +808,8 @@ body {
 
 .github-link-button:hover {
   background: #2c974b;
+}
+
+.message-content br {
+  margin-bottom: 0.5em;
 } 

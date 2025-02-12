@@ -36,14 +36,18 @@ const TOOL_ICONS: Record<string, JSX.Element> = {
   'get_channel_members': <FaSlack />,
 };
 
-function Chat() {
-  // State
+interface ChatProps {
+  messages: Message[];
+  setMessages: (messages: Message[]) => void;
+  toolCalls: ToolCall[];
+  setToolCalls: (toolCalls: ToolCall[]) => void;
+}
+
+function Chat({ messages, setMessages, toolCalls, setToolCalls }: ChatProps) {
   const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
   const [tools, setTools] = useState<Tool[]>([]);
-  const [toolCalls, setToolCalls] = useState<ToolCall[]>([]);
 
   // Effects
   useEffect(() => {
@@ -117,16 +121,16 @@ function Chat() {
   };
 
   const convertLinksToHtml = (text: string) => {
-    const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-    const urlRegex = /(?<![[\]])\b(https?:\/\/[^\s<>"']+)(?![^<]*>|[^<>]*<\/)/g;
-
-    let processedText = text.replace(markdownLinkRegex, 
-      (match, text, url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`
-    );
+    // First, replace newlines with <br> tags
+    let formattedText = text.replace(/\n/g, '<br>');
     
-    return processedText.replace(urlRegex, 
-      (match, url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
-    );
+    // Then handle URLs
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    formattedText = formattedText.replace(urlRegex, (url) => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+
+    return formattedText;
   };
 
   // Render Functions

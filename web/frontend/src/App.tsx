@@ -6,8 +6,25 @@ import CustomTools from './components/CustomTools';
 
 type TabType = 'chat' | 'tools';
 
+// Types
+interface Message {
+  text: string;
+  role?: 'user' | 'assistant';
+}
+
+interface ToolCall {
+  id: string;
+  type: string;
+  function: {
+    name: string;
+    arguments: string;
+  };
+}
+
 function App() {
   const [activeTab, setActiveTab] = useState<TabType>('chat');
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [toolCalls, setToolCalls] = useState<ToolCall[]>([]);
 
   return (
     <div className="container">
@@ -27,7 +44,16 @@ function App() {
           </button>
         </div>
 
-        {activeTab === 'chat' ? <Chat /> : <CustomTools />}
+        {activeTab === 'chat' ? (
+          <Chat 
+            messages={messages}
+            setMessages={setMessages}
+            toolCalls={toolCalls}
+            setToolCalls={setToolCalls}
+          />
+        ) : (
+          <CustomTools />
+        )}
       </div>
     </div>
   );
