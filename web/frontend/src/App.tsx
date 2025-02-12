@@ -41,7 +41,7 @@ function App() {
             className={`tab ${activeTab === 'tools' ? 'active' : ''}`}
             onClick={() => setActiveTab('tools')}
           >
-            <FaTools /> Custom Tools
+            <FaTools /> Tools
           </button>
         </div>
 

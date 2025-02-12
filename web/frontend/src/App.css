@@ -386,22 +386,31 @@ body {
 }
 
 .code-editor {
+  position: relative;
   border-radius: 8px;
   overflow: hidden;
-  background: #1e1e1e;
 }
 
-.code-editor textarea {
+.code-input {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  min-height: 200px;
+  height: 100%;
   padding: 16px;
   border: none;
-  background: #1e1e1e;
-  color: #d4d4d4;
+  background: transparent;
+  color: transparent;
+  caret-color: white;
   font-family: 'Consolas', 'Monaco', monospace;
   font-size: 14px;
   line-height: 1.5;
   resize: vertical;
+  z-index: 1;
+}
+
+.code-input:focus {
+  outline: none;
 }
 
 .tools-list {
@@ -439,4 +448,216 @@ body {
 
 .tool-item.loading {
   opacity: 0.7;
+}
+
+/* Registered Tools styles */
+.registered-tools-section {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.registered-tool-item {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.registered-tool-item h3 {
+  margin: 0 0 12px 0;
+  color: #1a202c;
+  font-size: 1.2rem;
+}
+
+.tool-description {
+  color: #4a5568;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.tool-parameters h4 {
+  margin: 0 0 8px 0;
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+.tool-parameters ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tool-parameters li {
+  margin-bottom: 12px;
+  padding: 8px;
+  background: #f7fafc;
+  border-radius: 4px;
+}
+
+.param-name {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.param-type {
+  margin-left: 8px;
+  padding: 2px 6px;
+  background: #edf2f7;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #4a5568;
+}
+
+.param-description {
+  margin: 4px 0 0 0;
+  font-size: 0.9em;
+  color: #718096;
+}
+
+/* Update existing sections */
+.add-tool-section {
+  margin-bottom: 40px;
+}
+
+.custom-tools-section {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Tool accordion styles */
+.tool-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+}
+
+.tool-header:hover {
+  background: #f7fafc;
+}
+
+.tool-header h3,
+.tool-header h4 {
+  margin: 0;
+}
+
+.tool-details {
+  padding: 0 12px 12px 36px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.registered-tool-item {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.tool-description {
+  margin: 12px 0;
+}
+
+/* Update existing tool parameter styles */
+.tool-parameters {
+  margin-top: 16px;
+}
+
+.tool-parameters h4 {
+  margin-bottom: 12px;
+}
+
+.tool-parameters li {
+  padding: 12px;
+  background: #f7fafc;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.modal-close:hover {
+  background: #f3f4f6;
+}
+
+.modal-body {
+  padding: 16px;
+  overflow-y: auto;
+  max-height: calc(90vh - 70px);
+}
+
+.code-preview {
+  margin: 0 !important;
+  border-radius: 6px;
+}
+
+.view-code-button {
+  margin-left: auto;
+  background: #f3f4f6;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.view-code-button:hover {
+  background: #e5e7eb;
 } 

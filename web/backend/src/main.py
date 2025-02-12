@@ -12,6 +12,7 @@ from src.tools import (
 )
 import os
 from typing import Dict, List, Optional
+import inspect
 
 # Load environment variables
 load_dotenv()
@@ -73,7 +74,7 @@ class AIService:
     def add_tool(self, name: str, tool_function: callable):
         """Add a new tool to the service."""
         self.custom_tools[name] = {"tool": tool_function}
-        # self.initialize()  # Reinitialize with the new tool
+        self.initialize()  # Reinitialize with the new tool
 
     async def process_chat(self, messages: List[Message]) -> ChatResponse:
         """
@@ -220,6 +221,110 @@ from hyperpocket.auth import AuthProvider
         raise HTTPException(
             status_code=400,
             detail=f"Failed to add tool: {str(e)}"
+        )
+
+@app.get("/api/tools")
+async def get_tools():
+    """Get all registered tools and their specifications."""
+    try:
+        tools_info = []
+        for name, tool_data in ai_service.tools.items():
+            tool = tool_data["tool"]
+            # Get the original function from the FunctionTool instance
+            func = tool.func if isinstance(tool, FunctionTool) else tool
+            
+            # Get docstring
+            docstring = func.__doc__ or "No description available"
+            # Clean up docstring
+            docstring = inspect.cleandoc(docstring)
+            
+            # Split docstring into description and args sections
+            parts = docstring.split("Args:")
+            description = parts[0].strip()
+            args_section = parts[1].strip() if len(parts) > 1 else ""
+            
+            # Parse args section into a dict
+            param_descriptions = {}
+            if args_section:
+                current_param = None
+                current_desc = []
+                
+                for line in args_section.split("\n"):
+                    line = line.strip()
+                    if not line:
+                        continue
+                        
+                    if ":" in line and not line.startswith(" "):
+                        # Save previous parameter
+                        if current_param:
+                            param_descriptions[current_param] = " ".join(current_desc).strip()
+                        
+                        # Start new parameter
+                        param_name, desc = line.split(":", 1)
+                        current_param = param_name.strip()
+                        current_desc = [desc.strip()]
+                    else:
+                        # Continue previous parameter description
+                        if current_param:
+                            current_desc.append(line)
+                
+                # Save last parameter
+                if current_param:
+                    param_descriptions[current_param] = " ".join(current_desc).strip()
+            
+            tool_info = {
+                "name": name,
+                "description": description,
+                "parameters": []
+            }
+            
+            # Get parameters from function signature
+            if hasattr(func, "__annotations__"):
+                for param_name, param_type in func.__annotations__.items():
+                    if param_name != "return":
+                        param_info = {
+                            "name": param_name,
+                            "type": str(param_type).replace("typing.", ""),  # Clean up type string
+                            "description": param_descriptions.get(param_name, ""),
+                            "required": True
+                        }
+                        tool_info["parameters"].append(param_info)
+            
+            tools_info.append(tool_info)
+            
+        return {"tools": tools_info}
+        
+    except Exception as e:
+        print(f"Error getting tools: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to get tools: {str(e)}"
+        )
+
+@app.get("/api/tools/{tool_name}/code")
+async def get_tool_code(tool_name: str):
+    """Get the source code of a specific tool."""
+    try:
+        tool_data = ai_service.tools.get(tool_name)
+        if not tool_data:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Tool '{tool_name}' not found"
+            )
+            
+        tool = tool_data["tool"]
+        func = tool.func if isinstance(tool, FunctionTool) else tool
+        
+        # Get the source code
+        import inspect
+        code = inspect.getsource(func)
+        
+        return {"code": code}
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to get tool code: {str(e)}"
         )
 
 if __name__ == "__main__":
