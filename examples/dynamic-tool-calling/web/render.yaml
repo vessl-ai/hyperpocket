@@ -1,0 +1,33 @@
+services:
+  # Frontend service
+  - type: web
+    name: ai-tool-frontend
+    env: docker
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: docker build -t ai-tool-frontend -f frontend/Dockerfile frontend/
+    startCommand: docker run -p 80:80 -e VITE_API_URL=${VITE_API_URL} ai-tool-frontend
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          name: ai-tool-backend
+          type: web
+          property: url
+
+  # Backend service
+  - type: web
+    name: ai-tool-backend
+    env: docker
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: docker build -t ai-tool-backend -f backend/Dockerfile backend/
+    startCommand: docker run -p 3001:3001 ai-tool-backend
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        value: https://ai-tool-frontend.onrender.com
+      - key: PORT
+        value: 3001 
