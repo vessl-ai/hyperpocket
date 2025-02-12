@@ -18,18 +18,22 @@ class PocketCore:
     @staticmethod
     def _default_dock() -> Dock:
         try:
-            from hyperdock_wasm.dock import WasmDock
-            pocket_logger.info("hyperdock-wasm is loaded.")
-            return WasmDock()
-        except ImportError:
-            pocket_logger.warning("Failed to import hyperdock_wasm.")
-        
-        try:
             from hyperdock_container.dock import ContainerDock
             pocket_logger.info("hyperdock-container is loaded.")
             return ContainerDock()
         except ImportError:
+            import traceback
+            traceback.print_stack()
+            traceback.print_exc()
+            pocket_logger.warning("Failed to import hyperdock_container.")
+        
+        try:
+            from hyperdock_wasm.dock import WasmDock
+            pocket_logger.info("hyperdock-wasm is loaded.")
+            return WasmDock()
+        except ImportError:
             raise ImportError("No default dock available. To register a remote tool, you need to install either hyperdock_wasm or hyperdock_container.")
+        
     
     def __init__(
         self,
@@ -44,10 +48,7 @@ class PocketCore:
         str_tool_likes = [tool for tool in tools if isinstance(tool, str)]
         function_tool_likes = [tool for tool in tools if not isinstance(tool, str) and not isinstance(tool, Dock)]
         # especially, docks are maintained by core
-        self.docks = []
-        for dock_like in tools:
-            if isinstance(dock_like, Dock):
-                self.docks.append(dock_like)
+        self.docks = [dock for dock in tools if isinstance(dock, Dock)]
         
         if len(str_tool_likes) > 0:
             default_dock = self._default_dock()
@@ -55,10 +56,6 @@ class PocketCore:
                 default_dock.plug(req_like=str_tool_like)
             # append default dock
             self.docks.append(default_dock)
-        
-        # if there are docks, sync them
-        for dock in self.docks:
-            dock.sync(parallel=True)
 
         self.tools = dict()
         
@@ -67,7 +64,8 @@ class PocketCore:
             self._load_tool(tool_like)
         
         for dock in self.docks:
-            for tool in dock.tools():
+            tools = dock.tools()
+            for tool in tools:
                 self._load_tool(tool)
 
         pocket_logger.info(

@@ -1,0 +1,29 @@
+{
+    "tool": {
+      "name": "adder",
+      "description": "add two numbers",
+      "inputSchema": {
+        "properties": {
+          "a": {
+            "title": "first number",
+            "type": "integer"
+          },
+          "b": {
+            "title": "second number",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "a",
+          "b"
+        ],
+        "title": "AdderRequest",
+        "type": "object"
+      }
+    },
+    "baseImage": "golang",
+    "entrypoint": {
+      "build": "go build -o app main.go",
+      "run": "./app"
+    }
+  }

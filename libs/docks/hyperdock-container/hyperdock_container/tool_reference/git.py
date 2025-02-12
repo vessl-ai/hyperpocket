@@ -7,7 +7,7 @@ from hyperpocket.config import pocket_logger, settings
 from hyperpocket.repository import ToolReference
 
 
-class WasmGitToolReference(ToolReference):
+class ContainerGitToolReference(ToolReference):
     _remote_cache: ClassVar[dict[str, dict[str, str]]]
     tool_source: str = "git"
     repository_url: str
@@ -15,7 +15,7 @@ class WasmGitToolReference(ToolReference):
     ref_sha: Optional[str] = None
     
     def __str__(self):
-        return f"WasmGitToolReference(repository_url={self.repository_url}, git_ref={self.git_ref})"
+        return f"ContainerGitToolReference(repository_url={self.repository_url}, git_ref={self.git_ref})"
 
     def key(self) -> tuple[str, ...]:
         return "git", self.repository_url, self.git_ref

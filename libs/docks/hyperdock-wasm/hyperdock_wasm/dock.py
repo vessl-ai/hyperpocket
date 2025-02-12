@@ -41,43 +41,39 @@ class WasmDock(Dock):
         self._dock_http_router.get("/scripts/{script_id}/entrypoint")(get_entrypoint(prefix=self._unique_identifier))
         self._dock_http_router.get("/scripts/{script_id}/file/{file_name}", response_class=FileResponse)(get_dist_file)
     
-    @staticmethod
-    def try_parse(req_like: str) -> WasmToolRequest:
+    def try_parse(self, req_like: str) -> WasmToolRequest:
         if pathlib.Path(req_like).expanduser().exists():
             tool_ref = WasmLocalToolReference(tool_path=req_like)
-            return WasmToolRequest(tool_ref=tool_ref, rel_path="", tool_vars=dict())
+            return WasmToolRequest(tool_ref=tool_ref, rel_path="", tool_vars=self._dock_vars)
         elif req_like.startswith("https://github.com"):
             base_repo_url, git_ref, rel_path = WasmGitToolReference.parse_repo_url(req_like)
             tool_ref = WasmGitToolReference(repository_url=base_repo_url, git_ref=git_ref)
-            return WasmToolRequest(tool_ref=tool_ref, rel_path=rel_path, tool_vars=dict())
+            return WasmToolRequest(tool_ref=tool_ref, rel_path=rel_path, tool_vars=self._dock_vars)
         raise ValueError(f"Could not parse as a WasmToolRequest: {req_like}")
-    
-    def sync(self, parallel: bool, **kwargs):
-        if parallel:
-            with ThreadPoolExecutor(
-                max_workers=min(len(self.unique_tool_references) + 1, 100), thread_name_prefix="repository_loader"
-            ) as executor:
-                executor.map(lambda k: self._sync_ref(k, **kwargs), self.unique_tool_references.keys())
-        else:
-            for key in self.unique_tool_references.keys():
-                self._sync_ref(key, **kwargs)
-    
-    def _sync_ref(self, k, **kwargs):
-        tool_ref = self.unique_tool_references[k]
-        tool_ref.sync(**kwargs)
     
     def plug(self, req_like: Any, **kwargs):
         if isinstance(req_like, str):
-            req = WasmDock.try_parse(req_like)
+            req = self.try_parse(req_like)
             self.unique_tool_references[req.tool_ref.key()] = req.tool_ref
             self._tool_requests.append(req)
         elif isinstance(req_like, WasmToolRequest):
+            if not hasattr(req_like, "overridden_tool_vars"):
+                req_like.overridden_tool_vars = dict()
+            req_like.overridden_tool_vars = self._dock_vars | req_like.overridden_tool_vars
             self.unique_tool_references[req_like.tool_ref.key()] = req_like.tool_ref
             self._tool_requests.append(req_like)
         else:
             raise ValueError(f"Could not parse as a WasmToolRequest: {req_like}")
-    
+
+    def _sync_ref(self, k, **kwargs):
+        tool_ref = self.unique_tool_references[k]
+        tool_ref.sync(**kwargs)
+
     def tools(self) -> list[FunctionTool]:
+        with ThreadPoolExecutor(
+            max_workers=min(len(self.unique_tool_references) + 1, 100), thread_name_prefix="repository_loader"
+        ) as executor:
+            executor.map(lambda k: self._sync_ref(k), self.unique_tool_references.keys())
         return [self.runtime.from_tool_request(req) for req in self._tool_requests]
 
     async def teardown(self):

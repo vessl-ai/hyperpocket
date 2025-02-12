@@ -5,7 +5,7 @@ from hyperpocket.config import pocket_logger, settings
 from hyperpocket.repository import ToolReference
 from pydantic import Field
 
-class WasmLocalToolReference(ToolReference):
+class ContainerLocalToolReference(ToolReference):
     tool_source: str = Field(default="local")
     tool_path: str
 
@@ -15,17 +15,19 @@ class WasmLocalToolReference(ToolReference):
         )
     
     def __str__(self):
-        return f"WasmLocalToolReference(tool_path={self.tool_path})"
-
+        return f"ContainerLocalToolReference(tool_path={self.tool_path})"
+    
     def key(self) -> tuple[str, ...]:
         return "local", self.tool_path.rstrip("/")
 
-    def sync(self, **kwargs):
+    def sync(self, sync_base_image: bool = False, **kwargs):
         pocket_logger.info(f"Syncing path: {self.tool_path} ...")
         pkg_path = self.toolpkg_path()
         if pkg_path.exists():
             shutil.rmtree(pkg_path)
         shutil.copytree(self.tool_path, pkg_path)
+        last_sync = self.toolpkg_path() / ".last_sync"
+        last_sync.touch(exist_ok=True)
 
     def toolpkg_path(self) -> pathlib.Path:
         pocket_pkgs = settings.toolpkg_path

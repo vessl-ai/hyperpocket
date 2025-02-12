@@ -11,16 +11,17 @@ class DockerSettings(BaseModel):
     base_url: str = "unix://var/run/docker.sock"
     credstore_env: dict = None
 
-class HyperDockSettings(BaseModel):
-    runtime: Runtime = None
+class HyperdockSettings(BaseModel):
+    runtime: Runtime = Runtime.DOCKER
     docker: Optional[DockerSettings] = None
 
 HYPERDOCK_NAME = "container"
 
-settings = config().docks.get(HYPERDOCK_NAME, HyperDockSettings())
+def settings():
+    return HyperdockSettings(**config().docks.get(HYPERDOCK_NAME, dict()))
 
 __all__ = [
     "settings",
     "DockerSettings",
-    "HyperDockSettings",
+    "HyperdockSettings",
 ]

@@ -54,6 +54,7 @@ if __name__ == "__main__":
     with PocketLangchain(
         tools=[
             "~/Projects/hyperpocket/tools/slack/get-message/"
+            # "~/Projects/hyperpocket/tools/none/adder"
             # "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
             # "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
             # "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
