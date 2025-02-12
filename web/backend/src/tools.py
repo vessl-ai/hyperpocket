@@ -277,3 +277,35 @@ def post_slack_message(
         
     except SlackApiError as e:
         raise RuntimeError(f"Failed to post Slack message. Error: {str(e)}")
+
+@function_tool(auth_provider=AuthProvider.SLACK)
+def get_channel_members(channel_id: str, **kwargs) -> str:
+    """
+    Get all members in a Slack channel.
+    
+    Args:
+        channel_id (str): The ID of the Slack channel
+    """
+    client = WebClient(token=kwargs["SLACK_BOT_TOKEN"])
+    
+    # Get channel members
+    response = client.conversations_members(channel=channel_id)
+    if not response["ok"]:
+        raise RuntimeError(f"Failed to get members: {response['error']}")
+        
+    member_ids = response.get("members", [])
+    if not member_ids:
+        return "No members found in the channel."
+        
+    # Get user info for each member
+    members_info = []
+    for member_id in member_ids:
+        user_info = client.users_info(user=member_id)
+        if user_info["ok"]:
+            user = user_info["user"]
+            display_name = user.get("profile", {}).get("display_name") or user.get("real_name") or user.get("name")
+            members_info.append(display_name)
+    
+    # Format the response
+    members_text = "\n".join(f"- {name}" for name in sorted(members_info))
+    return f"Channel members ({len(members_info)}):\n{members_text}"

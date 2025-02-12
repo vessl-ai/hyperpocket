@@ -3,11 +3,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from openai.types.chat import ChatCompletionMessageToolCall, ChatCompletion
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
+from hyperpocket.tool.function import FunctionTool
 from hyperpocket_openai import PocketOpenAI
 from openai import OpenAI
 from src.tools import (
     send_mail, take_a_picture, call_diffusion_model,
-    get_slack_messages, post_slack_message
+    get_slack_messages, post_slack_message, get_channel_members
 )
 import os
 from typing import Dict, List, Optional
@@ -44,6 +45,7 @@ class AIService:
         self.llm = None
         self.tool_specs = None
         self.tools = None
+        self.custom_tools = {}  # Add this to store custom tools
         self.initialize()
 
     def initialize(self):
@@ -58,6 +60,8 @@ class AIService:
             call_diffusion_model.name: {"tool": call_diffusion_model},
             get_slack_messages.name: {"tool": get_slack_messages},
             post_slack_message.name: {"tool": post_slack_message},
+            get_channel_members.name: {"tool": get_channel_members},
+            **self.custom_tools  # Add custom tools to the tools dictionary
         }
         tool_list = [tool["tool"] for tool in self.tools.values()]
         
@@ -65,6 +69,11 @@ class AIService:
         self.pocket = PocketOpenAI(tools=tool_list)
         self.tool_specs = self.pocket.get_open_ai_tool_specs()
         self.llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+    def add_tool(self, name: str, tool_function: callable):
+        """Add a new tool to the service."""
+        self.custom_tools[name] = {"tool": tool_function}
+        # self.initialize()  # Reinitialize with the new tool
 
     async def process_chat(self, messages: List[Message]) -> ChatResponse:
         """
@@ -187,26 +196,24 @@ from hyperpocket.auth import AuthProvider
         
         # Find the function decorated with @function_tool
         tool_function = None
-        for item in namespace.values():
-            if callable(item):
+        function_name = None
+        
+        # Find the first FunctionTool instance
+        for name, item in namespace.items():
+            if isinstance(item, FunctionTool):
                 tool_function = item
+                function_name = name
                 break
                 
         if not tool_function:
-            raise ValueError("No function_tool found in the code")
+            raise ValueError("No function_tool found in the code. Make sure you're using the @function_tool decorator.")
             
-        # Get the function name
-        tool_name = tool_function.__name__
-        
-        # Add to tools dictionary
-        ai_service.tools[tool_name] = {"tool": tool_function}
-        
-        # Reinitialize the service to update tools
-        ai_service.initialize()
+        # Add the tool using the new method
+        ai_service.add_tool(function_name, tool_function)
         
         return AddToolResponse(
-            name=tool_name,
-            message=f"Successfully added tool: {tool_name}"
+            name=function_name,
+            message=f"Successfully added tool: {function_name}. You can now use this tool in your conversations."
         )
         
     except Exception as e:
