@@ -1,7 +1,6 @@
 import { useState, FormEvent, useEffect } from 'react';
 import { FaSpinner, FaChevronDown, FaChevronRight, FaCode } from 'react-icons/fa';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import Editor, { OnChange } from "@monaco-editor/react";
 import Modal from './Modal';
 
 interface Tool {
@@ -36,6 +35,40 @@ const DEFAULT_TOOL_CODE = `@function_tool
 def my_custom_tool(param1: str, param2: int) -> str:
     """Your tool description"""
     # Your code here`;
+
+interface CodeEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+  language?: string;
+  readOnly?: boolean;
+}
+
+const CodeEditor: React.FC<CodeEditorProps> = ({ value, onChange, language = "python", readOnly = false }) => {
+  const handleEditorChange: OnChange = (value, _event) => {
+    onChange(value || "");
+  };
+
+  return (
+    <Editor
+      height="300px"
+      defaultLanguage={language}
+      value={value}
+      onChange={readOnly ? undefined : handleEditorChange}
+      theme="vs-dark"
+      options={{
+        minimap: { enabled: false },
+        fontSize: 14,
+        lineNumbers: "on",
+        roundedSelection: false,
+        scrollBeyondLastLine: false,
+        automaticLayout: true,
+        wordWrap: "on",
+        readOnly: readOnly,
+        domReadOnly: readOnly,
+      }}
+    />
+  );
+};
 
 function CustomTools() {
   const [tools, setTools] = useState<Tool[]>([]);
@@ -260,24 +293,10 @@ function CustomTools() {
 
       <form onSubmit={handleSubmit} className="tool-form">
         <div className="code-editor">
-          <SyntaxHighlighter
+          <CodeEditor
+            value={newToolCode || DEFAULT_TOOL_CODE}
+            onChange={(value) => setNewToolCode(value)}
             language="python"
-            style={vscDarkPlus}
-            customStyle={{
-              margin: 0,
-              padding: '16px',
-              background: '#1e1e1e',
-              fontSize: '14px',
-              minHeight: '200px',
-            }}
-          >
-            {newToolCode || DEFAULT_TOOL_CODE}
-          </SyntaxHighlighter>
-          <textarea
-            value={newToolCode}
-            onChange={(e) => setNewToolCode(e.target.value)}
-            className="code-input"
-            disabled={loading}
           />
         </div>
         <button type="submit" className="submit-button" disabled={loading}>
@@ -371,16 +390,14 @@ function CustomTools() {
         onClose={() => setSelectedTool(null)}
         title={selectedTool ? `${selectedTool.name} Source Code` : ''}
       >
-        <SyntaxHighlighter
-          language="python"
-          style={vscDarkPlus}
-          customStyle={{
-            margin: 0,
-            borderRadius: '6px',
-          }}
-        >
-          {selectedTool?.code || ''}
-        </SyntaxHighlighter>
+        <div style={{ height: '500px' }}>
+          <CodeEditor
+            value={selectedTool?.code || ''}
+            onChange={() => {}}
+            language="python"
+            readOnly={true}
+          />
+        </div>
       </Modal>
     </div>
   );
