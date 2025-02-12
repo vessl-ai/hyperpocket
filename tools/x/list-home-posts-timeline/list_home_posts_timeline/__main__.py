@@ -21,7 +21,6 @@ def list_home_posts(req: XListUserPostRequest):
     token = os.getenv("X_AUTH_TOKEN")
 
     headers = {
-        "Content-Type": "application/json",
         "Authorization": f"Bearer {token}",
     }
 
@@ -39,7 +38,11 @@ def list_home_posts(req: XListUserPostRequest):
         return response.json()
     except requests.exceptions.RequestException as e:
         traceback.print_exc()
-        return {"error": str(e)}
+        return {
+            "error": str(e),
+            "response_status": response.status_code,
+            "response_text": response.text,
+        }
 
 
 def main():
