@@ -85,7 +85,26 @@ class XCreatePostRequest(BaseModel):
 def create_post(req: XCreatePostRequest):
     token = os.getenv("X_AUTH_TOKEN")
 
-    payload = req.dict()
+    payload = {"text": req.text}
+    if req.card_uri:
+        payload["card_uri"] = req.card_uri
+    if req.community_id:
+        payload["community_id"] = req.community_id
+    if req.direct_message_deep_link:
+        payload["direct_message_deep_link"] = req.direct_message_deep_link
+    if req.for_super_followers_only:
+        payload["for_super_followers_only"] = req.for_super_followers_only
+    if req.geo:
+        payload["geo"] = req.geo.dict()
+    if req.media:
+        payload["media"] = req.media.dict()
+    if req.nullcast:
+        payload["nullcast"] = req.nullcast
+    if req.poll:
+        payload["poll"] = req.poll.dict()
+    if req.quote_tweet_id:
+        payload["quote_tweet_id"] = req.quote_tweet_id
+
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {token}",
