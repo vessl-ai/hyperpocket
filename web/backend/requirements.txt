@@ -5,7 +5,7 @@ openai
 pydantic
 pillow
 pyautogui
-requests
+requests==2.31.0
 google-auth-oauthlib
 google-api-python-client
 slack-sdk

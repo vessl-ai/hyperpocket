@@ -727,6 +727,11 @@ body {
   color: white;
 }
 
+.tool-badge.github {
+  background-color: #2ea44f;
+  color: white;
+}
+
 .registered-tool-item h3 {
   display: flex;
   align-items: center;
@@ -736,4 +741,60 @@ body {
   font-size: 0.8rem;
   color: #22c55e;
   margin-left: 2px;
+}
+
+.from-git-section {
+  margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.git-form {
+  width: 100%;
+}
+
+.git-input-wrapper {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.git-input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: white;
+  color: #1a202c;
+}
+
+.git-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.git-input:disabled {
+  background: #f3f4f6;
+  cursor: not-allowed;
+}
+
+.github-link-button {
+  margin-left: auto;
+  background: #2ea44f;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.github-link-button:hover {
+  background: #2c974b;
 } 

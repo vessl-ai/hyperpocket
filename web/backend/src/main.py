@@ -14,6 +14,7 @@ import os
 from typing import Dict, List, Optional
 import inspect
 from src import tools as tools_module
+import requests
 
 # Load environment variables
 load_dotenv()
@@ -47,7 +48,8 @@ class AIService:
         self.llm = None
         self.tool_specs = None
         self.tools = None
-        self.custom_tools = {}  # Add this to store custom tools
+        self.custom_tools = {}
+        self.github_tools = []  # Add this to store GitHub tool URLs
         self.initialize()
 
     def initialize(self):
@@ -63,9 +65,12 @@ class AIService:
             get_slack_messages.name: {"tool": get_slack_messages},
             post_slack_message.name: {"tool": post_slack_message},
             get_channel_members.name: {"tool": get_channel_members},
-            **self.custom_tools  # Add custom tools to the tools dictionary
+            **self.custom_tools
         }
+        
+        # Create tool list including GitHub tools
         tool_list = [tool["tool"] for tool in self.tools.values()]
+        tool_list.extend(self.github_tools)  # Add GitHub tool URLs
         
         # Initialize Hyperpocket and OpenAI
         self.pocket = PocketOpenAI(tools=tool_list)
@@ -79,6 +84,12 @@ class AIService:
             "code": code  # Store the original code
         }
         self.initialize()
+
+    def add_github_tool(self, url: str):
+        """Add a GitHub tool URL."""
+        if url not in self.github_tools:
+            self.github_tools.append(url)
+            self.initialize()
 
     async def process_chat(self, messages: List[Message]) -> ChatResponse:
         """
@@ -232,6 +243,8 @@ async def get_tools():
     """Get all registered tools and their specifications."""
     try:
         tools_info = []
+        
+        # Add regular tools
         for name, tool_data in ai_service.tools.items():
             tool = tool_data["tool"]
             func = tool.func if isinstance(tool, FunctionTool) else tool
@@ -276,6 +289,19 @@ async def get_tools():
             
             tools_info.append(tool_info)
             
+        # Add GitHub tools
+        for url in ai_service.github_tools:
+            tool_name = url.rstrip("/").split("/")[-1]
+            tool_info = {
+                "name": tool_name,
+                "description": f"GitHub tool from: {url}",
+                "parameters": [],
+                "isCustom": True,
+                "isGitHub": True,  # Add this flag
+                "url": url  # Include the URL
+            }
+            tools_info.append(tool_info)
+            
         return {"tools": tools_info}
         
     except Exception as e:
@@ -316,6 +342,36 @@ async def get_tool_code(tool_name: str):
         raise HTTPException(
             status_code=500,
             detail=f"Failed to get tool code: {str(e)}"
+        )
+
+@app.post("/api/tools/from-git")
+async def add_tool_from_git(request: dict):
+    """Add a tool from a GitHub URL."""
+    try:
+        url = request["url"]
+        
+        # Basic validation
+        if not url.startswith("https://github.com/"):
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid GitHub URL"
+            )
+        
+        # Add the GitHub tool URL
+        ai_service.add_github_tool(url)
+        
+        # Get the tool name from the URL
+        tool_name = url.rstrip("/").split("/")[-1]
+        
+        return {
+            "name": tool_name,
+            "message": f"Successfully added GitHub tool: {tool_name}"
+        }
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Failed to add tool from git: {str(e)}"
         )
 
 if __name__ == "__main__":
