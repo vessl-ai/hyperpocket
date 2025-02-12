@@ -39,10 +39,6 @@ class Dock(abc.ABC):
     
     def dock_http_router(self) -> APIRouter:
         return self._dock_http_router
-    
-    @abc.abstractmethod
-    def sync(self, parallel: bool, **kwargs):
-        raise NotImplementedError
 
     @abc.abstractmethod
     def plug(self, req_like=Any, **kwargs):

@@ -1,0 +1,15 @@
+{
+  "tool": {
+    "name": "get_fortune",
+    "description": "get slack messages",
+    "inputSchema": {
+      "properties": {},
+      "required": [],
+      "title": "GetFortuneRequest",
+      "type": "object"
+    }
+  },
+  "entrypoint": {
+    "run": "echo 'You will die today'"
+  }
+}
