@@ -17,9 +17,9 @@ from hyperpocket.cli.codegen.auth import (
 @click.option("--force", is_flag=True, default=False)
 def create_token_auth_template(service_name, force):
     ## Validate service_name
-    if not service_name.islower() or not service_name.replace("_", "").isalpha():
+    if not service_name.islower() or not service_name.replace("_", "").isalnum():
         raise ValueError(
-            "service_name must be lowercase and contain only letters and underscores"
+            "service_name must be lowercase and contain only letters, numbers, and underscores"
         )
 
     capitliazed_service_name = service_name.capitalize()

@@ -8,8 +8,8 @@ from hyperpocket.cli.codegen.auth import get_auth_context_template, get_auth_oau
 @click.option('--force', is_flag=True, default=False)
 def create_oauth2_auth_template(service_name, force):
     ## Validate service_name
-    if not service_name.islower() or not service_name.replace('_', '').isalpha():
-        raise ValueError("service_name must be lowercase and contain only letters and underscores")
+    if not service_name.islower() or not service_name.replace('_', '').isalnum():
+        raise ValueError("service_name must be lowercase and contain only letters, numbers, and underscores")
     
     capitliazed_service_name = service_name.capitalize()
     if '_' in service_name:
