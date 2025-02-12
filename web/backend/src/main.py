@@ -13,8 +13,6 @@ from src.tools import (
 import os
 from typing import Dict, List, Optional
 import inspect
-from src import tools as tools_module
-import requests
 
 # Load environment variables
 load_dotenv()
@@ -41,6 +39,9 @@ class AddToolRequest(BaseModel):
 class AddToolResponse(BaseModel):
     name: str = Field(..., description="Name of the added tool")
     message: str = Field(..., description="Success message")
+
+class GenerateToolRequest(BaseModel):
+    prompt: str = Field(..., description="Prompt for generating tool code")
 
 class AIService:
     def __init__(self):
@@ -372,6 +373,79 @@ async def add_tool_from_git(request: dict):
         raise HTTPException(
             status_code=400,
             detail=f"Failed to add tool from git: {str(e)}"
+        )
+
+@app.post("/api/tools/generate")
+async def generate_tool_code(request: GenerateToolRequest):
+    """Generate tool code from a prompt."""
+    try:
+        messages = [
+            {"role": "system", "content": """You are a Python code generator. Generate code for a tool function that follows these rules:
+1. Must use the @function_tool decorator (no need to import it)
+2. Must have a clear docstring with Args section
+3. Must have type hints for all parameters and return value
+4. Must be a single function
+5. Must be production-ready code (not just example code, but actual production code. use official sdk if available)
+6. If the tool requires authentication:
+   - Use auth_provider parameter in @function_tool decorator
+   - The auth token will be automatically provided as a keyword argument
+   - Do not manually handle authentication in the function
+   
+Available auth providers and their token names (also no need to import AuthProvider):
+- Slack: auth_provider=AuthProvider.SLACK (token provided as SLACK_BOT_TOKEN)
+- Gmail: auth_provider=AuthProvider.GOOGLE (token provided as SLACK_BOT_TOKEN)
+- GitHub: auth_provider=AuthProvider.GITHUB (token provided as GITHUB_TOKEN)
+- Notion: auth_provider=AuthProvider.NOTION (token provided as NOTION_TOKEN)
+- And many more...
+
+Example:
+@function_tool(auth_provider=AuthProvider.SLACK)
+def post_message(channel: str, message: str, **kwargs) -> str:
+    '''Post a message to Slack channel
+    
+    Args:
+        channel: The channel to post to
+        message: The message to post
+        SLACK_BOT_TOKEN: Automatically provided by the auth provider
+    '''
+    SLACK_BOT_TOKEN = kwargs["SLACK_BOT_TOKEN"]
+    ...
+"""},
+            {"role": "user", "content": f"Generate only the Python code without any markdown or additional text for: {request.prompt}"}
+        ]
+
+        response = ai_service.llm.chat.completions.create(
+            model=MODEL_NAME,
+            messages=messages,
+        )
+
+        code = response.choices[0].message.content
+        
+        # Clean up the response
+        code = code.lstrip('\n')  # Remove leading newlines
+        code = code.strip()
+        
+        # Remove markdown code block if present
+        if code.startswith('```python'):
+            code = code[9:]
+        if code.startswith('```'):
+            code = code[3:]
+        if code.endswith('```'):
+            code = code[:-3]
+            
+        # Remove any additional notes or text after the code
+        code = code.split('\n\n#')[0]  # Remove notes that start with #
+        code = code.split('\n\nNote:')[0]  # Remove notes that start with "Note:"
+        
+        # Final cleanup of any remaining whitespace
+        code = code.strip()
+        
+        return {"code": code}
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to generate code: {str(e)}"
         )
 
 if __name__ == "__main__":

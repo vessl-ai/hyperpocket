@@ -4,6 +4,14 @@ import './App.css';
 import Chat from './components/Chat';
 import CustomTools from './components/CustomTools';
 
+type TabType = 'chat' | 'tools';
+
+// Types
+interface Message {
+  text: string;
+  role?: 'user' | 'assistant';
+}
+
 interface ToolCall {
   id: string;
   type: string;
@@ -13,32 +21,22 @@ interface ToolCall {
   };
 }
 
-interface ApiResponse {
-  response: string;
-  tool_calls?: ToolCall[];
-}
-
-interface Message {
-  text: string;
-}
-
-type TabType = 'chat' | 'tools';
-
 function App() {
   const [activeTab, setActiveTab] = useState<TabType>('chat');
   const [messages, setMessages] = useState<Message[]>([]);
+  const [toolCalls, setToolCalls] = useState<ToolCall[]>([]);
 
   return (
     <div className="container">
       <div className="content">
         <div className="tabs">
-          <button
+          <button 
             className={`tab ${activeTab === 'chat' ? 'active' : ''}`}
             onClick={() => setActiveTab('chat')}
           >
             <FaComment /> Chat
           </button>
-          <button
+          <button 
             className={`tab ${activeTab === 'tools' ? 'active' : ''}`}
             onClick={() => setActiveTab('tools')}
           >
@@ -47,7 +45,12 @@ function App() {
         </div>
 
         {activeTab === 'chat' ? (
-          <Chat messages={messages} setMessages={setMessages} />
+          <Chat 
+            messages={messages}
+            setMessages={setMessages}
+            toolCalls={toolCalls}
+            setToolCalls={setToolCalls}
+          />
         ) : (
           <CustomTools />
         )}
