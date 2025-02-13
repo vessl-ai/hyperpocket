@@ -1,0 +1,8 @@
+name = "x_list_home_posts"
+description = "list x home posts in user timeline"
+language = "python"
+
+[auth]
+auth_provider = "x"
+scopes = ["tweet.read", "users.read"]
+

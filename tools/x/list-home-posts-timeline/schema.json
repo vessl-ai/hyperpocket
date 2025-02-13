@@ -1,0 +1,13 @@
+{
+  "title": "XListUserPostRequest",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the user whose Tweets should be returned."
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

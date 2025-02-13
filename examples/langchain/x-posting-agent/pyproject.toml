@@ -1,0 +1,17 @@
+[project]
+name = "tool-calling-agent"
+version = "0.0.1"
+description = "Tool calling agent with hyperpocket and Langchain"
+authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "hyperpocket>=0.0.3",
+    "hyperpocket_langchain>=0.0.3",
+    "langchain>=0.3.15",
+    "langchain-openai>=0.3.1",
+]
+
+[tool.uv.sources]
+hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
+hyperpocket_langchain = { path = "../../../libs/extensions/langchain", editable = true }

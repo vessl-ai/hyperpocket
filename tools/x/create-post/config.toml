@@ -1,0 +1,8 @@
+name = "x_create_post"
+description = "create x post"
+language = "python"
+
+[auth]
+auth_provider = "x"
+scopes = ["tweet.read", "tweet.write", "users.read"]
+

@@ -1,0 +1,8 @@
+name = "x_user_lookup_me"
+description = "get my user data"
+language = "python"
+
+[auth]
+auth_provider = "x"
+scopes = ["tweet.read", "users.read"]
+
