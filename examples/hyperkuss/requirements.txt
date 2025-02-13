@@ -3,3 +3,11 @@ python-dotenv>=1.0.0
 openai>=1.0.0
 watchdog>=3.0.0
 -e ../../libs/hyperpocket  # Install the root project (hyperpocket) in edita
+-e ../../libs/extensions/openai
+aiohttp>=3.8.0  # Required for async HTTP requests
+hubspot-api-client>=8.1.0  # Required for HubSpot integration
+twilio>=8.2.0  # Required for phone call functionality
+notion-client>=2.0.0  # Required for Notion integration
+google-auth-oauthlib>=1.0.0  # Required for Google OAuth
+google-auth-httplib2>=0.1.0  # Required for Google API
+google-api-python-client>=2.0.0  # Required for Google Calendar API

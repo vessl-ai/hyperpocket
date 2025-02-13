@@ -14,6 +14,8 @@ class Assistant:
         }
 
 class AssistantManager:
+    DEFAULT_ASSISTANT = "default-assistant"
+
     def __init__(self, assistants_dir: str = "assistants"):
         self.assistants_dir = assistants_dir
         self.assistants: Dict[str, Assistant] = {}
@@ -33,8 +35,22 @@ class AssistantManager:
                             logger.info(f"Loaded assistant: {assistant_name}")
                     except Exception as e:
                         logger.error(f"Error loading assistant {filename}: {e}")
+
+            if self.DEFAULT_ASSISTANT not in self.assistants:
+                logger.error(f"Default assistant '{self.DEFAULT_ASSISTANT}' not found")
+                # Create a basic default assistant if file is missing
+                self.assistants[self.DEFAULT_ASSISTANT] = Assistant(
+                    self.DEFAULT_ASSISTANT,
+                    "You are a helpful assistant that provides detailed responses and can use various tools to help users."
+                )
+
         except Exception as e:
             logger.error(f"Error accessing assistants directory: {e}")
+            # Ensure we always have a default assistant
+            self.assistants[self.DEFAULT_ASSISTANT] = Assistant(
+                self.DEFAULT_ASSISTANT,
+                "You are a helpful assistant that provides detailed responses and can use various tools to help users."
+            )
 
     def get_assistant(self, name: str) -> Optional[Assistant]:
         """Get an assistant by name"""
@@ -42,16 +58,6 @@ class AssistantManager:
 
     def select_assistant(self, message: str) -> Assistant:
         """Select appropriate assistant based on message content"""
-        # Default to agent-building-assistant if no specific match
-        default_assistant = self.assistants.get('agent-building-assistant')
-        
         # Add your logic here to select appropriate assistant based on message content
-        # For example:
-        message_lower = message.lower()
-        
-        if "code" in message_lower or "programming" in message_lower:
-            return self.assistants.get('coding-assistant', default_assistant)
-        elif "data" in message_lower or "analysis" in message_lower:
-            return self.assistants.get('data-assistant', default_assistant)
-        
-        return default_assistant 
+        # For now, always return the default assistant
+        return self.assistants[self.DEFAULT_ASSISTANT] 

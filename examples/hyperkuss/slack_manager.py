@@ -1,4 +1,5 @@
-from slack_bolt import App
+from slack_bolt.async_app import AsyncApp
+from slack_bolt.adapter.socket_mode.async_handler import AsyncSocketModeHandler
 from slack_sdk.models.blocks import ButtonElement, ActionsBlock, SectionBlock
 import json
 import re
@@ -7,107 +8,120 @@ import logging
 logger = logging.getLogger(__name__)
 
 class SlackManager:
-    def __init__(self, app: App, ai_service):
-        self.app = app
+    def __init__(self, bot_token: str, app_token: str, ai_service):
+        self.app = AsyncApp(token=bot_token)
+        self.app_token = app_token
         self.ai_service = ai_service
         self.sessions = {}  # Format: {thread_ts: ConversationState}
         self.tool_calls_store = {}
+        self.handler = None
         self.setup_handlers()
 
     def setup_handlers(self):
         @self.app.event("message")
-        async def handle_message_events(event, say):
+        async def handle_message_events(body, event, say, logger):
             """Handle incoming message events"""
-            # Ignore bot messages to prevent loops
-            if event.get("bot_id"):
-                return
-
-            thread_ts = event.get("thread_ts", event.get("ts"))
-            channel_id = event["channel"]
-            
-            # Get or create session for this thread
-            if thread_ts not in self.sessions:
-                self.sessions[thread_ts] = ConversationState()
-                # Fetch thread history if this is a reply in an existing thread
-                if thread_ts != event.get("ts"):
-                    thread_messages = self.get_thread_history(event["channel"], thread_ts)
-                    self.sessions[thread_ts].messages.extend(thread_messages)
-            
-            session = self.sessions[thread_ts]
-            
-            # Add current message to session history
-            session.messages.append({
-                "role": "user",
-                "content": event["text"]
-            })
-
             try:
+                # Ignore bot messages to prevent loops
+                if event.get("bot_id"):
+                    return
+
+                # Check if the event has text
+                if "text" not in event:
+                    logger.warning("Received message event without text")
+                    return
+
+                # Check if we have required fields
+                if "channel" not in event:
+                    logger.warning("Received message event without channel")
+                    return
+
+                # Get thread info
+                thread_ts = event.get("thread_ts", event.get("ts"))
+                if not thread_ts:
+                    logger.warning("Received message event without thread_ts or ts")
+                    return
+
+                channel_id = event["channel"]
+                message_text = event["text"]
+                
+                # Initialize session if needed
+                if thread_ts not in self.sessions:
+                    self.sessions[thread_ts] = ConversationState()
+                
+                session = self.sessions[thread_ts]
+
+                # Fetch thread history if this is a reply in an existing thread
+                if thread_ts != event.get("ts") and not session.messages:
+                    thread_messages = await self.get_thread_history(channel_id, thread_ts)
+                    session.messages.extend(thread_messages)
+                
+                # Add current message to session history
+                session.messages.append({
+                    "role": "user",
+                    "content": message_text
+                })
+
                 # Send a temporary "thinking" message
-                thinking_msg = say(
+                thinking_msg = await say(
                     text="🤔 Thinking...",
                     thread_ts=thread_ts
                 )
 
-                # Get AI response with tool support
-                ai_response = await self.process_ai_response(
-                    session.messages,
-                    channel_id,
-                    thread_ts,
-                    say
-                )
-                
-                # If assistant changed, add an indicator in the response
-                if session.current_assistant != self.ai_service.assistant_manager.select_assistant(event["text"]):
-                    session.current_assistant = self.ai_service.assistant_manager.select_assistant(event["text"])
-                    assistant_indicator = f"_Switched to {session.current_assistant.name}_\n\n"
-                    ai_response = assistant_indicator + ai_response
-                
-                # Format response for Slack
-                formatted_response = self.format_for_slack(ai_response)
-                
-                # Delete thinking message
-                self.app.client.chat_delete(
-                    channel=channel_id,
-                    ts=thinking_msg['ts']
-                )
+                try:
+                    # Get AI response with tool support
+                    ai_response = await self.process_ai_response(
+                        session.messages,
+                        channel_id,
+                        thread_ts,
+                        say
+                    )
+                    
+                    # Format response for Slack
+                    formatted_response = self.format_for_slack(ai_response)
+                    
+                    # Delete thinking message
+                    await self.app.client.chat_delete(
+                        channel=channel_id,
+                        ts=thinking_msg['ts']
+                    )
 
-                # Split and send response in chunks
-                message_chunks = self.split_message(formatted_response)
-                first_message = True
-
-                for chunk in message_chunks:
-                    if first_message:
-                        say(
-                            text=chunk,
-                            thread_ts=thread_ts,
-                            mrkdwn=True
-                        )
-                        first_message = False
-                    else:
-                        say(
+                    # Split and send response in chunks
+                    message_chunks = self.split_message(formatted_response)
+                    
+                    for chunk in message_chunks:
+                        await say(
                             text=chunk,
                             thread_ts=thread_ts,
                             mrkdwn=True
                         )
 
-                # Add bot response to session history
-                session.messages.append({
-                    "role": "assistant",
-                    "content": ai_response
-                })
+                    # Add bot response to session history
+                    session.messages.append({
+                        "role": "assistant",
+                        "content": ai_response
+                    })
+
+                except Exception as e:
+                    logger.error(f"Error processing message: {str(e)}")
+                    if thinking_msg:
+                        try:
+                            await self.app.client.chat_delete(
+                                channel=channel_id,
+                                ts=thinking_msg['ts']
+                            )
+                        except:
+                            pass
+                    await say(
+                        text=f"Sorry, I encountered an error: {str(e)}",
+                        thread_ts=thread_ts
+                    )
+
             except Exception as e:
-                error_message = f"Sorry, I encountered an error: {str(e)}"
-                if 'thinking_msg' in locals():
-                    try:
-                        self.app.client.chat_delete(
-                            channel=channel_id,
-                            ts=thinking_msg['ts']
-                        )
-                    except:
-                        pass
-                say(
-                    text=error_message,
-                    thread_ts=thread_ts
+                logger.error(f"Error in message handler: {str(e)}")
+                await say(
+                    text=f"Sorry, I encountered an error: {str(e)}",
+                    thread_ts=thread_ts if 'thread_ts' in locals() else None
                 )
 
         @self.app.action("approve_tool")
@@ -120,10 +134,27 @@ class SlackManager:
             await ack()
             await self._handle_tool_approval(body, say, approved=False)
 
-    def get_thread_history(self, channel_id, thread_ts):
+    async def start(self):
+        """Start the Slack app"""
+        self.handler = AsyncSocketModeHandler(
+            app=self.app,
+            app_token=self.app_token
+        )
+        
+        print("⚡️ Bolt app is running!")
+        print("💡 Invite the bot to channels using: /invite @HyperKuss")
+        
+        await self.handler.start_async()
+
+    async def stop(self):
+        """Stop the Slack app"""
+        if self.handler:
+            await self.handler.close()
+
+    async def get_thread_history(self, channel_id, thread_ts):
         """Fetch all messages in a thread"""
         try:
-            result = self.app.client.conversations_replies(
+            result = await self.app.client.conversations_replies(
                 channel=channel_id,
                 ts=thread_ts
             )
@@ -142,23 +173,139 @@ class SlackManager:
             logger.error(f"Error fetching thread history: {e}")
             return []
 
-    async def _handle_tool_approval(self, body, say, approved: bool):
-        value = json.loads(body["actions"][0]["value"])
-        thread_ts = value["thread_ts"]
-        tool_call_id = value["tool_call_id"]
+    async def process_ai_response(self, messages, channel_id, thread_ts, say):
+        """Process AI response and handle tool calls if any"""
+        response, tool_calls = await self.ai_service.get_response(messages, thread_ts)
         
-        if thread_ts in self.tool_calls_store and tool_call_id in self.tool_calls_store[thread_ts]:
-            stored_data = self.tool_calls_store[thread_ts][tool_call_id]
-            if stored_data["pending"]:
-                if approved:
-                    # Execute the tool and handle response
-                    await self._execute_approved_tool(stored_data, thread_ts, say)
-                else:
-                    say(
-                        text="❌ Tool execution was denied. Let me try to help without using the tool.",
+        if tool_calls:  # Tool calls need approval
+            for tool_call in tool_calls:
+                tool_args = json.loads(tool_call.function.arguments)
+                
+                blocks = [
+                    SectionBlock(
+                        text=f"🔧 Request to use tool: *{tool_call.function.name}*\nArguments: ```{json.dumps(tool_args, indent=2)}```"
+                    ),
+                    ActionsBlock(
+                        elements=[
+                            ButtonElement(
+                                text="✅ Approve",
+                                action_id="approve_tool",
+                                style="primary",
+                                value=json.dumps({
+                                    "tool_call_id": tool_call.id,
+                                    "thread_ts": thread_ts
+                                })
+                            ),
+                            ButtonElement(
+                                text="❌ Deny",
+                                action_id="deny_tool",
+                                style="danger",
+                                value=json.dumps({
+                                    "tool_call_id": tool_call.id,
+                                    "thread_ts": thread_ts
+                                })
+                            )
+                        ]
+                    )
+                ]
+                
+                await say(
+                    text="Tool execution requires approval",
+                    blocks=blocks,
+                    thread_ts=thread_ts
+                )
+
+        return response
+
+    async def _handle_tool_approval(self, body, say, approved: bool):
+        """Handle tool approval/denial"""
+        try:
+            value = json.loads(body["actions"][0]["value"])
+            thread_ts = value["thread_ts"]
+            tool_call_id = value["tool_call_id"]
+            
+            logger.info(f"Tool {'approval' if approved else 'denial'} received - thread: {thread_ts}, tool_call_id: {tool_call_id}")
+            
+            # Get the session
+            session = self.sessions.get(thread_ts)
+            if not session:
+                logger.error(f"Session not found for thread: {thread_ts}")
+                await say(
+                    text="Sorry, I couldn't find the conversation context.",
+                    thread_ts=thread_ts
+                )
+                return
+
+            if approved:
+                logger.info(f"Executing approved tool: {tool_call_id}")
+                # Send thinking message
+                thinking_msg = await say(
+                    text="🤔 Executing tool...",
+                    thread_ts=thread_ts
+                )
+
+                try:
+                    response = await self.ai_service.execute_approved_tool(thread_ts, tool_call_id)
+                    logger.info(f"Tool execution response received - length: {len(response) if response else 0}")
+                    
+                    if response:
+                        # Delete thinking message
+                        await self.app.client.chat_delete(
+                            channel=body["channel"]["id"],
+                            ts=thinking_msg['ts']
+                        )
+
+                        # Format and send response
+                        formatted_response = self.format_for_slack(response)
+                        message_chunks = self.split_message(formatted_response)
+                        logger.info(f"Sending response in {len(message_chunks)} chunks")
+                        
+                        for chunk in message_chunks:
+                            await say(
+                                text=chunk,
+                                thread_ts=thread_ts,
+                                mrkdwn=True
+                            )
+
+                        # Add tool response to conversation history
+                        session.messages.append({
+                            "role": "assistant",
+                            "content": response
+                        })
+                        logger.info("Tool response added to conversation history")
+                    else:
+                        logger.error("Tool execution returned no response")
+                        await say(
+                            text="Sorry, I couldn't process the tool execution.",
+                            thread_ts=thread_ts
+                        )
+                except Exception as e:
+                    logger.error(f"Error executing tool: {str(e)}", exc_info=True)
+                    await say(
+                        text=f"Sorry, I encountered an error while executing the tool: {str(e)}",
                         thread_ts=thread_ts
                     )
-                stored_data["pending"] = False
+            else:
+                logger.info("Processing tool denial")
+                response = self.ai_service.deny_tool(thread_ts)
+                if response:
+                    await say(
+                        text=response,
+                        thread_ts=thread_ts
+                    )
+                    # Add denial response to conversation history
+                    session.messages.append({
+                        "role": "assistant",
+                        "content": response
+                    })
+                    logger.info("Denial response added to conversation history")
+
+        except Exception as e:
+            logger.error(f"Error in tool approval handler: {str(e)}", exc_info=True)
+            await say(
+                text=f"Sorry, I encountered an error: {str(e)}",
+                thread_ts=thread_ts if 'thread_ts' in locals() else None
+            )
 
     @staticmethod
     def split_message(text, max_length=3000):
@@ -219,88 +366,6 @@ class SlackManager:
         text = re.sub(r'\n\s*```', '\n```', text)
         
         return text
-
-    async def _execute_approved_tool(self, stored_data, thread_ts, say):
-        """Execute an approved tool and handle its response"""
-        tool_call = stored_data["tool_call"]
-        tool_message = await self.ai_service.pocket.ainvoke(tool_call)
-        
-        # Update conversation with tool result
-        stored_data["messages"].append(tool_message)
-        
-        # Get AI response with tool result
-        response = self.ai_service.llm.chat.completions.create(
-            model="gpt-4o",
-            messages=stored_data["messages"],
-            temperature=0.7,
-            max_tokens=16384
-        )
-        
-        # Send the response
-        formatted_response = self.format_for_slack(response.choices[0].message.content)
-        message_chunks = self.split_message(formatted_response)
-        
-        for chunk in message_chunks:
-            say(
-                text=chunk,
-                thread_ts=thread_ts,
-                mrkdwn=True
-            )
-
-    async def process_ai_response(self, messages, channel_id, thread_ts, say):
-        """Process AI response and handle tool calls if any"""
-        result = await self.ai_service.get_response(messages, self.tool_calls_store)
-        
-        if isinstance(result, tuple):  # Tool calls
-            tool_calls, messages = result
-            for tool_call in tool_calls:
-                tool_args = json.loads(tool_call.function.arguments)
-                
-                blocks = [
-                    SectionBlock(
-                        text=f"🔧 Request to use tool: *{tool_call.function.name}*\nArguments: ```{json.dumps(tool_args, indent=2)}```"
-                    ),
-                    ActionsBlock(
-                        elements=[
-                            ButtonElement(
-                                text="✅ Approve",
-                                action_id="approve_tool",
-                                style="primary",
-                                value=json.dumps({
-                                    "tool_call_id": tool_call.id,
-                                    "thread_ts": thread_ts
-                                })
-                            ),
-                            ButtonElement(
-                                text="❌ Deny",
-                                action_id="deny_tool",
-                                style="danger",
-                                value=json.dumps({
-                                    "tool_call_id": tool_call.id,
-                                    "thread_ts": thread_ts
-                                })
-                            )
-                        ]
-                    )
-                ]
-                
-                say(
-                    text="Tool execution requires approval",
-                    blocks=blocks,
-                    thread_ts=thread_ts
-                )
-                
-                if thread_ts not in self.tool_calls_store:
-                    self.tool_calls_store[thread_ts] = {}
-                self.tool_calls_store[thread_ts][tool_call.id] = {
-                    "tool_call": tool_call,
-                    "pending": True,
-                    "messages": messages.copy()
-                }
-                
-                return "I'm waiting for approval to use the requested tool. Please approve or deny the request."
-        
-        return result  # Regular response
 
 class ConversationState:
     def __init__(self):
