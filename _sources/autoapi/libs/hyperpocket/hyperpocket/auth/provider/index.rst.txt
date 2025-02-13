@@ -71,6 +71,11 @@ Module Contents
 
 
 
+   .. py:attribute:: APITOKEN
+      :value: 'apitoken'
+
+
+
    .. py:method:: get_auth_provider(auth_provider_name: str) -> AuthProvider
       :classmethod:
 

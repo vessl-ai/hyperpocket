@@ -11,6 +11,7 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
+   /autoapi/libs/hyperpocket/hyperpocket/auth/apitoken/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/calendly/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/context/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/github/index

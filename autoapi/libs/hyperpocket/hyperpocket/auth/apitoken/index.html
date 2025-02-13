@@ -7,16 +7,16 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>libs.hyperpocket.hyperpocket.auth.provider | Hyperpocket  documentation</title>
-<meta content="libs.hyperpocket.hyperpocket.auth.provider | Hyperpocket  documentation" property="og:title"/>
-<meta content="libs.hyperpocket.hyperpocket.auth.provider | Hyperpocket  documentation" name="twitter:title"/>
+<title>libs.hyperpocket.hyperpocket.auth.apitoken | Hyperpocket  documentation</title>
+<meta content="libs.hyperpocket.hyperpocket.auth.apitoken | Hyperpocket  documentation" property="og:title"/>
+<meta content="libs.hyperpocket.hyperpocket.auth.apitoken | Hyperpocket  documentation" name="twitter:title"/>
 <link href="../../../../../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../_static/graphviz.css?v=4ae1632d" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../search.html" rel="search" title="Search"/>
 <link href="../../../../../../genindex.html" rel="index" title="Index"/>
-<link href="../reddit/index.html" rel="next" title="libs.hyperpocket.hyperpocket.auth.reddit"/>
-<link href="../notion/token_schema/index.html" rel="prev" title="libs.hyperpocket.hyperpocket.auth.notion.token_schema"/>
+<link href="context/index.html" rel="next" title="libs.hyperpocket.hyperpocket.auth.apitoken.context"/>
+<link href="../index.html" rel="prev" title="libs.hyperpocket.hyperpocket.auth"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -128,100 +128,27 @@
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../../index.html">libs.hyperpocket</a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../index.html">libs.hyperpocket.hyperpocket</a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">libs.hyperpocket.hyperpocket.auth</a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">libs.hyperpocket.hyperpocket.auth.provider</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">libs.hyperpocket.hyperpocket.auth.apitoken</span>
 </nav>
 <div id="content" role="main">
-<section id="module-libs.hyperpocket.hyperpocket.auth.provider">
-<span id="libs-hyperpocket-hyperpocket-auth-provider"></span><h1>libs.hyperpocket.hyperpocket.auth.provider<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.auth.provider" title="Link to this heading"><span>#</span></a></h1>
-<section id="classes">
-<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#classes'"><span>#</span></a></h2>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider" title="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AuthProvider</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="module-contents">
-<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#module-contents'"><span>#</span></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.auth.provider.</span></span><span class="sig-name descname"><span class="pre">AuthProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider'"><span>#</span></a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.SLACK">
-<span class="sig-name descname"><span class="pre">SLACK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'slack'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.SLACK" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.SLACK'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.LINEAR">
-<span class="sig-name descname"><span class="pre">LINEAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'linear'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.LINEAR" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.LINEAR'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GITHUB">
-<span class="sig-name descname"><span class="pre">GITHUB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'github'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GITHUB" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GITHUB'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GOOGLE">
-<span class="sig-name descname"><span class="pre">GOOGLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'google'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GOOGLE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GOOGLE'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.CALENDLY">
-<span class="sig-name descname"><span class="pre">CALENDLY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'calendly'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.CALENDLY" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.CALENDLY'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.NOTION">
-<span class="sig-name descname"><span class="pre">NOTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'notion'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.NOTION" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.NOTION'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.REDDIT">
-<span class="sig-name descname"><span class="pre">REDDIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'reddit'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.REDDIT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.REDDIT'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GUMLOOP">
-<span class="sig-name descname"><span class="pre">GUMLOOP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gumloop'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GUMLOOP" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GUMLOOP'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.SERPAPI">
-<span class="sig-name descname"><span class="pre">SERPAPI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'serpapi'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.SERPAPI" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.SERPAPI'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.X">
-<span class="sig-name descname"><span class="pre">X</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'x'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.X" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.X'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.APITOKEN">
-<span class="sig-name descname"><span class="pre">APITOKEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'apitoken'</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.APITOKEN" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.APITOKEN'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.get_auth_provider">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_auth_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_provider_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider" title="libs.hyperpocket.hyperpocket.auth.provider.AuthProvider"><span class="pre">AuthProvider</span></a></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.get_auth_provider" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.get_auth_provider'"><span>#</span></a></dt>
-<dd></dd></dl>
-</dd></dl>
+<section id="module-libs.hyperpocket.hyperpocket.auth.apitoken">
+<span id="libs-hyperpocket-hyperpocket-auth-apitoken"></span><h1>libs.hyperpocket.hyperpocket.auth.apitoken<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.auth.apitoken" title="Link to this heading"><span>#</span></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#submodules'"><span>#</span></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="context/index.html">libs.hyperpocket.hyperpocket.auth.apitoken.context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="token_context/index.html">libs.hyperpocket.hyperpocket.auth.apitoken.token_context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="token_handler/index.html">libs.hyperpocket.hyperpocket.auth.apitoken.token_handler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="token_schema/index.html">libs.hyperpocket.hyperpocket.auth.apitoken.token_schema</a></li>
+</ul>
+</div>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#classes'" class="reference internal" href="#classes">Classes</a></li>
-<li><a :data-current="activeSection === '#module-contents'" class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider"><code class="docutils literal notranslate"><span class="pre">AuthProvider</span></code></a><ul>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.SLACK'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.SLACK"><code class="docutils literal notranslate"><span class="pre">AuthProvider.SLACK</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.LINEAR'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.LINEAR"><code class="docutils literal notranslate"><span class="pre">AuthProvider.LINEAR</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GITHUB'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GITHUB"><code class="docutils literal notranslate"><span class="pre">AuthProvider.GITHUB</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GOOGLE'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GOOGLE"><code class="docutils literal notranslate"><span class="pre">AuthProvider.GOOGLE</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.CALENDLY'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.CALENDLY"><code class="docutils literal notranslate"><span class="pre">AuthProvider.CALENDLY</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.NOTION'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.NOTION"><code class="docutils literal notranslate"><span class="pre">AuthProvider.NOTION</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.REDDIT'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.REDDIT"><code class="docutils literal notranslate"><span class="pre">AuthProvider.REDDIT</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GUMLOOP'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.GUMLOOP"><code class="docutils literal notranslate"><span class="pre">AuthProvider.GUMLOOP</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.SERPAPI'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.SERPAPI"><code class="docutils literal notranslate"><span class="pre">AuthProvider.SERPAPI</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.X'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.X"><code class="docutils literal notranslate"><span class="pre">AuthProvider.X</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.APITOKEN'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.APITOKEN"><code class="docutils literal notranslate"><span class="pre">AuthProvider.APITOKEN</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.get_auth_provider'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.provider.AuthProvider.get_auth_provider"><code class="docutils literal notranslate"><span class="pre">AuthProvider.get_auth_provider()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a :data-current="activeSection === '#submodules'" class="reference internal" href="#submodules">Submodules</a></li>
 </ul>
 </div>
 </aside>

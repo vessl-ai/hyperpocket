@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.apitoken
+=================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.apitoken
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.apitoken.api_token_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.apitoken.notion_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: api_token_auth_router
+
+.. py:function:: notion_token_callback(state: str, token: str)
+   :async:
+
+
