@@ -18,6 +18,7 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/linear/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/notion/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/reddit/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/serpapi/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/slack/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/token/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/x/index

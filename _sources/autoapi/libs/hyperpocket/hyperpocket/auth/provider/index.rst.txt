@@ -61,6 +61,11 @@ Module Contents
 
 
 
+   .. py:attribute:: SERPAPI
+      :value: 'serpapi'
+
+
+
    .. py:attribute:: X
       :value: 'x'
 

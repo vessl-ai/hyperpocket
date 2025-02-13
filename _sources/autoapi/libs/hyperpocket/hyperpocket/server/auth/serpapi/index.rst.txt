@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.serpapi
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.serpapi
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.serpapi.serpapi_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.serpapi.serpapi_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: serpapi_auth_router
+
+.. py:function:: serpapi_token_callback(state: str, token: str)
+   :async:
+
+

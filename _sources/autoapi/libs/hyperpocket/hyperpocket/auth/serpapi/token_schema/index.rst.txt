@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.serpapi.token_schema
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.serpapi.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.serpapi.token_schema.SerpapiTokenRequest
+   libs.hyperpocket.hyperpocket.auth.serpapi.token_schema.SerpapiTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: SerpapiTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: SerpapiTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

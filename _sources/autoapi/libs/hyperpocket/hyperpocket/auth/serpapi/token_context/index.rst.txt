@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.serpapi.token_context
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.serpapi.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.serpapi.token_context.SerpapiTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: SerpapiTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.serpapi.context.SerpapiAuthContext`
+
+
+   .. py:method:: from_serpapi_token_response(response: hyperpocket.auth.serpapi.token_schema.SerpapiTokenResponse)
+      :classmethod:
+
+
+
