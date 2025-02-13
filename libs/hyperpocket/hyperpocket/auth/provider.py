@@ -11,6 +11,7 @@ class AuthProvider(Enum):
     REDDIT = "reddit"
     GUMLOOP = "gumloop"
     X = "x"
+    API_TOKEN = "api-token"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":
