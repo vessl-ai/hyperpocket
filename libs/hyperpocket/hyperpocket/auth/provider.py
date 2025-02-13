@@ -12,6 +12,7 @@ class AuthProvider(Enum):
     GUMLOOP = "gumloop"
     SERPAPI = "serpapi"
     X = "x"
+    APITOKEN = "apitoken"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":
