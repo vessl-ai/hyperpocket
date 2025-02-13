@@ -8,3 +8,4 @@ Tools
    using-wasm-tools.md
    using-function-tools.md
    tool-interfaces.md
+   under-the-hood.md
