@@ -62,6 +62,9 @@ def process_tool_directory(target_path: Path, language: str):
     tool_name = func.func.__name__.replace("-", "_")
     cleaned_code = clean_tool_source_code(decorated_function_file.read_text())
     tool_main_code = transform_function_to_pydantic(cleaned_code, func)
+    
+    if tool_name != decorated_function_file.stem:
+        raise ValueError("Tool name must match the file name")
 
     generate_tool_template(tool_name)
     copy_tool_directory(target_path, tool_name)
@@ -162,8 +165,7 @@ def copy_tool_directory(src_path: Path, tool_name: str):
     os.remove(dst_path / f"{tool_name}.py")
     
     init_file = src_path.parent/ tool_directory_name / tool_name / "__init__.py"    
-    with open(init_file, "w", encoding="utf-8") as f:
-        init_file.write_text(f"from .__main__ import main\n\n__all__ = ['main']")
+    init_file.write_text(f"from .__main__ import main\n\n__all__ = ['main']")
 
 def generate_tool_files(target_path: Path, tool_name: str, tool_main_code: str, func: Callable, language: str):
     """Generate config.toml, __main__.py, and schema.json for the tool."""
