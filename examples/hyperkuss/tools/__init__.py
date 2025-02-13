@@ -6,6 +6,9 @@ from . import system_tools
 from . import notion_tools
 from . import slack_tools
 from . import google_tools
+from . import linkedin_tools
+from . import attio_tools
+from . import firecrawl_tools
 
 # List of all available tools
 AVAILABLE_TOOLS: List[Callable] = [
@@ -15,6 +18,8 @@ AVAILABLE_TOOLS: List[Callable] = [
     hubspot_tools.search_contacts,
     hubspot_tools.create_contact,
     hubspot_tools.get_contact_by_id,
+    hubspot_tools.get_deal_details,
+    hubspot_tools.list_deals,
     # Twilio tools
     twilio_tools.make_phone_call,
     twilio_tools.check_call_status,
@@ -32,6 +37,13 @@ AVAILABLE_TOOLS: List[Callable] = [
     # Google tools
     google_tools.create_meet_link,
     google_tools.get_meetings,
+    # LinkedIn tools
+    linkedin_tools.get_profile_info,
+    # Attio tools
+    attio_tools.get_deal_info,
+    attio_tools.list_workspace_objects,
+    # Firecrawl tools
+    firecrawl_tools.summarize_website,
 ]
 
 # Tool categories metadata
@@ -50,6 +62,8 @@ TOOL_CATEGORIES = {
             hubspot_tools.search_contacts,
             hubspot_tools.create_contact,
             hubspot_tools.get_contact_by_id,
+            hubspot_tools.get_deal_details,
+            hubspot_tools.list_deals,
         ]
     },
     "twilio": {
@@ -87,6 +101,28 @@ TOOL_CATEGORIES = {
         "tools": [
             google_tools.create_meet_link,
             google_tools.get_meetings,
+        ]
+    },
+    "linkedin": {
+        "name": "LinkedIn",
+        "description": "Tools for accessing LinkedIn profile information",
+        "tools": [
+            linkedin_tools.get_profile_info,
+        ]
+    },
+    "attio": {
+        "name": "Attio",
+        "description": "Tools for interacting with Attio CRM",
+        "tools": [
+            attio_tools.get_deal_info,
+            attio_tools.list_workspace_objects,
+        ]
+    },
+    "firecrawl": {
+        "name": "Firecrawl",
+        "description": "Tools for crawling and summarizing web content",
+        "tools": [
+            firecrawl_tools.summarize_website,
         ]
     }
 } 

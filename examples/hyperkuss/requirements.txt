@@ -2,6 +2,7 @@ slack-bolt>=1.18.0
 python-dotenv>=1.0.0
 openai>=1.0.0
 watchdog>=3.0.0
+-e git+https://github.com/firecrawl/firecrawl-python.git#egg=firecrawl  # Firecrawl Python SDK
 -e ../../libs/hyperpocket  # Install the root project (hyperpocket) in edita
 -e ../../libs/extensions/openai
 aiohttp>=3.8.0  # Required for async HTTP requests
