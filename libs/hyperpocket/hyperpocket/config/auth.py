@@ -51,6 +51,9 @@ class MailchimpAuthConfig(OAuth2AuthConfig):
 class BitbucketAuthConfig(OAuth2AuthConfig):
     pass
 
+class NotionAuthConfig(OAuth2AuthConfig):
+    pass
+
 class AuthConfig(BaseModel):
     slack: Optional[SlackAuthConfig] = None
     google: Optional[GoogleAuthConfig] = None
@@ -61,6 +64,10 @@ class AuthConfig(BaseModel):
     hubspot: Optional[HubspotAuthConfig] = None
     discord: Optional[DiscordAuthConfig] = None
     zoom: Optional[ZoomAuthConfig] = None
+    asana: Optional[AsanaAuthConfig] = None
+    mailchimp: Optional[MailchimpAuthConfig] = None
+    bitbucket: Optional[BitbucketAuthConfig] = None
+    notion: Optional[NotionAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
 
 
