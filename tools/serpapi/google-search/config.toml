@@ -1,0 +1,6 @@
+name = "google_search"
+description = "serp api google search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

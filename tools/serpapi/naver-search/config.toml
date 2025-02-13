@@ -1,0 +1,6 @@
+name = "naver_search"
+description = "serp api naver search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

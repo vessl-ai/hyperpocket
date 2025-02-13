@@ -10,6 +10,7 @@ class AuthProvider(Enum):
     NOTION = "notion"
     REDDIT = "reddit"
     GUMLOOP = "gumloop"
+    SERPAPI = "serpapi"
     X = "x"
 
     @classmethod

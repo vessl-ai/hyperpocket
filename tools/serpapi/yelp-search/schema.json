@@ -1,0 +1,160 @@
+{
+  "properties": {
+    "find_desc": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Search query for Yelp. Can include anything used in a regular Yelp search.",
+      "title": "Find Desc"
+    },
+    "find_loc": {
+      "description": "Location from where the search should originate. Accepts city, zip code, or address.",
+      "title": "Find Loc",
+      "type": "string"
+    },
+    "l": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Defines search radius or neighborhoods. Distance and neighborhoods can't be used together.",
+      "title": "L"
+    },
+    "yelp_domain": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "yelp.com",
+      "description": "Yelp domain to use (default: 'yelp.com').",
+      "title": "Yelp Domain"
+    },
+    "cflt": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Category filter to refine search alongside find_desc parameter.",
+      "title": "Cflt"
+    },
+    "sortby": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "recommended",
+      "description": "Sorting option ('recommended', 'rating', 'review_count'). Default: 'recommended'.",
+      "title": "Sortby"
+    },
+    "attrs": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Refining filters such as 'price' or 'features'. Multiple values allowed.",
+      "title": "Attrs"
+    },
+    "start": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 0,
+      "description": "Result offset for pagination (default: 0). Skips given number of results.",
+      "title": "Start"
+    },
+    "no_cache": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Force fetching new results instead of cached results.",
+      "title": "No Cache"
+    },
+    "async": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Submit search asynchronously.",
+      "title": "Async"
+    },
+    "zero_trace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Enterprise-only: Enable ZeroTrace mode.",
+      "title": "Zero Trace"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "json",
+      "description": "Output format ('json' or 'html').",
+      "title": "Output"
+    }
+  },
+  "required": [
+    "find_loc"
+  ],
+  "title": "YelpSearchRequest",
+  "type": "object"
+}

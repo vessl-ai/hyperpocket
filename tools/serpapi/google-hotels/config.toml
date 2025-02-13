@@ -1,0 +1,6 @@
+name = "google_hotels"
+description = "serp api google hotels search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

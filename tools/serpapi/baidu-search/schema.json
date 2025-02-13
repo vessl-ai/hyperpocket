@@ -1,0 +1,199 @@
+{
+  "properties": {
+    "q": {
+      "description": "Search query including all Baidu search operators",
+      "title": "Q",
+      "type": "string"
+    },
+    "ct": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 1,
+      "description": "Language restriction (1: All, 2: Simplified Chinese, 3: Traditional Chinese)",
+      "title": "Ct"
+    },
+    "pn": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 0,
+      "description": "Result offset for pagination (e.g., 0 for first page, 10 for second page)",
+      "title": "Pn"
+    },
+    "rn": {
+      "anyOf": [
+        {
+          "maximum": 50,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 10,
+      "description": "Maximum number of results to return (default: 10, max: 50)",
+      "title": "Rn"
+    },
+    "gpc": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "",
+      "description": "Time period filter using Unix Timestamp",
+      "title": "Gpc"
+    },
+    "q5": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Search filter (1: by title, 2: by URL)",
+      "title": "Q5"
+    },
+    "q6": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "",
+      "description": "Domain restriction for search results",
+      "title": "Q6"
+    },
+    "bs": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "",
+      "description": "Previous search query",
+      "title": "Bs"
+    },
+    "oq": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "",
+      "description": "Original search query when navigated from a related search",
+      "title": "Oq"
+    },
+    "f": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Originating search type (8: normal, 3: suggestion list, 1: related search)",
+      "title": "F"
+    },
+    "device": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "desktop",
+      "description": "Device type ('desktop', 'tablet', or 'mobile')",
+      "title": "Device"
+    },
+    "no_cache": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Force fetching new results instead of cached results",
+      "title": "No Cache"
+    },
+    "async": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Submit search asynchronously",
+      "title": "Async"
+    },
+    "zero_trace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Enterprise-only: Enable ZeroTrace mode",
+      "title": "Zero Trace"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "json",
+      "description": "Output format: 'json' (default) or 'html'",
+      "title": "Output"
+    }
+  },
+  "required": [
+    "q"
+  ],
+  "title": "BaiduSearchRequest",
+  "type": "object"
+}
