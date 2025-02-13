@@ -5,6 +5,10 @@
     "id": {
       "type": "string",
       "description": "The unique identifier of the user whose Tweets should be returned."
+    },
+    "max_results": {
+      "type": "integer",
+      "description": "The maximum number of results to be returned per page."
     }
   },
   "required": [
