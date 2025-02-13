@@ -8,10 +8,19 @@ brew install vite, tsc
 brew install uv
 ```
 
-### sync uv
+### setting backend
+    
+in web/backend
 ```shell
-cd backend
 uv sync
+uv run playwright install
+```
+
+### setting frontend
+
+in web/frontend
+```shell
+npm install
 ```
 
 ### create `.secrets.toml` in `web/backend/`
@@ -42,13 +51,15 @@ OPENAI_API_KEY=<YOUR_KEY>
 ```
 
 ### run backend
+
+in web/backend
 ```shell
 uv run ./start.sh
 ```
 
 ### run frontend
+
+in web/frontend
 ```shell
-cd ../frontend
-npm install
 vite
 ```
