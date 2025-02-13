@@ -1,0 +1,83 @@
+libs.hyperpocket.hyperpocket.cli.tool_export
+============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.cli.tool_export
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.cli.tool_export.export_tool
+   libs.hyperpocket.hyperpocket.cli.tool_export.process_tool_file
+   libs.hyperpocket.hyperpocket.cli.tool_export.process_tool_directory
+   libs.hyperpocket.hyperpocket.cli.tool_export.find_function_tool_decorated_functions
+   libs.hyperpocket.hyperpocket.cli.tool_export.load_functions_as_callable
+   libs.hyperpocket.hyperpocket.cli.tool_export.clean_tool_source_code
+   libs.hyperpocket.hyperpocket.cli.tool_export.transform_function_to_pydantic
+   libs.hyperpocket.hyperpocket.cli.tool_export.extract_function_code
+   libs.hyperpocket.hyperpocket.cli.tool_export.generate_tool_template
+   libs.hyperpocket.hyperpocket.cli.tool_export.copy_tool_directory
+   libs.hyperpocket.hyperpocket.cli.tool_export.generate_tool_files
+
+
+Module Contents
+---------------
+
+.. py:function:: export_tool(target, language='python')
+
+   Convert the specified tool to a local tool.
+
+
+.. py:function:: process_tool_file(target_path: pathlib.Path, language: str)
+
+   Process a single Python file containing function_tool decorated functions.
+
+
+.. py:function:: process_tool_directory(target_path: pathlib.Path, language: str)
+
+   Process a directory containing function_tool decorated functions.
+
+
+.. py:function:: find_function_tool_decorated_functions(file_path: pathlib.Path)
+
+   Find all functions decorated with @function_tool in a given Python file.
+
+
+.. py:function:: load_functions_as_callable(decorated_functions, file_path: pathlib.Path)
+
+   Load function_tool decorated function as a callable object.
+
+
+.. py:function:: clean_tool_source_code(source_code: str) -> str
+
+   Remove hyperpocket import, function_tool decorator, and main execution block.
+
+
+.. py:function:: transform_function_to_pydantic(tool_source_code: str, func: Callable)
+
+   Transform function into a Pydantic-based CLI tool.
+
+
+.. py:function:: extract_function_code(func: Callable) -> str
+
+   Extract function definition as a string.
+
+
+.. py:function:: generate_tool_template(tool_name: str)
+
+   Generate tool template using Click context forwarding.
+
+
+.. py:function:: copy_tool_directory(src_path: pathlib.Path, tool_name: str)
+
+   Copy the tool directory to the new tool directory.
+
+
+.. py:function:: generate_tool_files(target_path: pathlib.Path, tool_name: str, tool_main_code: str, func: Callable, language: str)
+
+   Generate config.toml, __main__.py, and schema.json for the tool.
+
+
