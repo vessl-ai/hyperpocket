@@ -39,6 +39,18 @@ class HubspotAuthConfig(OAuth2AuthConfig):
 class DiscordAuthConfig(OAuth2AuthConfig):
     pass
 
+class ZoomAuthConfig(OAuth2AuthConfig):
+    pass
+
+class AsanaAuthConfig(OAuth2AuthConfig):
+    pass
+
+class MailchimpAuthConfig(OAuth2AuthConfig):
+    pass
+
+class BitbucketAuthConfig(OAuth2AuthConfig):
+    pass
+
 class AuthConfig(BaseModel):
     slack: Optional[SlackAuthConfig] = None
     google: Optional[GoogleAuthConfig] = None
@@ -48,6 +60,7 @@ class AuthConfig(BaseModel):
     jira: Optional[JiraAuthConfig] = None
     hubspot: Optional[HubspotAuthConfig] = None
     discord: Optional[DiscordAuthConfig] = None
+    zoom: Optional[ZoomAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
 
 

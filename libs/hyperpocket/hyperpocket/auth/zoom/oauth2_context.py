@@ -1,22 +1,18 @@
-from jinja2 import Template
-
-def get_auth_oauth2_context_template() -> Template:
-    return Template('''\
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 from pydantic import Field
 
-from hyperpocket.auth.{{ service_name }}.context import {{ capitalized_service_name }}AuthContext
-from hyperpocket.auth.{{ service_name }}.oauth2_schema import {{ capitalized_service_name }}OAuth2Response
+from hyperpocket.auth.zoom.context import ZoomAuthContext
+from hyperpocket.auth.zoom.oauth2_schema import ZoomOAuth2Response
 
 
-class {{ capitalized_service_name }}OAuth2AuthContext({{ capitalized_service_name }}AuthContext):
+class ZoomOAuth2AuthContext(ZoomAuthContext):
     refresh_token: Optional[str] = Field(default=None, description="refresh token")
 
     @classmethod
-    def from_{{ service_name }}_oauth2_response(cls, response: {{ capitalized_service_name }}OAuth2Response):
-        description = f'{{ capitalized_service_name }} OAuth2 Context logged in'
+    def from_zoom_oauth2_response(cls, response: ZoomOAuth2Response):
+        description = f'Zoom OAuth2 Context logged in'
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token
@@ -35,4 +31,3 @@ class {{ capitalized_service_name }}OAuth2AuthContext({{ capitalized_service_nam
             description=description,
             detail=response,
         )
-''')

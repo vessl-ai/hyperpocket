@@ -1,11 +1,7 @@
-from jinja2 import Template
 
-
-def get_auth_context_template() -> Template:
-    return Template("""
 from hyperpocket.auth.context import AuthContext
-class {{ capitalized_service_name }}AuthContext(AuthContext):
-    _ACCESS_TOKEN_KEY: str = "{{ upper_service_name }}_TOKEN"
+class BitbucketAuthContext(AuthContext):
+    _ACCESS_TOKEN_KEY: str = "BITBUCKET_TOKEN"
     def to_dict(self) -> dict[str, str]:
         return {
             self._ACCESS_TOKEN_KEY: self.access_token,
@@ -14,4 +10,3 @@ class {{ capitalized_service_name }}AuthContext(AuthContext):
         return {
             f"{profile.upper()}_{self._ACCESS_TOKEN_KEY}": self.access_token,
         }
-""")

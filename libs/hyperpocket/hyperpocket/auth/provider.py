@@ -56,6 +56,10 @@ class AuthProvider(Enum):
     TAVILY = "tavily"
     EXA = "exa"
     AIRTABLE = "airtable"
+    BITBUCKET = "bitbucket"
+    MAILCHIMP = "mailchimp"
+    ASANA = "asana"
+    ZOOM = "zoom"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":
