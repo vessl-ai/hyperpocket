@@ -4,14 +4,14 @@ from urllib.parse import urlencode, urljoin
 from hyperpocket.auth import AuthProvider
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.handler import AuthHandlerInterface
-from hyperpocket.auth.api_token.token_context import ApiTokenAuthContext
-from hyperpocket.auth.api_token.token_schema import ApiTokenRequest, ApiTokenResponse
+from hyperpocket.auth.apitoken.token_context import ApiTokenAuthContext
+from hyperpocket.auth.apitoken.token_schema import ApiTokenRequest, ApiTokenResponse
 from hyperpocket.config import config
 from hyperpocket.futures import FutureStore
 
 
 class ApiTokenAuthHandler(AuthHandlerInterface):
-    name: str = "api-token"
+    name: str = "apitoken"
     description: str = "This handler is used to authenticate users using the Api token."
     scoped: bool = False
 
@@ -22,11 +22,15 @@ class ApiTokenAuthHandler(AuthHandlerInterface):
 
     @staticmethod
     def provider() -> AuthProvider:
-        return AuthProvider.API_TOKEN
+        return AuthProvider.APITOKEN
 
     @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
+
+    @staticmethod
+    def provider_default() -> bool:
+        return True
 
     def prepare(
         self,
@@ -39,7 +43,7 @@ class ApiTokenAuthHandler(AuthHandlerInterface):
     ) -> str:
         redirect_uri = urljoin(
             config().public_base_url + "/",
-            f"{config().callback_url_rewrite_prefix}/auth/api-token/token/callback",
+            f"{config().callback_url_rewrite_prefix}/auth/apitoken/token/callback",
         )
         url = self._make_auth_url(
             auth_req=auth_req, redirect_uri=redirect_uri, state=future_uid
@@ -62,7 +66,7 @@ class ApiTokenAuthHandler(AuthHandlerInterface):
         access_token = await future_data.future
 
         response = ApiTokenResponse(access_token=access_token)
-        context = ApiTokenAuthContext.from_notion_token_response(response)
+        context = ApiTokenAuthContext.from_api_token_response(response)
 
         return context
 

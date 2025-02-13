@@ -6,8 +6,8 @@ This module provides authentication using simple API tokens.
 
 ```toml
 [auth]
-auth_provider = "api-token"
-auth_handler = "api-token"
+auth_provider = "apitoken"
+auth_handler = "apitoken"
 scopes = []
 ```
 

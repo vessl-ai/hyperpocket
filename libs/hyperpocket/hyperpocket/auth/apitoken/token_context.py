@@ -1,5 +1,5 @@
-from hyperpocket.auth.api_token.context import ApiTokenAuthContext
-from hyperpocket.auth.api_token.token_schema import ApiTokenResponse
+from hyperpocket.auth.apitoken.context import ApiTokenAuthContext
+from hyperpocket.auth.apitoken.token_schema import ApiTokenResponse
 
 
 class ApiTokenAuthContext(ApiTokenAuthContext):

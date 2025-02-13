@@ -3,7 +3,7 @@ from starlette.responses import HTMLResponse
 
 from hyperpocket.futures import FutureStore
 
-api_token_auth_router = APIRouter(prefix="/api-token")
+api_token_auth_router = APIRouter(prefix="/apitoken")
 
 
 @api_token_auth_router.get("/token/callback")
