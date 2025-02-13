@@ -4,6 +4,7 @@ from slack_sdk.models.blocks import ButtonElement, ActionsBlock, SectionBlock
 import json
 import re
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -15,6 +16,7 @@ class SlackManager:
         self.sessions = {}  # Format: {thread_ts: ConversationState}
         self.tool_calls_store = {}
         self.handler = None
+        self.bot_user_id = None
         self.setup_handlers()
 
     def setup_handlers(self):
@@ -22,9 +24,10 @@ class SlackManager:
         async def handle_message_events(body, event, say, logger):
             """Handle incoming message events"""
             try:
-                # Ignore bot messages to prevent loops
-                if event.get("bot_id"):
-                    return
+                # Initialize bot user ID if not set
+                if not self.bot_user_id:
+                    auth_response = await self.app.client.auth_test()
+                    self.bot_user_id = auth_response["user_id"]
 
                 # Check if the event has text
                 if "text" not in event:
@@ -44,6 +47,15 @@ class SlackManager:
 
                 channel_id = event["channel"]
                 message_text = event["text"]
+                
+                # Only respond if bot is mentioned
+                bot_mention = f"<@{self.bot_user_id}>"
+                
+                if bot_mention not in message_text:
+                    return
+                
+                # Remove bot mention from message
+                message_text = message_text.replace(bot_mention, "").strip()
                 
                 # Initialize session if needed
                 if thread_ts not in self.sessions:
@@ -175,33 +187,48 @@ class SlackManager:
 
     async def process_ai_response(self, messages, channel_id, thread_ts, say):
         """Process AI response and handle tool calls if any"""
-        response, tool_calls = await self.ai_service.get_response(messages, thread_ts)
-        
-        if tool_calls:  # Tool calls need approval
-            for tool_call in tool_calls:
-                tool_args = json.loads(tool_call.function.arguments)
+        try:
+            response = await self.ai_service.get_response(messages, thread_ts)
+            
+            # Check if response is a tuple containing tool calls
+            if isinstance(response, tuple):
+                response, tool_calls = response
+            else:
+                tool_calls = None
+
+            if tool_calls:  # Tool calls need approval
+                # Group all tool calls into one approval request
+                tool_descriptions = []
+                tool_call_ids = []
+                
+                for tool_call in tool_calls:
+                    tool_args = json.loads(tool_call.function.arguments)
+                    tool_descriptions.append(
+                        f"*{tool_call.function.name}*\nArguments: ```{json.dumps(tool_args, indent=2)}```"
+                    )
+                    tool_call_ids.append(tool_call.id)
                 
                 blocks = [
                     SectionBlock(
-                        text=f"🔧 Request to use tool: *{tool_call.function.name}*\nArguments: ```{json.dumps(tool_args, indent=2)}```"
+                        text="🔧 Request to use multiple tools:\n\n" + "\n\n".join(tool_descriptions)
                     ),
                     ActionsBlock(
                         elements=[
                             ButtonElement(
-                                text="✅ Approve",
+                                text="✅ Approve All",
                                 action_id="approve_tool",
                                 style="primary",
                                 value=json.dumps({
-                                    "tool_call_id": tool_call.id,
+                                    "tool_call_ids": tool_call_ids,
                                     "thread_ts": thread_ts
                                 })
                             ),
                             ButtonElement(
-                                text="❌ Deny",
+                                text="❌ Deny All",
                                 action_id="deny_tool",
                                 style="danger",
                                 value=json.dumps({
-                                    "tool_call_id": tool_call.id,
+                                    "tool_call_ids": tool_call_ids,
                                     "thread_ts": thread_ts
                                 })
                             )
@@ -210,21 +237,25 @@ class SlackManager:
                 ]
                 
                 await say(
-                    text="Tool execution requires approval",
+                    text="Tool executions require approval",
                     blocks=blocks,
                     thread_ts=thread_ts
                 )
 
-        return response
+            return response
+
+        except Exception as e:
+            logger.error(f"Error in process_ai_response: {str(e)}", exc_info=True)
+            raise
 
     async def _handle_tool_approval(self, body, say, approved: bool):
         """Handle tool approval/denial"""
         try:
             value = json.loads(body["actions"][0]["value"])
             thread_ts = value["thread_ts"]
-            tool_call_id = value["tool_call_id"]
+            tool_call_ids = value.get("tool_call_ids", [value.get("tool_call_id")])  # Support both single and multiple IDs
             
-            logger.info(f"Tool {'approval' if approved else 'denial'} received - thread: {thread_ts}, tool_call_id: {tool_call_id}")
+            logger.info(f"Tool {'approval' if approved else 'denial'} received - thread: {thread_ts}, tool_call_ids: {tool_call_ids}")
             
             # Get the session
             session = self.sessions.get(thread_ts)
@@ -237,28 +268,31 @@ class SlackManager:
                 return
 
             if approved:
-                logger.info(f"Executing approved tool: {tool_call_id}")
+                logger.info(f"Executing approved tools: {tool_call_ids}")
                 # Send thinking message
                 thinking_msg = await say(
-                    text="🤔 Executing tool...",
+                    text="🤔 Executing tools...",
                     thread_ts=thread_ts
                 )
 
                 try:
-                    response = await self.ai_service.execute_approved_tool(thread_ts, tool_call_id)
-                    logger.info(f"Tool execution response received - length: {len(response) if response else 0}")
+                    # Execute all tools and collect responses
+                    responses = []
+                    for tool_call_id in tool_call_ids:
+                        response = await self.ai_service.execute_approved_tool(thread_ts, tool_call_id)
+                        if response:
+                            responses.append(response)
                     
-                    if response:
-                        # Delete thinking message
-                        await self.app.client.chat_delete(
-                            channel=body["channel"]["id"],
-                            ts=thinking_msg['ts']
-                        )
+                    # Delete thinking message
+                    await self.app.client.chat_delete(
+                        channel=body["channel"]["id"],
+                        ts=thinking_msg['ts']
+                    )
 
-                        # Format and send response
+                    # Send all responses
+                    for response in responses:
                         formatted_response = self.format_for_slack(response)
                         message_chunks = self.split_message(formatted_response)
-                        logger.info(f"Sending response in {len(message_chunks)} chunks")
                         
                         for chunk in message_chunks:
                             await say(
@@ -272,17 +306,11 @@ class SlackManager:
                             "role": "assistant",
                             "content": response
                         })
-                        logger.info("Tool response added to conversation history")
-                    else:
-                        logger.error("Tool execution returned no response")
-                        await say(
-                            text="Sorry, I couldn't process the tool execution.",
-                            thread_ts=thread_ts
-                        )
+
                 except Exception as e:
-                    logger.error(f"Error executing tool: {str(e)}", exc_info=True)
+                    logger.error(f"Error executing tools: {str(e)}", exc_info=True)
                     await say(
-                        text=f"Sorry, I encountered an error while executing the tool: {str(e)}",
+                        text=f"Sorry, I encountered an error while executing the tools: {str(e)}",
                         thread_ts=thread_ts
                     )
             else:
@@ -293,12 +321,10 @@ class SlackManager:
                         text=response,
                         thread_ts=thread_ts
                     )
-                    # Add denial response to conversation history
                     session.messages.append({
                         "role": "assistant",
                         "content": response
                     })
-                    logger.info("Denial response added to conversation history")
 
         except Exception as e:
             logger.error(f"Error in tool approval handler: {str(e)}", exc_info=True)

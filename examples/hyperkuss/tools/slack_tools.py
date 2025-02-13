@@ -112,4 +112,193 @@ def get_mention_messages(
         return {
             "error": str(e),
             "message": "Failed to fetch Slack messages"
+        }
+
+@function_tool()
+def summarize_thread(
+    channel_id: str,
+    thread_ts: str,
+    **kwargs
+) -> Dict:
+    """
+    Summarize all messages in a Slack thread.
+    Args:
+        channel_id: Channel ID containing the thread
+        thread_ts: Thread timestamp ID
+    Returns:
+        Summary of the thread discussion
+    """
+    try:
+        SLACK_TOKEN = os.environ.get("SLACK_BOT_TOKEN")
+        client = WebClient(token=SLACK_TOKEN)
+        
+        # Get thread messages
+        response = client.conversations_replies(
+            channel=channel_id,
+            ts=thread_ts
+        )
+        
+        if not response["messages"]:
+            return {
+                "message": "No messages found in thread"
+            }
+            
+        # Prepare messages for summarization
+        messages = []
+        for msg in response["messages"]:
+            # Get user info
+            user_info = client.users_info(user=msg["user"])
+            username = user_info["user"]["real_name"]
+            
+            messages.append({
+                "user": username,
+                "text": msg["text"],
+                "timestamp": msg["ts"]
+            })
+            
+        # Create summary prompt
+        thread_text = "\n".join([f"{m['user']}: {m['text']}" for m in messages])
+        summary_prompt = f"Please summarize this Slack thread discussion:\n\n{thread_text}"
+        
+        # Get summary using OpenAI
+        response = client.llm.chat.completions.create(
+            model="gpt-4",
+            messages=[{
+                "role": "system",
+                "content": "You are a helpful assistant that summarizes Slack discussions concisely."
+            }, {
+                "role": "user",
+                "content": summary_prompt
+            }],
+            temperature=0.7
+        )
+        
+        summary = response.choices[0].message.content
+        
+        return {
+            "summary": summary,
+            "message_count": len(messages),
+            "participants": list(set(m["user"] for m in messages)),
+            "message": summary
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to summarize thread: {str(e)}")
+        return {
+            "error": str(e),
+            "message": "Failed to summarize thread"
+        }
+
+@function_tool()
+def help_with_thread(
+    channel_id: str,
+    thread_ts: str,
+    language: str = "en",
+    **kwargs
+) -> Dict:
+    """
+    Analyze current thread and provide help with ongoing discussion.
+    Args:
+        channel_id: Channel ID containing the thread
+        thread_ts: Thread timestamp ID
+        language: Response language ("en" or "ko", default: "en")
+    Returns:
+        Analysis and suggestions for the current discussion
+    """
+    try:
+        SLACK_TOKEN = os.environ.get("SLACK_BOT_TOKEN")
+        client = WebClient(token=SLACK_TOKEN)
+        
+        # Get thread messages
+        response = client.conversations_replies(
+            channel=channel_id,
+            ts=thread_ts
+        )
+        
+        if not response["messages"]:
+            return {
+                "message": "스레드에서 메시지를 찾을 수 없습니다" if language == "ko" else "No messages found in thread"
+            }
+            
+        # Prepare messages for analysis
+        messages = []
+        for msg in response["messages"]:
+            user_info = client.users_info(user=msg["user"])
+            username = user_info["user"]["real_name"]
+            
+            messages.append({
+                "user": username,
+                "text": msg["text"],
+                "timestamp": msg["ts"]
+            })
+            
+        # Create analysis prompt
+        thread_text = "\n".join([f"{m['user']}: {m['text']}" for m in messages])
+        
+        system_prompt = {
+            "en": """You are a helpful assistant that analyzes ongoing Slack discussions to provide immediate help.
+Focus on:
+1. Understanding the current situation/problem
+2. Identifying what help is needed
+3. Suggesting immediate next steps or solutions
+4. Offering relevant tools or resources""",
+            "ko": """진행 중인 Slack 토론을 분석하여 즉각적인 도움을 제공하는 도우미입니다.
+다음 사항에 중점을 둡니다:
+1. 현재 상황/문제 파악
+2. 필요한 도움 식별
+3. 즉각적인 다음 단계나 해결책 제안
+4. 관련 도구나 리소스 제공"""
+        }[language]
+        
+        user_prompt = {
+            "en": f"""Please help with this ongoing discussion:
+
+Current Thread:
+{thread_text}
+
+Provide:
+1. Current Situation: What's happening now?
+2. Help Needed: What kind of help is required?
+3. Next Steps: What should be done next?
+4. Tools/Resources: What tools or resources could help?""",
+            "ko": f"""현재 진행 중인 토론에 도움을 제공해주세요:
+
+현재 스레드:
+{thread_text}
+
+다음 사항을 제공해주세요:
+1. 현재 상황: 지금 무슨 일이 일어나고 있나요?
+2. 필요한 도움: 어떤 종류의 도움이 필요한가요?
+3. 다음 단계: 다음에 무엇을 해야 하나요?
+4. 도구/리소스: 어떤 도구나 리소스가 도움될 수 있나요?"""
+        }[language]
+        
+        # Get analysis using OpenAI
+        response = client.llm.chat.completions.create(
+            model="gpt-4",
+            messages=[{
+                "role": "system",
+                "content": system_prompt
+            }, {
+                "role": "user",
+                "content": user_prompt
+            }],
+            temperature=0.7
+        )
+        
+        analysis = response.choices[0].message.content
+        
+        return {
+            "analysis": analysis,
+            "message_count": len(messages),
+            "participants": list(set(m["user"] for m in messages)),
+            "message": analysis
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to analyze thread: {str(e)}")
+        error_msg = "스레드 분석에 실패했습니다" if language == "ko" else "Failed to analyze thread"
+        return {
+            "error": str(e),
+            "message": error_msg
         } 

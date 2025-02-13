@@ -27,6 +27,8 @@ AVAILABLE_TOOLS: List[Callable] = [
     notion_tools.get_page_content,
     # Slack tools
     slack_tools.get_mention_messages,
+    slack_tools.summarize_thread,
+    slack_tools.help_with_thread,
     # Google tools
     google_tools.create_meet_link,
     google_tools.get_meetings,
@@ -75,6 +77,8 @@ TOOL_CATEGORIES = {
         "description": "Tools for interacting with Slack messages and channels",
         "tools": [
             slack_tools.get_mention_messages,
+            slack_tools.summarize_thread,
+            slack_tools.help_with_thread,
         ]
     },
     "google": {
