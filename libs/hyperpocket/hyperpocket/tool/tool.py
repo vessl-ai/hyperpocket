@@ -116,7 +116,7 @@ class Tool(BaseModel, abc.ABC):
             return self.description
 
     def override_tool_variables(self, override_vars: dict[str, str]) -> "Tool":
-        self.overridden_tool_vars = override_vars
+        self.overridden_tool_vars |= override_vars
         return self
 
     @property
