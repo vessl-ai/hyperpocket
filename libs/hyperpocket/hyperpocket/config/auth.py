@@ -54,6 +54,9 @@ class BitbucketAuthConfig(OAuth2AuthConfig):
 class NotionAuthConfig(OAuth2AuthConfig):
     pass
 
+class SalesForceAuthConfig(OAuth2AuthConfig):
+    domain_url: str
+
 class AuthConfig(BaseModel):
     slack: Optional[SlackAuthConfig] = None
     google: Optional[GoogleAuthConfig] = None
@@ -68,6 +71,7 @@ class AuthConfig(BaseModel):
     mailchimp: Optional[MailchimpAuthConfig] = None
     bitbucket: Optional[BitbucketAuthConfig] = None
     notion: Optional[NotionAuthConfig] = None
+    salesforce: Optional[SalesForceAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
 
 
