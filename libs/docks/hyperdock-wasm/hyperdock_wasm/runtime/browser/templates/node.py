@@ -10,7 +10,6 @@ node_template = """
 <script type="module">
     function loadConfig() {
         globalThis.toolConfigs = {
-            routerPrefix: `{{ ROUTER_PREFIX }}`,
             envs: `{{ ENV_JSON }}`,
             body: `{{ BODY_JSON_B64 }}`,
             scriptID: `{{ SCRIPT_ID }}`
@@ -44,7 +43,7 @@ node_template = """
     
     async function _main() {
         loadConfig();
-        const b64FilesResp = await fetch(`/${globalThis.toolConfigs.routerPrefix}/scripts/${globalThis.toolConfigs.scriptID}/file_tree`);
+        const b64FilesResp = await fetch(`/scripts/${globalThis.toolConfigs.scriptID}/file_tree`);
         const b64Files = await b64FilesResp.json();
         const files = decodeFileTree(b64Files.tree);
         const webcontainer = await WebContainer.boot();
@@ -74,7 +73,7 @@ node_template = """
         if (stdout.startsWith(decodedBytes)) {
             stdout = stdout.slice(decodedBytes);
         }
-        await fetch(`/${globalThis.toolConfigs.routerPrefix}/scripts/${globalThis.toolConfigs.scriptID}/done`, {
+        await fetch(`/scripts/${globalThis.toolConfigs.scriptID}/done`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -88,7 +87,7 @@ node_template = """
             await _main();
         } catch (e) {
             console.error(e);
-            await fetch(`/${globalThis.toolConfigs.routerPrefix}/scripts/${globalThis.toolConfigs.scriptID}/done`, {
+            await fetch(`/scripts/${globalThis.toolConfigs.scriptID}/done`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
