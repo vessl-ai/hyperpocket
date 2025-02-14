@@ -63,6 +63,7 @@ class AuthProvider(Enum):
     SALESFORCE = "salesforce"
     SPOTIFY = "spotify"
     FACEBOOK = "facebook"
+    ACTIVELOOP = "activeloop"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":

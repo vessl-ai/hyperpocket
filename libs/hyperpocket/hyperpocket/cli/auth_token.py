@@ -111,7 +111,7 @@ def generate_auth_token_handler(service_name, capitalized_service_name, parent_p
 def generate_auth_token_schema(service_name, capitalized_service_name, parent_path, force):
     print(f"Generating auth/token schema for '{service_name}'.")
     output_from_parsed_template = get_auth_token_schema_template().render(
-        capitalized_service_namecapitalized_service_name=capitalized_service_name,
+        capitalized_service_name=capitalized_service_name,
     )
     output_path = (
         parent_path / f"hyperpocket/hyperpocket/auth/{service_name}/token_schema.py"
