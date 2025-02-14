@@ -12,11 +12,9 @@ from hyperdock_wasm.runtime.browser.templates import render
 
 
 class Invoker(object):
-    router_prefix: str
     browser: InvokerBrowser
-    
-    def __init__(self, router_prefix: str, browser: InvokerBrowser):
-        self.router_prefix = router_prefix
+
+    def __init__(self, browser: InvokerBrowser):
         self.browser = browser
 
     def invoke(
@@ -36,7 +34,7 @@ class Invoker(object):
         self, tool_path: str, runtime: ScriptRuntime, body: Any, envs: dict, **kwargs
     ) -> str:
         script_future_uid = str(uuid.uuid4())
-        html = render(runtime.value, script_future_uid, self.router_prefix, envs, json.dumps(body))
+        html = render(runtime.value, script_future_uid, envs, json.dumps(body))
         script = Script(
             id=script_future_uid, tool_path=tool_path, rendered_html=html, runtime=runtime
         )
@@ -44,7 +42,7 @@ class Invoker(object):
         future_data = FutureStore.create_future(uid=script_future_uid)
         page = await self.browser.new_page()
         url = urljoin(
-            config().internal_base_url + "/", f"{self.router_prefix}/scripts/{script_future_uid}/browse"
+            config().internal_base_url + "/", f"scripts/{script_future_uid}/browse"
         )
         await page.goto(url)
         stdout = await future_data.future
