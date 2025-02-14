@@ -66,6 +66,7 @@ class AuthProvider(Enum):
     ACTIVELOOP = "activeloop"
     AGENTQL = "agentql"
     HAPPYROBOT = "happyrobot"
+    LINKEDIN = "linkedin"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":
