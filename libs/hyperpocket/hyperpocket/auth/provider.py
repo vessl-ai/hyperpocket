@@ -64,6 +64,7 @@ class AuthProvider(Enum):
     SPOTIFY = "spotify"
     FACEBOOK = "facebook"
     ACTIVELOOP = "activeloop"
+    AGENTQL = "agentql"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":
