@@ -1,0 +1,6 @@
+name = "yelp_search"
+description = "serp api yelp search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

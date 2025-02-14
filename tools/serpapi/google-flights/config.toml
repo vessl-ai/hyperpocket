@@ -1,0 +1,6 @@
+name = "google_flights"
+description = "serp api google flights api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

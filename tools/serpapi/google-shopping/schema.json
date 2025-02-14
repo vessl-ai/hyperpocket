@@ -1,0 +1,211 @@
+{
+  "properties": {
+    "q": {
+      "description": "Search query for Google Shopping.",
+      "title": "Q",
+      "type": "string"
+    },
+    "location": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Location to originate the search from.",
+      "title": "Location"
+    },
+    "uule": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Google encoded location for search. Can't be used with location.",
+      "title": "Uule"
+    },
+    "google_domain": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "google.com",
+      "description": "Google domain to use (default: 'google.com').",
+      "title": "Google Domain"
+    },
+    "gl": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "us",
+      "description": "Country code for search localization (default: 'us').",
+      "title": "Gl"
+    },
+    "hl": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "en",
+      "description": "Language code for search localization (default: 'en').",
+      "title": "Hl"
+    },
+    "tbs": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Advanced search filters for specific content types.",
+      "title": "Tbs"
+    },
+    "shoprs": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Helper ID for setting search filters.",
+      "title": "Shoprs"
+    },
+    "direct_link": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Include direct link of each product (default: False).",
+      "title": "Direct Link"
+    },
+    "start": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 0,
+      "description": "Pagination offset for results (default: 0). Not recommended for the new layout.",
+      "title": "Start"
+    },
+    "num": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 60,
+      "description": "Number of results to return (default: 60, max: 100). Not supported in new layout.",
+      "title": "Num"
+    },
+    "device": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "desktop",
+      "description": "Device type ('desktop', 'tablet', 'mobile').",
+      "title": "Device"
+    },
+    "no_cache": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Force fetching new results instead of cached results.",
+      "title": "No Cache"
+    },
+    "async": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Submit search asynchronously.",
+      "title": "Async"
+    },
+    "zero_trace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Enterprise-only: Enable ZeroTrace mode.",
+      "title": "Zero Trace"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "json",
+      "description": "Output format ('json' or 'html').",
+      "title": "Output"
+    }
+  },
+  "required": [
+    "q"
+  ],
+  "title": "GoogleShoppingRequest",
+  "type": "object"
+}

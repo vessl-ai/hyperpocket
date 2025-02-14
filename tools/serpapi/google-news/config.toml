@@ -1,0 +1,6 @@
+name = "google_news"
+description = "serp api google news search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

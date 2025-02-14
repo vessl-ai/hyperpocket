@@ -1,0 +1,92 @@
+{
+  "properties": {
+    "q": {
+      "description": "Query term for Google Finance search. Can be a stock, index, mutual fund, currency, or futures.",
+      "title": "Q",
+      "type": "string"
+    },
+    "hl": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Language code for localization (e.g., 'en', 'es', 'fr').",
+      "title": "Hl"
+    },
+    "window": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "1D",
+      "description": "Time range for the graph (Options: '1D', '5D', '1M', '6M', 'YTD', '1Y', '5Y', 'MAX'). Default: '1D'.",
+      "title": "Window"
+    },
+    "no_cache": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Force fetching new results instead of cached results.",
+      "title": "No Cache"
+    },
+    "async": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Submit search asynchronously.",
+      "title": "Async"
+    },
+    "zero_trace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Enterprise-only: Enable ZeroTrace mode.",
+      "title": "Zero Trace"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "json",
+      "description": "Output format: 'json' (default) or 'html'.",
+      "title": "Output"
+    }
+  },
+  "required": [
+    "q"
+  ],
+  "title": "GoogleFinanceRequest",
+  "type": "object"
+}

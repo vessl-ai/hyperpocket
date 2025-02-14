@@ -1,0 +1,6 @@
+name = "ebay_search"
+description = "serp api ebay search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

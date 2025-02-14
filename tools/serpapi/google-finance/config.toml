@@ -1,0 +1,6 @@
+name = "google_finance"
+description = "serp api google finance api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

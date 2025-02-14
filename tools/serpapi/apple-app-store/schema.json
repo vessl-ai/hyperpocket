@@ -1,0 +1,160 @@
+{
+  "properties": {
+    "term": {
+      "description": "Query term to search in the App Store",
+      "title": "Term",
+      "type": "string"
+    },
+    "country": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "us",
+      "description": "Country code for localization (e.g., 'us', 'uk', 'fr')",
+      "title": "Country"
+    },
+    "lang": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "en-us",
+      "description": "Language code for localization (e.g., 'en-us', 'fr-fr', 'uk-ua')",
+      "title": "Lang"
+    },
+    "num": {
+      "anyOf": [
+        {
+          "maximum": 200,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 10,
+      "description": "Number of results per page (1-200)",
+      "title": "Num"
+    },
+    "page": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 0,
+      "description": "Page number of the search results",
+      "title": "Page"
+    },
+    "disallow_explicit": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Filter explicit apps (default: False)",
+      "title": "Disallow Explicit"
+    },
+    "property": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "",
+      "description": "Search property of an app (e.g., 'developer')",
+      "title": "Property"
+    },
+    "no_cache": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Force fetching new results instead of cached results",
+      "title": "No Cache"
+    },
+    "async": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Submit search asynchronously",
+      "title": "Async"
+    },
+    "zero_trace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Enterprise-only: Enable ZeroTrace mode",
+      "title": "Zero Trace"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "json",
+      "description": "Output format: 'json' (default) or 'html'",
+      "title": "Output"
+    },
+    "device": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "mobile",
+      "description": "Device type: 'desktop', 'tablet', or 'mobile' (default)",
+      "title": "Device"
+    }
+  },
+  "required": [
+    "term"
+  ],
+  "title": "AppleAppStoreRequest",
+  "type": "object"
+}

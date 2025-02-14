@@ -1,0 +1,229 @@
+{
+  "properties": {
+    "query": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Search query for Walmart. Either query or cat_id is required.",
+      "title": "Query"
+    },
+    "sort": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Sorting option (e.g., 'price_low', 'price_high', 'best_seller', 'best_match', 'rating_high', 'new').",
+      "title": "Sort"
+    },
+    "soft_sort": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": true,
+      "description": "Enable sort by relevance (default: True). Set to False to disable relevance sorting.",
+      "title": "Soft Sort"
+    },
+    "cat_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Category ID for Walmart search. Either query or cat_id is required.",
+      "title": "Cat Id"
+    },
+    "facet": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Filter items based on attributes using 'key:value' pairs separated by '||'.",
+      "title": "Facet"
+    },
+    "store_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Filter products by specific Walmart store ID.",
+      "title": "Store Id"
+    },
+    "min_price": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Lower bound of price range.",
+      "title": "Min Price"
+    },
+    "max_price": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Upper bound of price range.",
+      "title": "Max Price"
+    },
+    "spelling": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": true,
+      "description": "Enable spelling fix (default: True). Set to False to disable.",
+      "title": "Spelling"
+    },
+    "nd_en": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Show results with NextDay delivery only (default: False).",
+      "title": "Nd En"
+    },
+    "page": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 1,
+      "description": "Page number for pagination (default: 1, max: 100).",
+      "title": "Page"
+    },
+    "device": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "desktop",
+      "description": "Device type ('desktop', 'tablet', 'mobile').",
+      "title": "Device"
+    },
+    "no_cache": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Force fetching new results instead of cached results.",
+      "title": "No Cache"
+    },
+    "async": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Submit search asynchronously.",
+      "title": "Async"
+    },
+    "zero_trace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Enterprise-only: Enable ZeroTrace mode.",
+      "title": "Zero Trace"
+    },
+    "include_filters": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Include filters in JSON response (default: False).",
+      "title": "Include Filters"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "json",
+      "description": "Output format ('json' or 'html').",
+      "title": "Output"
+    }
+  },
+  "title": "WalmartSearchRequest",
+  "type": "object"
+}
