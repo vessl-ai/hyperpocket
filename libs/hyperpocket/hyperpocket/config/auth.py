@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 class BaseAuthConfig(BaseModel):
     use_recommended_scope: bool = Field(default=True)
 
+
 class OAuth2AuthConfig(BaseAuthConfig):
     client_id: str
     client_secret: str
@@ -30,41 +31,58 @@ class CalendlyAuthConfig(OAuth2AuthConfig):
 class XAuthConfig(OAuth2AuthConfig):
     pass
 
+
 class JiraAuthConfig(OAuth2AuthConfig):
     pass
+
 
 class HubspotAuthConfig(OAuth2AuthConfig):
     pass
 
+
 class DiscordAuthConfig(OAuth2AuthConfig):
     pass
+
 
 class ZoomAuthConfig(OAuth2AuthConfig):
     pass
 
+
 class AsanaAuthConfig(OAuth2AuthConfig):
     pass
+
 
 class MailchimpAuthConfig(OAuth2AuthConfig):
     pass
 
+
 class BitbucketAuthConfig(OAuth2AuthConfig):
     pass
+
 
 class NotionAuthConfig(OAuth2AuthConfig):
     pass
 
+
 class LinkedinAuthConfig(OAuth2AuthConfig):
     pass
+
 
 class LinearAuthConfig(OAuth2AuthConfig):
     pass
 
+
 class SalesForceAuthConfig(OAuth2AuthConfig):
     domain_url: str
 
+
 class SpotifyAuthConfig(OAuth2AuthConfig):
     pass
+
+
+class FacebookAuthConfig(OAuth2AuthConfig):
+    pass
+
 
 class AuthConfig(BaseModel):
     slack: Optional[SlackAuthConfig] = None
@@ -84,6 +102,7 @@ class AuthConfig(BaseModel):
     spotify: Optional[SpotifyAuthConfig] = None
     linkedin: Optional[LinkedinAuthConfig] = None
     linear: Optional[LinearAuthConfig] = None
+    facebook: Optional[FacebookAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
 
 
