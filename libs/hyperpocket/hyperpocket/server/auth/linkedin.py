@@ -2,13 +2,13 @@ from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from hyperpocket.futures import FutureStore
 
-linear_auth_router = APIRouter(
-    prefix="/linear"
+linkedin_auth_router = APIRouter(
+    prefix="/linkedin"
 )
 
 
-@linear_auth_router.get("/oauth2/callback")
-async def linear_oauth2_callback(state: str, code: str):
+@linkedin_auth_router.get("/oauth2/callback")
+async def linkedin_oauth2_callback(state: str, code: str):
     try:
         FutureStore.resolve_future(state, code)
     except ValueError:
@@ -17,8 +17,8 @@ async def linear_oauth2_callback(state: str, code: str):
     return HTMLResponse(content="success")
 
 
-@linear_auth_router.get("/token/callback")
-async def linear_token_callback(state: str, token: str):
+@linkedin_auth_router.get("/token/callback")
+async def linkedin_token_callback(state: str, token: str):
     try:
         FutureStore.resolve_future(state, token)
     except ValueError:

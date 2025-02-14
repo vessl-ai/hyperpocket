@@ -54,6 +54,12 @@ class BitbucketAuthConfig(OAuth2AuthConfig):
 class NotionAuthConfig(OAuth2AuthConfig):
     pass
 
+class LinkedinAuthConfig(OAuth2AuthConfig):
+    pass
+
+class LinearAuthConfig(OAuth2AuthConfig):
+    pass
+
 class SalesForceAuthConfig(OAuth2AuthConfig):
     domain_url: str
 
@@ -76,6 +82,8 @@ class AuthConfig(BaseModel):
     notion: Optional[NotionAuthConfig] = None
     salesforce: Optional[SalesForceAuthConfig] = None
     spotify: Optional[SpotifyAuthConfig] = None
+    linkedin: Optional[LinkedinAuthConfig] = None
+    linear: Optional[LinearAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
 
 
