@@ -19,10 +19,20 @@ InMemorySessionValue = BaseSessionValue
 class InMemorySessionStorage(
     SessionStorageInterface[InMemorySessionKey, InMemorySessionValue]
 ):
-    # TODO(moon) : Force it to always take SessionConfig as an input
+    _instance = None
+    _is_initialized = False
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(InMemorySessionStorage, cls).__new__(cls)
+            cls._instance._is_initialized = False
+        return cls._instance
+
     def __init__(self, session_config: SessionConfigInMemory):
-        super().__init__()
-        self.storage: Dict[InMemorySessionKey, InMemorySessionValue] = {}
+        if not self._is_initialized:
+            super().__init__()
+            self.storage: Dict[InMemorySessionKey, InMemorySessionValue] = {}
+            self._is_initialized = True
 
     @classmethod
     def session_storage_type(cls) -> SessionType:

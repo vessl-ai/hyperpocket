@@ -1,17 +1,15 @@
 import asyncio
 import enum
 import uuid
-from typing import Optional, Union
+from typing import Optional
 
 import multiprocess as mp
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI
 from uvicorn import Config, Server
 
-from hyperpocket import PocketAuth
 from hyperpocket.config import config, pocket_logger
 from hyperpocket.pocket_core import PocketCore
 from hyperpocket.server.auth import auth_router
-from hyperpocket.session import SessionStorageInterface, SESSION_STORAGE_LIST
 
 
 class PocketServerOperations(enum.Enum):
@@ -20,6 +18,7 @@ class PocketServerOperations(enum.Enum):
     AUTHENTICATE = "authenticate"
     TOOL_CALL = "tool_call"
     PLUG_CORE = "plug_core"
+
 
 class PocketServer(object):
     fastapi_app: Optional[FastAPI]
@@ -33,7 +32,6 @@ class PocketServer(object):
     torn_down: bool = False
     _uidset: set
     _cores: dict[str, PocketCore]
-    _auth_session_storage: SessionStorageInterface
 
     def __init__(self):
         self._initialized = False
@@ -44,42 +42,15 @@ class PocketServer(object):
         self.fastapi_app = None
         self.main_server = None
         self._cores = dict()
-        self._auth_session_storage = None
-    
-    @property
-    def _session_storage(self):
-        if self._auth_session_storage is None:
-            for session_type in SESSION_STORAGE_LIST:
-                if session_type.session_storage_type() == config().session.session_type:
-                    session_config = getattr(
-                        config().session, config().session.session_type.value
-                    )
 
-                    pocket_logger.info(
-                        f"init {session_type.session_storage_type()} session storage.."
-                    )
-                    self._auth_session_storage = session_type(session_config)
-                    break
-
-            if self._auth_session_storage is None:
-                pocket_logger.error(
-                    f"not supported session type({config().session.session_type})"
-                )
-                raise RuntimeError(
-                    f"Not Supported Session Type({config().session.session_type})"
-                )
-
-        return self._auth_session_storage
-    
     # should be called in child process
     def _plug_core(self, pocket_uid: str, pocket_core: PocketCore, *_a, **_kw):
         # extend http routers from each docks
         for dock in pocket_core.docks:
             self.fastapi_app.include_router(dock.router)
         # keep pocket core
-        pocket_core.auth.plug_storage(self._session_storage)
         self._cores[pocket_uid] = pocket_core
-    
+
     # should be called in parent process
     async def plug_core(self, pocket_uid: str, pocket_core: PocketCore):
         await self.call_in_subprocess(
@@ -91,7 +62,7 @@ class PocketServer(object):
                 "pocket_core": pocket_core,
             },
         )
-    
+
     @classmethod
     def get_instance_and_refcnt_up(cls, uid: str):
         if cls.__dict__.get("_instance") is None:
@@ -99,7 +70,7 @@ class PocketServer(object):
             cls._instance.run()
         cls._instance.refcnt_up(uid)
         return cls._instance
-    
+
     def refcnt_up(self, uid: str):
         self._uidset.add(uid)
 
@@ -132,7 +103,7 @@ class PocketServer(object):
     async def poll_in_child(self):
         loop = asyncio.get_running_loop()
         _, conn = self.pipe
-        
+
         async def _acall(_conn, _future_uid, _core_uid, _args, _kwargs):
             try:
                 core = self._cores[_core_uid]
@@ -185,7 +156,7 @@ class PocketServer(object):
                 error = e
 
             _conn.send((_future_uid, result, error))
-        
+
         async def _plug_core(_conn, _future_uid, _core_uid, a, kw):
             try:
                 self._plug_core(*a, **kw)
@@ -258,11 +229,11 @@ class PocketServer(object):
         if not error_queue.empty():
             error_message = error_queue.get()
             raise error_message
-    
+
     def _report_initialized(self, error: Optional[Exception] = None):
         _, conn = self.pipe
         conn.send(('server-initialization', error,))
-    
+
     def wait_initialized(self):
         if self._initialized:
             return
@@ -288,7 +259,7 @@ class PocketServer(object):
             loop.close()
         except Exception as error:
             self._report_initialized(error)
-    
+
     def _create_fastapi_app(self) -> FastAPI:
         app = FastAPI()
         app.include_router(auth_router)
