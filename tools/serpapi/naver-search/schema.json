@@ -1,0 +1,133 @@
+{
+  "properties": {
+    "query": {
+      "description": "Search query for Naver. Supports advanced search operators.",
+      "title": "Query",
+      "type": "string"
+    },
+    "start": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 1,
+      "description": "Offset for organic results. Defaults to 1.",
+      "title": "Start"
+    },
+    "page": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Page number for pagination. Automatically calculates start parameter.",
+      "title": "Page"
+    },
+    "num": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 50,
+      "description": "Maximum number of results to return (default: 50, max: 100). Only applicable for Naver Images API.",
+      "title": "Num"
+    },
+    "where": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "nexearch",
+      "description": "Search type (e.g., 'nexearch', 'web', 'video', 'news', 'image').",
+      "title": "Where"
+    },
+    "device": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "desktop",
+      "description": "Device type ('desktop', 'tablet', 'mobile').",
+      "title": "Device"
+    },
+    "no_cache": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Force fetching new results instead of cached results.",
+      "title": "No Cache"
+    },
+    "async": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Submit search asynchronously.",
+      "title": "Async"
+    },
+    "zero_trace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": false,
+      "description": "Enterprise-only: Enable ZeroTrace mode.",
+      "title": "Zero Trace"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "json",
+      "description": "Output format ('json' or 'html').",
+      "title": "Output"
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "title": "NaverSearchRequest",
+  "type": "object"
+}

@@ -1,0 +1,6 @@
+name = "baidu_search"
+description = "serp api baidu search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

@@ -15,6 +15,11 @@ class XListUserPostRequest(BaseModel):
         ...,
         description="The unique identifier of the user whose Tweets should be returned.",
     )
+    max_results: Optional[int] = Field(
+        10,
+        description="The maximum number of results to be returned per page.",
+    )
+    # extend by referncing https://docs.x.com/x-api/posts/user-home-timeline-by-user-id
 
 
 def list_home_posts(req: XListUserPostRequest):

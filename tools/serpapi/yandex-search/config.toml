@@ -1,0 +1,6 @@
+name = "yandex_search"
+description = "serp api yandex search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

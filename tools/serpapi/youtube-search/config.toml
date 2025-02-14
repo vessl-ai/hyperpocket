@@ -1,0 +1,6 @@
+name = "youtube_search"
+description = "serp api youtube search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"

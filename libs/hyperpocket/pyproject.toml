@@ -1,6 +1,6 @@
 [project]
 name = "hyperpocket"
-version = "0.3.3"
+version = "0.3.4"
 description = "Building AI agent with hyperpocket tool in a flash"
 authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 requires-python = ">=3.10"

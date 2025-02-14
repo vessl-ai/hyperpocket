@@ -10,6 +10,7 @@ class AuthProvider(Enum):
     NOTION = "notion"
     REDDIT = "reddit"
     GUMLOOP = "gumloop"
+    SERPAPI = "serpapi"
     X = "x"
     JIRA = "jira"
     SENDGRID = "sendgird"
@@ -66,7 +67,8 @@ class AuthProvider(Enum):
     ACTIVELOOP = "activeloop"
     AGENTQL = "agentql"
     HAPPYROBOT = "happyrobot"
-    LINKEDIN = "linkedin"
+    APITOKEN = "apitoken"
+
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":

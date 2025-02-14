@@ -1,0 +1,6 @@
+name = "google_shopping"
+description = "serp api google shoping search api"
+language = "python"
+
+[auth]
+auth_provider = "serpapi"
