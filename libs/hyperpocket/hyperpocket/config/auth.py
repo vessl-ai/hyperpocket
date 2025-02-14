@@ -57,6 +57,9 @@ class NotionAuthConfig(OAuth2AuthConfig):
 class SalesForceAuthConfig(OAuth2AuthConfig):
     domain_url: str
 
+class SpotifyAuthConfig(OAuth2AuthConfig):
+    pass
+
 class AuthConfig(BaseModel):
     slack: Optional[SlackAuthConfig] = None
     google: Optional[GoogleAuthConfig] = None
@@ -72,6 +75,7 @@ class AuthConfig(BaseModel):
     bitbucket: Optional[BitbucketAuthConfig] = None
     notion: Optional[NotionAuthConfig] = None
     salesforce: Optional[SalesForceAuthConfig] = None
+    spotify: Optional[SpotifyAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
 
 

@@ -61,6 +61,7 @@ class AuthProvider(Enum):
     ASANA = "asana"
     ZOOM = "zoom"
     SALESFORCE = "salesforce"
+    SPOTIFY = "spotify"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":
