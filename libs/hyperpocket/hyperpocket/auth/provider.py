@@ -67,6 +67,7 @@ class AuthProvider(Enum):
     ACTIVELOOP = "activeloop"
     AGENTQL = "agentql"
     HAPPYROBOT = "happyrobot"
+    LINKEDIN = "linkedin"
     APITOKEN = "apitoken"
 
 
