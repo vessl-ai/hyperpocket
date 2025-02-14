@@ -200,6 +200,8 @@ class ContainerRuntime(abc.ABC):
             runtime_arguments: dict = None) -> FunctionTool:
         if runtime_arguments is None:
             runtime_arguments = dict()
+        if overridden_tool_vars is None:
+            overridden_tool_vars = dict()
 
         with pocket_schema_path.open("r") as f:
             pocket_schema = json.load(f)
@@ -212,6 +214,7 @@ class ContainerRuntime(abc.ABC):
 
         # 2. variable section
         default_tool_vars = pocket_schema.get("variables", {})
+        tool_vars = default_tool_vars | overridden_tool_vars
 
         # 3. auth section
         auth = None
@@ -246,23 +249,16 @@ class ContainerRuntime(abc.ABC):
         async def _ainvoke(body: Any, envs: dict, **kwargs) -> str:
             return _invoke(body, envs, **kwargs)
 
-        model = json_schema
-        _ainvoke.__name__ = name
-        _ainvoke.__doc__ = description
-        _ainvoke.__model__ = model
-        _invoke.__name__ = name
-        _invoke.__doc__ = description
-        _invoke.__model__ = model
-
         tool = FunctionTool.from_func(
             func=_invoke,
             afunc=_ainvoke,
             auth=auth,
-            tool_vars=default_tool_vars,
+            name=name,
+            description=description,
+            json_schema=json_schema,
+            tool_vars=tool_vars,
             keep_structured_arguments=True,
         )
-        if overridden_tool_vars is not None:
-            tool.override_tool_variables(overridden_tool_vars)
         return tool
 
     @classmethod

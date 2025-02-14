@@ -93,18 +93,13 @@ class BrowserScriptRuntime(ToolRuntime):
             except RuntimeError:
                 return asyncio.run(_ainvoke(body, envs, **kwargs))
 
-        model = json_schema
-        _ainvoke.__name__ = name
-        _ainvoke.__doc__ = description
-        _ainvoke.__model__ = model
-        _invoke.__name__ = name
-        _invoke.__doc__ = description
-        _invoke.__model__ = model
-
         tool = FunctionTool.from_func(
             func=_invoke,
             afunc=_ainvoke,
             auth=auth,
+            name=name,
+            description=description,
+            json_schema=json_schema,
             tool_vars=default_tool_vars,
             keep_structured_arguments=True,
         )
