@@ -1,9 +1,11 @@
 import pathlib
 import shutil
 
+from pydantic import Field
+
 from hyperpocket.config import pocket_logger, settings
 from hyperpocket.repository import ToolReference
-from pydantic import Field
+
 
 class ContainerLocalToolReference(ToolReference):
     tool_source: str = Field(default="local")
@@ -13,10 +15,10 @@ class ContainerLocalToolReference(ToolReference):
         super().__init__(
             tool_source="local", tool_path=str(pathlib.Path(tool_path).expanduser().resolve())
         )
-    
+
     def __str__(self):
         return f"ContainerLocalToolReference(tool_path={self.tool_path})"
-    
+
     def key(self) -> tuple[str, ...]:
         return "local", self.tool_path.rstrip("/")
 
@@ -26,8 +28,6 @@ class ContainerLocalToolReference(ToolReference):
         if pkg_path.exists():
             shutil.rmtree(pkg_path)
         shutil.copytree(self.tool_path, pkg_path)
-        last_sync = self.toolpkg_path() / ".last_sync"
-        last_sync.touch(exist_ok=True)
 
     def toolpkg_path(self) -> pathlib.Path:
         pocket_pkgs = settings.toolpkg_path

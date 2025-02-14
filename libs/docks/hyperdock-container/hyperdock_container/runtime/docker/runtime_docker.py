@@ -32,36 +32,36 @@ class DockerContainerRuntime(ContainerRuntime):
         return state
     
     def create(self, image_tag: str, workdir: str, command: str, envs: dict, **kwargs) -> str:
-        pocket_logger.info(f"Creating container from image: {image_tag}")
+        pocket_logger.debug(f"Creating container from image: {image_tag}")
         command = ["/bin/sh", "-c", command]
         container = self.client.containers.create(
             image=image_tag, command=command, working_dir=workdir, environment=envs, **kwargs)
-        pocket_logger.info(f"Container created: {container.id}")
+        pocket_logger.debug(f"Container created: {container.id}")
         return container.id
     
     def start(self, container_id: str) -> None:
-        pocket_logger.info(f"Starting container: {container_id}")
+        pocket_logger.debug(f"Starting container: {container_id}")
         container = self.client.containers.get(container_id)
         container.start()
-        pocket_logger.info(f"Container started: {container_id}")
+        pocket_logger.debug(f"Container started: {container_id}")
     
     def stop(self, container_id: str) -> None:
-        pocket_logger.info(f"Stopping container: {container_id}")
+        pocket_logger.debug(f"Stopping container: {container_id}")
         container = self.client.containers.get(container_id)
         container.stop()
-        pocket_logger.info(f"Container stopped: {container_id}")
+        pocket_logger.debug(f"Container stopped: {container_id}")
     
     def remove(self, container_id: str) -> None:
-        pocket_logger.info(f"Removing container: {container_id}")
+        pocket_logger.debug(f"Removing container: {container_id}")
         container = self.client.containers.get(container_id)
         container.remove()
-        pocket_logger.info(f"Container removed: {container_id}")
+        pocket_logger.debug(f"Container removed: {container_id}")
     
     def commit(self, container_id: str, repository: str, tag: str) -> str:
-        pocket_logger.info(f"Committing container: {container_id} to image: {repository}/{tag}")
+        pocket_logger.debug(f"Committing container: {container_id} to image: {repository}/{tag}")
         container = self.client.containers.get(container_id)
         image = container.commit(repository=repository, tag=tag)
-        pocket_logger.info(f"Container committed: {container_id} to image: {repository}/{tag} ({image.short_id})")
+        pocket_logger.debug(f"Container committed: {container_id} to image: {repository}/{tag} ({image.short_id})")
         return image.id
         
     def pull(self, image_tag: str) -> str:
@@ -78,7 +78,7 @@ class DockerContainerRuntime(ContainerRuntime):
         return [(image.id, image.tags) for image in images]
     
     def put_archive(self, container_id: str, source: pathlib.Path, dest: str) -> None:
-        pocket_logger.info(f"Putting archive to container: {container_id}")
+        pocket_logger.debug(f"Putting archive to container: {container_id}")
         fd, archive_file = tempfile.mkstemp(suffix=".tar")
         os.close(fd)
         tar = tarfile.open(archive_file, mode="w")
@@ -90,7 +90,7 @@ class DockerContainerRuntime(ContainerRuntime):
             container.put_archive(dest, f)
         
         os.remove(archive_file)
-        pocket_logger.info(f"Archive put to container: {container_id}")
+        pocket_logger.debug(f"Archive put to container: {container_id}")
 
     def run(self, container_id: str, stdin_str: Optional[str] = None, **kwargs) -> str:
         container = self.client.containers.get(container_id)
@@ -105,5 +105,5 @@ class DockerContainerRuntime(ContainerRuntime):
         container.wait()
         container.stop()
         log = container.logs()
-        pocket_logger.info(f"Command executed in container: {container.id}")
+        pocket_logger.debug(f"Command executed in container: {container.id}")
         return log.decode("utf-8")
