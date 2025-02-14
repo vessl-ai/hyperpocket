@@ -30,7 +30,7 @@ class Pocket(object):
                 auth=auth,
             )
         except Exception as e:
-            if self.__dict__.get("server"):
+            if hasattr(self, "server"):
                 self.server.refcnt_down(self._uid)
             pocket_logger.error(f"Failed to initialize pocket server. error : {e}")
             self._teardown_server()
@@ -172,10 +172,7 @@ class Pocket(object):
             "profile": profile,
             **kwargs,
         }
-        print("!!!!!!!!!!!!!!!!")
-        print(args)
-        print(_kwargs)
-        print("!!!!!!!!!!!!!!!!")
+
         result, paused = await self.server.call_in_subprocess(
             PocketServerOperations.CALL,
             self._uid,
