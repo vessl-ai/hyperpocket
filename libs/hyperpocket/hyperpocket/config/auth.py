@@ -54,6 +54,12 @@ class BitbucketAuthConfig(OAuth2AuthConfig):
 class NotionAuthConfig(OAuth2AuthConfig):
     pass
 
+class LinkedinAuthConfig(OAuth2AuthConfig):
+    pass
+
+class LinearAuthConfig(OAuth2AuthConfig):
+    pass
+
 class AuthConfig(BaseModel):
     slack: Optional[SlackAuthConfig] = None
     google: Optional[GoogleAuthConfig] = None
@@ -68,6 +74,8 @@ class AuthConfig(BaseModel):
     mailchimp: Optional[MailchimpAuthConfig] = None
     bitbucket: Optional[BitbucketAuthConfig] = None
     notion: Optional[NotionAuthConfig] = None
+    linkedin: Optional[LinkedinAuthConfig] = None
+    linear: Optional[LinearAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
 
 
