@@ -46,8 +46,17 @@ class PocketServer(object):
     # should be called in child process
     def _plug_core(self, pocket_uid: str, pocket_core: PocketCore, *_a, **_kw):
         # extend http routers from each docks
+        dock_routes = set([str(r) for r in self.fastapi_app.routes])
+
         for dock in pocket_core.docks:
+            # check duplicated api route
+            dock_route = set([str(r) for r in dock.router.routes])
+            if dock_route in dock_routes:
+                continue
+
+            dock_routes.update(dock_route)
             self.fastapi_app.include_router(dock.router)
+
         # keep pocket core
         self._cores[pocket_uid] = pocket_core
 
