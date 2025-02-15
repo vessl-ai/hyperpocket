@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.supabase
+=================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.supabase
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.supabase.supabase_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.supabase.supabase_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: supabase_auth_router
+
+.. py:function:: supabase_token_callback(state: str, token: str)
+   :async:
+
+

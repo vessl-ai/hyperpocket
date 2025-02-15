@@ -1,0 +1,67 @@
+libs.hyperpocket.hyperpocket.auth.happyrobot.token_handler
+==========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.happyrobot.token_handler
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.happyrobot.token_handler.HappyrobotTokenAuthHandler
+
+
+Module Contents
+---------------
+
+.. py:class:: HappyrobotTokenAuthHandler
+
+   Bases: :py:obj:`hyperpocket.auth.handler.AuthHandlerInterface`
+
+
+   .. py:attribute:: name
+      :type:  str
+      :value: 'happyrobot-token'
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: 'This handler is used to authenticate users using the Happyrobot token.'
+
+
+
+   .. py:attribute:: scoped
+      :type:  bool
+      :value: False
+
+
+
+   .. py:method:: provider() -> hyperpocket.auth.AuthProvider
+      :staticmethod:
+
+
+
+   .. py:method:: recommended_scopes() -> set[str]
+      :staticmethod:
+
+
+
+   .. py:method:: prepare(auth_req: hyperpocket.auth.happyrobot.token_schema.HappyrobotTokenRequest, thread_id: str, profile: str, future_uid: str, *args, **kwargs) -> str
+
+
+   .. py:method:: authenticate(auth_req: hyperpocket.auth.happyrobot.token_schema.HappyrobotTokenRequest, future_uid: str, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: refresh(auth_req: hyperpocket.auth.happyrobot.token_schema.HappyrobotTokenRequest, context: hyperpocket.auth.context.AuthContext, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: make_request(auth_scopes: Optional[list[str]] = None, **kwargs) -> hyperpocket.auth.happyrobot.token_schema.HappyrobotTokenRequest
+
+

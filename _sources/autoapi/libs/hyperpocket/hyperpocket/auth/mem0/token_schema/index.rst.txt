@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.mem0.token_schema
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.mem0.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.mem0.token_schema.Mem0TokenRequest
+   libs.hyperpocket.hyperpocket.auth.mem0.token_schema.Mem0TokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: Mem0TokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: Mem0TokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

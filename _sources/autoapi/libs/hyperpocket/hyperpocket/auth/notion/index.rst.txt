@@ -12,6 +12,9 @@ Submodules
    :maxdepth: 1
 
    /autoapi/libs/hyperpocket/hyperpocket/auth/notion/context/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/notion/oauth2_context/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/notion/oauth2_handler/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/notion/oauth2_schema/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/notion/token_context/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/notion/token_handler/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/notion/token_schema/index

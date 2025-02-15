@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.dailybot.token_schema
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.dailybot.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.dailybot.token_schema.DailybotTokenRequest
+   libs.hyperpocket.hyperpocket.auth.dailybot.token_schema.DailybotTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: DailybotTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: DailybotTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

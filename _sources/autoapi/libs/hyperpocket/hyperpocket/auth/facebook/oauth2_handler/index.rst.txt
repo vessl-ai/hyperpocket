@@ -1,0 +1,72 @@
+libs.hyperpocket.hyperpocket.auth.facebook.oauth2_handler
+=========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.facebook.oauth2_handler
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.facebook.oauth2_handler.FacebookOAuth2AuthHandler
+
+
+Module Contents
+---------------
+
+.. py:class:: FacebookOAuth2AuthHandler
+
+   Bases: :py:obj:`hyperpocket.auth.handler.AuthHandlerInterface`
+
+
+   .. py:attribute:: name
+      :type:  str
+      :value: 'facebook-oauth2'
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: 'This handler is used to authenticate users using the Facebook OAuth2 authentication method.'
+
+
+
+   .. py:attribute:: scoped
+      :type:  bool
+      :value: True
+
+
+
+   .. py:method:: provider() -> hyperpocket.auth.AuthProvider
+      :staticmethod:
+
+
+
+   .. py:method:: provider_default() -> bool
+      :staticmethod:
+
+
+
+   .. py:method:: recommended_scopes() -> set[str]
+      :staticmethod:
+
+
+
+   .. py:method:: prepare(auth_req: hyperpocket.auth.facebook.oauth2_schema.FacebookOAuth2Request, thread_id: str, profile: str, future_uid: str, *args, **kwargs) -> str
+
+
+   .. py:method:: authenticate(auth_req: hyperpocket.auth.facebook.oauth2_schema.FacebookOAuth2Request, future_uid: str, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: refresh(auth_req: hyperpocket.auth.facebook.oauth2_schema.FacebookOAuth2Request, context: hyperpocket.auth.context.AuthContext, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: make_request(auth_scopes: Optional[list[str]] = None, **kwargs) -> hyperpocket.auth.facebook.oauth2_schema.FacebookOAuth2Request
+
+

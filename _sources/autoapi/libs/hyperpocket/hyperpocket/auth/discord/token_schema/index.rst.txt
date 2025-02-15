@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.discord.token_schema
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.discord.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.discord.token_schema.DiscordTokenRequest
+   libs.hyperpocket.hyperpocket.auth.discord.token_schema.DiscordTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: DiscordTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: DiscordTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

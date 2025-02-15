@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.finage.token_schema
+=====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.finage.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.finage.token_schema.FinageTokenRequest
+   libs.hyperpocket.hyperpocket.auth.finage.token_schema.FinageTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: FinageTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: FinageTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

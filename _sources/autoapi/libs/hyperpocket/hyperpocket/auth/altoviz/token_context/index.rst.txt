@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.altoviz.token_context
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.altoviz.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.altoviz.token_context.AltovizTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: AltovizTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.altoviz.context.AltovizAuthContext`
+
+
+   .. py:method:: from_altoviz_token_response(response: hyperpocket.auth.altoviz.token_schema.AltovizTokenResponse)
+      :classmethod:
+
+
+

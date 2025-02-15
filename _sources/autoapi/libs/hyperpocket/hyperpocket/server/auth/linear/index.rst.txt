@@ -18,7 +18,8 @@ Functions
 
 .. autoapisummary::
 
-   libs.hyperpocket.hyperpocket.server.auth.linear.slack_token_callback
+   libs.hyperpocket.hyperpocket.server.auth.linear.linear_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.linear.linear_token_callback
 
 
 Module Contents
@@ -26,7 +27,11 @@ Module Contents
 
 .. py:data:: linear_auth_router
 
-.. py:function:: slack_token_callback(state: str, token: str)
+.. py:function:: linear_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: linear_token_callback(state: str, token: str)
    :async:
 
 

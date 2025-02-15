@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.auth.zoom.oauth2_context
+=====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.zoom.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.zoom.oauth2_context.ZoomOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: ZoomOAuth2AuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.zoom.context.ZoomAuthContext`
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+
+   .. py:method:: from_zoom_oauth2_response(response: hyperpocket.auth.zoom.oauth2_schema.ZoomOAuth2Response)
+      :classmethod:
+
+
+

@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.salesforce
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.salesforce
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.salesforce.salesforce_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.salesforce.salesforce_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.salesforce.salesforce_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: salesforce_auth_router
+
+.. py:function:: salesforce_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: salesforce_token_callback(state: str, token: str)
+   :async:
+
+

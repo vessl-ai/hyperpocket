@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.workiom
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.workiom
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.workiom.workiom_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.workiom.workiom_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: workiom_auth_router
+
+.. py:function:: workiom_token_callback(state: str, token: str)
+   :async:
+
+

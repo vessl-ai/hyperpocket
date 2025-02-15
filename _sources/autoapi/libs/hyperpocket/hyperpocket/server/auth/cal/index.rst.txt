@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.cal
+============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.cal
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.cal.cal_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.cal.cal_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: cal_auth_router
+
+.. py:function:: cal_token_callback(state: str, token: str)
+   :async:
+
+

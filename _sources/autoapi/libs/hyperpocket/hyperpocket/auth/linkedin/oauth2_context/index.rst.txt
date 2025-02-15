@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.auth.linkedin.oauth2_context
+=========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.linkedin.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.linkedin.oauth2_context.LinkedinOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: LinkedinOAuth2AuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.linkedin.context.LinkedinAuthContext`
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+
+   .. py:method:: from_linkedin_oauth2_response(response: hyperpocket.auth.linkedin.oauth2_schema.LinkedinOAuth2Response)
+      :classmethod:
+
+
+

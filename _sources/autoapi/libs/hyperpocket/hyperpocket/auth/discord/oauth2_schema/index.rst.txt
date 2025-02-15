@@ -1,0 +1,57 @@
+libs.hyperpocket.hyperpocket.auth.discord.oauth2_schema
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.discord.oauth2_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.discord.oauth2_schema.DiscordOAuth2Request
+   libs.hyperpocket.hyperpocket.auth.discord.oauth2_schema.DiscordOAuth2Response
+
+
+Module Contents
+---------------
+
+.. py:class:: DiscordOAuth2Request
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
+.. py:class:: DiscordOAuth2Response
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+
+   .. py:attribute:: expires_in
+      :type:  int
+
+
+   .. py:attribute:: token_type
+      :type:  str
+
+
+   .. py:attribute:: scope
+      :type:  str
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+

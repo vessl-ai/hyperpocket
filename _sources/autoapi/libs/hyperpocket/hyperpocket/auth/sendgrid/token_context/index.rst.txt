@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.sendgrid.token_context
+========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.sendgrid.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.sendgrid.token_context.SendgridTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: SendgridTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.sendgrid.context.SendgridAuthContext`
+
+
+   .. py:method:: from_sendgrid_token_response(response: hyperpocket.auth.sendgrid.token_schema.SendgridTokenResponse)
+      :classmethod:
+
+
+

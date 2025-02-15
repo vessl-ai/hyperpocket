@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.elevenlabs
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.elevenlabs
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.elevenlabs.elevenlabs_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.elevenlabs.elevenlabs_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: elevenlabs_auth_router
+
+.. py:function:: elevenlabs_token_callback(state: str, token: str)
+   :async:
+
+

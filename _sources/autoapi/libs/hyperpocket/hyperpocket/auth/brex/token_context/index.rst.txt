@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.brex.token_context
+====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.brex.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.brex.token_context.BrexTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: BrexTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.brex.context.BrexAuthContext`
+
+
+   .. py:method:: from_brex_token_response(response: hyperpocket.auth.brex.token_schema.BrexTokenResponse)
+      :classmethod:
+
+
+

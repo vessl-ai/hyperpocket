@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.datadog.token_context
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.datadog.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.datadog.token_context.DatadogTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: DatadogTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.datadog.context.DatadogAuthContext`
+
+
+   .. py:method:: from_datadog_token_response(response: hyperpocket.auth.datadog.token_schema.DatadogTokenResponse)
+      :classmethod:
+
+
+

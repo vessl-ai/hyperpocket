@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.listennotes.token_schema
+==========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.listennotes.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.listennotes.token_schema.ListennotesTokenRequest
+   libs.hyperpocket.hyperpocket.auth.listennotes.token_schema.ListennotesTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: ListennotesTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: ListennotesTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.auth.bitbucket.oauth2_context
+==========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.bitbucket.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.bitbucket.oauth2_context.BitbucketOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: BitbucketOAuth2AuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.bitbucket.context.BitbucketAuthContext`
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+
+   .. py:method:: from_bitbucket_oauth2_response(response: hyperpocket.auth.bitbucket.oauth2_schema.BitbucketOAuth2Response)
+      :classmethod:
+
+
+

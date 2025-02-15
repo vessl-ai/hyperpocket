@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.happyrobot.token_context
+==========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.happyrobot.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.happyrobot.token_context.HappyrobotTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: HappyrobotTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.happyrobot.context.HappyrobotAuthContext`
+
+
+   .. py:method:: from_happyrobot_token_response(response: hyperpocket.auth.happyrobot.token_schema.HappyrobotTokenResponse)
+      :classmethod:
+
+
+

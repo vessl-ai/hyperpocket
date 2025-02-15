@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.posthog.token_context
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.posthog.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.posthog.token_context.PosthogTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: PosthogTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.posthog.context.PosthogAuthContext`
+
+
+   .. py:method:: from_posthog_token_response(response: hyperpocket.auth.posthog.token_schema.PosthogTokenResponse)
+      :classmethod:
+
+
+

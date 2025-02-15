@@ -1,0 +1,29 @@
+libs.hyperpocket.hyperpocket.auth.discordbot.context
+====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.discordbot.context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.discordbot.context.DiscordbotAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: DiscordbotAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.context.AuthContext`
+
+
+   .. py:method:: to_dict() -> dict[str, str]
+
+
+   .. py:method:: to_profiled_dict(profile: str) -> dict[str, str]
+
+

@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.posthog
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.posthog
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.posthog.posthog_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.posthog.posthog_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: posthog_auth_router
+
+.. py:function:: posthog_token_callback(state: str, token: str)
+   :async:
+
+

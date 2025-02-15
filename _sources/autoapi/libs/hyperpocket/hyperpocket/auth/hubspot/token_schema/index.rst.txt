@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.hubspot.token_schema
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.hubspot.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.hubspot.token_schema.HubspotTokenRequest
+   libs.hyperpocket.hyperpocket.auth.hubspot.token_schema.HubspotTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: HubspotTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: HubspotTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

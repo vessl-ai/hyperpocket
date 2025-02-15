@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.brex
+=============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.brex
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.brex.brex_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.brex.brex_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: brex_auth_router
+
+.. py:function:: brex_token_callback(state: str, token: str)
+   :async:
+
+

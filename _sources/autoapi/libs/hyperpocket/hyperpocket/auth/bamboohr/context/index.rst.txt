@@ -1,0 +1,29 @@
+libs.hyperpocket.hyperpocket.auth.bamboohr.context
+==================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.bamboohr.context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.bamboohr.context.BamboohrAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: BamboohrAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.context.AuthContext`
+
+
+   .. py:method:: to_dict() -> dict[str, str]
+
+
+   .. py:method:: to_profiled_dict(profile: str) -> dict[str, str]
+
+

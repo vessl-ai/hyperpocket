@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.adobe.token_schema
+====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.adobe.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.adobe.token_schema.AdobeTokenRequest
+   libs.hyperpocket.hyperpocket.auth.adobe.token_schema.AdobeTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: AdobeTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: AdobeTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

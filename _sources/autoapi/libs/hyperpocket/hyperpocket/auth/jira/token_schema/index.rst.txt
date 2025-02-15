@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.jira.token_schema
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.jira.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.jira.token_schema.JiraTokenRequest
+   libs.hyperpocket.hyperpocket.auth.jira.token_schema.JiraTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: JiraTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: JiraTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

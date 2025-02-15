@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.tavily
+===============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.tavily
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.tavily.tavily_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.tavily.tavily_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: tavily_auth_router
+
+.. py:function:: tavily_token_callback(state: str, token: str)
+   :async:
+
+

@@ -1,0 +1,88 @@
+libs.hyperpocket.hyperpocket.auth.linear.oauth2_handler
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.linear.oauth2_handler
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.linear.oauth2_handler.LinearOAuth2AuthHandler
+
+
+Module Contents
+---------------
+
+.. py:class:: LinearOAuth2AuthHandler
+
+   Bases: :py:obj:`hyperpocket.auth.handler.AuthHandlerInterface`
+
+
+   .. py:attribute:: name
+      :type:  str
+      :value: 'linear-oauth2'
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: 'This handler is used to authenticate users using the Linear OAuth2 authentication method.'
+
+
+
+   .. py:attribute:: scoped
+      :type:  bool
+      :value: True
+
+
+
+   .. py:method:: provider() -> hyperpocket.auth.AuthProvider
+      :staticmethod:
+
+
+
+   .. py:method:: provider_default() -> bool
+      :staticmethod:
+
+
+
+   .. py:method:: recommended_scopes() -> set[str]
+      :staticmethod:
+
+
+      This method returns a set of recommended scopes for the service.
+      If the service has a recommended scope, it should be returned here.
+      Example:
+      return {
+          "channels:history",
+          "channels:read",
+          "chat:write",
+          "groups:history",
+          "groups:read",
+          "im:history",
+          "mpim:history",
+          "reactions:read",
+          "reactions:write",
+      }
+
+
+
+   .. py:method:: prepare(auth_req: hyperpocket.auth.linear.oauth2_schema.LinearOAuth2Request, thread_id: str, profile: str, future_uid: str, *args, **kwargs) -> str
+
+
+   .. py:method:: authenticate(auth_req: hyperpocket.auth.linear.oauth2_schema.LinearOAuth2Request, future_uid: str, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: refresh(auth_req: hyperpocket.auth.linear.oauth2_schema.LinearOAuth2Request, context: hyperpocket.auth.context.AuthContext, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: make_request(auth_scopes: Optional[list[str]] = None, **kwargs) -> hyperpocket.auth.linear.oauth2_schema.LinearOAuth2Request
+
+

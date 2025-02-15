@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.jira
+=============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.jira
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.jira.jira_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.jira.jira_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.jira.jira_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: jira_auth_router
+
+.. py:function:: jira_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: jira_token_callback(state: str, token: str)
+   :async:
+
+

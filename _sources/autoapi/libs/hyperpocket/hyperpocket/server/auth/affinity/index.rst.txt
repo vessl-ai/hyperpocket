@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.affinity
+=================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.affinity
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.affinity.affinity_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.affinity.affinity_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: affinity_auth_router
+
+.. py:function:: affinity_token_callback(state: str, token: str)
+   :async:
+
+

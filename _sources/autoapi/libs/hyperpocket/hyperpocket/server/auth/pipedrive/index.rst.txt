@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.pipedrive
+==================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.pipedrive
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.pipedrive.pipedrive_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.pipedrive.pipedrive_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: pipedrive_auth_router
+
+.. py:function:: pipedrive_token_callback(state: str, token: str)
+   :async:
+
+

@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.microsoft_clarity.token_context
+=================================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.microsoft_clarity.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.microsoft_clarity.token_context.MicrosoftClarityTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: MicrosoftClarityTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.microsoft_clarity.context.MicrosoftClarityAuthContext`
+
+
+   .. py:method:: from_microsoft_clarity_token_response(response: hyperpocket.auth.microsoft_clarity.token_schema.MicrosoftClarityTokenResponse)
+      :classmethod:
+
+
+

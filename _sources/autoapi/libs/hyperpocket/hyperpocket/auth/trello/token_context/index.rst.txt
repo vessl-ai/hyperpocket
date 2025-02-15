@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.trello.token_context
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.trello.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.trello.token_context.TrelloTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: TrelloTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.trello.context.TrelloAuthContext`
+
+
+   .. py:method:: from_trello_token_response(response: hyperpocket.auth.trello.token_schema.TrelloTokenResponse)
+      :classmethod:
+
+
+

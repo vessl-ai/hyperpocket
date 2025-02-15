@@ -15,8 +15,8 @@
 <link href="../../../../../../../_static/graphviz.css?v=4ae1632d" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../../search.html" rel="search" title="Search"/>
 <link href="../../../../../../../genindex.html" rel="index" title="Index"/>
-<link href="../reddit/index.html" rel="next" title="libs.hyperpocket.hyperpocket.server.auth.reddit"/>
-<link href="../linear/index.html" rel="prev" title="libs.hyperpocket.hyperpocket.server.auth.linear"/>
+<link href="../oncehub/index.html" rel="next" title="libs.hyperpocket.hyperpocket.server.auth.oncehub"/>
+<link href="../ngrok/index.html" rel="prev" title="libs.hyperpocket.hyperpocket.server.auth.ngrok"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -148,7 +148,10 @@
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#functions'"><span>#</span></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.notion.notion_token_callback" title="libs.hyperpocket.hyperpocket.server.auth.notion.notion_token_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">notion_token_callback</span></code></a>(state, token)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.notion.notion_oauth2_callback" title="libs.hyperpocket.hyperpocket.server.auth.notion.notion_oauth2_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">notion_oauth2_callback</span></code></a>(state, code)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.notion.notion_token_callback" title="libs.hyperpocket.hyperpocket.server.auth.notion.notion_token_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">notion_token_callback</span></code></a>(state, token)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -159,6 +162,10 @@
 <dl class="py data">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.auth.notion.notion_auth_router">
 <span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.auth.notion.</span></span><span class="sig-name descname"><span class="pre">notion_auth_router</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.auth.notion.notion_auth_router" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.server.auth.notion.notion_auth_router'"><span>#</span></a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.auth.notion.notion_oauth2_callback">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.auth.notion.</span></span><span class="sig-name descname"><span class="pre">notion_oauth2_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.auth.notion.notion_oauth2_callback" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.server.auth.notion.notion_oauth2_callback'"><span>#</span></a></dt>
 <dd></dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.auth.notion.notion_token_callback">
@@ -173,6 +180,7 @@
 <li><a :data-current="activeSection === '#functions'" class="reference internal" href="#functions">Functions</a></li>
 <li><a :data-current="activeSection === '#module-contents'" class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.server.auth.notion.notion_auth_router'" class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.notion.notion_auth_router"><code class="docutils literal notranslate"><span class="pre">notion_auth_router</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.server.auth.notion.notion_oauth2_callback'" class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.notion.notion_oauth2_callback"><code class="docutils literal notranslate"><span class="pre">notion_oauth2_callback()</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.server.auth.notion.notion_token_callback'" class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.notion.notion_token_callback"><code class="docutils literal notranslate"><span class="pre">notion_token_callback()</span></code></a></li>
 </ul>
 </li>

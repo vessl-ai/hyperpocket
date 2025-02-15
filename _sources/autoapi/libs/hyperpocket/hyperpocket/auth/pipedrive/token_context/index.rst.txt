@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.pipedrive.token_context
+=========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.pipedrive.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.pipedrive.token_context.PipedriveTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: PipedriveTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.pipedrive.context.PipedriveAuthContext`
+
+
+   .. py:method:: from_pipedrive_token_response(response: hyperpocket.auth.pipedrive.token_schema.PipedriveTokenResponse)
+      :classmethod:
+
+
+

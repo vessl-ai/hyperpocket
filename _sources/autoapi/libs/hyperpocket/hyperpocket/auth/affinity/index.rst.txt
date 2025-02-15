@@ -1,0 +1,19 @@
+libs.hyperpocket.hyperpocket.auth.affinity
+==========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.affinity
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/hyperpocket/hyperpocket/auth/affinity/context/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/affinity/token_context/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/affinity/token_handler/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/affinity/token_schema/index
+
+

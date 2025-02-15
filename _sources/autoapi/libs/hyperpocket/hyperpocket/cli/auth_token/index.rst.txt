@@ -28,11 +28,11 @@ Module Contents
 
 .. py:function:: generate_hyperpocket_auth_dir(service_name, parent_path, force)
 
-.. py:function:: generate_auth_context(service_name, capitliazed_service_name, parent_path, force)
+.. py:function:: generate_auth_context(service_name, capitalized_service_name, parent_path, force)
 
-.. py:function:: generate_auth_token_context(service_name, capitliazed_service_name, parent_path, force)
+.. py:function:: generate_auth_token_context(service_name, capitalized_service_name, parent_path, force)
 
-.. py:function:: generate_auth_token_handler(service_name, capitliazed_service_name, parent_path, force)
+.. py:function:: generate_auth_token_handler(service_name, capitalized_service_name, parent_path, force)
 
-.. py:function:: generate_auth_token_schema(service_name, capitliazed_service_name, parent_path, force)
+.. py:function:: generate_auth_token_schema(service_name, capitalized_service_name, parent_path, force)
 

@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.affinity.token_context
+========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.affinity.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.affinity.token_context.AffinityTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: AffinityTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.affinity.context.AffinityAuthContext`
+
+
+   .. py:method:: from_affinity_token_response(response: hyperpocket.auth.affinity.token_schema.AffinityTokenResponse)
+      :classmethod:
+
+
+

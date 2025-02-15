@@ -1,0 +1,67 @@
+libs.hyperpocket.hyperpocket.auth.ngrok.token_handler
+=====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.ngrok.token_handler
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.ngrok.token_handler.NgrokTokenAuthHandler
+
+
+Module Contents
+---------------
+
+.. py:class:: NgrokTokenAuthHandler
+
+   Bases: :py:obj:`hyperpocket.auth.handler.AuthHandlerInterface`
+
+
+   .. py:attribute:: name
+      :type:  str
+      :value: 'ngrok-token'
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: 'This handler is used to authenticate users using the Ngrok token.'
+
+
+
+   .. py:attribute:: scoped
+      :type:  bool
+      :value: False
+
+
+
+   .. py:method:: provider() -> hyperpocket.auth.AuthProvider
+      :staticmethod:
+
+
+
+   .. py:method:: recommended_scopes() -> set[str]
+      :staticmethod:
+
+
+
+   .. py:method:: prepare(auth_req: hyperpocket.auth.ngrok.token_schema.NgrokTokenRequest, thread_id: str, profile: str, future_uid: str, *args, **kwargs) -> str
+
+
+   .. py:method:: authenticate(auth_req: hyperpocket.auth.ngrok.token_schema.NgrokTokenRequest, future_uid: str, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: refresh(auth_req: hyperpocket.auth.ngrok.token_schema.NgrokTokenRequest, context: hyperpocket.auth.context.AuthContext, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: make_request(auth_scopes: Optional[list[str]] = None, **kwargs) -> hyperpocket.auth.ngrok.token_schema.NgrokTokenRequest
+
+

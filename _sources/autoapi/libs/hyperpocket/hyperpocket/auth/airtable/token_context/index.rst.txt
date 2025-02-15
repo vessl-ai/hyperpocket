@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.airtable.token_context
+========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.airtable.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.airtable.token_context.AirtableTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: AirtableTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.airtable.context.AirtableAuthContext`
+
+
+   .. py:method:: from_airtable_token_response(response: hyperpocket.auth.airtable.token_schema.AirtableTokenResponse)
+      :classmethod:
+
+
+

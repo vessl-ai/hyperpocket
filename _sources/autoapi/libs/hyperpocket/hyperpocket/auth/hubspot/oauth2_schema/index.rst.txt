@@ -1,0 +1,53 @@
+libs.hyperpocket.hyperpocket.auth.hubspot.oauth2_schema
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.hubspot.oauth2_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.hubspot.oauth2_schema.HubspotOAuth2Request
+   libs.hyperpocket.hyperpocket.auth.hubspot.oauth2_schema.HubspotOAuth2Response
+
+
+Module Contents
+---------------
+
+.. py:class:: HubspotOAuth2Request
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
+.. py:class:: HubspotOAuth2Response
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+
+   .. py:attribute:: expires_in
+      :type:  int
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+
+   .. py:attribute:: redirect_uri
+      :type:  Optional[str]
+
+

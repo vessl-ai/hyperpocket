@@ -1,0 +1,36 @@
+libs.hyperpocket.hyperpocket.auth.asana.oauth2_context
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.asana.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.asana.oauth2_context.AsanaOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: AsanaOAuth2AuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.asana.context.AsanaAuthContext`
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+
+   .. py:attribute:: code
+      :type:  Optional[str]
+
+
+   .. py:method:: from_asana_oauth2_response(response: hyperpocket.auth.asana.oauth2_schema.AsanaOAuth2Response)
+      :classmethod:
+
+
+

@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.airtable.token_schema
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.airtable.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.airtable.token_schema.AirtableTokenRequest
+   libs.hyperpocket.hyperpocket.auth.airtable.token_schema.AirtableTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: AirtableTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: AirtableTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

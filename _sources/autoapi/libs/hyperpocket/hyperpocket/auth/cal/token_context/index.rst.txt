@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.cal.token_context
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.cal.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.cal.token_context.CalTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: CalTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.cal.context.CalAuthContext`
+
+
+   .. py:method:: from_cal_token_response(response: hyperpocket.auth.cal.token_schema.CalTokenResponse)
+      :classmethod:
+
+
+

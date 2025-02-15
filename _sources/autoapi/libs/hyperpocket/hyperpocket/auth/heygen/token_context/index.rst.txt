@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.heygen.token_context
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.heygen.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.heygen.token_context.HeygenTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: HeygenTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.heygen.context.HeygenAuthContext`
+
+
+   .. py:method:: from_heygen_token_response(response: hyperpocket.auth.heygen.token_schema.HeygenTokenResponse)
+      :classmethod:
+
+
+

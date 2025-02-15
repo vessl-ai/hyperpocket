@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.heygen
+===============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.heygen
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.heygen.heygen_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.heygen.heygen_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: heygen_auth_router
+
+.. py:function:: heygen_token_callback(state: str, token: str)
+   :async:
+
+

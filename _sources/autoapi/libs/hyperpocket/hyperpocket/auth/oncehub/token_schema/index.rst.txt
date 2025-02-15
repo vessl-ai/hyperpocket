@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.oncehub.token_schema
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.oncehub.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.oncehub.token_schema.OncehubTokenRequest
+   libs.hyperpocket.hyperpocket.auth.oncehub.token_schema.OncehubTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: OncehubTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: OncehubTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

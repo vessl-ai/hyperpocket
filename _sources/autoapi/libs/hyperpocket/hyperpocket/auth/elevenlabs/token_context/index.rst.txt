@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.elevenlabs.token_context
+==========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.elevenlabs.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.elevenlabs.token_context.ElevenlabsTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: ElevenlabsTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.elevenlabs.context.ElevenlabsAuthContext`
+
+
+   .. py:method:: from_elevenlabs_token_response(response: hyperpocket.auth.elevenlabs.token_schema.ElevenlabsTokenResponse)
+      :classmethod:
+
+
+

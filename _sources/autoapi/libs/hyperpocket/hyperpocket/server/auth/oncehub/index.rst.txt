@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.oncehub
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.oncehub
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.oncehub.oncehub_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.oncehub.oncehub_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: oncehub_auth_router
+
+.. py:function:: oncehub_token_callback(state: str, token: str)
+   :async:
+
+

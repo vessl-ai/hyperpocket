@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.ngrok.token_context
+=====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.ngrok.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.ngrok.token_context.NgrokTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: NgrokTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.ngrok.context.NgrokAuthContext`
+
+
+   .. py:method:: from_ngrok_token_response(response: hyperpocket.auth.ngrok.token_schema.NgrokTokenResponse)
+      :classmethod:
+
+
+

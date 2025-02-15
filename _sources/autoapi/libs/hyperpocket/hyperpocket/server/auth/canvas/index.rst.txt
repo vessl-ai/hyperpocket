@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.canvas
+===============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.canvas
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.canvas.canvas_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.canvas.canvas_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: canvas_auth_router
+
+.. py:function:: canvas_token_callback(state: str, token: str)
+   :async:
+
+

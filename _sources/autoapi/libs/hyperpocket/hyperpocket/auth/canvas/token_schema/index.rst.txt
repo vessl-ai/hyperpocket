@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.canvas.token_schema
+=====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.canvas.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.canvas.token_schema.CanvasTokenRequest
+   libs.hyperpocket.hyperpocket.auth.canvas.token_schema.CanvasTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: CanvasTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: CanvasTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

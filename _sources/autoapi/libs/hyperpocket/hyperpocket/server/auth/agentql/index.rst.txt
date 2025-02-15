@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.agentql
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.agentql
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.agentql.agentql_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.agentql.agentql_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.agentql.agentql_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: agentql_auth_router
+
+.. py:function:: agentql_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: agentql_token_callback(state: str, token: str)
+   :async:
+
+

@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.wandb
+==============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.wandb
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.wandb.wandb_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.wandb.wandb_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.wandb.wandb_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: wandb_auth_router
+
+.. py:function:: wandb_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: wandb_token_callback(state: str, token: str)
+   :async:
+
+

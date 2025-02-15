@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.sendgrid
+=================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.sendgrid
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.sendgrid.sendgrid_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.sendgrid.sendgrid_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: sendgrid_auth_router
+
+.. py:function:: sendgrid_token_callback(state: str, token: str)
+   :async:
+
+

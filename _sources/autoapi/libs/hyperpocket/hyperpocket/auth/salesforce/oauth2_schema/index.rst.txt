@@ -1,0 +1,69 @@
+libs.hyperpocket.hyperpocket.auth.salesforce.oauth2_schema
+==========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.salesforce.oauth2_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.salesforce.oauth2_schema.SalesforceOAuth2Request
+   libs.hyperpocket.hyperpocket.auth.salesforce.oauth2_schema.SalesforceOAuth2Response
+
+
+Module Contents
+---------------
+
+.. py:class:: SalesforceOAuth2Request
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
+.. py:class:: SalesforceOAuth2Response
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+
+   .. py:attribute:: signature
+      :type:  str
+
+
+   .. py:attribute:: scope
+      :type:  str
+
+
+   .. py:attribute:: id_token
+      :type:  str
+
+
+   .. py:attribute:: instance_url
+      :type:  str
+
+
+   .. py:attribute:: token_type
+      :type:  str
+
+
+   .. py:attribute:: issued_at
+      :type:  str
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+

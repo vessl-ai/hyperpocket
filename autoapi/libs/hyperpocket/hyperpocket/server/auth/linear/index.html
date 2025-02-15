@@ -15,8 +15,8 @@
 <link href="../../../../../../../_static/graphviz.css?v=4ae1632d" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../../search.html" rel="search" title="Search"/>
 <link href="../../../../../../../genindex.html" rel="index" title="Index"/>
-<link href="../notion/index.html" rel="next" title="libs.hyperpocket.hyperpocket.server.auth.notion"/>
-<link href="../gumloop/index.html" rel="prev" title="libs.hyperpocket.hyperpocket.server.auth.gumloop"/>
+<link href="../linkedin/index.html" rel="next" title="libs.hyperpocket.hyperpocket.server.auth.linkedin"/>
+<link href="../lever_sandbox/index.html" rel="prev" title="libs.hyperpocket.hyperpocket.server.auth.lever_sandbox"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -148,7 +148,10 @@
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#functions'"><span>#</span></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.linear.slack_token_callback" title="libs.hyperpocket.hyperpocket.server.auth.linear.slack_token_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slack_token_callback</span></code></a>(state, token)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.linear.linear_oauth2_callback" title="libs.hyperpocket.hyperpocket.server.auth.linear.linear_oauth2_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linear_oauth2_callback</span></code></a>(state, code)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.linear.linear_token_callback" title="libs.hyperpocket.hyperpocket.server.auth.linear.linear_token_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linear_token_callback</span></code></a>(state, token)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -161,8 +164,12 @@
 <span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.auth.linear.</span></span><span class="sig-name descname"><span class="pre">linear_auth_router</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.auth.linear.linear_auth_router" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.server.auth.linear.linear_auth_router'"><span>#</span></a></dt>
 <dd></dd></dl>
 <dl class="py function">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.auth.linear.slack_token_callback">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.auth.linear.</span></span><span class="sig-name descname"><span class="pre">slack_token_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.auth.linear.slack_token_callback" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.server.auth.linear.slack_token_callback'"><span>#</span></a></dt>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.auth.linear.linear_oauth2_callback">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.auth.linear.</span></span><span class="sig-name descname"><span class="pre">linear_oauth2_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.auth.linear.linear_oauth2_callback" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.server.auth.linear.linear_oauth2_callback'"><span>#</span></a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.auth.linear.linear_token_callback">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.auth.linear.</span></span><span class="sig-name descname"><span class="pre">linear_token_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.auth.linear.linear_token_callback" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.server.auth.linear.linear_token_callback'"><span>#</span></a></dt>
 <dd></dd></dl>
 </section>
 </section>
@@ -173,7 +180,8 @@
 <li><a :data-current="activeSection === '#functions'" class="reference internal" href="#functions">Functions</a></li>
 <li><a :data-current="activeSection === '#module-contents'" class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.server.auth.linear.linear_auth_router'" class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.linear.linear_auth_router"><code class="docutils literal notranslate"><span class="pre">linear_auth_router</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.server.auth.linear.slack_token_callback'" class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.linear.slack_token_callback"><code class="docutils literal notranslate"><span class="pre">slack_token_callback()</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.server.auth.linear.linear_oauth2_callback'" class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.linear.linear_oauth2_callback"><code class="docutils literal notranslate"><span class="pre">linear_oauth2_callback()</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.server.auth.linear.linear_token_callback'" class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.linear.linear_token_callback"><code class="docutils literal notranslate"><span class="pre">linear_token_callback()</span></code></a></li>
 </ul>
 </li>
 </ul>

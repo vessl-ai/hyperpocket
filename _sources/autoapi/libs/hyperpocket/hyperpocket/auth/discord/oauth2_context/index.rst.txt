@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.auth.discord.oauth2_context
+========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.discord.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.discord.oauth2_context.DiscordOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: DiscordOAuth2AuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.discord.context.DiscordAuthContext`
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+
+   .. py:method:: from_discord_oauth2_response(response: hyperpocket.auth.discord.oauth2_schema.DiscordOAuth2Response)
+      :classmethod:
+
+
+

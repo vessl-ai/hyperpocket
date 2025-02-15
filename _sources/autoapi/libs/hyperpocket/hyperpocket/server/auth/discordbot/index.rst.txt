@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.discordbot
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.discordbot
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.discordbot.discordbot_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.discordbot.discordbot_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: discordbot_auth_router
+
+.. py:function:: discordbot_token_callback(state: str, token: str)
+   :async:
+
+

@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.mailchimp
+==================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.mailchimp
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.mailchimp.mailchimp_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.mailchimp.mailchimp_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.mailchimp.mailchimp_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: mailchimp_auth_router
+
+.. py:function:: mailchimp_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: mailchimp_token_callback(state: str, token: str)
+   :async:
+
+

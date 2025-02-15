@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.discord.token_context
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.discord.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.discord.token_context.DiscordTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: DiscordTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.discord.context.DiscordAuthContext`
+
+
+   .. py:method:: from_discord_token_response(response: hyperpocket.auth.discord.token_schema.DiscordTokenResponse)
+      :classmethod:
+
+
+

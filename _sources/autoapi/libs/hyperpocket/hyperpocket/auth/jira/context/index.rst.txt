@@ -1,0 +1,29 @@
+libs.hyperpocket.hyperpocket.auth.jira.context
+==============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.jira.context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.jira.context.JiraAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: JiraAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.context.AuthContext`
+
+
+   .. py:method:: to_dict() -> dict[str, str]
+
+
+   .. py:method:: to_profiled_dict(profile: str) -> dict[str, str]
+
+

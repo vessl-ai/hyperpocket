@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.bamboohr.token_schema
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.bamboohr.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.bamboohr.token_schema.BamboohrTokenRequest
+   libs.hyperpocket.hyperpocket.auth.bamboohr.token_schema.BamboohrTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: BamboohrTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: BamboohrTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

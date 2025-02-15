@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.bitwarden
+==================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.bitwarden
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.bitwarden.bitwarden_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.bitwarden.bitwarden_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: bitwarden_auth_router
+
+.. py:function:: bitwarden_token_callback(state: str, token: str)
+   :async:
+
+

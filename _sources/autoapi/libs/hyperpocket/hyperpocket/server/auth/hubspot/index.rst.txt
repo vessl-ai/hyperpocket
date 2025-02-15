@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.hubspot
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.hubspot
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.hubspot.hubspot_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.hubspot.hubspot_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.hubspot.hubspot_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: hubspot_auth_router
+
+.. py:function:: hubspot_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: hubspot_token_callback(state: str, token: str)
+   :async:
+
+

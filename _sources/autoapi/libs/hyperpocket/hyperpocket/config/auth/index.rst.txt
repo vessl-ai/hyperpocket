@@ -19,11 +19,25 @@ Classes
 .. autoapisummary::
 
    libs.hyperpocket.hyperpocket.config.auth.BaseAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.OAuth2AuthConfig
    libs.hyperpocket.hyperpocket.config.auth.SlackAuthConfig
    libs.hyperpocket.hyperpocket.config.auth.GoogleAuthConfig
    libs.hyperpocket.hyperpocket.config.auth.GithubAuthConfig
    libs.hyperpocket.hyperpocket.config.auth.CalendlyAuthConfig
    libs.hyperpocket.hyperpocket.config.auth.XAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.JiraAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.HubspotAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.DiscordAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.ZoomAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.AsanaAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.MailchimpAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.BitbucketAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.NotionAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.LinkedinAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.LinearAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.SalesForceAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.SpotifyAuthConfig
+   libs.hyperpocket.hyperpocket.config.auth.FacebookAuthConfig
    libs.hyperpocket.hyperpocket.config.auth.AuthConfig
 
 
@@ -39,7 +53,7 @@ Module Contents
       :type:  bool
 
 
-.. py:class:: SlackAuthConfig
+.. py:class:: OAuth2AuthConfig
 
    Bases: :py:obj:`BaseAuthConfig`
 
@@ -50,58 +64,100 @@ Module Contents
 
    .. py:attribute:: client_secret
       :type:  str
+
+
+.. py:class:: SlackAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
 
 
 .. py:class:: GoogleAuthConfig
 
-   Bases: :py:obj:`BaseAuthConfig`
-
-
-   .. py:attribute:: client_id
-      :type:  str
-
-
-   .. py:attribute:: client_secret
-      :type:  str
+   Bases: :py:obj:`OAuth2AuthConfig`
 
 
 .. py:class:: GithubAuthConfig
 
-   Bases: :py:obj:`BaseAuthConfig`
-
-
-   .. py:attribute:: client_id
-      :type:  str
-
-
-   .. py:attribute:: client_secret
-      :type:  str
+   Bases: :py:obj:`OAuth2AuthConfig`
 
 
 .. py:class:: CalendlyAuthConfig
 
-   Bases: :py:obj:`BaseAuthConfig`
-
-
-   .. py:attribute:: client_id
-      :type:  str
-
-
-   .. py:attribute:: client_secret
-      :type:  str
+   Bases: :py:obj:`OAuth2AuthConfig`
 
 
 .. py:class:: XAuthConfig
 
-   Bases: :py:obj:`BaseAuthConfig`
+   Bases: :py:obj:`OAuth2AuthConfig`
 
 
-   .. py:attribute:: client_id
+.. py:class:: JiraAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+.. py:class:: HubspotAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+.. py:class:: DiscordAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+.. py:class:: ZoomAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+.. py:class:: AsanaAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+.. py:class:: MailchimpAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+.. py:class:: BitbucketAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+.. py:class:: NotionAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+.. py:class:: LinkedinAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+.. py:class:: LinearAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+.. py:class:: SalesForceAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+   .. py:attribute:: domain_url
       :type:  str
 
 
-   .. py:attribute:: client_secret
-      :type:  str
+.. py:class:: SpotifyAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
+
+
+.. py:class:: FacebookAuthConfig
+
+   Bases: :py:obj:`OAuth2AuthConfig`
 
 
 .. py:class:: AuthConfig
@@ -135,6 +191,84 @@ Module Contents
 
    .. py:attribute:: x
       :type:  Optional[XAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: jira
+      :type:  Optional[JiraAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: hubspot
+      :type:  Optional[HubspotAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: discord
+      :type:  Optional[DiscordAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: zoom
+      :type:  Optional[ZoomAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: asana
+      :type:  Optional[AsanaAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: mailchimp
+      :type:  Optional[MailchimpAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: bitbucket
+      :type:  Optional[BitbucketAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: notion
+      :type:  Optional[NotionAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: salesforce
+      :type:  Optional[SalesForceAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: spotify
+      :type:  Optional[SpotifyAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: linkedin
+      :type:  Optional[LinkedinAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: linear
+      :type:  Optional[LinearAuthConfig]
+      :value: None
+
+
+
+   .. py:attribute:: facebook
+      :type:  Optional[FacebookAuthConfig]
       :value: None
 
 

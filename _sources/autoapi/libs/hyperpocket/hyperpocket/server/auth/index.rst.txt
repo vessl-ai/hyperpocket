@@ -11,18 +11,75 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/activeloop/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/adobe/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/affinity/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/agentql/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/ahrefs/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/airtable/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/alchemy/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/altoviz/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/apitoken/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/asana/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/bamboohr/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/bitbucket/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/bitwarden/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/brevo/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/brex/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/cal/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/calendly/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/canvas/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/clickup/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/cloudflare/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/dailybot/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/datadog/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/discord/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/discordbot/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/elevenlabs/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/exa/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/facebook/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/finage/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/github/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/google/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/gumloop/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/happyrobot/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/heygen/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/hubspot/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/jira/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/klaviyo/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/lever/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/lever_sandbox/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/linear/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/linkedin/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/listennotes/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/mailchimp/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/mem0/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/microsoft_clarity/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/neon/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/ngrok/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/notion/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/oncehub/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/pagerduty/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/pandadoc/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/pipedrive/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/posthog/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/ravenseotools/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/reddit/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/salesforce/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/sendgrid/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/serpapi/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/slack/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/spotify/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/stripe/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/supabase/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/tavily/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/timekit/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/token/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/trello/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/wandb/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/workiom/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/x/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/zoom/index
 
 
 Attributes

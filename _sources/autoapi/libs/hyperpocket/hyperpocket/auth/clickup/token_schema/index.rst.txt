@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.clickup.token_schema
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.clickup.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.clickup.token_schema.ClickupTokenRequest
+   libs.hyperpocket.hyperpocket.auth.clickup.token_schema.ClickupTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: ClickupTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: ClickupTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

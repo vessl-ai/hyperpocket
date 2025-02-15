@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.trello
+===============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.trello
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.trello.trello_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.trello.trello_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: trello_auth_router
+
+.. py:function:: trello_token_callback(state: str, token: str)
+   :async:
+
+

@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.workiom.token_schema
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.workiom.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.workiom.token_schema.WorkiomTokenRequest
+   libs.hyperpocket.hyperpocket.auth.workiom.token_schema.WorkiomTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: WorkiomTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: WorkiomTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.stripe
+===============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.stripe
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.stripe.stripe_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.stripe.stripe_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: stripe_auth_router
+
+.. py:function:: stripe_token_callback(state: str, token: str)
+   :async:
+
+

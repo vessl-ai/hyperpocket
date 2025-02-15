@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.finage.token_context
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.finage.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.finage.token_context.FinageTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: FinageTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.finage.context.FinageAuthContext`
+
+
+   .. py:method:: from_finage_token_response(response: hyperpocket.auth.finage.token_schema.FinageTokenResponse)
+      :classmethod:
+
+
+

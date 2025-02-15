@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.ahrefs.token_schema
+=====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.ahrefs.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.ahrefs.token_schema.AhrefsTokenRequest
+   libs.hyperpocket.hyperpocket.auth.ahrefs.token_schema.AhrefsTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: AhrefsTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: AhrefsTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

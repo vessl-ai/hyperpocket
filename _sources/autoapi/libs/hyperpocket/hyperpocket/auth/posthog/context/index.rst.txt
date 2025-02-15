@@ -1,0 +1,29 @@
+libs.hyperpocket.hyperpocket.auth.posthog.context
+=================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.posthog.context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.posthog.context.PosthogAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: PosthogAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.context.AuthContext`
+
+
+   .. py:method:: to_dict() -> dict[str, str]
+
+
+   .. py:method:: to_profiled_dict(profile: str) -> dict[str, str]
+
+

@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.pandadoc.token_schema
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.pandadoc.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.pandadoc.token_schema.PandadocTokenRequest
+   libs.hyperpocket.hyperpocket.auth.pandadoc.token_schema.PandadocTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: PandadocTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: PandadocTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

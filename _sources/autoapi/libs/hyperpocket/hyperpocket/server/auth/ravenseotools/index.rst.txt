@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.ravenseotools
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.ravenseotools
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.ravenseotools.ravenseotools_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.ravenseotools.ravenseotools_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: ravenseotools_auth_router
+
+.. py:function:: ravenseotools_token_callback(state: str, token: str)
+   :async:
+
+

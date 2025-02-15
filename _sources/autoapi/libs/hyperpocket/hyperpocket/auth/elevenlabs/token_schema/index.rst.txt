@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.elevenlabs.token_schema
+=========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.elevenlabs.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.elevenlabs.token_schema.ElevenlabsTokenRequest
+   libs.hyperpocket.hyperpocket.auth.elevenlabs.token_schema.ElevenlabsTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: ElevenlabsTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: ElevenlabsTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

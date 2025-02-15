@@ -1,0 +1,72 @@
+libs.hyperpocket.hyperpocket.auth.salesforce.oauth2_handler
+===========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.salesforce.oauth2_handler
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.salesforce.oauth2_handler.SalesforceOAuth2AuthHandler
+
+
+Module Contents
+---------------
+
+.. py:class:: SalesforceOAuth2AuthHandler
+
+   Bases: :py:obj:`hyperpocket.auth.handler.AuthHandlerInterface`
+
+
+   .. py:attribute:: name
+      :type:  str
+      :value: 'salesforce-oauth2'
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: 'This handler is used to authenticate users using the Salesforce OAuth2 authentication method.'
+
+
+
+   .. py:attribute:: scoped
+      :type:  bool
+      :value: True
+
+
+
+   .. py:method:: provider() -> hyperpocket.auth.AuthProvider
+      :staticmethod:
+
+
+
+   .. py:method:: provider_default() -> bool
+      :staticmethod:
+
+
+
+   .. py:method:: recommended_scopes() -> set[str]
+      :staticmethod:
+
+
+
+   .. py:method:: prepare(auth_req: hyperpocket.auth.salesforce.oauth2_schema.SalesforceOAuth2Request, thread_id: str, profile: str, future_uid: str, *args, **kwargs) -> str
+
+
+   .. py:method:: authenticate(auth_req: hyperpocket.auth.salesforce.oauth2_schema.SalesforceOAuth2Request, future_uid: str, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: refresh(auth_req: hyperpocket.auth.salesforce.oauth2_schema.SalesforceOAuth2Request, context: hyperpocket.auth.context.AuthContext, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: make_request(auth_scopes: Optional[list[str]] = None, **kwargs) -> hyperpocket.auth.salesforce.oauth2_schema.SalesforceOAuth2Request
+
+

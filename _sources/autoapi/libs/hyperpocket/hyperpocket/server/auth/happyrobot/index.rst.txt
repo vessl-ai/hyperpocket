@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.happyrobot
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.happyrobot
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.happyrobot.happyrobot_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.happyrobot.happyrobot_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.happyrobot.happyrobot_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: happyrobot_auth_router
+
+.. py:function:: happyrobot_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: happyrobot_token_callback(state: str, token: str)
+   :async:
+
+

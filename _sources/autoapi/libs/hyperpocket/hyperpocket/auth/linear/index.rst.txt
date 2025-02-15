@@ -12,6 +12,9 @@ Submodules
    :maxdepth: 1
 
    /autoapi/libs/hyperpocket/hyperpocket/auth/linear/context/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/linear/oauth2_context/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/linear/oauth2_handler/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/linear/oauth2_schema/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/linear/token_context/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/linear/token_handler/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/linear/token_schema/index

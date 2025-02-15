@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.alchemy
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.alchemy
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.alchemy.alchemy_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.alchemy.alchemy_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: alchemy_auth_router
+
+.. py:function:: alchemy_token_callback(state: str, token: str)
+   :async:
+
+

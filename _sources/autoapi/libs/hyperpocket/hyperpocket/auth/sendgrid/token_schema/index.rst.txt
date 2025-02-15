@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.sendgrid.token_schema
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.sendgrid.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.sendgrid.token_schema.SendgridTokenRequest
+   libs.hyperpocket.hyperpocket.auth.sendgrid.token_schema.SendgridTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: SendgridTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: SendgridTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

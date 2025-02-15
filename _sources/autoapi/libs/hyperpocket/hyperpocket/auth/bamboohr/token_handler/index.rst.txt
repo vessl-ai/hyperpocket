@@ -1,0 +1,67 @@
+libs.hyperpocket.hyperpocket.auth.bamboohr.token_handler
+========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.bamboohr.token_handler
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.bamboohr.token_handler.BamboohrTokenAuthHandler
+
+
+Module Contents
+---------------
+
+.. py:class:: BamboohrTokenAuthHandler
+
+   Bases: :py:obj:`hyperpocket.auth.handler.AuthHandlerInterface`
+
+
+   .. py:attribute:: name
+      :type:  str
+      :value: 'bamboohr-token'
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: 'This handler is used to authenticate users using the Bamboohr token.'
+
+
+
+   .. py:attribute:: scoped
+      :type:  bool
+      :value: False
+
+
+
+   .. py:method:: provider() -> hyperpocket.auth.AuthProvider
+      :staticmethod:
+
+
+
+   .. py:method:: recommended_scopes() -> set[str]
+      :staticmethod:
+
+
+
+   .. py:method:: prepare(auth_req: hyperpocket.auth.bamboohr.token_schema.BamboohrTokenRequest, thread_id: str, profile: str, future_uid: str, *args, **kwargs) -> str
+
+
+   .. py:method:: authenticate(auth_req: hyperpocket.auth.bamboohr.token_schema.BamboohrTokenRequest, future_uid: str, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: refresh(auth_req: hyperpocket.auth.bamboohr.token_schema.BamboohrTokenRequest, context: hyperpocket.auth.context.AuthContext, *args, **kwargs) -> hyperpocket.auth.context.AuthContext
+      :async:
+
+
+
+   .. py:method:: make_request(auth_scopes: Optional[list[str]] = None, **kwargs) -> hyperpocket.auth.bamboohr.token_schema.BamboohrTokenRequest
+
+

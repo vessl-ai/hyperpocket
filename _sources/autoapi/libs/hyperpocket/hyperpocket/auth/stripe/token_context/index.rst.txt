@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.stripe.token_context
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.stripe.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.stripe.token_context.StripeTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: StripeTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.stripe.context.StripeAuthContext`
+
+
+   .. py:method:: from_stripe_token_response(response: hyperpocket.auth.stripe.token_schema.StripeTokenResponse)
+      :classmethod:
+
+
+

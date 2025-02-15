@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.wandb.token_context
+=====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.wandb.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.wandb.token_context.WandbTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: WandbTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.wandb.context.WandbAuthContext`
+
+
+   .. py:method:: from_wandb_token_response(response: hyperpocket.auth.wandb.token_schema.WandbTokenResponse)
+      :classmethod:
+
+
+

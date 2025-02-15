@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.auth.mailchimp.oauth2_context
+==========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.mailchimp.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.mailchimp.oauth2_context.MailchimpOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: MailchimpOAuth2AuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.mailchimp.context.MailchimpAuthContext`
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+
+   .. py:method:: from_mailchimp_oauth2_response(response: hyperpocket.auth.mailchimp.oauth2_schema.MailchimpOAuth2Response)
+      :classmethod:
+
+
+

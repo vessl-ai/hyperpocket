@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.bitbucket
+==================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.bitbucket
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.bitbucket.bitbucket_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.bitbucket.bitbucket_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.bitbucket.bitbucket_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: bitbucket_auth_router
+
+.. py:function:: bitbucket_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: bitbucket_token_callback(state: str, token: str)
+   :async:
+
+

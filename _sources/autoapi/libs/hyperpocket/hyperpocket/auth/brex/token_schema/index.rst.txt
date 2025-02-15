@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.brex.token_schema
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.brex.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.brex.token_schema.BrexTokenRequest
+   libs.hyperpocket.hyperpocket.auth.brex.token_schema.BrexTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: BrexTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: BrexTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

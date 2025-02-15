@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.bitwarden.token_schema
+========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.bitwarden.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.bitwarden.token_schema.BitwardenTokenRequest
+   libs.hyperpocket.hyperpocket.auth.bitwarden.token_schema.BitwardenTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: BitwardenTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: BitwardenTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.timekit.token_context
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.timekit.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.timekit.token_context.TimekitTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: TimekitTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.timekit.context.TimekitAuthContext`
+
+
+   .. py:method:: from_timekit_token_response(response: hyperpocket.auth.timekit.token_schema.TimekitTokenResponse)
+      :classmethod:
+
+
+

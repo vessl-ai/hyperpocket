@@ -1,0 +1,29 @@
+libs.hyperpocket.hyperpocket.auth.mem0.context
+==============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.mem0.context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.mem0.context.Mem0AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: Mem0AuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.context.AuthContext`
+
+
+   .. py:method:: to_dict() -> dict[str, str]
+
+
+   .. py:method:: to_profiled_dict(profile: str) -> dict[str, str]
+
+

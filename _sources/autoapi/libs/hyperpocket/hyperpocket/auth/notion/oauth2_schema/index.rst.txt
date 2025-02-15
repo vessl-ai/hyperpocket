@@ -1,0 +1,91 @@
+libs.hyperpocket.hyperpocket.auth.notion.oauth2_schema
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.notion.oauth2_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.notion.oauth2_schema.NotionOAuth2Request
+   libs.hyperpocket.hyperpocket.auth.notion.oauth2_schema.NotionOAuth2Response
+
+
+Module Contents
+---------------
+
+.. py:class:: NotionOAuth2Request
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+   .. py:attribute:: client_id
+      :type:  str
+
+
+   .. py:attribute:: client_secret
+      :type:  str
+
+
+.. py:class:: NotionOAuth2Response
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: bot_id
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: duplicated_template_id
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: owner
+      :type:  Optional[dict]
+      :value: None
+
+
+
+   .. py:attribute:: workspace_id
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: workspace_name
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: workspace_icon
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: expires_in
+      :type:  Optional[int]
+      :value: None
+
+
+

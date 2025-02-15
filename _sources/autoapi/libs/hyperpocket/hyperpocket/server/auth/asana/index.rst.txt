@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.asana
+==============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.asana
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.asana.asana_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.asana.asana_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.asana.asana_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: asana_auth_router
+
+.. py:function:: asana_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: asana_token_callback(state: str, token: str)
+   :async:
+
+

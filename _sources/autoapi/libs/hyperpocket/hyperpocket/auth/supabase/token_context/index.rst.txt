@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.supabase.token_context
+========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.supabase.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.supabase.token_context.SupabaseTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: SupabaseTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.supabase.context.SupabaseAuthContext`
+
+
+   .. py:method:: from_supabase_token_response(response: hyperpocket.auth.supabase.token_schema.SupabaseTokenResponse)
+      :classmethod:
+
+
+

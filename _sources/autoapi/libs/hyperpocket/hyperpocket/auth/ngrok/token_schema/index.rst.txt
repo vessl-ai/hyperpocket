@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.ngrok.token_schema
+====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.ngrok.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.ngrok.token_schema.NgrokTokenRequest
+   libs.hyperpocket.hyperpocket.auth.ngrok.token_schema.NgrokTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: NgrokTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: NgrokTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

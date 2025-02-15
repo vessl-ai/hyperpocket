@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.zoom
+=============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.zoom
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.zoom.zoom_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.zoom.zoom_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.zoom.zoom_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: zoom_auth_router
+
+.. py:function:: zoom_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: zoom_token_callback(state: str, token: str)
+   :async:
+
+

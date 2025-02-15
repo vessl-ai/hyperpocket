@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.auth.facebook.oauth2_context
+=========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.facebook.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.facebook.oauth2_context.FacebookOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: FacebookOAuth2AuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.facebook.context.FacebookAuthContext`
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+
+   .. py:method:: from_facebook_oauth2_response(response: hyperpocket.auth.facebook.oauth2_schema.FacebookOAuth2Response)
+      :classmethod:
+
+
+

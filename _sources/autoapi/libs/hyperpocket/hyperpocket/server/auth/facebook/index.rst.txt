@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.facebook
+=================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.facebook
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.facebook.facebook_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.facebook.facebook_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.facebook.facebook_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: facebook_auth_router
+
+.. py:function:: facebook_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: facebook_token_callback(state: str, token: str)
+   :async:
+
+

@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.linkedin
+=================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.linkedin
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.linkedin.linkedin_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.linkedin.linkedin_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.linkedin.linkedin_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: linkedin_auth_router
+
+.. py:function:: linkedin_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: linkedin_token_callback(state: str, token: str)
+   :async:
+
+

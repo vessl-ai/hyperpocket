@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.auth.salesforce.oauth2_context
+===========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.salesforce.oauth2_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.salesforce.oauth2_context.SalesforceOAuth2AuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: SalesforceOAuth2AuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.salesforce.context.SalesforceAuthContext`
+
+
+   .. py:attribute:: refresh_token
+      :type:  Optional[str]
+
+
+   .. py:method:: from_salesforce_oauth2_response(response: hyperpocket.auth.salesforce.oauth2_schema.SalesforceOAuth2Response)
+      :classmethod:
+
+
+

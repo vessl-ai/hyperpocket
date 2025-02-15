@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.timekit
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.timekit
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.timekit.timekit_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.timekit.timekit_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: timekit_auth_router
+
+.. py:function:: timekit_token_callback(state: str, token: str)
+   :async:
+
+

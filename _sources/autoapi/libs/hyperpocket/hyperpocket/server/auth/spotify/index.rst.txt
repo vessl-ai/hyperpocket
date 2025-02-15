@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.spotify
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.spotify
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.spotify.spotify_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.spotify.spotify_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.spotify.spotify_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: spotify_auth_router
+
+.. py:function:: spotify_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: spotify_token_callback(state: str, token: str)
+   :async:
+
+

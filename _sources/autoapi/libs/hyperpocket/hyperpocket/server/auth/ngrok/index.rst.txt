@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.ngrok
+==============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.ngrok
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.ngrok.ngrok_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.ngrok.ngrok_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: ngrok_auth_router
+
+.. py:function:: ngrok_token_callback(state: str, token: str)
+   :async:
+
+

@@ -71,6 +71,291 @@ Module Contents
 
 
 
+   .. py:attribute:: JIRA
+      :value: 'jira'
+
+
+
+   .. py:attribute:: SENDGRID
+      :value: 'sendgird'
+
+
+
+   .. py:attribute:: POSTHOG
+      :value: 'posthog'
+
+
+
+   .. py:attribute:: PAGERDUTY
+      :value: 'pagerduty'
+
+
+
+   .. py:attribute:: PIPEDRIVE
+      :value: 'pipedrive'
+
+
+
+   .. py:attribute:: KLAVIYO
+      :value: 'klaviyo'
+
+
+
+   .. py:attribute:: BREVO
+      :value: 'brevo'
+
+
+
+   .. py:attribute:: BAMBOOHR
+      :value: 'bamboohr'
+
+
+
+   .. py:attribute:: CAL
+      :value: 'cal'
+
+
+
+   .. py:attribute:: CLICKUP
+      :value: 'clickup'
+
+
+
+   .. py:attribute:: SUPABASE
+      :value: 'supabase'
+
+
+
+   .. py:attribute:: NEON
+      :value: 'neon'
+
+
+
+   .. py:attribute:: CANVAS
+      :value: 'canvas'
+
+
+
+   .. py:attribute:: ELEVENLABS
+      :value: 'elevenlabs'
+
+
+
+   .. py:attribute:: AHREFS
+      :value: 'ahrefs'
+
+
+
+   .. py:attribute:: MEM0
+      :value: 'mem0'
+
+
+
+   .. py:attribute:: HEYGEN
+      :value: 'heygen'
+
+
+
+   .. py:attribute:: LISTENNOTES
+      :value: 'listennotes'
+
+
+
+   .. py:attribute:: STRIPE
+      :value: 'stripe'
+
+
+
+   .. py:attribute:: AFFINITY
+      :value: 'affinity'
+
+
+
+   .. py:attribute:: TRELLO
+      :value: 'trello'
+
+
+
+   .. py:attribute:: HUBSPOT
+      :value: 'hubspot'
+
+
+
+   .. py:attribute:: DISCORD
+      :value: 'discord'
+
+
+
+   .. py:attribute:: DISCORDBOT
+      :value: 'discordbot'
+
+
+
+   .. py:attribute:: MICROSOFT_CLARITY
+      :value: 'microsoft_clarity'
+
+
+
+   .. py:attribute:: LEVER_SANDBOX
+      :value: 'lever_sandbox'
+
+
+
+   .. py:attribute:: ALTOVIZ
+      :value: 'altoviz'
+
+
+
+   .. py:attribute:: RAVENSEOTOOLS
+      :value: 'ravenseotools'
+
+
+
+   .. py:attribute:: BREX
+      :value: 'brex'
+
+
+
+   .. py:attribute:: BITWARDEN
+      :value: 'bitwarden'
+
+
+
+   .. py:attribute:: DATADOG
+      :value: 'datadog'
+
+
+
+   .. py:attribute:: ONCEHUB
+      :value: 'oncehub'
+
+
+
+   .. py:attribute:: LEVER
+      :value: 'lever'
+
+
+
+   .. py:attribute:: NGROK
+      :value: 'ngrok'
+
+
+
+   .. py:attribute:: PANDADOC
+      :value: 'pandadoc'
+
+
+
+   .. py:attribute:: TIMEKIT
+      :value: 'timekit'
+
+
+
+   .. py:attribute:: FINAGE
+      :value: 'finage'
+
+
+
+   .. py:attribute:: DAILYBOT
+      :value: 'dailybot'
+
+
+
+   .. py:attribute:: WORKIOM
+      :value: 'workiom'
+
+
+
+   .. py:attribute:: ALCHEMY
+      :value: 'alchemy'
+
+
+
+   .. py:attribute:: CLOUDFLARE
+      :value: 'cloudflare'
+
+
+
+   .. py:attribute:: ADOBE
+      :value: 'adobe'
+
+
+
+   .. py:attribute:: TAVILY
+      :value: 'tavily'
+
+
+
+   .. py:attribute:: EXA
+      :value: 'exa'
+
+
+
+   .. py:attribute:: AIRTABLE
+      :value: 'airtable'
+
+
+
+   .. py:attribute:: BITBUCKET
+      :value: 'bitbucket'
+
+
+
+   .. py:attribute:: MAILCHIMP
+      :value: 'mailchimp'
+
+
+
+   .. py:attribute:: ASANA
+      :value: 'asana'
+
+
+
+   .. py:attribute:: ZOOM
+      :value: 'zoom'
+
+
+
+   .. py:attribute:: SALESFORCE
+      :value: 'salesforce'
+
+
+
+   .. py:attribute:: SPOTIFY
+      :value: 'spotify'
+
+
+
+   .. py:attribute:: FACEBOOK
+      :value: 'facebook'
+
+
+
+   .. py:attribute:: ACTIVELOOP
+      :value: 'activeloop'
+
+
+
+   .. py:attribute:: AGENTQL
+      :value: 'agentql'
+
+
+
+   .. py:attribute:: HAPPYROBOT
+      :value: 'happyrobot'
+
+
+
+   .. py:attribute:: LINKEDIN
+      :value: 'linkedin'
+
+
+
+   .. py:attribute:: WANDB
+      :value: 'wandb'
+
+
+
    .. py:attribute:: APITOKEN
       :value: 'apitoken'
 

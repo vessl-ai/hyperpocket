@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.datadog
+================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.datadog
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.datadog.datadog_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.datadog.datadog_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: datadog_auth_router
+
+.. py:function:: datadog_token_callback(state: str, token: str)
+   :async:
+
+

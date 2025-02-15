@@ -11,21 +11,78 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
+   /autoapi/libs/hyperpocket/hyperpocket/auth/activeloop/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/adobe/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/affinity/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/agentql/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/ahrefs/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/airtable/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/alchemy/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/altoviz/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/apitoken/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/asana/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/bamboohr/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/bitbucket/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/bitwarden/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/brevo/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/brex/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/cal/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/calendly/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/canvas/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/clickup/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/cloudflare/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/context/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/dailybot/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/datadog/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/discord/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/discordbot/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/elevenlabs/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/exa/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/facebook/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/finage/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/github/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/google/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/gumloop/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/handler/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/happyrobot/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/heygen/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/hubspot/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/jira/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/klaviyo/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/lever/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/lever_sandbox/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/linear/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/linkedin/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/listennotes/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/mailchimp/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/mem0/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/microsoft_clarity/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/neon/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/ngrok/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/notion/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/oncehub/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/pagerduty/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/pandadoc/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/pipedrive/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/posthog/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/provider/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/ravenseotools/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/reddit/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/salesforce/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/schema/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/sendgrid/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/serpapi/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/slack/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/spotify/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/stripe/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/supabase/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/tavily/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/timekit/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/trello/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/wandb/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/workiom/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/x/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/zoom/index
 
 
 Attributes

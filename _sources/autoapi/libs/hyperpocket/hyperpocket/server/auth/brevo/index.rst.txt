@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.brevo
+==============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.brevo
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.brevo.brevo_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.brevo.brevo_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: brevo_auth_router
+
+.. py:function:: brevo_token_callback(state: str, token: str)
+   :async:
+
+

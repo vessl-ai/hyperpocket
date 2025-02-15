@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.oncehub.token_context
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.oncehub.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.oncehub.token_context.OncehubTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: OncehubTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.oncehub.context.OncehubAuthContext`
+
+
+   .. py:method:: from_oncehub_token_response(response: hyperpocket.auth.oncehub.token_schema.OncehubTokenResponse)
+      :classmethod:
+
+
+
