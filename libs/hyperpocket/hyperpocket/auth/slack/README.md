@@ -2,13 +2,14 @@
 
 This document provides instructions on how to set up OAuth2 authentication for Slack using Hyperpocket.
 
+## Supported Authentication Types
+
+- Token
+- OAuth2
+
 ## How to Create an OAuth2 App
 
-1. Go to the Slack API Portal.
-2. Create a new application.
-3. Set the redirect URI to `https://yourapp.com/callback`.
-4. Note down the client ID and client secret.
-5. Configure your application to use these credentials.
+- See here: ]link](https://api.slack.com/authentication/oauth-v2)
 
 ## Additional Resources
 
