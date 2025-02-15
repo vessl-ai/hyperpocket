@@ -1,6 +1,6 @@
-# Using WASM Tools
+# Using Sandbox Tools
 
-> WASM Tools has some unsupported features like L4 socket access or multithreading. Use at on your own risks.
+> Sandbox Tools has some unsupported features like L4 socket access or multithreading. Use at on your own risks.
 
 ## Referencing Tools from Local Directory
 
@@ -55,7 +55,7 @@ pocket = PocketLangchain(tools=[from_git(
 # ...
 ```
 
-## Example Directory Structure of a WASM Tool with Python
+## Example Directory Structure of a Sandbox Tool with Python
 
 > More examples can be found in the [link](https://github.com/vessl-ai/hyperpocket/tree/main/tools)
 
