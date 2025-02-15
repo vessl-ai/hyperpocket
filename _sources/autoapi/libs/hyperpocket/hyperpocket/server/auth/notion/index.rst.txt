@@ -19,6 +19,7 @@ Functions
 .. autoapisummary::
 
    libs.hyperpocket.hyperpocket.server.auth.notion.notion_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.notion.notion_oauth2_callback
    libs.hyperpocket.hyperpocket.server.auth.notion.notion_token_callback
 
 
@@ -26,6 +27,10 @@ Module Contents
 ---------------
 
 .. py:data:: notion_auth_router
+
+.. py:function:: notion_oauth2_callback(state: str, code: str)
+   :async:
+
 
 .. py:function:: notion_oauth2_callback(state: str, code: str)
    :async:
