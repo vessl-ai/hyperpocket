@@ -1,0 +1,7 @@
+name = "happyrobot_list_calls"
+description = "List calls from HappyRobot"
+language = "python"
+
+[auth]
+auth_provider = "happyrobot"
+scopes = []

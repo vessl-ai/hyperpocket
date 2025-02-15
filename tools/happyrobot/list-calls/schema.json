@@ -1,0 +1,70 @@
+{
+  "properties": {
+    "type": {
+      "description": "Filter by call type",
+      "type": "string",
+      "enum": [
+        "Inbound",
+        "Outbound"
+      ]
+    },
+    "limit": {
+      "description": "Limit the number of calls returned",
+      "type": "integer"
+    },
+    "skip": {
+      "description": "Skip the first N calls",
+      "type": "integer"
+    },
+    "statuses": {
+      "description": "Filter by call statuses, comma separated",
+      "type": "string"
+    },
+    "tags": {
+      "description": "Filter by tags, comma separated",
+      "type": "string"
+    },
+    "models": {
+      "description": "Filter by models names, comma separated",
+      "type": "string"
+    },
+    "ratings": {
+      "description": "Filter by ratings, comma separated",
+      "type": "string"
+    },
+    "use_cases": {
+      "description": "Filter by use case ids, comma separated",
+      "type": "string"
+    },
+    "from": {
+      "description": "Filter by start date",
+      "type": "string"
+    },
+    "to": {
+      "description": "Filter by end date",
+      "type": "string"
+    },
+    "sort": {
+      "description": "Sort direction",
+      "type": "string",
+      "enum": [
+        "asc",
+        "desc"
+      ]
+    },
+    "search": {
+      "description": "Search by extraction or phone number",
+      "type": "string"
+    },
+    "campaigns": {
+      "description": "Filter by campaign ids, comma separated",
+      "type": "string"
+    },
+    "transfer_contact_email": {
+      "description": "Filter by transfer contact email",
+      "type": "string"
+    }
+  },
+  "title": "ListCallsRequest",
+  "type": "object"
+}

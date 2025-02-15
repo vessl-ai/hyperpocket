@@ -1,0 +1,7 @@
+name = "happyrobot_stop_call"
+description = "Stop a HappyRobot call"
+language = "python"
+
+[auth]
+auth_provider = "happyrobot"
+scopes = []

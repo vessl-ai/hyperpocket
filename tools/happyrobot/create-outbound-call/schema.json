@@ -1,0 +1,75 @@
+{
+  "properties": {
+    "number_id": {
+      "description": "ID of the phone number that should trigger the call",
+      "type": "string"
+    },
+    "phone_number": {
+      "description": "Phone number to call",
+      "type": "string"
+    },
+    "prompt_id": {
+      "description": "ID of the prompt to use for the call. If empty, default outbound prompt will be used.",
+      "type": "string"
+    },
+    "use_case_id": {
+      "description": "ID of the use case that should handle the call",
+      "type": "string"
+    },
+    "agent_id": {
+      "description": "ID of the agent that should handle the call",
+      "type": "string"
+    },
+    "model_id": {
+      "description": "ID of the model that should handle the call",
+      "type": "string"
+    },
+    "language": {
+      "description": "Language of the call",
+      "type": "string",
+      "enum": [
+        "en-US",
+        "en-GB",
+        "es-MX",
+        "es-ES",
+        "es-CO",
+        "pt-PT",
+        "de-DE",
+        "fr-FR",
+        "pl-PL",
+        "ro-RO",
+        "it-IT",
+        "zh-CN",
+        "hi-IN",
+        "ja-JP",
+        "sv-SE"
+      ]
+    },
+    "params": {
+      "description": "Dynamic parameters to inject into the templated use case prompt",
+      "type": "object"
+    },
+    "metadata": {
+      "description": "Custom metadata associated with the call",
+      "type": "object"
+    },
+    "campaign_id": {
+      "description": "ID of the campaign that triggered the call",
+      "type": "string"
+    },
+    "scheduled_for": {
+      "description": "ISO 8601 UTC datetime the call is scheduled for. If not specified, the call will the executed immediately.",
+      "type": "string"
+    },
+    "max_duration_mins": {
+      "description": "Specifies the maximum duration of the call in minutes. This value takes precedence over the maximum duration specified in the use-case model. If neither is provided, the default duration is 10 minutes.",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "number_id",
+    "phone_number"
+  ],
+  "title": "CreateOutboundCallRequest",
+  "type": "object"
+}

@@ -1,0 +1,13 @@
+{
+  "properties": {
+    "call_id": {
+      "description": "ID of the call to get the transcript for",
+      "type": "string"
+    }
+  },
+  "required": [
+    "call_id"
+  ],
+  "title": "GetTranscriptRequest",
+  "type": "object"
+}
