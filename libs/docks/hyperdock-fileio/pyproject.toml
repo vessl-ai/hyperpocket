@@ -1,6 +1,6 @@
 [project]
 name = "hyperdock-fileio"
-version = "0.3.4"
+version = "0.3.5"
 description = "hyperdockt-fileio"
 authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 readme = "README.md"
