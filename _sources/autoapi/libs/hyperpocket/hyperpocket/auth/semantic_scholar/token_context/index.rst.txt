@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.semantic_scholar.token_context
+================================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.semantic_scholar.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.semantic_scholar.token_context.SemanticScholarTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: SemanticScholarTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.semantic_scholar.context.SemanticScholarAuthContext`
+
+
+   .. py:method:: from_semantic_scholar_token_response(response: hyperpocket.auth.semantic_scholar.token_schema.SemanticScholarTokenResponse)
+      :classmethod:
+
+
+

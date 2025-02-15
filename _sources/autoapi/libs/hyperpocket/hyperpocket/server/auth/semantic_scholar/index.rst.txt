@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.semantic_scholar
+=========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.semantic_scholar
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.semantic_scholar.semantic_scholar_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.semantic_scholar.semantic_scholar_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.semantic_scholar.semantic_scholar_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: semantic_scholar_auth_router
+
+.. py:function:: semantic_scholar_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: semantic_scholar_token_callback(state: str, token: str)
+   :async:
+
+

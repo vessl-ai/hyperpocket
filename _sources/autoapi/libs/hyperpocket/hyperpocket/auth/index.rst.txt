@@ -70,6 +70,7 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/auth/reddit/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/salesforce/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/schema/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/semantic_scholar/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/sendgrid/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/serpapi/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/slack/index

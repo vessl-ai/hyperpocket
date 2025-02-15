@@ -361,6 +361,11 @@ Module Contents
 
 
 
+   .. py:attribute:: SEMANTIC_SCHOLAR
+      :value: 'semantic_scholar'
+
+
+
    .. py:method:: get_auth_provider(auth_provider_name: str) -> AuthProvider
       :classmethod:
 

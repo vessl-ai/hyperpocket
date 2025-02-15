@@ -66,6 +66,7 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/ravenseotools/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/reddit/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/salesforce/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/semantic_scholar/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/sendgrid/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/serpapi/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/slack/index
