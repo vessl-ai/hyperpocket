@@ -1,0 +1,69 @@
+{
+    "properties": {
+        "retailer": {
+            "title": "Retailer",
+            "type": "string",
+            "description": "The retailer code of the supported retailer"
+        },
+        "products": {
+            "title": "Products",
+            "type": "array",
+            "description": "A list of product objects that should be ordered"
+        },
+        "shipping_address": {
+            "title": "Shipping Address",
+            "type": "object",
+            "description": "An address object to which the order will be delivered"
+        },
+        "shipping_method": {
+            "title": "Shipping Method",
+            "type": "string",
+            "description": "The desired shipping method for the object. Available methods are cheapest, fastest, amazon_day, or free. You must provide either this or the shipping attribute, but not both."
+        },
+        "shipping": {
+            "title": "Shipping",
+            "type": "object",
+            "description": "A shipping object with information as to which shipping method to use. You must provide either this or the shipping_method attribute, but not both."
+        },
+        "billing_address": {
+            "title": "Billing Address",
+            "type": "object",
+            "description": "An address object for the person associated with the credit card"
+        },
+        "payment_method": {
+            "title": "Payment Method",
+            "type": "object",
+            "description": "A payment method object containing payment information for the order"
+        },
+        "retailer_credentials": {
+            "title": "Retailer Credentials",
+            "type": "object",
+            "description": "A retailer credentials object for logging into the retailer with a preexisting account"
+        },
+        "is_gift": {
+            "title": "Is Gift",
+            "type": "boolean",
+            "description": "Whether or not this order should be placed as a gift. Typically, retailers will exclude the price of the items on the receipt if this is set."
+        },
+        "max_price": {
+            "title": "Max Price",
+            "type": "number",
+            "description": "The maximum price in cents for the order. If the final price exceeds this number, the order will not go through and will return a max_price_exceeded error."
+        }
+    },
+    "required": [
+        "retailer",
+        "products",
+        "shipping_address",
+        "shipping_method",
+        "shipping",
+        "billing_address",
+        "payment_method",
+        "retailer_credentials",
+        "is_gift",
+        "max_price"
+    ],
+    "title": "CreateOrdersRequest",
+    "type": "object"
+  }
+  
