@@ -70,6 +70,7 @@ class AuthProvider(Enum):
     LINKEDIN = "linkedin"
     WANDB = "wandb"
     APITOKEN = "apitoken"
+    ZINC = "zinc"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":

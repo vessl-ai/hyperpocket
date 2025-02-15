@@ -1,0 +1,8 @@
+name = "create_orders"
+description = ""
+language = "python"
+
+[auth]
+auth_provider = "zinc"
+auth_handler = "zinc-token"
+scopes = []
