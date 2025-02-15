@@ -1,0 +1,23 @@
+{
+  "properties": {
+    "dataset_path": {
+      "type": "string",
+      "description": "The path to the Deep Lake dataset (e.g. hub://org_id/dataset_name). This same path must be used in the FROM clause of your query."
+    },
+    "query": {
+      "type": "string",
+      "description": "SQL-like query to search the dataset. The query must include FROM clause with the exact dataset_path. The query should follow these rules:\n- Use 'select' to specify fields to return\n- Use 'from' with the dataset_path\n- Use 'where' for filtering (optional)\n- Use 'order by' for sorting (optional)\n- Use 'limit' to restrict results (optional)\n\nExample queries:\nBasic select:\nselect * from \"hub://org/dataset\"\n\nVector similarity search:\nselect text, cosine_similarity(embedding, ARRAY[0.1,0.2,...]) as score \nfrom \"hub://org/dataset\" \norder by score desc \nlimit 5"
+    },
+    "as_list": {
+      "type": "boolean",
+      "description": "If True, returns results as a list of objects. If False, returns results grouped by tensor",
+      "default": true
+    }
+  },
+  "required": [
+    "dataset_path",
+    "query"
+  ],
+  "title": "ActiveloopQueryRequest",
+  "type": "object"
+} 

@@ -1,0 +1,8 @@
+name = "activeloop_query_data"
+description = "Query data from Deep Lake datasets using Activeloop's REST API"
+language = "python"
+
+[auth]
+auth_provider = "activeloop"
+auth_handler = "activeloop-token"
+scopes = [] 
