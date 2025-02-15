@@ -71,6 +71,7 @@ class AuthProvider(Enum):
     WANDB = "wandb"
     APITOKEN = "apitoken"
     ZINC = "zinc"
+    SEMANTIC_SCHOLAR = "semantic_scholar"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":
