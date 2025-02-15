@@ -1,15 +1,9 @@
 # Bitwarden Authentication
 
-This document provides instructions on how to set up token-based authentication for Bitwarden using Hyperpocket.
+## Supported Authentication Types
 
-## How to Create a Token
-
-1. Log in to your Bitwarden account.
-2. Navigate to the API settings or token management section.
-3. Generate a new API token.
-4. Note down the token for use in your application.
+- Token
 
 ## Additional Resources
 
 - [Official Documentation](https://docs.bitwarden.com)
-- [Support](https://support.bitwarden.com) 

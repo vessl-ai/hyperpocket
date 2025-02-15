@@ -1,15 +1,9 @@
 # Clickup Authentication
 
-This document provides instructions on how to set up token-based authentication for Clickup using Hyperpocket.
+## Supported Authentication Types
 
-## How to Create a Token
-
-1. Log in to your Clickup account.
-2. Navigate to the API settings or token management section.
-3. Generate a new API token.
-4. Note down the token for use in your application.
+- OAuth2
 
 ## Additional Resources
 
 - [Official Documentation](https://docs.clickup.com)
-- [Support](https://support.clickup.com) 
