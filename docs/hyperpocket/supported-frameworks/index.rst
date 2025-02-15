@@ -13,3 +13,4 @@ Hyperpocket supports the following frameworks:
    openai.md
    anthropic.md
    crewai.md
+   gemini.md

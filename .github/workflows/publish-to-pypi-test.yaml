@@ -27,6 +27,7 @@ jobs:
             "hyperpocket-openai"
             "hyperpocket-llamaindex"
             "hyperpocket-crewai"
+            "hyperpocket-gemini"
             "hyperdock-fileio"
             "hyperdock-langchain"
           )
@@ -87,6 +88,7 @@ jobs:
             "libs/extensions/llamaindex"
             "libs/extensions/openai"
             "libs/extensions/crewai"
+            "libs/extensions/gemini"
             "libs/docks/hyperdock-fileio"
             "libs/docks/hyperdock-langchain"
           )
@@ -178,6 +180,14 @@ jobs:
           uv build
           uv publish --publish-url https://test.pypi.org/legacy/
 
+      - name: Publish hyperpocket gemini package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
+        working-directory: libs/extensions/gemini
+        run: |
+          uv build
+          uv publish --publish-url https://test.pypi.org/legacy/
+
       - name: Publish hyperdock-fileio package
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
@@ -214,6 +224,7 @@ jobs:
             "hyperpocket-openai"
             "hyperpocket-llamaindex"
             "hyperpocket-crewai"
+            "hyperpocket-gemini"
             "hyperdock-fileio"
             "hyperdock-langchain"
           )
