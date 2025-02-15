@@ -3,7 +3,7 @@ name = "query-data"
 version = "0.1.0"
 description = "Query data from Deep Lake datasets using Activeloop's REST API"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = [
     "pydantic",
     "requests>=2.32.3",
