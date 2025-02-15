@@ -12,7 +12,7 @@ class NotionOAuth2AuthContext(NotionAuthContext):
 
     @classmethod
     def from_notion_oauth2_response(cls, response: NotionOAuth2Response):
-        description = f'Notion OAuth2 Context logged in'
+        description = f"Notion OAuth2 Context logged in"
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token

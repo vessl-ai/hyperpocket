@@ -12,7 +12,7 @@ class SalesforceOAuth2AuthContext(SalesforceAuthContext):
 
     @classmethod
     def from_salesforce_oauth2_response(cls, response: SalesforceOAuth2Response):
-        description = f'Salesforce OAuth2 Context logged in'
+        description = f"Salesforce OAuth2 Context logged in"
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token
@@ -20,7 +20,7 @@ class SalesforceOAuth2AuthContext(SalesforceAuthContext):
         expires_in = response.expires_in
 
         if expires_in:
-            expires_at = now + timedelta(seconds=60*60) # 1 hour
+            expires_at = now + timedelta(seconds=60 * 60)  # 1 hour
         else:
             expires_at = None
 

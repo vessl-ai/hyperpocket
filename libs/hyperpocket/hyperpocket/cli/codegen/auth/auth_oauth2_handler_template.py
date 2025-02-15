@@ -1,5 +1,6 @@
 from jinja2 import Template
 
+
 def get_auth_oauth2_handler_template() -> Template:
     return Template('''\
 from typing import Optional

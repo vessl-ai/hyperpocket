@@ -1,10 +1,10 @@
-
 from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from hyperpocket.futures import FutureStore
-cal_auth_router = APIRouter(
-    prefix="/cal"
-)
+
+cal_auth_router = APIRouter(prefix="/cal")
+
+
 @cal_auth_router.get("/token/callback")
 async def cal_token_callback(state: str, token: str):
     try:

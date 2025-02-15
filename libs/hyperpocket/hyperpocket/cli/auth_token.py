@@ -35,9 +35,15 @@ def create_token_auth_template(service_name, force):
     generate_server_auth(service_name, parent_path, force)
     generate_hyperpocket_auth_dir(service_name, parent_path, force)
     generate_auth_context(service_name, capitalized_service_name, parent_path, force)
-    generate_auth_token_context(service_name, capitalized_service_name, parent_path, force)
-    generate_auth_token_handler(service_name, capitalized_service_name, parent_path, force)
-    generate_auth_token_schema(service_name, capitalized_service_name, parent_path, force)
+    generate_auth_token_context(
+        service_name, capitalized_service_name, parent_path, force
+    )
+    generate_auth_token_handler(
+        service_name, capitalized_service_name, parent_path, force
+    )
+    generate_auth_token_schema(
+        service_name, capitalized_service_name, parent_path, force
+    )
     ##TODO: Add service to hyperpocket/auth/provider
 
 
@@ -78,7 +84,9 @@ def generate_auth_context(service_name, capitalized_service_name, parent_path, f
             f.write(output_from_parsed_template)
 
 
-def generate_auth_token_context(service_name, capitalized_service_name, parent_path, force):
+def generate_auth_token_context(
+    service_name, capitalized_service_name, parent_path, force
+):
     print(f"Generating auth/token context for '{service_name}'.")
     output_from_parsed_template = get_auth_token_context_template().render(
         service_name=service_name,
@@ -92,7 +100,9 @@ def generate_auth_token_context(service_name, capitalized_service_name, parent_p
             f.write(output_from_parsed_template)
 
 
-def generate_auth_token_handler(service_name, capitalized_service_name, parent_path, force):
+def generate_auth_token_handler(
+    service_name, capitalized_service_name, parent_path, force
+):
     print(f"Generating auth/token handler for '{service_name}'.")
     output_from_parsed_template = get_auth_token_handler_template().render(
         service_name=service_name,
@@ -108,7 +118,9 @@ def generate_auth_token_handler(service_name, capitalized_service_name, parent_p
             f.write(output_from_parsed_template)
 
 
-def generate_auth_token_schema(service_name, capitalized_service_name, parent_path, force):
+def generate_auth_token_schema(
+    service_name, capitalized_service_name, parent_path, force
+):
     print(f"Generating auth/token schema for '{service_name}'.")
     output_from_parsed_template = get_auth_token_schema_template().render(
         capitalized_service_name=capitalized_service_name,

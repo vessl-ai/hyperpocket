@@ -13,7 +13,9 @@ class AsanaOAuth2AuthContext(AsanaAuthContext):
 
     @classmethod
     def from_asana_oauth2_response(cls, response: AsanaOAuth2Response):
-        description = f'Asana OAuth2 Context logged in as a user {response.authed_user.id}'
+        description = (
+            f"Asana OAuth2 Context logged in as a user {response.authed_user.id}"
+        )
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token

@@ -12,7 +12,7 @@ class BitbucketOAuth2AuthContext(BitbucketAuthContext):
 
     @classmethod
     def from_bitbucket_oauth2_response(cls, response: BitbucketOAuth2Response):
-        description = f'Bitbucket OAuth2 Context logged in'
+        description = f"Bitbucket OAuth2 Context logged in"
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token

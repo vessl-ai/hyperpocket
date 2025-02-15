@@ -12,7 +12,7 @@ class LinkedinOAuth2AuthContext(LinkedinAuthContext):
 
     @classmethod
     def from_linkedin_oauth2_response(cls, response: LinkedinOAuth2Response):
-        description = f'Linkedin OAuth2 Context logged in'
+        description = f"Linkedin OAuth2 Context logged in"
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token

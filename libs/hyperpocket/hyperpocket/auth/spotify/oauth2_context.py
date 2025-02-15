@@ -12,7 +12,7 @@ class SpotifyOAuth2AuthContext(SpotifyAuthContext):
 
     @classmethod
     def from_spotify_oauth2_response(cls, response: SpotifyOAuth2Response):
-        description = f'Spotify OAuth2 Context logged in'
+        description = f"Spotify OAuth2 Context logged in"
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token

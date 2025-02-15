@@ -1,10 +1,10 @@
-
 from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from hyperpocket.futures import FutureStore
-airtable_auth_router = APIRouter(
-    prefix="/airtable"
-)
+
+airtable_auth_router = APIRouter(prefix="/airtable")
+
+
 @airtable_auth_router.get("/token/callback")
 async def airtable_token_callback(state: str, token: str):
     try:

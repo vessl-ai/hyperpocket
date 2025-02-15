@@ -12,7 +12,9 @@ class DiscordOAuth2AuthContext(DiscordAuthContext):
 
     @classmethod
     def from_discord_oauth2_response(cls, response: DiscordOAuth2Response):
-        description = f'Discord OAuth2 Context logged in as a user {response.authed_user.id}'
+        description = (
+            f"Discord OAuth2 Context logged in as a user {response.authed_user.id}"
+        )
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token

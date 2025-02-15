@@ -3,9 +3,7 @@ from starlette.responses import HTMLResponse
 
 from hyperpocket.futures import FutureStore
 
-happyrobot_auth_router = APIRouter(
-    prefix="/happyrobot"
-)
+happyrobot_auth_router = APIRouter(prefix="/happyrobot")
 
 
 @happyrobot_auth_router.get("/oauth2/callback")

@@ -11,7 +11,6 @@ from hyperpocket.tool.wasm.tool import WasmToolRequest
 
 
 class TestPocketCore(IsolatedAsyncioTestCase):
-
     def test_parse_local_path_tool_like(self):
         # given
         test_local_path = pathlib.Path(os.getcwd()) / "test_local_path"
@@ -41,12 +40,17 @@ class TestPocketCore(IsolatedAsyncioTestCase):
         self.assertIsInstance(parsed_tool_like, WasmToolRequest)
         self.assertEqual(parsed_tool_like.rel_path, "")
         self.assertIsInstance(parsed_tool_like.lock, GitLock)
-        self.assertEqual(parsed_tool_like.lock.repository_url, "https://github.com/vessl-ai/hyperpocket")
+        self.assertEqual(
+            parsed_tool_like.lock.repository_url,
+            "https://github.com/vessl-ai/hyperpocket",
+        )
         self.assertEqual(parsed_tool_like.lock.git_ref, "HEAD")
 
     def test_parse_specific_github_url_tool_like(self):
         # given
-        test_github_url = "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message"
+        test_github_url = (
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message"
+        )
 
         # when
         parsed_tool_like = PocketCore._parse_str_tool_like(test_github_url)
@@ -55,16 +59,17 @@ class TestPocketCore(IsolatedAsyncioTestCase):
         self.assertIsInstance(parsed_tool_like, WasmToolRequest)
         self.assertEqual(parsed_tool_like.rel_path, "tools/slack/get-message")
         self.assertIsInstance(parsed_tool_like.lock, GitLock)
-        self.assertEqual(parsed_tool_like.lock.repository_url, "https://github.com/vessl-ai/hyperpocket")
+        self.assertEqual(
+            parsed_tool_like.lock.repository_url,
+            "https://github.com/vessl-ai/hyperpocket",
+        )
         self.assertEqual(parsed_tool_like.lock.git_ref, "main")
 
     def test_parse_wasm_tool_like(self):
         # given
         local_path = pathlib.Path(os.getcwd()) / "test_local_path"
         tool_request = WasmToolRequest(
-            LocalLock(str(local_path)),
-            rel_path="/rel/path",
-            tool_vars={}
+            LocalLock(str(local_path)), rel_path="/rel/path", tool_vars={}
         )
 
         # when

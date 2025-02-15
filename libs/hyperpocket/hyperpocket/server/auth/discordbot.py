@@ -1,10 +1,10 @@
-
 from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from hyperpocket.futures import FutureStore
-discordbot_auth_router = APIRouter(
-    prefix="/discordbot"
-)
+
+discordbot_auth_router = APIRouter(prefix="/discordbot")
+
+
 @discordbot_auth_router.get("/token/callback")
 async def discordbot_token_callback(state: str, token: str):
     try:

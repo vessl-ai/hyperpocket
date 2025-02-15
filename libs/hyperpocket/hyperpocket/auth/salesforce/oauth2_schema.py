@@ -9,6 +9,7 @@ class SalesforceOAuth2Request(AuthenticateRequest):
     client_id: str
     client_secret: str
 
+
 class SalesforceOAuth2Response(AuthenticateResponse):
     access_token: str
     signature: str

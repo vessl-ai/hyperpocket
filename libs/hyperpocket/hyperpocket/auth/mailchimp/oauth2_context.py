@@ -12,7 +12,7 @@ class MailchimpOAuth2AuthContext(MailchimpAuthContext):
 
     @classmethod
     def from_mailchimp_oauth2_response(cls, response: MailchimpOAuth2Response):
-        description = f'Mailchimp OAuth2 Context logged in'
+        description = f"Mailchimp OAuth2 Context logged in"
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token

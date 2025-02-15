@@ -1,10 +1,10 @@
-
 from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from hyperpocket.futures import FutureStore
-lever_auth_router = APIRouter(
-    prefix="/lever"
-)
+
+lever_auth_router = APIRouter(prefix="/lever")
+
+
 @lever_auth_router.get("/token/callback")
 async def lever_token_callback(state: str, token: str):
     try:

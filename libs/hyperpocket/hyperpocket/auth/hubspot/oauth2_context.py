@@ -12,7 +12,9 @@ class HubspotOAuth2AuthContext(HubspotAuthContext):
 
     @classmethod
     def from_hubspot_oauth2_response(cls, response: HubspotOAuth2Response):
-        description = f'Hubspot OAuth2 Context logged in as a user {response.authed_user.id}'
+        description = (
+            f"Hubspot OAuth2 Context logged in as a user {response.authed_user.id}"
+        )
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token

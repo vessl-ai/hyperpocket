@@ -9,6 +9,7 @@ class AsanaOAuth2Request(AuthenticateRequest):
     client_id: str
     client_secret: str
 
+
 class AsanaOAuth2Response(AuthenticateResponse):
     access_token: str
     expires_in: int

@@ -2,9 +2,7 @@ from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from hyperpocket.futures import FutureStore
 
-facebook_auth_router = APIRouter(
-    prefix="/facebook"
-)
+facebook_auth_router = APIRouter(prefix="/facebook")
 
 
 @facebook_auth_router.get("/oauth2/callback")

@@ -9,6 +9,7 @@ class NotionOAuth2Request(AuthenticateRequest):
     client_id: str
     client_secret: str
 
+
 class NotionOAuth2Response(AuthenticateResponse):
     access_token: Optional[str] = None
     bot_id: Optional[str] = None

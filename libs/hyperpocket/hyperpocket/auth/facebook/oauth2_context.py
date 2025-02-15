@@ -12,7 +12,7 @@ class FacebookOAuth2AuthContext(FacebookAuthContext):
 
     @classmethod
     def from_facebook_oauth2_response(cls, response: FacebookOAuth2Response):
-        description = f'Facebook OAuth2 Context logged in'
+        description = f"Facebook OAuth2 Context logged in"
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token

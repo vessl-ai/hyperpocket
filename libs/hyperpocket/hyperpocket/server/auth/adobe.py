@@ -1,10 +1,10 @@
-
 from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from hyperpocket.futures import FutureStore
-adobe_auth_router = APIRouter(
-    prefix="/adobe"
-)
+
+adobe_auth_router = APIRouter(prefix="/adobe")
+
+
 @adobe_auth_router.get("/token/callback")
 async def adobe_token_callback(state: str, token: str):
     try:

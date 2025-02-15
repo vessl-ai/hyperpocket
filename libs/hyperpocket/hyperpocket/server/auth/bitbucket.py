@@ -2,9 +2,7 @@ from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from hyperpocket.futures import FutureStore
 
-bitbucket_auth_router = APIRouter(
-    prefix="/bitbucket"
-)
+bitbucket_auth_router = APIRouter(prefix="/bitbucket")
 
 
 @bitbucket_auth_router.get("/oauth2/callback")

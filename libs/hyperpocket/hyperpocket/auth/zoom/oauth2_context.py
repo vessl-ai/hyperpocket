@@ -12,7 +12,7 @@ class ZoomOAuth2AuthContext(ZoomAuthContext):
 
     @classmethod
     def from_zoom_oauth2_response(cls, response: ZoomOAuth2Response):
-        description = f'Zoom OAuth2 Context logged in'
+        description = f"Zoom OAuth2 Context logged in"
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token

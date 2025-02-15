@@ -2,9 +2,7 @@ from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from hyperpocket.futures import FutureStore
 
-zoom_auth_router = APIRouter(
-    prefix="/zoom"
-)
+zoom_auth_router = APIRouter(prefix="/zoom")
 
 
 @zoom_auth_router.get("/oauth2/callback")

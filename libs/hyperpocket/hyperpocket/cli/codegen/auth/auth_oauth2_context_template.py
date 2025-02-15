@@ -1,7 +1,8 @@
 from jinja2 import Template
 
+
 def get_auth_oauth2_context_template() -> Template:
-    return Template('''\
+    return Template("""\
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
@@ -35,4 +36,4 @@ class {{ capitalized_service_name }}OAuth2AuthContext({{ capitalized_service_nam
             description=description,
             detail=response,
         )
-''')
+""")

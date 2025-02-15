@@ -12,7 +12,7 @@ class LinearOAuth2AuthContext(LinearAuthContext):
 
     @classmethod
     def from_linear_oauth2_response(cls, response: LinearOAuth2Response):
-        description = f'Linear OAuth2 Context logged in'
+        description = f"Linear OAuth2 Context logged in"
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token

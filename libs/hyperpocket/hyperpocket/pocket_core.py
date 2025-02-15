@@ -298,11 +298,13 @@ class PocketCore:
                 repo_url=tool_like
             )
             lock = GitLock(repository_url=base_repo_url, git_ref=git_ref)
-            parsed_tool_like = WasmToolRequest(lock=lock, rel_path=rel_path, tool_vars={})
+            parsed_tool_like = WasmToolRequest(
+                lock=lock, rel_path=rel_path, tool_vars={}
+            )
         else:
             parsed_tool_like = None
             RuntimeError(
-                f"Can't convert to ToolRequest. it might be wrong github url or local path. path: {tool_like}")
+                f"Can't convert to ToolRequest. it might be wrong github url or local path. path: {tool_like}"
+            )
 
         return parsed_tool_like
-

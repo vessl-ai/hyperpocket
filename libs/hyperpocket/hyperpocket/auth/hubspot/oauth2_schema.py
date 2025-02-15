@@ -9,6 +9,7 @@ class HubspotOAuth2Request(AuthenticateRequest):
     client_id: str
     client_secret: str
 
+
 class HubspotOAuth2Response(AuthenticateResponse):
     access_token: str
     expires_in: int

@@ -2,9 +2,7 @@ from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from hyperpocket.futures import FutureStore
 
-salesforce_auth_router = APIRouter(
-    prefix="/salesforce"
-)
+salesforce_auth_router = APIRouter(prefix="/salesforce")
 
 
 @salesforce_auth_router.get("/oauth2/callback")

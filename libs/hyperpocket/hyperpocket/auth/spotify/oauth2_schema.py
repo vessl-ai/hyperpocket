@@ -9,6 +9,7 @@ class SpotifyOAuth2Request(AuthenticateRequest):
     client_id: str
     client_secret: str
 
+
 class SpotifyOAuth2Response(AuthenticateResponse):
     access_token: str
     token_type: str
