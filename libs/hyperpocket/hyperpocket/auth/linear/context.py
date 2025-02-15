@@ -2,7 +2,7 @@ from hyperpocket.auth.context import AuthContext
 
 
 class LinearAuthContext(AuthContext):
-    _ACCESS_TOKEN_KEY: str = "LINEAR_API_KEY"
+    _ACCESS_TOKEN_KEY: str = "LINEAR_TOKEN"
 
     def to_dict(self) -> dict[str, str]:
         return {

@@ -9,6 +9,7 @@ from hyperpocket.cli.auth_oauth2 import create_oauth2_auth_template
 from hyperpocket.cli.tool_create import create_tool_template, build_tool
 from hyperpocket.cli.tool_export import export_tool
 
+
 @click.group()
 def cli():
     pass

@@ -165,19 +165,22 @@ class PocketServer(object):
 
         error_queue = mp.Queue()
         self.pipe = mp.Pipe()
-        self.process = mp.Process(
-            target=self._run, args=(pocket_core, )
-        )
+        self.process = mp.Process(target=self._run, args=(pocket_core,))
         self.process.start()  # process start
 
         if not error_queue.empty():
             error_message = error_queue.get()
             raise error_message
-    
+
     def _report_initialized(self, error: Optional[Exception] = None):
         _, conn = self.pipe
-        conn.send(('server-initialization', error,))
-    
+        conn.send(
+            (
+                "server-initialization",
+                error,
+            )
+        )
+
     def wait_initialized(self):
         conn, _ = self.pipe
         while True:

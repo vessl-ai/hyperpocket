@@ -1,5 +1,6 @@
 from jinja2 import Template
 
+
 def get_tool_main_template() -> Template:
     return Template('''import json
 import os

@@ -1,7 +1,8 @@
 from jinja2 import Template
 
+
 def get_auth_oauth2_context_template() -> Template:
-    return Template('''
+    return Template("""\
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
@@ -16,7 +17,7 @@ class {{ capitalized_service_name }}OAuth2AuthContext({{ capitalized_service_nam
 
     @classmethod
     def from_{{ service_name }}_oauth2_response(cls, response: {{ capitalized_service_name }}OAuth2Response):
-        description = f'{{ capitalized_service_name }} OAuth2 Context logged in as a user {response.authed_user.id}'
+        description = f'{{ capitalized_service_name }} OAuth2 Context logged in'
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token
@@ -24,7 +25,7 @@ class {{ capitalized_service_name }}OAuth2AuthContext({{ capitalized_service_nam
         expires_in = response.expires_in
 
         if expires_in:
-            expires_at = now + timedelta(seconds=response.authed_user.expires_in)
+            expires_at = now + timedelta(seconds=response.expires_in)
         else:
             expires_at = None
 
@@ -35,4 +36,4 @@ class {{ capitalized_service_name }}OAuth2AuthContext({{ capitalized_service_nam
             description=description,
             detail=response,
         )
-''')
+""")

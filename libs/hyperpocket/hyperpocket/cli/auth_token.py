@@ -17,14 +17,14 @@ from hyperpocket.cli.codegen.auth import (
 @click.option("--force", is_flag=True, default=False)
 def create_token_auth_template(service_name, force):
     ## Validate service_name
-    if not service_name.islower() or not service_name.replace("_", "").isalpha():
+    if not service_name.islower() or not service_name.replace("_", "").isalnum():
         raise ValueError(
-            "service_name must be lowercase and contain only letters and underscores"
+            "service_name must be lowercase and contain only letters, numbers, and underscores"
         )
 
-    capitliazed_service_name = service_name.capitalize()
+    capitalized_service_name = service_name.capitalize()
     if "_" in service_name:
-        capitliazed_service_name = "".join(
+        capitalized_service_name = "".join(
             [word.capitalize() for word in service_name.split("_")]
         )
 
@@ -34,10 +34,16 @@ def create_token_auth_template(service_name, force):
 
     generate_server_auth(service_name, parent_path, force)
     generate_hyperpocket_auth_dir(service_name, parent_path, force)
-    generate_auth_context(service_name, capitliazed_service_name, parent_path, force)
-    generate_auth_token_context(service_name, capitliazed_service_name, parent_path, force)
-    generate_auth_token_handler(service_name, capitliazed_service_name, parent_path, force)
-    generate_auth_token_schema(service_name, capitliazed_service_name, parent_path, force)
+    generate_auth_context(service_name, capitalized_service_name, parent_path, force)
+    generate_auth_token_context(
+        service_name, capitalized_service_name, parent_path, force
+    )
+    generate_auth_token_handler(
+        service_name, capitalized_service_name, parent_path, force
+    )
+    generate_auth_token_schema(
+        service_name, capitalized_service_name, parent_path, force
+    )
     ##TODO: Add service to hyperpocket/auth/provider
 
 
@@ -64,10 +70,10 @@ def generate_hyperpocket_auth_dir(service_name, parent_path, force):
             pass
 
 
-def generate_auth_context(service_name, capitliazed_service_name, parent_path, force):
+def generate_auth_context(service_name, capitalized_service_name, parent_path, force):
     print(f"Generating auth/context for '{service_name}'.")
     output_from_parsed_template = get_auth_context_template().render(
-        caplitalized_service_name=capitliazed_service_name,
+        capitalized_service_name=capitalized_service_name,
         upper_service_name=service_name.upper(),
     )
     output_path = (
@@ -78,11 +84,13 @@ def generate_auth_context(service_name, capitliazed_service_name, parent_path, f
             f.write(output_from_parsed_template)
 
 
-def generate_auth_token_context(service_name, capitliazed_service_name, parent_path, force):
+def generate_auth_token_context(
+    service_name, capitalized_service_name, parent_path, force
+):
     print(f"Generating auth/token context for '{service_name}'.")
     output_from_parsed_template = get_auth_token_context_template().render(
         service_name=service_name,
-        caplitalized_service_name=capitliazed_service_name,
+        capitalized_service_name=capitalized_service_name,
     )
     output_path = (
         parent_path / f"hyperpocket/hyperpocket/auth/{service_name}/token_context.py"
@@ -92,12 +100,14 @@ def generate_auth_token_context(service_name, capitliazed_service_name, parent_p
             f.write(output_from_parsed_template)
 
 
-def generate_auth_token_handler(service_name, capitliazed_service_name, parent_path, force):
+def generate_auth_token_handler(
+    service_name, capitalized_service_name, parent_path, force
+):
     print(f"Generating auth/token handler for '{service_name}'.")
     output_from_parsed_template = get_auth_token_handler_template().render(
         service_name=service_name,
         auth_handler_name=service_name.replace("_", "-"),
-        caplitalized_service_name=capitliazed_service_name,
+        capitalized_service_name=capitalized_service_name,
         upper_service_name=service_name.upper(),
     )
     output_path = (
@@ -108,10 +118,12 @@ def generate_auth_token_handler(service_name, capitliazed_service_name, parent_p
             f.write(output_from_parsed_template)
 
 
-def generate_auth_token_schema(service_name, capitliazed_service_name, parent_path, force):
+def generate_auth_token_schema(
+    service_name, capitalized_service_name, parent_path, force
+):
     print(f"Generating auth/token schema for '{service_name}'.")
     output_from_parsed_template = get_auth_token_schema_template().render(
-        caplitalized_service_name=capitliazed_service_name,
+        capitalized_service_name=capitalized_service_name,
     )
     output_path = (
         parent_path / f"hyperpocket/hyperpocket/auth/{service_name}/token_schema.py"

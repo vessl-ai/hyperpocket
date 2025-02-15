@@ -1,7 +1,8 @@
 from jinja2 import Template
 
+
 def get_auth_oauth2_handler_template() -> Template:
-    return Template('''
+    return Template('''\
 from typing import Optional
 from urllib.parse import urljoin, urlencode
 
@@ -12,7 +13,7 @@ from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.handler import AuthHandlerInterface
 from hyperpocket.auth.{{ service_name }}.oauth2_context import {{ capitalized_service_name }}OAuth2AuthContext
 from hyperpocket.auth.{{ service_name }}.oauth2_schema import {{ capitalized_service_name }}OAuth2Response, {{ capitalized_service_name }}OAuth2Request
-from hyperpocket.config import config as config
+from hyperpocket.config import config
 from hyperpocket.futures import FutureStore
 
 
@@ -55,10 +56,9 @@ class {{ capitalized_service_name }}OAuth2AuthHandler(AuthHandlerInterface):
     def prepare(self, auth_req: {{ capitalized_service_name }}OAuth2Request, thread_id: str, profile: str,
                 future_uid: str, *args, **kwargs) -> str:
         redirect_uri = urljoin(
-            config.public_base_url + "/",
-            f"{config.callback_url_rewrite_prefix}/auth/{{ service_name }}/oauth2/callback",
+            config().public_base_url + "/",
+            f"{config().callback_url_rewrite_prefix}/auth/{{ service_name }}/oauth2/callback",
         )
-        print(f"redirect_uri: {redirect_uri}")
         auth_url = self._make_auth_url(req=auth_req, redirect_uri=redirect_uri, state=future_uid)
 
         FutureStore.create_future(future_uid, data={
@@ -83,65 +83,40 @@ class {{ capitalized_service_name }}OAuth2AuthHandler(AuthHandlerInterface):
                     'redirect_uri': future_data.data["redirect_uri"],
                 }
             )
-        if resp.status_code != 200:
-            raise Exception(f"failed to authenticate. status_code : {resp.status_code}")
-
+        resp.raise_for_status()
         resp_json = resp.json()
-        if resp_json["ok"] is False:
-            raise Exception(f"failed to authenticate. error : {resp_json['error']}")
-
         resp_typed = {{ capitalized_service_name }}OAuth2Response(**resp_json)
         return {{ capitalized_service_name }}OAuth2AuthContext.from_{{ service_name }}_oauth2_response(resp_typed)
 
     async def refresh(self, auth_req: {{ capitalized_service_name }}OAuth2Request, context: AuthContext, *args, **kwargs) -> AuthContext:
         {{ service_name }}_context: {{ capitalized_service_name }}OAuth2AuthContext = context
-        last_oauth2_resp: {{ capitalized_service_name }}OAuth2Response = {{ service_name }}_context.detail
         refresh_token = {{ service_name }}_context.refresh_token
 
         async with httpx.AsyncClient() as client:
             resp = await client.post(
                 url=self._{{ upper_service_name }}_TOKEN_URL,
                 data={
-                    'client_id': config.auth.{{ service_name }}.client_id,
-                    'client_secret': config.auth.{{ service_name }}.client_secret,
+                    'client_id': auth_req.client_id,
+                    'client_secret': auth_req.client_secret,
                     'grant_type': 'refresh_token',
                     'refresh_token': refresh_token,
                 },
             )
 
-        if resp.status_code != 200:
-            raise Exception(f"failed to refresh. status_code : {resp.status_code}")
-
+        resp.raise_for_status()
         resp_json = resp.json()
-        if resp_json["ok"] is False:
-            raise Exception(f"failed to refresh. status_code : {resp.status_code}")
-
-        if last_oauth2_resp.authed_user:
-            new_resp = last_oauth2_resp.model_copy(
-                update={
-                    "authed_user": {{ capitalized_service_name }}OAuth2Response.AuthedUser(**{
-                        **last_oauth2_resp.authed_user.model_dump(),
-                        "access_token": resp_json["access_token"],
-                        "refresh_token": resp_json["refresh_token"],
-                        "expires_in": resp_json["expires_in"],
-                    })
-                }
-            )
-        else:
-            new_resp = last_oauth2_resp.model_copy(
-                update={
-                    **last_oauth2_resp.model_dump(),
-                    "access_token": resp_json["access_token"],
-                    "refresh_token": resp_json["refresh_token"],
-                    "expires_in": resp_json["expires_in"],
-                }
-            )
-
+        
+        new_resp = {{ capitalized_service_name }}OAuth2Response(**{
+            "access_token": resp_json["access_token"],
+            "refresh_token": resp_json["refresh_token"],
+            "expires_in": resp_json["expires_in"],
+        })
+        
         return {{ capitalized_service_name }}OAuth2AuthContext.from_{{ service_name }}_oauth2_response(new_resp)
 
     def _make_auth_url(self, req: {{ capitalized_service_name }}OAuth2Request, redirect_uri: str, state: str):
         params = {
-            "user_scope": ','.join(req.auth_scopes),
+            "scope": ' '.join(req.auth_scopes),
             "client_id": req.client_id,
             "redirect_uri": redirect_uri,
             "state": state,
@@ -152,7 +127,7 @@ class {{ capitalized_service_name }}OAuth2AuthHandler(AuthHandlerInterface):
     def make_request(self, auth_scopes: Optional[list[str]] = None, **kwargs) -> {{ capitalized_service_name }}OAuth2Request:
         return {{ capitalized_service_name }}OAuth2Request(
             auth_scopes=auth_scopes,
-            client_id=config.auth.{{ service_name }}.client_id,
-            client_secret=config.auth.{{ service_name }}.client_secret,
+            client_id=config().auth.{{ service_name }}.client_id,
+            client_secret=config().auth.{{ service_name }}.client_secret,
         )
 ''')
