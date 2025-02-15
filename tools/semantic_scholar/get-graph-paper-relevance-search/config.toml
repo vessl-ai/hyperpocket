@@ -2,7 +2,3 @@ name = "get_graph_paper_relevance_search"
 description = ""
 language = "python"
 
-[auth]
-auth_provider = "semantic-scholar"
-auth_handler = "semantic-scholar-token"
-scopes = []

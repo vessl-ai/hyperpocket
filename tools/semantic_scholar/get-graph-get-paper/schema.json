@@ -1,0 +1,15 @@
+{
+    "properties": {
+        "paper_id": {
+            "title": "Paper Id",
+            "type": "integer",
+            "description": "Semantic Scholar ID"
+        }
+    },
+    "required": [
+        "paper_id"
+    ],
+    "title": "GetGraphGetPaperRequest",
+    "type": "object"
+  }
+  
