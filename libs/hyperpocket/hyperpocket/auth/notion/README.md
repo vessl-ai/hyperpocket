@@ -1,28 +1,18 @@
-### Notion Token Auth
+# Notion Authentication
 
-This module provides authentication using Notion tokens.
+This document provides instructions on how to set up token-based authentication for Notion using Hyperpocket.
 
-1. To use this authentication in your tool, include the following in your `config.toml`:
+## Supported Authentication Types
 
-```toml
-[auth]
-auth_provider = "notion"
-auth_handler = "notion-token"
-scopes = []
-```
+- OAuth2
+- Token
 
-2. To use it with `function_tool`, you can define your function as follows:
+## How to Create an OAuth2 App
 
-```python
-from hyperpocket.tool import function_tool
-from hyperpocket.auth import AuthProvider
+- See here: [link](https://developers.notion.com/docs/authorization)
+
+## Additional Resources
+
+- [Official Documentation](https://developers.notion.com/)
 
 
-@function_tool(
-    auth_provider=AuthProvider.NOTION
-)
-def my_function(**kwargs):
-    token = kwargs["NOTION_TOKEN"]
-
-    # ...
-```

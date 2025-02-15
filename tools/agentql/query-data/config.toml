@@ -1,0 +1,8 @@
+name = "agentql_query_data"
+description = "Query data from a webpage using AgentQL"
+language = "python"
+
+[auth]
+auth_provider = "agentql"
+auth_handler = "agentql-token"
+scopes = [] 
