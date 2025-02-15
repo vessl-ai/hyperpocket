@@ -1,0 +1,8 @@
+name = "get_graph_get_paper"
+description = ""
+language = "python"
+
+[auth]
+auth_provider = ""
+auth_handler = ""
+scopes = []
