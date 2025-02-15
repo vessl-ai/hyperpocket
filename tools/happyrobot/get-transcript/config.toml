@@ -1,0 +1,7 @@
+name = "happyrobot_get_transcript"
+description = "Get transcript for a HappyRobot call"
+language = "python"
+
+[auth]
+auth_provider = "happyrobot"
+scopes = []

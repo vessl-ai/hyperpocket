@@ -1,0 +1,13 @@
+{
+  "properties": {
+    "call_id": {
+      "description": "ID of the call to stop",
+      "type": "string"
+    }
+  },
+  "required": [
+    "call_id"
+  ],
+  "title": "StopCallRequest",
+  "type": "object"
+}

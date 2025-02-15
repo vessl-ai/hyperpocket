@@ -1,0 +1,7 @@
+[project]
+name = "list-calls"
+version = "0.1.0"
+description = "List calls from HappyRobot"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["pydantic", "requests>=2.32.3"]

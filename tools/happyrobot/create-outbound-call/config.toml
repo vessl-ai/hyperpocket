@@ -1,0 +1,7 @@
+name = "happyrobot_create_outbound_call"
+description = "Create an outbound call using HappyRobot"
+language = "python"
+
+[auth]
+auth_provider = "happyrobot"
+scopes = []
