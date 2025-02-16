@@ -181,12 +181,7 @@ def create_orders(req: CreateOrdersRequest):
 
 
 def main():
-    with open("schema.json", "w") as f:
-        f.write(CreateOrdersRequest.schema_json(indent=2))
-    print(CreateOrdersRequest.model_json_schema())
-    breakpoint()
     req = json.load(sys.stdin.buffer)
-    CreateOrdersRequest.model_json_schema
     req_typed = CreateOrdersRequest.model_validate(req)
     response = create_orders(req_typed)
 
