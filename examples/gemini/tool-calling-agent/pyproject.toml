@@ -5,8 +5,9 @@ description = "Tool calling agent with hyperpocket and Gemini API"
 authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = ["hyperpocket>=0.0.3", "hyperpocket_gemini>=0.0.3"]
+dependencies = [
+ "hyperpocket_gemini>=0.0.3",
+]
 
 [tool.uv.sources]
-hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
 hyperpocket_gemini = { path = "../../../libs/extensions/gemini", editable = true }
