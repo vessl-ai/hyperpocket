@@ -379,7 +379,7 @@ wheels = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.3.4"
+version = "0.3.6"
 source = { editable = "../../../libs/hyperpocket" }
 dependencies = [
     { name = "click" },
@@ -427,7 +427,7 @@ dev = [
 
 [[package]]
 name = "hyperpocket-gemini"
-version = "0.1.0"
+version = "0.3.6"
 source = { editable = "../../../libs/extensions/gemini" }
 dependencies = [
     { name = "google-genai" },
@@ -436,7 +436,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "google-genai", specifier = ">=1.2.0" },
+    { name = "google-genai", specifier = ">=1.0.0" },
     { name = "hyperpocket", editable = "../../../libs/hyperpocket" },
 ]
 
@@ -802,15 +802,11 @@ name = "tool-calling-agent"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
-    { name = "hyperpocket" },
     { name = "hyperpocket-gemini" },
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "hyperpocket", editable = "../../../libs/hyperpocket" },
-    { name = "hyperpocket-gemini", editable = "../../../libs/extensions/gemini" },
-]
+requires-dist = [{ name = "hyperpocket-gemini", editable = "../../../libs/extensions/gemini" }]
 
 [[package]]
 name = "typing-extensions"
