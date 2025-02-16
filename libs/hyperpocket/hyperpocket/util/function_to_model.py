@@ -21,6 +21,7 @@ def function_to_model(func: callable) -> Type[BaseModel]:
     fields: Dict[str, Tuple[Type, Any]] = {}
     sig = signature(func)
     param_desc_map = extract_param_docstring_mapping(func)
+    allowed_param_typing_types = ["Optional", "List"]
 
     for param_name, param in sig.parameters.items():
         if param_name in ("self", "cls"):
@@ -41,7 +42,7 @@ def function_to_model(func: callable) -> Type[BaseModel]:
 
         if (
             param.annotation.__module__ == "typing"
-            and param.annotation.__name__ == "Optional"
+            and param.annotation.__name__ in allowed_param_typing_types
         ):
             fields[param_name] = (
                 param.annotation.__args__[0],
