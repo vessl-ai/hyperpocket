@@ -1534,7 +1534,7 @@ wheels = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.2.1"
+version = "0.3.6"
 source = { editable = "../../hyperpocket" }
 dependencies = [
     { name = "click" },
@@ -1582,7 +1582,7 @@ dev = [
 
 [[package]]
 name = "hyperpocket-crewai"
-version = "0.0.1"
+version = "0.3.6"
 source = { editable = "." }
 dependencies = [
     { name = "crewai" },
@@ -1598,7 +1598,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "crewai", specifier = ">=0.98.0" },
+    { name = "crewai", specifier = ">=0.30.0" },
     { name = "crewai-tools", specifier = ">=0.32.1" },
     { name = "hyperpocket", editable = "../../hyperpocket" },
 ]
