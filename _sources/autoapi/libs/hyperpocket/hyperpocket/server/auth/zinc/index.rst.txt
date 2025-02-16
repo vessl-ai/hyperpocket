@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.zinc
+=============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.zinc
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.zinc.zinc_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.zinc.zinc_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.zinc.zinc_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: zinc_auth_router
+
+.. py:function:: zinc_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: zinc_token_callback(state: str, token: str)
+   :async:
+
+

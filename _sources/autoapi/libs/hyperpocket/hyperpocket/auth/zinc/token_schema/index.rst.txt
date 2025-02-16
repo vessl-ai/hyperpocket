@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.zinc.token_schema
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.zinc.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.zinc.token_schema.ZincTokenRequest
+   libs.hyperpocket.hyperpocket.auth.zinc.token_schema.ZincTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: ZincTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: ZincTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

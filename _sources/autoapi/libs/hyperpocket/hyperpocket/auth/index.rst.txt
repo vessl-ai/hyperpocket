@@ -83,6 +83,7 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/auth/wandb/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/workiom/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/x/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/zinc/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/zoom/index
 
 

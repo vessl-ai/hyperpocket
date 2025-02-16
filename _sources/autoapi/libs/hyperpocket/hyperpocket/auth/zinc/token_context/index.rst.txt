@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.zinc.token_context
+====================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.zinc.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.zinc.token_context.ZincTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: ZincTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.zinc.context.ZincAuthContext`
+
+
+   .. py:method:: from_zinc_token_response(response: hyperpocket.auth.zinc.token_schema.ZincTokenResponse)
+      :classmethod:
+
+
+

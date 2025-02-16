@@ -361,6 +361,11 @@ Module Contents
 
 
 
+   .. py:attribute:: ZINC
+      :value: 'zinc'
+
+
+
    .. py:attribute:: SEMANTIC_SCHOLAR
       :value: 'semantic_scholar'
 

@@ -7,16 +7,16 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>libs.hyperpocket.hyperpocket.server.auth | Hyperpocket  documentation</title>
-<meta content="libs.hyperpocket.hyperpocket.server.auth | Hyperpocket  documentation" property="og:title"/>
-<meta content="libs.hyperpocket.hyperpocket.server.auth | Hyperpocket  documentation" name="twitter:title"/>
+<title>libs.hyperpocket.hyperpocket.auth.zinc | Hyperpocket  documentation</title>
+<meta content="libs.hyperpocket.hyperpocket.auth.zinc | Hyperpocket  documentation" property="og:title"/>
+<meta content="libs.hyperpocket.hyperpocket.auth.zinc | Hyperpocket  documentation" name="twitter:title"/>
 <link href="../../../../../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../_static/graphviz.css?v=4ae1632d" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../search.html" rel="search" title="Search"/>
 <link href="../../../../../../genindex.html" rel="index" title="Index"/>
-<link href="activeloop/index.html" rel="next" title="libs.hyperpocket.hyperpocket.server.auth.activeloop"/>
-<link href="../index.html" rel="prev" title="libs.hyperpocket.hyperpocket.server"/>
+<link href="context/index.html" rel="next" title="libs.hyperpocket.hyperpocket.auth.zinc.context"/>
+<link href="../x/oauth2_schema/index.html" rel="prev" title="libs.hyperpocket.hyperpocket.auth.x.oauth2_schema"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -129,125 +129,28 @@
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../../../index.html">libs</a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../../index.html">libs.hyperpocket</a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../index.html">libs.hyperpocket.hyperpocket</a>
-<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">libs.hyperpocket.hyperpocket.server</a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">libs.hyperpocket.hyperpocket.server.auth</span>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">libs.hyperpocket.hyperpocket.auth</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">libs.hyperpocket.hyperpocket.auth.zinc</span>
 </nav>
 <div id="content" role="main">
-<section id="module-libs.hyperpocket.hyperpocket.server.auth">
-<span id="libs-hyperpocket-hyperpocket-server-auth"></span><h1>libs.hyperpocket.hyperpocket.server.auth<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.server.auth" title="Link to this heading"><span>#</span></a></h1>
+<section id="module-libs.hyperpocket.hyperpocket.auth.zinc">
+<span id="libs-hyperpocket-hyperpocket-auth-zinc"></span><h1>libs.hyperpocket.hyperpocket.auth.zinc<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.auth.zinc" title="Link to this heading"><span>#</span></a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#submodules'"><span>#</span></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="activeloop/index.html">libs.hyperpocket.hyperpocket.server.auth.activeloop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="adobe/index.html">libs.hyperpocket.hyperpocket.server.auth.adobe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="affinity/index.html">libs.hyperpocket.hyperpocket.server.auth.affinity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="agentql/index.html">libs.hyperpocket.hyperpocket.server.auth.agentql</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ahrefs/index.html">libs.hyperpocket.hyperpocket.server.auth.ahrefs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="airtable/index.html">libs.hyperpocket.hyperpocket.server.auth.airtable</a></li>
-<li class="toctree-l1"><a class="reference internal" href="alchemy/index.html">libs.hyperpocket.hyperpocket.server.auth.alchemy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="altoviz/index.html">libs.hyperpocket.hyperpocket.server.auth.altoviz</a></li>
-<li class="toctree-l1"><a class="reference internal" href="apitoken/index.html">libs.hyperpocket.hyperpocket.server.auth.apitoken</a></li>
-<li class="toctree-l1"><a class="reference internal" href="asana/index.html">libs.hyperpocket.hyperpocket.server.auth.asana</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bamboohr/index.html">libs.hyperpocket.hyperpocket.server.auth.bamboohr</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bitbucket/index.html">libs.hyperpocket.hyperpocket.server.auth.bitbucket</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bitwarden/index.html">libs.hyperpocket.hyperpocket.server.auth.bitwarden</a></li>
-<li class="toctree-l1"><a class="reference internal" href="brevo/index.html">libs.hyperpocket.hyperpocket.server.auth.brevo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="brex/index.html">libs.hyperpocket.hyperpocket.server.auth.brex</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cal/index.html">libs.hyperpocket.hyperpocket.server.auth.cal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="calendly/index.html">libs.hyperpocket.hyperpocket.server.auth.calendly</a></li>
-<li class="toctree-l1"><a class="reference internal" href="canvas/index.html">libs.hyperpocket.hyperpocket.server.auth.canvas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="clickup/index.html">libs.hyperpocket.hyperpocket.server.auth.clickup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloudflare/index.html">libs.hyperpocket.hyperpocket.server.auth.cloudflare</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dailybot/index.html">libs.hyperpocket.hyperpocket.server.auth.dailybot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datadog/index.html">libs.hyperpocket.hyperpocket.server.auth.datadog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord/index.html">libs.hyperpocket.hyperpocket.server.auth.discord</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discordbot/index.html">libs.hyperpocket.hyperpocket.server.auth.discordbot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="elevenlabs/index.html">libs.hyperpocket.hyperpocket.server.auth.elevenlabs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="exa/index.html">libs.hyperpocket.hyperpocket.server.auth.exa</a></li>
-<li class="toctree-l1"><a class="reference internal" href="facebook/index.html">libs.hyperpocket.hyperpocket.server.auth.facebook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="finage/index.html">libs.hyperpocket.hyperpocket.server.auth.finage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="github/index.html">libs.hyperpocket.hyperpocket.server.auth.github</a></li>
-<li class="toctree-l1"><a class="reference internal" href="google/index.html">libs.hyperpocket.hyperpocket.server.auth.google</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gumloop/index.html">libs.hyperpocket.hyperpocket.server.auth.gumloop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="happyrobot/index.html">libs.hyperpocket.hyperpocket.server.auth.happyrobot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="heygen/index.html">libs.hyperpocket.hyperpocket.server.auth.heygen</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hubspot/index.html">libs.hyperpocket.hyperpocket.server.auth.hubspot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jira/index.html">libs.hyperpocket.hyperpocket.server.auth.jira</a></li>
-<li class="toctree-l1"><a class="reference internal" href="klaviyo/index.html">libs.hyperpocket.hyperpocket.server.auth.klaviyo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lever/index.html">libs.hyperpocket.hyperpocket.server.auth.lever</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lever_sandbox/index.html">libs.hyperpocket.hyperpocket.server.auth.lever_sandbox</a></li>
-<li class="toctree-l1"><a class="reference internal" href="linear/index.html">libs.hyperpocket.hyperpocket.server.auth.linear</a></li>
-<li class="toctree-l1"><a class="reference internal" href="linkedin/index.html">libs.hyperpocket.hyperpocket.server.auth.linkedin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="listennotes/index.html">libs.hyperpocket.hyperpocket.server.auth.listennotes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mailchimp/index.html">libs.hyperpocket.hyperpocket.server.auth.mailchimp</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mem0/index.html">libs.hyperpocket.hyperpocket.server.auth.mem0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="microsoft_clarity/index.html">libs.hyperpocket.hyperpocket.server.auth.microsoft_clarity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="neon/index.html">libs.hyperpocket.hyperpocket.server.auth.neon</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ngrok/index.html">libs.hyperpocket.hyperpocket.server.auth.ngrok</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notion/index.html">libs.hyperpocket.hyperpocket.server.auth.notion</a></li>
-<li class="toctree-l1"><a class="reference internal" href="oncehub/index.html">libs.hyperpocket.hyperpocket.server.auth.oncehub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pagerduty/index.html">libs.hyperpocket.hyperpocket.server.auth.pagerduty</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pandadoc/index.html">libs.hyperpocket.hyperpocket.server.auth.pandadoc</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pipedrive/index.html">libs.hyperpocket.hyperpocket.server.auth.pipedrive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="posthog/index.html">libs.hyperpocket.hyperpocket.server.auth.posthog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ravenseotools/index.html">libs.hyperpocket.hyperpocket.server.auth.ravenseotools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reddit/index.html">libs.hyperpocket.hyperpocket.server.auth.reddit</a></li>
-<li class="toctree-l1"><a class="reference internal" href="salesforce/index.html">libs.hyperpocket.hyperpocket.server.auth.salesforce</a></li>
-<li class="toctree-l1"><a class="reference internal" href="semantic_scholar/index.html">libs.hyperpocket.hyperpocket.server.auth.semantic_scholar</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sendgrid/index.html">libs.hyperpocket.hyperpocket.server.auth.sendgrid</a></li>
-<li class="toctree-l1"><a class="reference internal" href="serpapi/index.html">libs.hyperpocket.hyperpocket.server.auth.serpapi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slack/index.html">libs.hyperpocket.hyperpocket.server.auth.slack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spotify/index.html">libs.hyperpocket.hyperpocket.server.auth.spotify</a></li>
-<li class="toctree-l1"><a class="reference internal" href="stripe/index.html">libs.hyperpocket.hyperpocket.server.auth.stripe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supabase/index.html">libs.hyperpocket.hyperpocket.server.auth.supabase</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tavily/index.html">libs.hyperpocket.hyperpocket.server.auth.tavily</a></li>
-<li class="toctree-l1"><a class="reference internal" href="timekit/index.html">libs.hyperpocket.hyperpocket.server.auth.timekit</a></li>
-<li class="toctree-l1"><a class="reference internal" href="token/index.html">libs.hyperpocket.hyperpocket.server.auth.token</a></li>
-<li class="toctree-l1"><a class="reference internal" href="trello/index.html">libs.hyperpocket.hyperpocket.server.auth.trello</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wandb/index.html">libs.hyperpocket.hyperpocket.server.auth.wandb</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workiom/index.html">libs.hyperpocket.hyperpocket.server.auth.workiom</a></li>
-<li class="toctree-l1"><a class="reference internal" href="x/index.html">libs.hyperpocket.hyperpocket.server.auth.x</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zinc/index.html">libs.hyperpocket.hyperpocket.server.auth.zinc</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zoom/index.html">libs.hyperpocket.hyperpocket.server.auth.zoom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context/index.html">libs.hyperpocket.hyperpocket.auth.zinc.context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="token_context/index.html">libs.hyperpocket.hyperpocket.auth.zinc.token_context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="token_handler/index.html">libs.hyperpocket.hyperpocket.auth.zinc.token_handler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="token_schema/index.html">libs.hyperpocket.hyperpocket.auth.zinc.token_schema</a></li>
 </ul>
 </div>
-</section>
-<section id="attributes">
-<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#attributes'"><span>#</span></a></h2>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.auth_router" title="libs.hyperpocket.hyperpocket.server.auth.auth_router"><code class="xref py py-obj docutils literal notranslate"><span class="pre">auth_router</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.routers" title="libs.hyperpocket.hyperpocket.server.auth.routers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">routers</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="package-contents">
-<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#package-contents'"><span>#</span></a></h2>
-<dl class="py data">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.auth.auth_router">
-<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.auth.</span></span><span class="sig-name descname"><span class="pre">auth_router</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.auth.auth_router" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.server.auth.auth_router'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py data">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.server.auth.routers">
-<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.server.auth.</span></span><span class="sig-name descname"><span class="pre">routers</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.server.auth.routers" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.server.auth.routers'"><span>#</span></a></dt>
-<dd></dd></dl>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#submodules'" class="reference internal" href="#submodules">Submodules</a></li>
-<li><a :data-current="activeSection === '#attributes'" class="reference internal" href="#attributes">Attributes</a></li>
-<li><a :data-current="activeSection === '#package-contents'" class="reference internal" href="#package-contents">Package Contents</a><ul>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.server.auth.auth_router'" class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.auth_router"><code class="docutils literal notranslate"><span class="pre">auth_router</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.server.auth.routers'" class="reference internal" href="#libs.hyperpocket.hyperpocket.server.auth.routers"><code class="docutils literal notranslate"><span class="pre">routers</span></code></a></li>
-</ul>
-</li>
 </ul>
 </div>
 </aside>
