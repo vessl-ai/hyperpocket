@@ -70,6 +70,7 @@ class AuthProvider(Enum):
     LINKEDIN = "linkedin"
     WANDB = "wandb"
     APITOKEN = "apitoken"
+    ZINC = "zinc"
     SEMANTIC_SCHOLAR = "semantic_scholar"
 
     @classmethod

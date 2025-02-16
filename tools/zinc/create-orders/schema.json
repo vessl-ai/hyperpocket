@@ -1,0 +1,305 @@
+{
+    "properties": {
+        "retailer": {
+            "description": "The retailer code of the supported retailer",
+            "title": "Retailer",
+            "type": "string"
+        },
+        "products": {
+            "description": "A list of product objects that should be ordered",
+            "items": {},
+            "title": "Products",
+            "type": "array"
+        },
+        "shipping_address": {
+            "properties": {
+                "first_name": {
+                    "description": "The first name of the addressee",
+                    "title": "First Name",
+                    "type": "string"
+                },
+                "last_name": {
+                    "description": "The last name of the addressee",
+                    "title": "Last Name",
+                    "type": "string"
+                },
+                "address_line1": {
+                    "description": "The house number and street name",
+                    "title": "Address Line1",
+                    "type": "string"
+                },
+                "address_line2": {
+                    "description": "The suite, post office box, or apartment number (optional)",
+                    "title": "Address Line2",
+                    "type": "string"
+                },
+                "zip_code": {
+                    "description": "The zip code of the address",
+                    "title": "Zip Code",
+                    "type": "string"
+                },
+                "city": {
+                    "description": "The city of the address",
+                    "title": "City",
+                    "type": "string"
+                },
+                "state": {
+                    "description": "The USPS abbreviation for the state of the address (e.g. AK)",
+                    "title": "State",
+                    "type": "string"
+                },
+                "country": {
+                    "description": "The ISO abbreviation for the country of the address (e.g. US). A list of all available two-letter country codes can be found here.",
+                    "title": "Country",
+                    "type": "string"
+                },
+                "phone_number": {
+                    "description": "The phone number associated with the address",
+                    "title": "Phone Number",
+                    "type": "string"
+                },
+                "instructions": {
+                    "description": "Optional instructions to include with the shipping addresses",
+                    "title": "Instructions",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "first_name",
+                "last_name",
+                "address_line1",
+                "address_line2",
+                "zip_code",
+                "city",
+                "state",
+                "country",
+                "phone_number",
+                "instructions"
+            ],
+            "title": "AddressObject",
+            "type": "object",
+            "description": "An address object to which the order will be delivered"
+        },
+        "shipping_method": {
+            "description": "The desired shipping method for the object. Available methods are cheapest, fastest, amazon_day, or free. You must provide either this or the shipping attribute, but not both.",
+            "title": "Shipping Method",
+            "type": "string"
+        },
+        "shipping": {
+            "properties": {
+                "order_by": {
+                    "description": "The ordering of available shipping methods that meet the desired criteria. Available values are price or speed. If ordering by price, then the Zinc API will choose the cheapest shipping method that meets the desired criteria, while speed will choose the fastest shipping method meeting the criteria.",
+                    "title": "Order By",
+                    "type": "string"
+                },
+                "max_days": {
+                    "description": "The maximum number of days allowed for shipping on the order.",
+                    "title": "Max Days",
+                    "type": "integer"
+                },
+                "max_price": {
+                    "description": "The maximum price in cents allowed for the shipping cost of the order.",
+                    "title": "Max Price",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "order_by",
+                "max_days",
+                "max_price"
+            ],
+            "title": "ShippingObject",
+            "type": "object",
+            "description": "A shipping object with information as to which shipping method to use. You must provide either this or the shipping_method attribute, but not both."
+        },
+        "billing_address": {
+            "properties": {
+                "first_name": {
+                    "description": "The first name of the addressee",
+                    "title": "First Name",
+                    "type": "string"
+                },
+                "last_name": {
+                    "description": "The last name of the addressee",
+                    "title": "Last Name",
+                    "type": "string"
+                },
+                "address_line1": {
+                    "description": "The house number and street name",
+                    "title": "Address Line1",
+                    "type": "string"
+                },
+                "address_line2": {
+                    "description": "The suite, post office box, or apartment number (optional)",
+                    "title": "Address Line2",
+                    "type": "string"
+                },
+                "zip_code": {
+                    "description": "The zip code of the address",
+                    "title": "Zip Code",
+                    "type": "string"
+                },
+                "city": {
+                    "description": "The city of the address",
+                    "title": "City",
+                    "type": "string"
+                },
+                "state": {
+                    "description": "The USPS abbreviation for the state of the address (e.g. AK)",
+                    "title": "State",
+                    "type": "string"
+                },
+                "country": {
+                    "description": "The ISO abbreviation for the country of the address (e.g. US). A list of all available two-letter country codes can be found here.",
+                    "title": "Country",
+                    "type": "string"
+                },
+                "phone_number": {
+                    "description": "The phone number associated with the address",
+                    "title": "Phone Number",
+                    "type": "string"
+                },
+                "instructions": {
+                    "description": "Optional instructions to include with the shipping addresses",
+                    "title": "Instructions",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "first_name",
+                "last_name",
+                "address_line1",
+                "address_line2",
+                "zip_code",
+                "city",
+                "state",
+                "country",
+                "phone_number",
+                "instructions"
+            ],
+            "title": "AddressObject",
+            "type": "object",
+            "description": "An address object for the person associated with the credit card"
+        },
+        "payment_method": {
+            "properties": {
+                "name_on_card": {
+                    "description": "The full name on the credit/debit card",
+                    "title": "Name On Card",
+                    "type": "string"
+                },
+                "number": {
+                    "description": "The credit/debit card number",
+                    "title": "Number",
+                    "type": "string"
+                },
+                "security_code": {
+                    "description": "The card verification value on the back of the credit/debit card",
+                    "title": "Security Code",
+                    "type": "string"
+                },
+                "expiration_month": {
+                    "description": "The month of the expiration of the card (e.g. January is 1, February is 2)",
+                    "title": "Expiration Month",
+                    "type": "integer"
+                },
+                "expiration_year": {
+                    "description": "The year of the expiration of the card (e.g. 2016)",
+                    "title": "Expiration Year",
+                    "type": "integer"
+                },
+                "use_gift": {
+                    "description": "Whether or not to use the gift balance on the retailer account. If true, then the gift balance will be used for payment. Only works for retailers which support gift balance (Amazon and Walmart).",
+                    "title": "Use Gift",
+                    "type": "boolean"
+                },
+                "use_account_payment_defaults": {
+                    "description": "Overrides all other payment_method options and uses the default payment configuration on the account. Only applies to Amazon orders.",
+                    "title": "Use Account Payment Defaults",
+                    "type": "boolean"
+                },
+                "is_virtual_card": {
+                    "description": "Whether or not to check the 'Virtual or one-time-use' checkbox when adding the card. Only applies to Amazon orders.",
+                    "title": "Is Virtual Card",
+                    "type": "boolean"
+                },
+                "reuse": {
+                    "description": "If true, will skip entering credit card if it is already present and we aren't prompted for it. Only applies to Amazon orders.",
+                    "title": "Reuse",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "name_on_card",
+                "number",
+                "security_code",
+                "expiration_month",
+                "expiration_year",
+                "use_gift",
+                "use_account_payment_defaults",
+                "is_virtual_card",
+                "reuse"
+            ],
+            "title": "PaymentMethodObject",
+            "type": "object",
+            "description": "A payment method object containing payment information for the order"
+        },
+        "retailer_credentials": {
+            "properties": {
+                "email": {
+                    "description": "The email for the retailer account",
+                    "title": "Email",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "The password for the retailer account",
+                    "title": "Password",
+                    "type": "string"
+                },
+                "verification_code": {
+                    "description": "(Optional) The verification code required by the retailer for logging in. Only required in cases where the retailer prevents a login with an account_locked_verification_required error code.",
+                    "title": "Verification Code",
+                    "type": "string"
+                },
+                "totp_2fa_key": {
+                    "description": "(Optional) The secret key used for two factor authentication. If you have two factor authentication enabled, you must provide this key. You can find the 64 digit Amazon key by enabling two factor authentication and clicking on the 'Can't scan the barcode?' link. Note: This is not the 6 digit time based code.",
+                    "title": "Totp 2Fa Key",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "email",
+                "password",
+                "verification_code",
+                "totp_2fa_key"
+            ],
+            "title": "RetailerCredentialsObject",
+            "type": "object",
+            "description": "A retailer credentials object for logging into the retailer with a preexisting account"
+        },
+        "is_gift": {
+            "description": "Whether or not this order should be placed as a gift. Typically, retailers will exclude the price of the items on the receipt if this is set.",
+            "title": "Is Gift",
+            "type": "boolean"
+        },
+        "max_price": {
+            "description": "The maximum price in cents for the order. If the final price exceeds this number, the order will not go through and will return a max_price_exceeded error.",
+            "title": "Max Price",
+            "type": "number"
+        }
+    },
+    "required": [
+        "retailer",
+        "products",
+        "shipping_address",
+        "shipping_method",
+        "shipping",
+        "billing_address",
+        "payment_method",
+        "retailer_credentials",
+        "is_gift",
+        "max_price"
+    ],
+    "title": "CreateOrdersRequest",
+    "type": "object"
+}
