@@ -1,6 +1,6 @@
 ## Langchain extensions
 
-### Biding Pocket Tools
+### Binding Pocket Tools
 
 ```python
 from langchain_openai import ChatOpenAI

@@ -1,0 +1,14 @@
+[project]
+name = "langchain-gemini"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "hyperpocket-langchain",
+    "langchain-community>=0.3.17",
+    "langchain-google-genai>=2.0.9",
+]
+
+[tool.uv.sources]
+hyperpocket-langchain = { path = "../../../libs/extensions/langchain", editable = true }
