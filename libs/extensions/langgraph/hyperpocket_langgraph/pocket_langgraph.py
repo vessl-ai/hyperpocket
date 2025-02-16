@@ -1,10 +1,11 @@
 import copy
+import json
 from typing import Optional
 
-from hyperpocket.config import pocket_logger
 from langchain_core.runnables import RunnableConfig
 from langgraph.errors import NodeInterrupt
-from pydantic import BaseModel
+
+from hyperpocket.config import pocket_logger
 
 try:
     from langchain_core.messages import ToolMessage
@@ -66,9 +67,6 @@ class PocketLanggraph(Pocket):
                     body = tool_args
                     profile = "default"
 
-                if isinstance(body, BaseModel):
-                    body = body.model_dump()
-
                 prepare = await self.prepare_in_subprocess(
                     tool_name, body=body, thread_id=thread_id, profile=profile
                 )
@@ -122,8 +120,8 @@ class PocketLanggraph(Pocket):
                     body = tool_args
                     profile = "default"
 
-                if isinstance(body, BaseModel):
-                    body = body.model_dump()
+                if isinstance(body, str):
+                    body = json.loads(body)
 
                 try:
                     auth = await self.authenticate_in_subprocess(
@@ -185,8 +183,8 @@ class PocketLanggraph(Pocket):
                 thread_id = "default"
                 profile = "default"
 
-            if isinstance(body, BaseModel):
-                body = body.model_dump()
+            if isinstance(body, str):
+                body = json.loads(body)
 
             result, interrupted = self.invoke_with_state(
                 pocket_tool.name, body, thread_id, profile, **kwargs
@@ -206,8 +204,8 @@ class PocketLanggraph(Pocket):
                 thread_id = "default"
                 profile = "default"
 
-            if isinstance(body, BaseModel):
-                body = body.model_dump()
+            if isinstance(body, str):
+                body = json.loads(body)
 
             result, interrupted = await self.ainvoke_with_state(
                 pocket_tool.name, body, thread_id, profile, **kwargs
