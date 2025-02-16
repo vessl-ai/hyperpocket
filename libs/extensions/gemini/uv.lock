@@ -379,7 +379,7 @@ wheels = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.3.4"
+version = "0.3.6"
 source = { editable = "../../hyperpocket" }
 dependencies = [
     { name = "click" },
@@ -427,7 +427,7 @@ dev = [
 
 [[package]]
 name = "hyperpocket-gemini"
-version = "0.1.0"
+version = "0.3.6"
 source = { editable = "." }
 dependencies = [
     { name = "google-genai" },
@@ -442,7 +442,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "google-genai", specifier = ">=1.2.0" },
+    { name = "google-genai", specifier = ">=1.0.0" },
     { name = "hyperpocket", editable = "../../hyperpocket" },
 ]
 

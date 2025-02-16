@@ -400,7 +400,7 @@ wheels = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.0.3"
+version = "0.3.6"
 source = { editable = "../../../libs/hyperpocket" }
 dependencies = [
     { name = "click" },
@@ -442,12 +442,13 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "pytest", specifier = ">=8.3.4" },
+    { name = "pytest-cov", specifier = ">=6.0.0" },
     { name = "ruff", specifier = ">=0.8.6" },
 ]
 
 [[package]]
 name = "hyperpocket-langgraph"
-version = "0.0.1"
+version = "0.3.6"
 source = { editable = "../../../libs/extensions/langgraph" }
 dependencies = [
     { name = "hyperpocket" },
@@ -457,7 +458,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "hyperpocket", editable = "../../../libs/hyperpocket" },
-    { name = "langgraph", specifier = ">=0.2.59" },
+    { name = "langgraph", specifier = ">=0.2.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -465,6 +466,7 @@ dev = [
     { name = "pytest", specifier = ">=8.3.4" },
     { name = "ruff", specifier = ">=0.8.6" },
 ]
+test = [{ name = "langchain-openai", specifier = ">=0.3.1" }]
 
 [[package]]
 name = "idna"
@@ -1304,7 +1306,6 @@ source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
     { name = "httpx" },
-    { name = "hyperpocket" },
     { name = "hyperpocket-langgraph" },
     { name = "langchain-openai" },
     { name = "langgraph" },
@@ -1317,7 +1318,6 @@ dependencies = [
 requires-dist = [
     { name = "fastapi", specifier = ">=0.115.6" },
     { name = "httpx", specifier = ">=0.27.0" },
-    { name = "hyperpocket", editable = "../../../libs/hyperpocket" },
     { name = "hyperpocket-langgraph", editable = "../../../libs/extensions/langgraph" },
     { name = "langchain-openai", specifier = ">=0.3.1" },
     { name = "langgraph", specifier = ">=0.2.65" },

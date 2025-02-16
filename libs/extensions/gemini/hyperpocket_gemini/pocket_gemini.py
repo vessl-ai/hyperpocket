@@ -4,11 +4,10 @@ from typing import List, Optional
 
 from google.genai import types
 from google.genai.types import FunctionCall, Tool as GeminiTool
-from pydantic import BaseModel
+from hyperpocket_gemini.util.tool_to_gemini_spec import tool_to_gemini_spec
 
 from hyperpocket import Pocket
 from hyperpocket.tool import Tool
-from hyperpocket_gemini.util.tool_to_gemini_spec import tool_to_gemini_spec
 
 
 class PocketGemini(Pocket):
@@ -32,8 +31,8 @@ class PocketGemini(Pocket):
             thread_id = "default"
             profile = "default"
 
-        if isinstance(body, BaseModel):
-            body = body.model_dump()
+        if isinstance(body, str):
+            body = json.loads(body)
 
         try:
             response = {'result': await super().ainvoke(

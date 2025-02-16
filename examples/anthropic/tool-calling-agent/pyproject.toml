@@ -6,11 +6,9 @@ authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "hyperpocket>=0.0.3",
-    "hyperpocket_anthropic>=0.0.3",
     "anthropic>=0.43.1",
+    "hyperpocket-anthropic",
 ]
 
 [tool.uv.sources]
-hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
-hyperpocket_anthropic = { path = "../../../libs/extensions/anthropic", editable = true }
+hyperpocket-anthropic = { path = "../../../libs/extensions/anthropic", editable = true }

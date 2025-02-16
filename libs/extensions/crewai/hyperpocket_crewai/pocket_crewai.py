@@ -1,9 +1,9 @@
 import asyncio
+import json
 from typing import List, Optional
 
 from crewai.tools import BaseTool
 from crewai.tools.base_tool import Tool
-from pydantic import BaseModel
 
 from hyperpocket import Pocket
 from hyperpocket.tool import Tool as HyperpocketTool
@@ -44,8 +44,8 @@ class PocketCrewAI(Pocket):
                 thread_id = "default"
                 profile = "default"
 
-            if isinstance(body, BaseModel):
-                body = body.model_dump()
+            if isinstance(body, str):
+                body = json.loads(body)
 
             result, interrupted = self.invoke_with_state(pocket_tool.name, body=body, thread_id=thread_id,
                                                          profile=profile)
