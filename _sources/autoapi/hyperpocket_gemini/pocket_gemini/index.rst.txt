@@ -1,0 +1,37 @@
+hyperpocket_gemini.pocket_gemini
+================================
+
+.. py:module:: hyperpocket_gemini.pocket_gemini
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperpocket_gemini.pocket_gemini.PocketGemini
+
+
+Module Contents
+---------------
+
+.. py:class:: PocketGemini
+
+   Bases: :py:obj:`hyperpocket.Pocket`
+
+
+   .. py:method:: invoke(tool_call: google.genai.types.FunctionCall, **kwargs)
+
+
+   .. py:method:: ainvoke(tool_call: google.genai.types.FunctionCall, **kwargs)
+      :async:
+
+
+
+   .. py:method:: get_gemini_tool_specs(use_profile: Optional[bool] = None) -> List[google.genai.types.Tool]
+
+
+   .. py:method:: get_gemini_tool_spec(tool: hyperpocket.tool.Tool) -> google.genai.types.Tool
+
+

@@ -1,0 +1,20 @@
+hyperpocket_gemini.util.tool_to_gemini_spec
+===========================================
+
+.. py:module:: hyperpocket_gemini.util.tool_to_gemini_spec
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   hyperpocket_gemini.util.tool_to_gemini_spec.tool_to_gemini_spec
+
+
+Module Contents
+---------------
+
+.. py:function:: tool_to_gemini_spec(tool: hyperpocket.tool.Tool, use_profile: bool) -> google.genai.types.Tool
+
