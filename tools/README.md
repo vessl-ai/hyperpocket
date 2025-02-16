@@ -182,6 +182,17 @@
     - Get my user data
     - Auth: x (scopes: tweet.read, users.read)
 
+### Semantic Scholars
+
+- **[semantic_scholars_get_graph_get_paper](semantic_scholar/get-graph-get-paper)**
+- **[semantic_scholars_get_graph_paper_relevance_search](semantic_scholar/get-graph-paper-relevance-search)**
+
+### Zinc
+
+- **[zinc_create_orders](zinc/create-orders)**
+    - Create Zinc Orders
+    - Auth: zinc
+
 ### No Auth Required
 
 - **[simple_echo_text](none/simple-echo-tool)**
