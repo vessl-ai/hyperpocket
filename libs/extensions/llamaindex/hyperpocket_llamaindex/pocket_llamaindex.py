@@ -1,6 +1,5 @@
+import json
 from typing import List, Optional
-
-from pydantic import BaseModel
 
 try:
     from llama_index.core.tools import BaseTool, FunctionTool, ToolMetadata
@@ -30,8 +29,8 @@ class PocketLlamaindex(Pocket):
                 thread_id = "default"
                 profile = "default"
 
-            if isinstance(body, BaseModel):
-                body = body.model_dump()
+            if isinstance(body, str):
+                body = json.loads(body)
 
             result, interrupted = self.invoke_with_state(
                 pocket_tool.name,
@@ -55,8 +54,8 @@ class PocketLlamaindex(Pocket):
                 thread_id = "default"
                 profile = "default"
 
-            if isinstance(body, BaseModel):
-                body = body.model_dump()
+            if isinstance(body, str):
+                body = json.loads(body)
 
             result, interrupted = await self.ainvoke_with_state(
                 pocket_tool.name,
