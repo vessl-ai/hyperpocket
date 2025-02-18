@@ -30,6 +30,7 @@ jobs:
     steps:
       - name: Check if version already exists
         run: |
+          VERSION=${{ steps.version.outputs.full_without_prefix}}
           echo "Checking if version $VERSION already exists for all packages..."
 
           # Define package names
@@ -89,6 +90,7 @@ jobs:
       # 5. Update Version
       - name: Update version in all packages
         run: |
+          VERSION=${{ steps.version.outputs.full_without_prefix}}
           echo "Updating version to $VERSION"
           
           PYTHON_COMMAND=$(which python)
@@ -224,6 +226,7 @@ jobs:
       # Check if publishing succeeded
       - name: Check if version uploaded successfully
         run: |
+          VERSION=${{ steps.version.outputs.full_without_prefix}}
           echo "Checking if version $VERSION uploaded successfully for all packages..."
           
           PACKAGES=(
