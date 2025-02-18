@@ -55,27 +55,23 @@ class FunctionTool(Tool):
         # binding args
         binding_args = {}
         if self.func.__dict__.get("__model__") is not None:
-            # when a function signature is not inferrable from the function itself
+            # when a function signature is not inferrable from the function itself\
+            # @moon: which case?
             binding_args = args.copy()
             binding_args |= _kwargs.get("envs", {}) | self.tool_vars
         else:
             sig = inspect.signature(self.func)
-            for param_name, param in sig.parameters.items():
-                if param_name not in args:
-                    continue
+            is_kwargs_existing = any([param.kind == param.VAR_KEYWORD for param in sig.parameters.values()])
 
-                if param.kind == param.VAR_KEYWORD:
-                    # var keyword args should be passed by plain dict
-                    binding_args |= args[param_name]
-                    binding_args |= _kwargs.get("envs", {}) | self.tool_vars
-
-                    if "envs" in _kwargs:
-                        _kwargs.pop("envs")
-
-                    binding_args |= _kwargs  # add other kwargs
-                    continue
-
-                binding_args[param_name] = args[param_name]
+            # if kwargs exist in function, we don't get binding all args one by one.
+            # just put all the values into binding_args in order of priority.
+            if is_kwargs_existing:
+                binding_args |= args | _kwargs.pop("envs", {}) | _kwargs | self.tool_vars
+            else:
+                # but kwargs don't exist in function, we should bind all the values one by one.
+                for param_name, parma in sig.parameters.items():
+                    if param_name in args:
+                        binding_args[param_name] = args[param_name]
 
         return binding_args
 
@@ -89,11 +85,11 @@ class FunctionTool(Tool):
 
     @classmethod
     def from_func(
-        cls,
-        func: Callable | "FunctionTool",
-        afunc: Callable[..., Coroutine[Any, Any, str]] | "FunctionTool" = None,
-        auth: Optional[ToolAuth] = None,
-        tool_vars: dict[str, str] = None,
+            cls,
+            func: Callable | "FunctionTool",
+            afunc: Callable[..., Coroutine[Any, Any, str]] | "FunctionTool" = None,
+            auth: Optional[ToolAuth] = None,
+            tool_vars: dict[str, str] = None,
     ) -> "FunctionTool":
         if tool_vars is None:
             tool_vars = dict()
@@ -124,9 +120,9 @@ class FunctionTool(Tool):
 
     @classmethod
     def from_dock(
-        cls,
-        dock: list[Callable[..., str]],
-        tool_vars: Optional[dict[str, str]] = None,
+            cls,
+            dock: list[Callable[..., str]],
+            tool_vars: Optional[dict[str, str]] = None,
     ) -> list["FunctionTool"]:
         if tool_vars is None:
             tool_vars = dict()
@@ -155,7 +151,7 @@ class FunctionTool(Tool):
                         argument_json_schema=argument_json_schema,
                         auth=auth,
                         default_tool_vars=(
-                            tool_vars | func.__dict__.get("__vars__", {})
+                                tool_vars | func.__dict__.get("__vars__", {})
                         ),
                     )
                 )
@@ -169,7 +165,7 @@ class FunctionTool(Tool):
                         argument_json_schema=argument_json_schema,
                         auth=auth,
                         default_tool_vars=(
-                            tool_vars | func.__dict__.get("__vars__", {})
+                                tool_vars | func.__dict__.get("__vars__", {})
                         ),
                     )
                 )

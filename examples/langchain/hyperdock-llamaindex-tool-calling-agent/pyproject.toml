@@ -1,0 +1,19 @@
+[project]
+name = "hyperdock-llamaindex-tool-calling-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "hyperdock-llamaindex",
+    "hyperpocket-langchain",
+    "langchain>=0.3.17",
+    "langchain-core>=0.3.33",
+    "langchain-openai>=0.3.3",
+    "llama-index-tools-duckduckgo>=0.3.0",
+    "llama-index-tools-yahoo-finance>=0.3.0",
+]
+
+[tool.uv.sources]
+hyperdock-llamaindex = { path = "../../../libs/docks/hyperdock-llamaindex", editable = true }
+hyperpocket-langchain = { path = "../../../libs/extensions/langchain", editable = true }
