@@ -8,16 +8,21 @@ jobs:
   extract-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Extract version from tag
-        id: extract_version
+      - uses: nowsprinting/check-version-format-action@v3
+        name: extract version
+        id: version
+        with:
+          prefix: 'v'
+
+      - name: export to env
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
+          VERSION=${{ steps.version.outputs.full_without_prefix}}
+          echo "Version: $VERSION"
           if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Error: Tag name is not in the correct format. Expected format: v<MAJOR>.<MINOR>.<PATCH>"
             exit 1
           fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-
   check-version-before:
     runs-on: ubuntu-latest
     needs: extract-version
