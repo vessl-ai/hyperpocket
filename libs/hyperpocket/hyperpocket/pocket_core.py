@@ -45,8 +45,8 @@ class PocketCore:
         self.auth = auth
 
         # filter strs out first and register the tools to default dock
-        str_tool_likes = [tool for tool in tools if isinstance(tool, str)]
-        function_tool_likes = [tool for tool in tools if not isinstance(tool, str) and not isinstance(tool, Dock)]
+        str_tool_likes = [tool for tool in tools if (isinstance(tool, str) or isinstance(tool, tuple))]
+        function_tool_likes = [tool for tool in tools if (not isinstance(tool, str) and not isinstance(tool, Dock) and not isinstance(tool, tuple))]
         # especially, docks are maintained by core
         self.docks = [dock for dock in tools if isinstance(dock, Dock)]
         

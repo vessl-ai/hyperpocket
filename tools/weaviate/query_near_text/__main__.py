@@ -15,7 +15,7 @@ class QueryNearTextRequest(BaseModel):
 
 def query_near_text(req: QueryNearTextRequest):
     WCD_URL = os.getenv('WCD_URL')
-    WCD_API_KEY = os.getenv("WCD_API_KEY")
+    WCD_API_KEY = os.getenv("WEAVIATE_TOKEN")
     openai_api_key = os.environ["OPENAI_API_KEY"]
 
     client = weaviate.connect_to_weaviate_cloud(
@@ -39,7 +39,9 @@ def query_near_text(req: QueryNearTextRequest):
 def main():
     req = json.load(sys.stdin.buffer)
     req_typed = QueryNearTextRequest.model_validate(req)
-    print(json.dumps(query_near_text(req_typed), indent=2))
+    resp = query_near_text(req_typed)
+    resp_serialized = [obj.properties for obj in resp.objects]
+    print(json.dumps(resp_serialized, indent=2))
 
 
 if __name__ == '__main__':

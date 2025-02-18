@@ -20,6 +20,10 @@ class WeaviateTokenAuthHandler(AuthHandlerInterface):
     @staticmethod
     def provider() -> AuthProvider:
         return AuthProvider.WEAVIATE
+    
+    @staticmethod
+    def provider_default() -> bool:
+        return True
 
     @staticmethod
     def recommended_scopes() -> set[str]:

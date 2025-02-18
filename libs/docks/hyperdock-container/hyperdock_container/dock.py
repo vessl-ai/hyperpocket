@@ -1,6 +1,6 @@
 import pathlib
 from concurrent.futures import ThreadPoolExecutor
-from typing import Any
+from typing import Any, Optional
 
 from hyperpocket.tool.dock import Dock
 from hyperpocket.tool.function import FunctionTool
@@ -22,19 +22,29 @@ class ContainerDock(Dock):
         self.runtime = ContainerRuntime.get_runtime_from_settings()
         self._tool_requests = []
 
-    def try_parse(self, req_like: str) -> ContainerToolRequest:
+    def try_parse(self, req_like: str, inline_tool_vars: Optional[dict] = None) -> ContainerToolRequest:
+        if inline_tool_vars is None:
+            inline_tool_vars = dict()
         if pathlib.Path(req_like).expanduser().exists():
             tool_ref = ContainerLocalToolReference(tool_path=req_like)
-            return ContainerToolRequest(tool_ref=tool_ref, rel_path="", tool_vars=self._dock_vars)
+            return ContainerToolRequest(tool_ref=tool_ref, rel_path="", tool_vars=self._dock_vars | inline_tool_vars)
         elif req_like.startswith("https://github.com"):
             base_repo_url, git_ref, rel_path = ContainerGitToolReference.parse_repo_url(req_like)
             tool_ref = ContainerGitToolReference(repository_url=base_repo_url, git_ref=git_ref)
-            return ContainerToolRequest(tool_ref=tool_ref, rel_path=rel_path, tool_vars=self._dock_vars)
+            return ContainerToolRequest(tool_ref=tool_ref, rel_path=rel_path, tool_vars=self._dock_vars | inline_tool_vars)
         raise ValueError(f"Could not parse as a ContainerToolRequest: {req_like}")
 
     def plug(self, req_like: Any, **kwargs):
         if isinstance(req_like, str):
             req = self.try_parse(req_like)
+            req.overridden_tool_vars = self._dock_vars
+            self.unique_tool_references[req.tool_ref.key()] = req.tool_ref
+            self._tool_requests.append(req)
+        elif isinstance(req_like, tuple):
+            req, vars = req_like
+            if not isinstance(req, str) or not isinstance(vars, dict):
+                raise ValueError(f"Could not parse as a ContainerToolRequest: {req_like}")
+            req = self.try_parse(req, inline_tool_vars=vars)
             self.unique_tool_references[req.tool_ref.key()] = req.tool_ref
             self._tool_requests.append(req)
         elif isinstance(req_like, ContainerToolRequest):

@@ -53,6 +53,13 @@ def agent(pocket: PocketLangchain):
 if __name__ == "__main__":
     with PocketLangchain(
         tools=[
+            # (
+            #     "https://github.com/vessl-ai/hyperpocket/tree/main/tools/weaviate/query_near_text",
+            #     {
+            #         "WCD_URL": os.getenv("WCD_URL"),
+            #         "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY"),
+            #     },
+            # ),
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",

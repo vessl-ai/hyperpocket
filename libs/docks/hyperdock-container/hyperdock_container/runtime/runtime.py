@@ -44,9 +44,6 @@ class ToolContainer(object):
                 self.base_image_tag, "/tool", self.cmd, self.envs, **self.container_args)
             return self.container_id
         except Exception as e:
-            import traceback
-            traceback.print_exc()
-            traceback.print_stack()
             raise e
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -187,9 +184,23 @@ class ContainerRuntime(abc.ABC):
             include = pocket_schema["include"]
             for inc in include:
                 inc_path = rootpath / inc
-                tools.append(self.from_single_tool_config(tool_image_tag, inc_path))
+                tools.append(
+                    self.from_single_tool_config(
+                        tool_image_tag,
+                        inc_path,
+                        overridden_tool_vars=tool_request.overridden_tool_vars,
+                        runtime_arguments=tool_request.runtime_arguments
+                    )
+                )
         else:
-            tools = [self.from_single_tool_config(tool_image_tag, pocket_schema_path)]
+            tools = [
+                self.from_single_tool_config(
+                    tool_image_tag,
+                    pocket_schema_path,
+                    overridden_tool_vars=tool_request.overridden_tool_vars,
+                    runtime_arguments=tool_request.runtime_arguments
+                )
+            ]
         return tools
 
     def from_single_tool_config(
