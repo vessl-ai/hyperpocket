@@ -1,0 +1,70 @@
+{
+  "tool": {
+    "name": "github_update_issue",
+    "description": "Update a GitHub issue",
+    "inputSchema": {
+      "properties": {
+        "owner": {
+          "description": "The account owner of the repository. The name is not case sensitive.",
+          "type": "string"
+        },
+        "repo": {
+          "description": "The name of the repository. The name is not case sensitive.",
+          "type": "string"
+        },
+        "issue_number": {
+          "description": "The number of the issue",
+          "type": "integer"
+        },
+        "title": {
+          "description": "The title of the issue",
+          "type": "string"
+        },
+        "body": {
+          "description": "The body of the issue",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state of the issue",
+          "type": "string",
+          "enum": [
+            "open",
+            "closed"
+          ]
+        },
+        "labels": {
+          "description": "The labels of the issue",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assignees": {
+          "description": "The assignees of the issue",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "issue_number"
+      ],
+      "title": "GitHubUpdateIssueRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "github",
+    "scopes": [
+      "repo"
+    ]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m update_issue"
+  }
+}

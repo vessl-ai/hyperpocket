@@ -45,7 +45,7 @@ class ContainerToolRequest(ToolRequest):
             if (language := pocket_tool_config.get("language")) is not None:
                 if lang := language.lower():
                     if lang == "python":
-                        self._base_image = "python"
+                        self._base_image = "python:3.11-slim"
                         return "python"
                     if lang == "node":
                         self._base_image = "node"

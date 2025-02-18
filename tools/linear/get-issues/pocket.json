@@ -1,0 +1,37 @@
+{
+  "tool": {
+    "name": "linear_get_issues",
+    "description": "get linear issues",
+    "inputSchema": {
+      "properties": {
+        "team": {
+          "description": "Key or name of Linear Team",
+          "type": "string"
+        },
+        "assignee": {
+          "description": "Assignee name or email of linear issue",
+          "type": "string"
+        },
+        "state": {
+          "description": "Workflow state",
+          "type": "string"
+        },
+        "title": {
+          "description": "Issue title keyword",
+          "type": "string"
+        }
+      },
+      "required": [],
+      "title": "LinearGetIssuesRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "linear"
+  },
+  "language": "node",
+  "entrypoint": {
+    "build": "npm i",
+    "run": "node main.js"
+  }
+}

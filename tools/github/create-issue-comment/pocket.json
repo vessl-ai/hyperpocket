@@ -1,0 +1,43 @@
+{
+  "tool": {
+    "name": "github_create_issue_comment",
+    "description": "Create a GitHub issue comment",
+    "inputSchema": {
+      "properties": {
+        "owner": {
+          "description": "The account owner of the repository. The name is not case sensitive.",
+          "type": "string"
+        },
+        "repo": {
+          "description": "The name of the repository. The name is not case sensitive.",
+          "type": "string"
+        },
+        "issue_number": {
+          "description": "The number that identifies the issue.",
+          "type": "integer"
+        },
+        "body": {
+          "description": "The contents of the comment.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "issue_number",
+        "body"
+      ],
+      "title": "GitHubCreateIssueCommentRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "github",
+    "scopes": ["repo"]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m create_issue_comment"
+  }
+}

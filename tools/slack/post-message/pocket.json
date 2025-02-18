@@ -1,33 +1,33 @@
 {
   "tool": {
-    "name": "slack_get_messages",
-    "description": "get slack messages",
+    "name": "slack_send_messages",
+    "description": "send a slack message",
     "inputSchema": {
       "properties": {
         "channel": {
           "title": "Channel",
           "type": "string"
         },
-        "limit": {
-          "title": "Limit",
-          "type": "integer"
+        "text": {
+          "title": "Text",
+          "type": "string"
         }
       },
       "required": [
         "channel",
-        "limit"
+        "text"
       ],
-      "title": "SlackGetMessageRequest",
+      "title": "SlackPostMessageRequest",
       "type": "object"
     }
   },
   "auth": {
     "auth_provider": "slack",
-    "scopes": ["channels:history"]
+    "scopes": ["channels:history", "chat:write"]
   },
   "language": "python",
   "entrypoint": {
     "build": "pip install .",
-    "run": "python -m get_message"
+    "run": "python -m post_message"
   }
 }

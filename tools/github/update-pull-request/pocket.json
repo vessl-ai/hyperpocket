@@ -1,0 +1,60 @@
+{
+  "tool": {
+    "name": "github_update_pull_request",
+    "description": "Update a GitHub pull request",
+    "inputSchema": {
+      "properties": {
+        "owner": {
+          "description": "The account owner of the repository. The name is not case sensitive.",
+          "type": "string"
+        },
+        "repo": {
+          "description": "The name of the repository. The name is not case sensitive.",
+          "type": "string"
+        },
+        "pull_number": {
+          "description": "The number that identifies the pull request.",
+          "type": "integer"
+        },
+        "title": {
+          "description": "The title of the pull request.",
+          "type": "string"
+        },
+        "body": {
+          "description": "The body of the pull request.",
+          "type": "string"
+        },
+        "state": {
+          "description": "State of this Pull Request. Either open or closed.",
+          "type": "string"
+        },
+        "base": {
+          "description": "The name of the branch you want your changes pulled into. This should be an existing branch on the current repository. You cannot update the base branch on a pull request to point to another repository.",
+          "type": "string"
+        },
+        "maintainer_can_modify": {
+          "description": "Indicates whether maintainers can modify the pull request.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "pull_number"
+      ],
+      "title": "GitHubUpdatePullRequestRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "github",
+    "scopes": [
+      "repo"
+    ]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m update_pull_request"
+  }
+}

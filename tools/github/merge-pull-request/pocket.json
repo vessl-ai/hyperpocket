@@ -1,0 +1,59 @@
+{
+  "tool": {
+    "name": "github_merge_pull_request",
+    "description": "Merge a GitHub pull request",
+    "inputSchema": {
+      "properties": {
+        "owner": {
+          "description": "The account owner of the repository. The name is not case sensitive.",
+          "type": "string"
+        },
+        "repo": {
+          "description": "The name of the repository. The name is not case sensitive.",
+          "type": "string"
+        },
+        "pull_number": {
+          "description": "The number of the pull request.",
+          "type": "integer"
+        },
+        "commit_title": {
+          "description": "Title for the automatic commit message.",
+          "type": "string"
+        },
+        "commit_message": {
+          "description": "Extra detail to append to automatic commit message.",
+          "type": "string"
+        },
+        "sha": {
+          "description": "SHA that pull request head must match to allow merge.",
+          "type": "string"
+        },
+        "merge_method": {
+          "description": "The merge method to use.",
+          "type": "string",
+          "enum": [
+            "merge",
+            "squash",
+            "rebase"
+          ]
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "pull_number"
+      ],
+      "title": "GitHubUpdatePullRequestRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "github",
+    "scopes": ["repo"]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m merge_pull_request"
+  }
+}
