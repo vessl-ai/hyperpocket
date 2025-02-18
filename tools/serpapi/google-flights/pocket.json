@@ -1,0 +1,462 @@
+{
+  "tool": {
+    "name": "google_flights",
+    "description": "serp api google flights api",
+    "inputSchema": {
+      "properties": {
+        "departure_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Departure airport code or location kgmid. Multiple values separated by commas.",
+          "title": "Departure Id"
+        },
+        "arrival_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Arrival airport code or location kgmid. Multiple values separated by commas.",
+          "title": "Arrival Id"
+        },
+        "gl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Country code for Google Flights search (e.g., 'us', 'uk', 'fr').",
+          "title": "Gl"
+        },
+        "hl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Language code for Google Flights search (e.g., 'en', 'es', 'fr').",
+          "title": "Hl"
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "USD",
+          "description": "Currency of returned prices (default: 'USD').",
+          "title": "Currency"
+        },
+        "type": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "description": "Type of flight (1: Round trip, 2: One way, 3: Multi-city). Default: 1.",
+          "title": "Type"
+        },
+        "outbound_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Outbound date in YYYY-MM-DD format.",
+          "title": "Outbound Date"
+        },
+        "return_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Return date in YYYY-MM-DD format. Required for Round trip.",
+          "title": "Return Date"
+        },
+        "travel_class": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "description": "Travel class (1: Economy, 2: Premium economy, 3: Business, 4: First). Default: 1.",
+          "title": "Travel Class"
+        },
+        "multi_city_json": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "JSON string containing multi-city flight information.",
+          "title": "Multi City Json"
+        },
+        "show_hidden": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Include hidden flight results (default: False).",
+          "title": "Show Hidden"
+        },
+        "deep_search": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enable deep search for better results (default: False).",
+          "title": "Deep Search"
+        },
+        "adults": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "description": "Number of adults (default: 1).",
+          "title": "Adults"
+        },
+        "children": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Number of children (default: 0).",
+          "title": "Children"
+        },
+        "infants_in_seat": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Number of infants in seat (default: 0).",
+          "title": "Infants In Seat"
+        },
+        "infants_on_lap": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Number of infants on lap (default: 0).",
+          "title": "Infants On Lap"
+        },
+        "sort_by": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "description": "Sorting order (1: Top flights, 2: Price, 3: Departure time, 4: Arrival time, 5: Duration, 6: Emissions). Default: 1.",
+          "title": "Sort By"
+        },
+        "stops": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Number of stops (0: Any, 1: Nonstop, 2: 1 stop, 3: 2 stops). Default: 0.",
+          "title": "Stops"
+        },
+        "exclude_airlines": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Comma-separated list of airline codes to exclude.",
+          "title": "Exclude Airlines"
+        },
+        "include_airlines": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Comma-separated list of airline codes to include.",
+          "title": "Include Airlines"
+        },
+        "bags": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Number of carry-on bags (default: 0).",
+          "title": "Bags"
+        },
+        "max_price": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Maximum ticket price (default: unlimited).",
+          "title": "Max Price"
+        },
+        "outbound_times": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Outbound times range as comma-separated values.",
+          "title": "Outbound Times"
+        },
+        "return_times": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Return times range as comma-separated values.",
+          "title": "Return Times"
+        },
+        "emissions": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Emission level filter (1: Less emissions only).",
+          "title": "Emissions"
+        },
+        "layover_duration": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Layover duration range in minutes (e.g., '90,330').",
+          "title": "Layover Duration"
+        },
+        "exclude_conns": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Comma-separated list of connecting airports to exclude.",
+          "title": "Exclude Conns"
+        },
+        "max_duration": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Maximum flight duration in minutes.",
+          "title": "Max Duration"
+        },
+        "departure_token": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Token for selecting departing flights for round trip/multi-city.",
+          "title": "Departure Token"
+        },
+        "booking_token": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Token for fetching booking options for selected flights.",
+          "title": "Booking Token"
+        },
+        "no_cache": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Force fetching new results instead of cached results.",
+          "title": "No Cache"
+        },
+        "async": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Submit search asynchronously.",
+          "title": "Async"
+        },
+        "zero_trace": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enterprise-only: Enable ZeroTrace mode.",
+          "title": "Zero Trace"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "json",
+          "description": "Output format: 'json' (default) or 'html'.",
+          "title": "Output"
+        }
+      },
+      "title": "GoogleFlightsRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "serpapi"
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m google_flights"
+  }
+}

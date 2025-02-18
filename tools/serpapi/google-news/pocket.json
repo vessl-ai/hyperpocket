@@ -1,0 +1,176 @@
+{
+  "tool": {
+    "name": "google_news",
+    "description": "serp api google news search api",
+    "inputSchema": {
+      "properties": {
+        "q": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search query for Google News. Can't be used with publication_token, story_token, or topic_token.",
+          "title": "Q"
+        },
+        "gl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "us",
+          "description": "Country code for Google News search (default: 'us').",
+          "title": "Gl"
+        },
+        "hl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "Language code for Google News search (default: 'en').",
+          "title": "Hl"
+        },
+        "topic_token": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Google News topic token. Can't be used with q, story_token, or publication_token.",
+          "title": "Topic Token"
+        },
+        "publication_token": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Google News publication token. Can't be used with q, story_token, or topic_token.",
+          "title": "Publication Token"
+        },
+        "section_token": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Google News section token. Can only be used with topic_token or publication_token.",
+          "title": "Section Token"
+        },
+        "story_token": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Google News story token for full coverage. Can't be used with q, topic_token, or publication_token.",
+          "title": "Story Token"
+        },
+        "so": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Sorting order (0: Relevance, 1: Date). Can only be used with story_token.",
+          "title": "So"
+        },
+        "no_cache": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Force fetching new results instead of cached results.",
+          "title": "No Cache"
+        },
+        "async": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Submit search asynchronously.",
+          "title": "Async"
+        },
+        "zero_trace": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enterprise-only: Enable ZeroTrace mode.",
+          "title": "Zero Trace"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "json",
+          "description": "Output format: 'json' (default) or 'html'.",
+          "title": "Output"
+        }
+      },
+      "title": "GoogleNewsRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "serpapi"
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m google_news"
+  }
+}

@@ -1,0 +1,393 @@
+{
+  "tool": {
+    "name": "google_hotels",
+    "description": "serp api google hotels search api",
+    "inputSchema": {
+      "properties": {
+        "q": {
+          "description": "Search query for Google Hotels.",
+          "title": "Q",
+          "type": "string"
+        },
+        "gl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Country code for Google Hotels search (e.g., 'us', 'uk', 'fr').",
+          "title": "Gl"
+        },
+        "hl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Language code for Google Hotels search (e.g., 'en', 'es', 'fr').",
+          "title": "Hl"
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "USD",
+          "description": "Currency of returned prices (default: 'USD').",
+          "title": "Currency"
+        },
+        "check_in_date": {
+          "description": "Check-in date in YYYY-MM-DD format.",
+          "title": "Check In Date",
+          "type": "string"
+        },
+        "check_out_date": {
+          "description": "Check-out date in YYYY-MM-DD format.",
+          "title": "Check Out Date",
+          "type": "string"
+        },
+        "adults": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 2,
+          "description": "Number of adults (default: 2).",
+          "title": "Adults"
+        },
+        "children": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Number of children (default: 0).",
+          "title": "Children"
+        },
+        "children_ages": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Ages of children, from 1 to 17 years old.",
+          "title": "Children Ages"
+        },
+        "sort_by": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Sorting order (3: Lowest price, 8: Highest rating, 13: Most reviewed).",
+          "title": "Sort By"
+        },
+        "min_price": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Lower bound of price range.",
+          "title": "Min Price"
+        },
+        "max_price": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Upper bound of price range.",
+          "title": "Max Price"
+        },
+        "property_types": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by property type (e.g., '17,12,18').",
+          "title": "Property Types"
+        },
+        "amenities": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by amenities (e.g., '35,9,19').",
+          "title": "Amenities"
+        },
+        "rating": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by rating (7: 3.5+, 8: 4.0+, 9: 4.5+).",
+          "title": "Rating"
+        },
+        "brands": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by hotel brands (not available for Vacation Rentals).",
+          "title": "Brands"
+        },
+        "hotel_class": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by hotel class (2: 2-star, 3: 3-star, etc.).",
+          "title": "Hotel Class"
+        },
+        "free_cancellation": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Show results with free cancellation.",
+          "title": "Free Cancellation"
+        },
+        "special_offers": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Show results with special offers.",
+          "title": "Special Offers"
+        },
+        "eco_certified": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Show results that are eco-certified.",
+          "title": "Eco Certified"
+        },
+        "vacation_rentals": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Search for vacation rentals instead of hotels.",
+          "title": "Vacation Rentals"
+        },
+        "bedrooms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Minimum number of bedrooms (only for Vacation Rentals).",
+          "title": "Bedrooms"
+        },
+        "bathrooms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Minimum number of bathrooms (only for Vacation Rentals).",
+          "title": "Bathrooms"
+        },
+        "next_page_token": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Token for retrieving the next page of results.",
+          "title": "Next Page Token"
+        },
+        "property_token": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Token for retrieving property details.",
+          "title": "Property Token"
+        },
+        "no_cache": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Force fetching new results instead of cached results.",
+          "title": "No Cache"
+        },
+        "async": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Submit search asynchronously.",
+          "title": "Async"
+        },
+        "zero_trace": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enterprise-only: Enable ZeroTrace mode.",
+          "title": "Zero Trace"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "json",
+          "description": "Output format: 'json' (default) or 'html'.",
+          "title": "Output"
+        }
+      },
+      "required": [
+        "q",
+        "check_in_date",
+        "check_out_date"
+      ],
+      "title": "GoogleHotelsRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "serpapi"
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m google_hotels"
+  }
+}

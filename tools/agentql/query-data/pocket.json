@@ -1,0 +1,58 @@
+{
+  "tool": {
+    "name": "agentql_query_data",
+    "description": "Query data from a webpage using AgentQL",
+    "inputSchema": {
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "AgentQL query to extract data from the webpage. The query should be enclosed in curly braces and follow these syntax rules:\n- Each term should be on a new line\n- Use lowercase with underscores (e.g., product_name)\n- Add [] after a term to get a list (e.g., products[])\n- Add descriptions in parentheses (e.g., price(integer))\n- Use nested curly braces for hierarchy\n\nExample queries:\nSingle element:\n{\n    search_box\n}\n\nList of products with details:\n{\n    products[] {\n        product_name\n        price(integer)\n        rating\n    }\n}\n\nWith hierarchy:\n{\n    header {\n        sign_in_btn\n    }\n    footer {\n        about_btn\n    }\n}"
+        },
+        "url": {
+          "type": "string",
+          "description": "The URL of the webpage to query"
+        },
+        "wait_for": {
+          "type": "integer",
+          "description": "Wait time in seconds for page load (max 10 seconds)",
+          "default": 0
+        },
+        "is_scroll_to_bottom_enabled": {
+          "type": "boolean",
+          "description": "Enable/disable scrolling to bottom before snapshot",
+          "default": false
+        },
+        "mode": {
+          "type": "string",
+          "description": "Extraction mode: 'standard' for complex data, 'fast' for typical use",
+          "default": "fast",
+          "enum": [
+            "standard",
+            "fast"
+          ]
+        },
+        "is_screenshot_enabled": {
+          "type": "boolean",
+          "description": "Enable/disable screenshot capture",
+          "default": false
+        }
+      },
+      "required": [
+        "query",
+        "url"
+      ],
+      "title": "AgentQLQueryDataRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "agentql",
+    "auth_handler": "agentql-token",
+    "scopes": []
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m query_data"
+  }
+}

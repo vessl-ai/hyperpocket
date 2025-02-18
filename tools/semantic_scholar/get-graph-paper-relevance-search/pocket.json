@@ -1,0 +1,77 @@
+{
+  "tool": {
+    "name": "get_graph_paper_relevance_search",
+    "description": "Get relevance search for a paper from Semantic Scholar",
+    "inputSchema": {
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string",
+          "description": "A plain-text search query string. No special query syntax is supported. Hyphenated query terms yield no matches (replace it with space to find matches)."
+        },
+        "fields": {
+          "title": "Fields",
+          "type": "string",
+          "description": "A comma-separated list of the fields to be returned. If omitted, only the paperId and title will be returned."
+        },
+        "publicationTypes": {
+          "title": "Publication Types",
+          "type": "string",
+          "description": "Restricts results to any of the following paper publication types: Review, JournalArticle, CaseReport, ClinicalTrial, Conference, Dataset, Editorial, LettersAndComments, MetaAnalysis, News, Study, Book, BookSection."
+        },
+        "openAccessPdf": {
+          "title": "Open Access PDF",
+          "type": "string",
+          "description": "Restricts results to only include papers with a public PDF. This parameter does not accept any values."
+        },
+        "minCitationCount": {
+          "title": "Min Citation Count",
+          "type": "string",
+          "description": "Restricts results to only include papers with the minimum number of citations."
+        },
+        "publicationDateOrYear": {
+          "title": "Publication Date Or Year",
+          "type": "string",
+          "description": "Restricts results to the given range of publication dates or years (inclusive). Accepts the format <startDate>:<endDate> with each date in YYYY-MM-DD format."
+        },
+        "year": {
+          "title": "Year",
+          "type": "string",
+          "description": "Restricts results to the given publication year or range of years (inclusive)."
+        },
+        "venue": {
+          "title": "Venue",
+          "type": "string",
+          "description": "Restricts results to papers published in the given venues, formatted as a comma-separated list."
+        },
+        "fieldsOfStudy": {
+          "title": "Fields Of Study",
+          "type": "string",
+          "description": "Restricts results to papers in the given fields of study, formatted as a comma-separated list."
+        },
+        "offset": {
+          "title": "Offset",
+          "type": "integer",
+          "default": 0,
+          "description": "Used for pagination. When returning a list of results, start with the element at this position in the list."
+        },
+        "limit": {
+          "title": "Limit",
+          "type": "integer",
+          "default": 100,
+          "description": "The maximum number of results to return. Must be <= 100."
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "GetGraphPaperRelevanceSearchRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m get_graph_paper_relevance_search"
+  }
+}
