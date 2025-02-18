@@ -1,0 +1,13 @@
+{
+    "properties": {
+      "test": {
+        "title": "Test",
+        "type": "string"
+      }
+    },
+    "required": [
+      "test"
+    ],
+    "title": "QueryRequest",
+    "type": "object"
+  }
