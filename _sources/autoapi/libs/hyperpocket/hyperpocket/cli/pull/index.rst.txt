@@ -16,5 +16,5 @@ Functions
 Module Contents
 ---------------
 
-.. py:function:: pull(url: str, lockfile: Optional[pathlib.Path], git_ref: str)
+.. py:function:: pull(url: str, git_ref: str)
 

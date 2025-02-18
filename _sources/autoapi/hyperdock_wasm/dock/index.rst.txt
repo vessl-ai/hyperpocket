@@ -1,0 +1,45 @@
+hyperdock_wasm.dock
+===================
+
+.. py:module:: hyperdock_wasm.dock
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_wasm.dock.WasmDock
+
+
+Module Contents
+---------------
+
+.. py:class:: WasmDock(*args, dock_vars: dict[str, str] = None, **kwargs)
+
+   Bases: :py:obj:`hyperpocket.tool.dock.Dock`
+
+
+   .. py:attribute:: unique_tool_references
+      :type:  dict[tuple[str, Ellipsis], hyperdock_wasm.tool_reference.WasmToolReference]
+
+
+   .. py:attribute:: runtime
+      :type:  hyperdock_wasm.runtime.ToolRuntime
+
+
+   .. py:method:: try_parse(req_like: str) -> hyperdock_wasm.tool.WasmToolRequest
+
+
+   .. py:method:: plug(req_like: Any, **kwargs)
+
+
+   .. py:method:: tools() -> list[hyperpocket.tool.function.FunctionTool]
+
+
+   .. py:method:: teardown()
+      :async:
+
+
+

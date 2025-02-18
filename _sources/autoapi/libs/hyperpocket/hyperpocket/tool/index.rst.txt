@@ -11,8 +11,8 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
+   /autoapi/libs/hyperpocket/hyperpocket/tool/dock/index
    /autoapi/libs/hyperpocket/hyperpocket/tool/function/index
    /autoapi/libs/hyperpocket/hyperpocket/tool/tool/index
-   /autoapi/libs/hyperpocket/hyperpocket/tool/wasm/index
 
 

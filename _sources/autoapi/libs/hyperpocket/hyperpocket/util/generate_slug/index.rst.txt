@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.util.generate_slug
+===============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.util.generate_slug
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.util.generate_slug.generate_slug
+
+
+Module Contents
+---------------
+
+.. py:function:: generate_slug(length: int = 6) -> str
+

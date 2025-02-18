@@ -1,0 +1,51 @@
+hyperdock_wasm.handlers
+=======================
+
+.. py:module:: hyperdock_wasm.handlers
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/hyperdock_wasm/handlers/browser/index
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   hyperdock_wasm.handlers.browse_script_page
+   hyperdock_wasm.handlers.done_script_page
+   hyperdock_wasm.handlers.get_entrypoint
+   hyperdock_wasm.handlers.get_file_tree
+   hyperdock_wasm.handlers.get_dist_file
+
+
+Package Contents
+----------------
+
+.. py:function:: browse_script_page(script_id: str)
+   :async:
+
+
+.. py:function:: done_script_page(script_id: str, req: hyperdock_wasm.dto.BrowserScriptResult) -> hyperdock_wasm.dto.BrowserScriptResult
+   :async:
+
+
+.. py:function:: get_entrypoint(script_id: str) -> hyperdock_wasm.dto.BrowserScriptEntrypoint
+   :async:
+
+
+.. py:function:: get_file_tree(script_id: str) -> hyperdock_wasm.dto.BrowserScriptFileTree
+   :async:
+
+
+.. py:function:: get_dist_file(script_id: str, file_name: str)
+   :async:
+
+

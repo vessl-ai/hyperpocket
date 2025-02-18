@@ -1,0 +1,150 @@
+hyperdock_container.runtime
+===========================
+
+.. py:module:: hyperdock_container.runtime
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/hyperdock_container/runtime/docker/index
+   /autoapi/hyperdock_container/runtime/runtime/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_container.runtime.ContainerRuntime
+
+
+Package Contents
+----------------
+
+.. py:class:: ContainerRuntime
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:method:: create(image_tag: str, workdir: str, command: str, envs: dict, **kwargs) -> str
+      :abstractmethod:
+
+
+      Create an image from tag
+      :param image_tag:
+      :param workdir:
+      :param command:
+      :param envs:
+      :return: container id
+
+
+
+   .. py:method:: start(container_id: str) -> None
+      :abstractmethod:
+
+
+      Start a container
+      :param container_id:
+      :return:
+
+
+
+   .. py:method:: stop(container_id: str) -> None
+      :abstractmethod:
+
+
+      Stop a container
+      :param container_id:
+      :return:
+
+
+
+   .. py:method:: remove(container_id: str) -> None
+      :abstractmethod:
+
+
+      Remove a container
+      :param container_id:
+      :return:
+
+
+
+   .. py:method:: pull(image_tag: str) -> str
+      :abstractmethod:
+
+
+      Pull an image from tag and returns its id
+      :param image:
+      :return:
+
+
+
+   .. py:method:: list_image() -> list[tuple[str, list[str]]]
+      :abstractmethod:
+
+
+      List all images
+      :return: list of image id and tag list
+
+
+
+   .. py:method:: run(container_id: str, stdin_str: Optional[str] = None) -> str
+      :abstractmethod:
+
+
+      Run a command in a container
+      :param container_id:
+      :param stdin_str:
+      :return: stdout_str of container
+
+
+
+   .. py:method:: put_archive(container_id: str, source: pathlib.Path, dest: str) -> None
+      :abstractmethod:
+
+
+      Put an archive to a container
+      :param container_id:
+      :param source:
+      :param dest:
+      :return:
+
+
+
+   .. py:method:: commit(container_id: str, repository: str, tag: str) -> str
+      :abstractmethod:
+
+
+      Commit a container to an image
+      :param container_id:
+      :param repository:
+      :param tag:
+      :return: image id
+
+
+
+   .. py:method:: from_tool_request(tool_request: hyperdock_container.tool.ContainerToolRequest) -> list[hyperpocket.tool.function.FunctionTool]
+
+      Create a FunctionTool from a tool request
+      :param tool_request:
+      :return:
+
+
+
+   .. py:method:: from_single_tool_config(tool_image_tag: str, pocket_schema_path: pathlib.Path, overridden_tool_vars: dict[str, str] = None, runtime_arguments: dict = None) -> hyperpocket.tool.function.FunctionTool
+
+
+   .. py:method:: get_runtime_from_settings() -> ContainerRuntime
+      :classmethod:
+
+
+

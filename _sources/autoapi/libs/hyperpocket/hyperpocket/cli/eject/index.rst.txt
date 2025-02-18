@@ -16,5 +16,5 @@ Functions
 Module Contents
 ---------------
 
-.. py:function:: eject(url: str, ref: str, remote_path: str, lockfile: Optional[pathlib.Path])
+.. py:function:: eject(url: str, ref: str, remote_path: str)
 

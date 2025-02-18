@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.server.auth.weaviate
+=================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.weaviate
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.weaviate.weaviate_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.weaviate.weaviate_oauth2_callback
+   libs.hyperpocket.hyperpocket.server.auth.weaviate.weaviate_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: weaviate_auth_router
+
+.. py:function:: weaviate_oauth2_callback(state: str, code: str)
+   :async:
+
+
+.. py:function:: weaviate_token_callback(state: str, token: str)
+   :async:
+
+

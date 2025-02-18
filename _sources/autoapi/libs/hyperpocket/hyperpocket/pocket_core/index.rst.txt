@@ -16,7 +16,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: PocketCore(tools: list[hyperpocket.tool_like.ToolLike], auth: hyperpocket.pocket_auth.PocketAuth = None, lockfile_path: Optional[str] = None, force_update: bool = False)
+.. py:class:: PocketCore(tools: list[hyperpocket.tool_like.ToolLike], auth: hyperpocket.pocket_auth.PocketAuth = None)
 
    .. py:attribute:: auth
       :type:  hyperpocket.pocket_auth.PocketAuth
@@ -26,8 +26,8 @@ Module Contents
       :type:  dict[str, hyperpocket.tool.Tool]
 
 
-   .. py:attribute:: lockfile
-      :type:  hyperpocket.repository.Lockfile
+   .. py:attribute:: docks
+      :type:  list[hyperpocket.tool.dock.Dock]
 
 
    .. py:method:: acall(tool_name: str, body: Any, thread_id: str = 'default', profile: str = 'default', *args, **kwargs) -> tuple[str, bool]

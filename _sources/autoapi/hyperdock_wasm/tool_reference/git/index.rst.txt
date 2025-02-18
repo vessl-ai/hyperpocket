@@ -1,0 +1,78 @@
+hyperdock_wasm.tool_reference.git
+=================================
+
+.. py:module:: hyperdock_wasm.tool_reference.git
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_wasm.tool_reference.git.WasmGitToolReference
+
+
+Module Contents
+---------------
+
+.. py:class:: WasmGitToolReference
+
+   Bases: :py:obj:`hyperpocket.repository.ToolReference`
+
+
+   .. py:attribute:: tool_source
+      :type:  str
+      :value: 'git'
+
+
+
+   .. py:attribute:: repository_url
+      :type:  str
+
+
+   .. py:attribute:: git_ref
+      :type:  str
+
+
+   .. py:attribute:: ref_sha
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:method:: key() -> tuple[str, Ellipsis]
+
+
+   .. py:method:: toolpkg_path() -> pathlib.Path
+
+
+   .. py:method:: sync(force_update: bool = False, **kwargs)
+
+      Synchronize the local git repository with the target remote branch.
+
+      1. Check if the SHA of the target ref in the remote repository matches the current local SHA.
+      2. If they do not match, fetch the target ref from the remote repository and do a hard reset
+         to align the local repository with the remote version.
+
+
+
+   .. py:method:: get_git_branches(repo_url)
+      :classmethod:
+
+
+
+   .. py:method:: parse_repo_url(repo_url: str) -> tuple[str, str, str]
+      :classmethod:
+
+
+      Parses a GitHub repository URL with optional branch and path information.
+
+      :returns: base_repo, branch_name, directory_path
+      :rtype: Tuple[str, str, str]
+
+
+
+   .. py:method:: eject_to_path(dest_path: pathlib.Path, src_sub_path: str = None)
+
+

@@ -1,0 +1,40 @@
+hyperdock_container.tool_reference.local
+========================================
+
+.. py:module:: hyperdock_container.tool_reference.local
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_container.tool_reference.local.ContainerLocalToolReference
+
+
+Module Contents
+---------------
+
+.. py:class:: ContainerLocalToolReference(tool_path: str)
+
+   Bases: :py:obj:`hyperpocket.repository.ToolReference`
+
+
+   .. py:attribute:: tool_source
+      :type:  str
+
+
+   .. py:attribute:: tool_path
+      :type:  str
+
+
+   .. py:method:: key() -> tuple[str, Ellipsis]
+
+
+   .. py:method:: sync(sync_base_image: bool = False, **kwargs)
+
+
+   .. py:method:: toolpkg_path() -> pathlib.Path
+
+

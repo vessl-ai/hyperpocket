@@ -1,0 +1,45 @@
+hyperdock_container.dock
+========================
+
+.. py:module:: hyperdock_container.dock
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_container.dock.ContainerDock
+
+
+Module Contents
+---------------
+
+.. py:class:: ContainerDock(*args, dock_vars: dict[str, str] = None, **kwargs)
+
+   Bases: :py:obj:`hyperpocket.tool.dock.Dock`
+
+
+   .. py:attribute:: unique_tool_references
+      :type:  dict[tuple[str, Ellipsis], hyperdock_container.tool_reference.ContainerToolReference]
+
+
+   .. py:attribute:: runtime
+      :type:  hyperdock_container.runtime.ContainerRuntime
+
+
+   .. py:method:: try_parse(req_like: str, inline_tool_vars: Optional[dict] = None) -> hyperdock_container.tool.ContainerToolRequest
+
+
+   .. py:method:: plug(req_like: Any, **kwargs)
+
+
+   .. py:method:: teardown()
+      :async:
+
+
+
+   .. py:method:: tools() -> list[hyperpocket.tool.function.FunctionTool]
+
+

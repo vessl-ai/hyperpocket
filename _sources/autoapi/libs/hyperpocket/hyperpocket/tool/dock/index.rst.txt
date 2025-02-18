@@ -1,0 +1,16 @@
+libs.hyperpocket.hyperpocket.tool.dock
+======================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.tool.dock
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/hyperpocket/hyperpocket/tool/dock/dock/index
+
+

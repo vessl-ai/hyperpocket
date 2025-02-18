@@ -1,0 +1,49 @@
+hyperdock_wasm.runtime
+======================
+
+.. py:module:: hyperdock_wasm.runtime
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/hyperdock_wasm/runtime/browser/index
+   /autoapi/hyperdock_wasm/runtime/runtime/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_wasm.runtime.ToolRuntime
+
+
+Package Contents
+----------------
+
+.. py:class:: ToolRuntime
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:method:: from_tool_request(tool_request: hyperpocket.tool.ToolRequest) -> hyperpocket.tool.function.FunctionTool
+      :abstractmethod:
+
+
+
+   .. py:method:: teardown()
+      :abstractmethod:
+
+      :async:
+
+
+

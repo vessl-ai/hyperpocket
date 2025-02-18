@@ -1,0 +1,40 @@
+hyperdock_wasm.tool_reference.local
+===================================
+
+.. py:module:: hyperdock_wasm.tool_reference.local
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_wasm.tool_reference.local.WasmLocalToolReference
+
+
+Module Contents
+---------------
+
+.. py:class:: WasmLocalToolReference(tool_path: str)
+
+   Bases: :py:obj:`hyperpocket.repository.ToolReference`
+
+
+   .. py:attribute:: tool_source
+      :type:  str
+
+
+   .. py:attribute:: tool_path
+      :type:  str
+
+
+   .. py:method:: key() -> tuple[str, Ellipsis]
+
+
+   .. py:method:: sync(**kwargs)
+
+
+   .. py:method:: toolpkg_path() -> pathlib.Path
+
+

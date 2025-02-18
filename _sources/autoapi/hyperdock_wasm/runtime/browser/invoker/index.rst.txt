@@ -1,0 +1,35 @@
+hyperdock_wasm.runtime.browser.invoker
+======================================
+
+.. py:module:: hyperdock_wasm.runtime.browser.invoker
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_wasm.runtime.browser.invoker.Invoker
+
+
+Module Contents
+---------------
+
+.. py:class:: Invoker(browser: hyperdock_wasm.runtime.browser.invoker_browser.InvokerBrowser)
+
+   Bases: :py:obj:`object`
+
+
+   .. py:attribute:: browser
+      :type:  hyperdock_wasm.runtime.browser.invoker_browser.InvokerBrowser
+
+
+   .. py:method:: invoke(tool_path: str, runtime: hyperdock_wasm.runtime.browser.script.ScriptRuntime, body: Any, envs: dict, **kwargs) -> str
+
+
+   .. py:method:: ainvoke(tool_path: str, runtime: hyperdock_wasm.runtime.browser.script.ScriptRuntime, body: Any, envs: dict, **kwargs) -> str
+      :async:
+
+
+

@@ -1,0 +1,44 @@
+hyperdock_container.tool
+========================
+
+.. py:module:: hyperdock_container.tool
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_container.tool.ContainerToolRequest
+
+
+Module Contents
+---------------
+
+.. py:class:: ContainerToolRequest(tool_ref: hyperdock_container.tool_reference.ContainerToolReference, rel_path: str, tool_vars: dict[str, str] = None, runtime_arguments: dict = None)
+
+   Bases: :py:obj:`hyperpocket.tool.ToolRequest`
+
+
+   .. py:attribute:: tool_ref
+      :type:  hyperdock_container.tool_reference.ContainerToolReference
+
+
+   .. py:attribute:: rel_path
+      :type:  str
+
+
+   .. py:attribute:: overridden_tool_vars
+      :type:  dict[str, str]
+
+
+   .. py:attribute:: runtime_arguments
+      :type:  dict
+
+
+   .. py:property:: base_image
+      :type: str
+
+
+

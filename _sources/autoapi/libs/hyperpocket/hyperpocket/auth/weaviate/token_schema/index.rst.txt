@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.weaviate.token_schema
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.weaviate.token_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.weaviate.token_schema.WeaviateTokenRequest
+   libs.hyperpocket.hyperpocket.auth.weaviate.token_schema.WeaviateTokenResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: WeaviateTokenRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: WeaviateTokenResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

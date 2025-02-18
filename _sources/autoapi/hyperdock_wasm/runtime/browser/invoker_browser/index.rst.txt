@@ -1,0 +1,48 @@
+hyperdock_wasm.runtime.browser.invoker_browser
+==============================================
+
+.. py:module:: hyperdock_wasm.runtime.browser.invoker_browser
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_wasm.runtime.browser.invoker_browser.InvokerBrowser
+
+
+Module Contents
+---------------
+
+.. py:class:: InvokerBrowser
+
+   Bases: :py:obj:`object`
+
+
+   .. py:attribute:: playwright
+      :type:  playwright.async_api.Playwright
+
+
+   .. py:attribute:: browser_context
+      :type:  playwright.async_api.BrowserContext
+
+
+   .. py:method:: async_init()
+      :classmethod:
+
+      :async:
+
+
+
+   .. py:method:: new_page() -> playwright.async_api.Page
+      :async:
+
+
+
+   .. py:method:: teardown()
+      :async:
+
+
+

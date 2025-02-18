@@ -1,0 +1,40 @@
+hyperdock_wasm.runtime.browser.runtime
+======================================
+
+.. py:module:: hyperdock_wasm.runtime.browser.runtime
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_wasm.runtime.browser.runtime.BrowserScriptRuntime
+
+
+Module Contents
+---------------
+
+.. py:class:: BrowserScriptRuntime
+
+   Bases: :py:obj:`hyperdock_wasm.runtime.runtime.ToolRuntime`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:method:: invoker() -> hyperdock_wasm.runtime.browser.invoker.Invoker
+      :async:
+
+
+
+   .. py:method:: teardown()
+      :async:
+
+
+
+   .. py:method:: from_tool_request(tool_req: hyperdock_wasm.tool.WasmToolRequest) -> hyperpocket.tool.function.FunctionTool
+
+

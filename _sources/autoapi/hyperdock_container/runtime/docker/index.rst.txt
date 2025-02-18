@@ -1,0 +1,122 @@
+hyperdock_container.runtime.docker
+==================================
+
+.. py:module:: hyperdock_container.runtime.docker
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/hyperdock_container/runtime/docker/runtime_docker/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_container.runtime.docker.DockerContainerRuntime
+
+
+Package Contents
+----------------
+
+.. py:class:: DockerContainerRuntime(settings: hyperdock_container.settings.DockerSettings)
+
+   Bases: :py:obj:`hyperdock_container.runtime.runtime.ContainerRuntime`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: settings
+      :type:  hyperdock_container.settings.DockerSettings
+
+
+   .. py:property:: client
+
+
+   .. py:method:: create(image_tag: str, workdir: str, command: str, envs: dict, **kwargs) -> str
+
+      Create an image from tag
+      :param image_tag:
+      :param workdir:
+      :param command:
+      :param envs:
+      :return: container id
+
+
+
+   .. py:method:: start(container_id: str) -> None
+
+      Start a container
+      :param container_id:
+      :return:
+
+
+
+   .. py:method:: stop(container_id: str) -> None
+
+      Stop a container
+      :param container_id:
+      :return:
+
+
+
+   .. py:method:: remove(container_id: str) -> None
+
+      Remove a container
+      :param container_id:
+      :return:
+
+
+
+   .. py:method:: commit(container_id: str, repository: str, tag: str) -> str
+
+      Commit a container to an image
+      :param container_id:
+      :param repository:
+      :param tag:
+      :return: image id
+
+
+
+   .. py:method:: pull(image_tag: str) -> str
+
+      Pull an image from tag and returns its id
+      :param image:
+      :return:
+
+
+
+   .. py:method:: list_image() -> list[tuple[str, list[str]]]
+
+      List all images
+      :return: list of image id and tag list
+
+
+
+   .. py:method:: put_archive(container_id: str, source: pathlib.Path, dest: str) -> None
+
+      Put an archive to a container
+      :param container_id:
+      :param source:
+      :param dest:
+      :return:
+
+
+
+   .. py:method:: run(container_id: str, stdin_str: Optional[str] = None, **kwargs) -> str
+
+      Run a command in a container
+      :param container_id:
+      :param stdin_str:
+      :return: stdout_str of container
+
+
+

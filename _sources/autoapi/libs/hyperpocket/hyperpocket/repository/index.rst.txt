@@ -11,8 +11,7 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
-   /autoapi/libs/hyperpocket/hyperpocket/repository/lock/index
-   /autoapi/libs/hyperpocket/hyperpocket/repository/lockfile/index
    /autoapi/libs/hyperpocket/hyperpocket/repository/repository/index
+   /autoapi/libs/hyperpocket/hyperpocket/repository/tool_reference/index
 
 

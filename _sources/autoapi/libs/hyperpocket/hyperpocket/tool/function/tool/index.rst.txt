@@ -32,6 +32,12 @@ Module Contents
       :type:  Optional[Callable[Ellipsis, Coroutine[Any, Any, str]]]
 
 
+   .. py:attribute:: keep_structured_arguments
+      :type:  bool
+      :value: False
+
+
+
    .. py:method:: invoke(**kwargs) -> str
 
 
@@ -45,7 +51,7 @@ Module Contents
 
 
 
-   .. py:method:: from_func(func: Callable | FunctionTool, afunc: Callable[Ellipsis, Coroutine[Any, Any, str]] | FunctionTool = None, auth: Optional[hyperpocket.tool.tool.ToolAuth] = None, tool_vars: dict[str, str] = None) -> FunctionTool
+   .. py:method:: from_func(func: Callable | FunctionTool, afunc: Callable[Ellipsis, Coroutine[Any, Any, str]] | FunctionTool = None, name: str = None, description: str = None, json_schema: dict[str, Any] = None, auth: Optional[hyperpocket.tool.tool.ToolAuth] = None, tool_vars: dict[str, str] = None, keep_structured_arguments: bool = False) -> FunctionTool
       :classmethod:
 
 

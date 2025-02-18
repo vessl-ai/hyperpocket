@@ -108,6 +108,10 @@ Module Contents
       :type:  dict[str, str]
 
 
+   .. py:attribute:: docks
+      :type:  dict[str, dict]
+
+
    .. py:property:: internal_base_url
 
 

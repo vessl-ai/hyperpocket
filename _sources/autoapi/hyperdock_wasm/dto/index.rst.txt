@@ -1,0 +1,102 @@
+hyperdock_wasm.dto
+==================
+
+.. py:module:: hyperdock_wasm.dto
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/hyperdock_wasm/dto/browser_script/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_wasm.dto.BrowserScript
+   hyperdock_wasm.dto.BrowserScriptResult
+   hyperdock_wasm.dto.BrowserScriptFileTree
+   hyperdock_wasm.dto.BrowserScriptEntrypoint
+   hyperdock_wasm.dto.BrowserScriptEncodedFile
+   hyperdock_wasm.dto.BrowserScriptFileRequest
+
+
+Package Contents
+----------------
+
+.. py:class:: BrowserScript
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: id
+      :type:  str
+
+
+   .. py:attribute:: tool_id
+      :type:  str
+
+
+.. py:class:: BrowserScriptResult
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: stdout
+      :type:  Optional[str]
+
+
+   .. py:attribute:: stderr
+      :type:  Optional[str]
+
+
+   .. py:attribute:: error
+      :type:  Optional[str]
+
+
+.. py:class:: BrowserScriptFileTree
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: tree
+      :type:  dict[str, hyperdock_wasm.runtime.browser.script.ScriptFileNode]
+
+
+.. py:class:: BrowserScriptEntrypoint
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: package_name
+      :type:  Optional[str]
+
+
+   .. py:attribute:: entrypoint
+      :type:  str
+
+
+.. py:class:: BrowserScriptEncodedFile
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: encoded_file
+      :type:  str
+
+
+.. py:class:: BrowserScriptFileRequest
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: path
+      :type:  str
+
+

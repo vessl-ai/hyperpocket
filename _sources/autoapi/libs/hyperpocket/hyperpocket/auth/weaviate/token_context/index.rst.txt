@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.weaviate.token_context
+========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.weaviate.token_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.weaviate.token_context.WeaviateTokenAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: WeaviateTokenAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.weaviate.context.WeaviateAuthContext`
+
+
+   .. py:method:: from_weaviate_token_response(response: hyperpocket.auth.weaviate.token_schema.WeaviateTokenResponse)
+      :classmethod:
+
+
+

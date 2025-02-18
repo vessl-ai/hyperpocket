@@ -42,13 +42,22 @@ Module Contents
 
 
 
-.. py:class:: PocketServer(internal_server_port: int = config().internal_server_port, proxy_port: int = config().public_server_port)
+   .. py:attribute:: PLUG_CORE
+      :value: 'plug_core'
+
+
+
+.. py:class:: PocketServer
 
    Bases: :py:obj:`object`
 
 
+   .. py:attribute:: fastapi_app
+      :type:  Optional[fastapi.FastAPI]
+
+
    .. py:attribute:: main_server
-      :type:  uvicorn.Server
+      :type:  Optional[uvicorn.Server]
 
 
    .. py:attribute:: internal_server_port
@@ -81,6 +90,22 @@ Module Contents
 
 
 
+   .. py:method:: plug_core(pocket_uid: str, pocket_core: hyperpocket.pocket_core.PocketCore)
+      :async:
+
+
+
+   .. py:method:: get_instance_and_refcnt_up(uid: str)
+      :classmethod:
+
+
+
+   .. py:method:: refcnt_up(uid: str)
+
+
+   .. py:method:: refcnt_down(uid: str)
+
+
    .. py:method:: teardown()
 
 
@@ -89,7 +114,7 @@ Module Contents
 
 
 
-   .. py:method:: send_in_parent(op: PocketServerOperations, args: tuple, kwargs: dict)
+   .. py:method:: send_in_parent(op: PocketServerOperations, pocket_uid: str, args: tuple, kwargs: dict)
 
 
    .. py:method:: poll_in_parent()
@@ -97,12 +122,12 @@ Module Contents
 
 
 
-   .. py:method:: call_in_subprocess(op: PocketServerOperations, args: tuple, kwargs: dict)
+   .. py:method:: call_in_subprocess(op: PocketServerOperations, pocket_uid: str, args: tuple, kwargs: dict)
       :async:
 
 
 
-   .. py:method:: run(pocket_core: hyperpocket.pocket_core.PocketCore)
+   .. py:method:: run()
 
 
    .. py:method:: wait_initialized()

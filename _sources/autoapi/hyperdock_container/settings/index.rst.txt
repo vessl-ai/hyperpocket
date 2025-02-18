@@ -1,0 +1,61 @@
+hyperdock_container.settings
+============================
+
+.. py:module:: hyperdock_container.settings
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_container.settings.DockerSettings
+   hyperdock_container.settings.HyperdockSettings
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   hyperdock_container.settings.settings
+
+
+Package Contents
+----------------
+
+.. py:class:: DockerSettings
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: base_url
+      :type:  str
+      :value: 'unix://var/run/docker.sock'
+
+
+
+   .. py:attribute:: credstore_env
+      :type:  dict
+      :value: None
+
+
+
+.. py:class:: HyperdockSettings
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: runtime
+      :type:  Runtime
+
+
+   .. py:attribute:: docker
+      :type:  Optional[DockerSettings]
+      :value: None
+
+
+
+.. py:function:: settings()
+

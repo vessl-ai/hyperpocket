@@ -34,10 +34,6 @@ Module Contents
    Bases: :py:obj:`hyperpocket.session.interface.SessionStorageInterface`\ [\ :py:obj:`InMemorySessionKey`\ , :py:obj:`InMemorySessionValue`\ ]
 
 
-   .. py:attribute:: storage
-      :type:  Dict[InMemorySessionKey, InMemorySessionValue]
-
-
    .. py:method:: session_storage_type() -> hyperpocket.config.session.SessionType
       :classmethod:
 

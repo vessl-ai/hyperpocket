@@ -1,0 +1,77 @@
+hyperdock_wasm
+==============
+
+.. py:module:: hyperdock_wasm
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/hyperdock_wasm/dock/index
+   /autoapi/hyperdock_wasm/dto/index
+   /autoapi/hyperdock_wasm/handlers/index
+   /autoapi/hyperdock_wasm/runtime/index
+   /autoapi/hyperdock_wasm/tool/index
+   /autoapi/hyperdock_wasm/tool_reference/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_wasm.WasmDock
+   hyperdock_wasm.WasmToolRequest
+
+
+Package Contents
+----------------
+
+.. py:class:: WasmDock(*args, dock_vars: dict[str, str] = None, **kwargs)
+
+   Bases: :py:obj:`hyperpocket.tool.dock.Dock`
+
+
+   .. py:attribute:: unique_tool_references
+      :type:  dict[tuple[str, Ellipsis], hyperdock_wasm.tool_reference.WasmToolReference]
+
+
+   .. py:attribute:: runtime
+      :type:  hyperdock_wasm.runtime.ToolRuntime
+
+
+   .. py:method:: try_parse(req_like: str) -> hyperdock_wasm.tool.WasmToolRequest
+
+
+   .. py:method:: plug(req_like: Any, **kwargs)
+
+
+   .. py:method:: tools() -> list[hyperpocket.tool.function.FunctionTool]
+
+
+   .. py:method:: teardown()
+      :async:
+
+
+
+.. py:class:: WasmToolRequest(tool_ref: hyperdock_wasm.tool_reference.WasmToolReference, rel_path: str, tool_vars: dict[str, str] = None)
+
+   Bases: :py:obj:`hyperpocket.tool.ToolRequest`
+
+
+   .. py:attribute:: tool_ref
+      :type:  hyperdock_wasm.tool_reference.WasmToolReference
+
+
+   .. py:attribute:: rel_path
+      :type:  str
+
+
+   .. py:attribute:: overridden_tool_vars
+      :type:  dict[str, str]
+
+

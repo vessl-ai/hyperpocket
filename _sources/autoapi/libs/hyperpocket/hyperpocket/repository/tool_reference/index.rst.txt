@@ -1,0 +1,48 @@
+libs.hyperpocket.hyperpocket.repository.tool_reference
+======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.repository.tool_reference
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.repository.tool_reference.ToolReference
+
+
+Module Contents
+---------------
+
+.. py:class:: ToolReference
+
+   Bases: :py:obj:`pydantic.BaseModel`, :py:obj:`abc.ABC`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: tool_source
+      :type:  str
+      :value: None
+
+
+
+   .. py:method:: key() -> str
+      :abstractmethod:
+
+
+
+   .. py:method:: sync(**kwargs)
+      :abstractmethod:
+
+
+
+   .. py:method:: eject_to_path(dest_path: pathlib.Path, src_sub_path: str = None)
+      :abstractmethod:
+
+
+

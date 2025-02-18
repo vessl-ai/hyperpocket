@@ -1,0 +1,124 @@
+hyperdock_wasm.runtime.browser.script
+=====================================
+
+.. py:module:: hyperdock_wasm.runtime.browser.script
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   hyperdock_wasm.runtime.browser.script.ScriptStore
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_wasm.runtime.browser.script.ScriptRuntime
+   hyperdock_wasm.runtime.browser.script.ScriptFileNodeContent
+   hyperdock_wasm.runtime.browser.script.ScriptFileNode
+   hyperdock_wasm.runtime.browser.script.Script
+
+
+Module Contents
+---------------
+
+.. py:class:: ScriptRuntime(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   .. py:attribute:: Node
+      :value: 'node'
+
+
+
+   .. py:attribute:: Python
+      :value: 'python'
+
+
+
+   .. py:attribute:: Wasm
+      :value: 'wasm'
+
+
+
+.. py:class:: ScriptFileNodeContent
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: contents
+      :type:  str
+
+
+.. py:class:: ScriptFileNode
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: directory
+      :type:  Optional[dict[str, ScriptFileNode]]
+      :value: None
+
+
+
+   .. py:attribute:: file
+      :type:  Optional[ScriptFileNodeContent]
+      :value: None
+
+
+
+   .. py:method:: create_file_tree(path: str, contents: str) -> dict[str, ScriptFileNode]
+      :classmethod:
+
+
+
+   .. py:method:: merge(a: dict[str, ScriptFileNode], b: [str, ScriptFileNode]) -> dict[str, ScriptFileNode]
+      :staticmethod:
+
+
+
+.. py:class:: Script
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   .. py:attribute:: id
+      :type:  str
+
+
+   .. py:attribute:: tool_path
+      :type:  str
+
+
+   .. py:attribute:: rendered_html
+      :type:  str
+
+
+   .. py:attribute:: runtime
+      :type:  ScriptRuntime
+
+
+   .. py:method:: load_file_tree() -> dict[str, ScriptFileNode]
+
+
+   .. py:property:: package_name
+      :type: Optional[str]
+
+
+
+   .. py:property:: entrypoint
+      :type: str
+
+
+
+   .. py:method:: dist_file_path(file_name: str) -> str
+
+
+.. py:data:: ScriptStore
+

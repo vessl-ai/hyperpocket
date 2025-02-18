@@ -1,0 +1,35 @@
+hyperdock_wasm.tool
+===================
+
+.. py:module:: hyperdock_wasm.tool
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_wasm.tool.WasmToolRequest
+
+
+Module Contents
+---------------
+
+.. py:class:: WasmToolRequest(tool_ref: hyperdock_wasm.tool_reference.WasmToolReference, rel_path: str, tool_vars: dict[str, str] = None)
+
+   Bases: :py:obj:`hyperpocket.tool.ToolRequest`
+
+
+   .. py:attribute:: tool_ref
+      :type:  hyperdock_wasm.tool_reference.WasmToolReference
+
+
+   .. py:attribute:: rel_path
+      :type:  str
+
+
+   .. py:attribute:: overridden_tool_vars
+      :type:  dict[str, str]
+
+
