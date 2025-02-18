@@ -1,0 +1,25 @@
+{
+    "properties": {
+      "collection_name": {
+        "title": "Collection Name",
+        "type": "string",
+        "description": "The name of the collection to read objects from."
+      },
+      "query": {
+        "title": "Query",
+        "type": "string",
+        "description": "The user prompt query"
+      },
+      "limit": {
+        "title": "Limit",
+        "type": "integer",
+        "description": "The maximum number of results to return. Default is 3."
+      }
+    },
+    "required": [
+      "collection_name",
+      "query"
+    ],
+    "title": "QueryNearTextRequest",
+    "type": "object"
+  } 
