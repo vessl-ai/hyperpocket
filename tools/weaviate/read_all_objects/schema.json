@@ -1,0 +1,20 @@
+{
+  "properties": {
+    "collection_name": {
+      "title": "Collection Name",
+      "type": "string",
+      "description": "The name of the collection to read objects from."
+    },
+    "include_vector": {
+      "title": "Include Vector",
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to include vectors in the response."
+    }
+  },
+  "required": [
+    "collection_name"
+  ],
+  "title": "ReadAllObjectsRequest",
+  "type": "object"
+} 
