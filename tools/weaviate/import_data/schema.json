@@ -1,0 +1,25 @@
+{
+  "properties": {
+    "collection_name": {
+      "title": "Collection Name",
+      "type": "string",
+      "description": "The name of the collection to import data into."
+    },
+    "data_rows": {
+      "title": "Data Rows",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "description": "A list of data rows to import into the collection."
+    }
+  },
+  "required": [
+    "collection_name",
+    "data_rows"
+  ],
+  "title": "ImportDataRequest",
+  "type": "object"
+} 

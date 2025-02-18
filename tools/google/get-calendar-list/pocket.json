@@ -1,0 +1,22 @@
+{
+  "tool": {
+    "name": "google_get_calendar_list",
+    "description": "get google calendar list",
+    "inputSchema": {
+      "properties": {},
+      "title": "GoogleGetCalendarListRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "google",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar"
+    ]
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m get_calendar_list"
+  }
+}

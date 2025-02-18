@@ -1,0 +1,127 @@
+{
+  "tool": {
+    "name": "github_search_commits",
+    "description": "Search commits in GitHub",
+    "inputSchema": {
+      "title": "GithubCommitSearchRequest",
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "default": "",
+          "description": "The search query to find commits."
+        },
+        "sort": {
+          "type": "string",
+          "enum": [
+            "author-date",
+            "committer-date"
+          ],
+          "description": "Sort by author-date or committer-date. Optional"
+        },
+        "order": {
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "description": "Sort order. Optional"
+        },
+        "per_page": {
+          "type": "integer",
+          "default": 30,
+          "description": "Number of items per page. Defaults 30. Optional"
+        },
+        "page": {
+          "type": "integer",
+          "default": 0,
+          "description": "Page number. Defaults 0. Optional"
+        },
+        "author": {
+          "type": "string",
+          "description": "Target author github username of the commit. Optional"
+        },
+        "author_name": {
+          "type": "string",
+          "description": "Target author real name of the commit. Optional"
+        },
+        "committer": {
+          "type": "string",
+          "description": "Target committer github username of the commit. Optional"
+        },
+        "committer_name": {
+          "type": "string",
+          "description": "Target committer real name of the commit. Optional"
+        },
+        "author_email": {
+          "type": "string",
+          "description": "Target author email of the commit. Optional"
+        },
+        "committer_email": {
+          "type": "string",
+          "description": "Target committer email of the commit. Optional"
+        },
+        "author_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Search commits authored before author_date. Optional"
+        },
+        "committer_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Search commits committed before committer_date. Optional"
+        },
+        "merge": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false"
+          ],
+          "description": "Search merge commits. Optional"
+        },
+        "commit_hash": {
+          "type": "string",
+          "description": "Search commits with the hash. Optional"
+        },
+        "tree_hash": {
+          "type": "string",
+          "description": "Search commits that refer to the tree hash. Optional"
+        },
+        "parent_hash": {
+          "type": "string",
+          "description": "Search children of commits with the hash. Optional"
+        },
+        "repo_visibility": {
+          "type": "string",
+          "enum": [
+            "public",
+            "private"
+          ],
+          "description": "Search in repositories with visibility. one of `public` or `private`. Optional"
+        },
+        "user": {
+          "type": "string",
+          "description": "Search in repositories owned by user of username. Optional"
+        },
+        "org": {
+          "type": "string",
+          "description": "Search in repositories owned by organization of username. Optional"
+        },
+        "repo": {
+          "type": "string",
+          "description": "Search in repositories with name. It should be in `USERNAME/REPO` format. Optional"
+        }
+      },
+      "required": []
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "github",
+    "scopes": ["repo", "user"]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m search_commit"
+  }
+}

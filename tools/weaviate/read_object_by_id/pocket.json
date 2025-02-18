@@ -1,0 +1,34 @@
+{
+  "tool": {
+    "name": "weaviate_read_object_by_id",
+    "description": "Read an object from a collection in weaviate by its ID",
+    "inputSchema": {
+      "properties": {
+        "collection_name": {
+          "title": "Collection Name",
+          "type": "string",
+          "description": "The name of the collection to read the object from."
+        },
+        "object_id": {
+          "title": "Object ID",
+          "type": "string",
+          "description": "The ID of the object to read."
+        }
+      },
+      "required": [
+        "collection_name",
+        "object_id"
+      ],
+      "title": "ReadObjectByIdRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "weaviate"
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python __main__.py"
+  }
+}

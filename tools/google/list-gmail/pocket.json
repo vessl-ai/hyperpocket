@@ -1,0 +1,27 @@
+{
+  "tool": {
+    "name": "google_list_gmail",
+    "description": "get gmail list",
+    "inputSchema": {
+      "properties": {
+        "date": {
+          "title": "Date",
+          "type": "string"
+        }
+      },
+      "title": "GoogleListGmailRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "google",
+    "scopes": [
+      "https://www.googleapis.com/auth/gmail.readonly"
+    ]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m list_gmail"
+  },
+  "language": "python"
+}

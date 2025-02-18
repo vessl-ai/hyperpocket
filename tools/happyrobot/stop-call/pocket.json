@@ -1,0 +1,28 @@
+{
+  "tool": {
+    "name": "happyrobot_stop_call",
+    "description": "Stop a HappyRobot call",
+    "inputSchema": {
+      "properties": {
+        "call_id": {
+          "description": "ID of the call to stop",
+          "type": "string"
+        }
+      },
+      "required": [
+        "call_id"
+      ],
+      "title": "StopCallRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "happyrobot",
+    "scopes": []
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m stop_call"
+  }
+}

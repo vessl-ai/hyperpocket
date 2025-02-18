@@ -72,6 +72,7 @@ class AuthProvider(Enum):
     APITOKEN = "apitoken"
     ZINC = "zinc"
     SEMANTIC_SCHOLAR = "semantic_scholar"
+    WEAVIATE = "weaviate"
 
     @classmethod
     def get_auth_provider(cls, auth_provider_name: str) -> "AuthProvider":

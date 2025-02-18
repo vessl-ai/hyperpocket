@@ -1,0 +1,274 @@
+{
+  "tool": {
+    "name": "ebay_search",
+    "description": "serp api ebay search api",
+    "inputSchema": {
+      "properties": {
+        "nkw": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search query term for Ebay. Required unless category_id is provided.",
+          "title": "Nkw"
+        },
+        "category_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Category ID for concentrated search. Can be used without nkw.",
+          "title": "Category Id"
+        },
+        "ebay_domain": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "ebay.com",
+          "description": "Ebay domain to use (default: ebay.com)",
+          "title": "Ebay Domain"
+        },
+        "salic": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Location based on country.",
+          "title": "Salic"
+        },
+        "pgn": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "description": "Page number for pagination (default: 1)",
+          "title": "Pgn"
+        },
+        "ipg": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 50,
+          "description": "Max results per page. Options: 25, 50 (default), 100, 200",
+          "title": "Ipg"
+        },
+        "blrs": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Exclude results from auto-corrected queries if spell_auto_correct is used.",
+          "title": "Blrs"
+        },
+        "show_only": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "List of filters to apply to results (e.g., 'Sold', 'FS')",
+          "title": "Show Only"
+        },
+        "buying_format": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Buying format filter (e.g., 'Auction', 'BIN', 'BO')",
+          "title": "Buying Format"
+        },
+        "udlo": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Lowest price filter.",
+          "title": "Udlo"
+        },
+        "udhi": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Highest price filter.",
+          "title": "Udhi"
+        },
+        "sop": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "Best Match",
+          "description": "Sorting method for results.",
+          "title": "Sop"
+        },
+        "dmd": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Visual layout (Grid or List)",
+          "title": "Dmd"
+        },
+        "stpos": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "ZIP or Postal code for filtering shipping products by area.",
+          "title": "Stpos"
+        },
+        "LH_ItemCondition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Product condition filter using numeric IDs (e.g., '1000|3000').",
+          "title": "Lh Itemcondition"
+        },
+        "no_cache": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Force fetching new results instead of cached results.",
+          "title": "No Cache"
+        },
+        "async_search": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Submit search asynchronously.",
+          "title": "Async Search"
+        },
+        "zero_trace": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enterprise-only: Enable ZeroTrace mode.",
+          "title": "Zero Trace"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "json",
+          "description": "Output format: 'json' (default) or 'html'",
+          "title": "Output"
+        }
+      },
+      "title": "EbaySearchRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "serpapi"
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m ebay_search"
+  }
+}

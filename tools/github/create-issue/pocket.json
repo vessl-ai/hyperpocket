@@ -1,0 +1,56 @@
+{
+  "tool": {
+    "name": "github_create_issue",
+    "description": "Create a GitHub issue",
+    "inputSchema": {
+      "properties": {
+        "owner": {
+          "description": "The account owner of the repository. The name is not case sensitive.",
+          "type": "string"
+        },
+        "repo": {
+          "description": "The name of the repository. The name is not case sensitive.",
+          "type": "string"
+        },
+        "title": {
+          "description": "The title of the issue.",
+          "type": "string"
+        },
+        "body": {
+          "description": "The contents of the issue.",
+          "type": "string"
+        },
+        "assignees": {
+          "description": "Logins for Users to assign to this issue. NOTE: Only users with push access can set assignees for new issues. Assignees are silently dropped otherwise.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "labels": {
+          "description": "Labels to associate with this issue. NOTE: Only users with push access can set labels for new issues. Labels are silently dropped otherwise.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "title"
+      ],
+      "title": "GitHubCreateIssueRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "github",
+    "scopes": ["repo"]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m create_issue"
+  }
+}

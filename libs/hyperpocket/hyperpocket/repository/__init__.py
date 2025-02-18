@@ -1,5 +1,4 @@
-from hyperpocket.repository.lock import Lock
-from hyperpocket.repository.lockfile import Lockfile
-from hyperpocket.repository.repository import eject, pull, sync
+from hyperpocket.repository.tool_reference import ToolReference
+from hyperpocket.repository.repository import eject, pull
 
-__all__ = ["Lock", "Lockfile", "pull", "sync", "eject"]
+__all__ = ["ToolReference", "pull", "eject"]

@@ -1,0 +1,133 @@
+{
+  "tool": {
+    "name": "duckduckgo_search",
+    "description": "serp api duckduckgo search api",
+    "inputSchema": {
+      "properties": {
+        "q": {
+          "description": "Query term to search in DuckDuckGo",
+          "title": "Q",
+          "type": "string"
+        },
+        "kl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Region code for localization (e.g., 'us-en', 'uk-en', 'fr-fr')",
+          "title": "Kl"
+        },
+        "safe": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": -1,
+          "description": "Filtering level for adult content (1: Strict, -1: Moderate, -2: Off)",
+          "title": "Safe"
+        },
+        "df": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter results by date ('d', 'w', 'm', 'y' or custom format 'YYYY-MM-DD..YYYY-MM-DD')",
+          "title": "Df"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Result offset for pagination (default: 0)",
+          "title": "Start"
+        },
+        "no_cache": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Force fetching new results instead of cached results",
+          "title": "No Cache"
+        },
+        "async": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Submit search asynchronously",
+          "title": "Async"
+        },
+        "zero_trace": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enterprise-only: Enable ZeroTrace mode",
+          "title": "Zero Trace"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "json",
+          "description": "Output format: 'json' (default) or 'html'",
+          "title": "Output"
+        }
+      },
+      "required": [
+        "q"
+      ],
+      "title": "DuckDuckGoSearchRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "serpapi"
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m duckduckgo_search"
+  }
+}

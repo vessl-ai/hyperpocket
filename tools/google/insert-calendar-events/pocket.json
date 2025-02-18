@@ -1,0 +1,70 @@
+{
+  "tool": {
+    "name": "google_insert_calendar_events",
+    "description": "insert google calendar events",
+    "inputSchema": {
+      "properties": {
+        "calendar_id": {
+          "description": "Google Calendar ID. The format should follow {user_name}@{domain}.",
+          "title": "Calendar Id",
+          "type": "string"
+        },
+        "send_updates": {
+          "default": "none",
+          "description": "Whether to send notifications about the creation of the new event. Note that some emails might still be sent. \nThe default is none.\nAcceptable values are:\n-'all' : Notifications are sent to all guests.\n-'externalOnly' : Notifications are sent to non-Google Calendar guests only.\n-'none' : No notifications are sent.\n",
+          "title": "Send Updates",
+          "type": "string"
+        },
+        "summary": {
+          "description": "event title summary.",
+          "title": "Summary",
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "default": null,
+          "description": "event description.",
+          "title": "Description"
+        },
+        "start_datetime": {
+          "description": "The time, as a combined date-time value (formatted according to RFC3339). A time zone offset is required unless a time zone is explicitly specified in timeZone.",
+          "title": "Start Datetime",
+          "type": "string"
+        },
+        "end_datetime": {
+          "description": "The time, as a combined date-time value (formatted according to RFC3339). A time zone offset is required unless a time zone is explicitly specified in timeZone.",
+          "title": "End Datetime",
+          "type": "string"
+        },
+        "attendees": {
+          "default": [],
+          "description": "attendees google calendar Id list(format is [id1, id2, ..]). if you dont know this, should get google calendar list at first.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Attendees",
+          "type": "array"
+        }
+      },
+      "required": [
+        "calendar_id",
+        "summary",
+        "start_datetime",
+        "end_datetime"
+      ],
+      "title": "GoogleInsertCalendarEventsRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "google",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar"
+    ]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m insert_calendar_events"
+  }
+}

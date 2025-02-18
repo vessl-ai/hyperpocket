@@ -1,0 +1,36 @@
+{
+  "tool": {
+    "name": "github_watch_repo",
+    "description": "Watch a GitHub repository",
+    "inputSchema": {
+      "properties": {
+        "owner": {
+          "description": "The account owner of the repository. The name is not case sensitive.",
+          "type": "string"
+        },
+        "repo": {
+          "description": "The name of the repository. The name is not case sensitive.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ],
+      "title": "GitHubStarRepoRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "github",
+    "scopes": [
+      "user",
+      "repo"
+    ]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m watch_repo"
+  }
+}

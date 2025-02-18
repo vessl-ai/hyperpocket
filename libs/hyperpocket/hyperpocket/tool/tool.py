@@ -116,20 +116,12 @@ class Tool(BaseModel, abc.ABC):
             return self.description
 
     def override_tool_variables(self, override_vars: dict[str, str]) -> "Tool":
-        self.overridden_tool_vars = override_vars
+        self.overridden_tool_vars |= override_vars
         return self
 
     @property
     def tool_vars(self) -> dict[str, str]:
         return self.default_tool_vars | self.overridden_tool_vars
-
-    @classmethod
-    def from_tool_request(cls, tool_req: ToolRequest, **kwargs) -> "Tool":
-        from hyperpocket.tool.wasm.tool import WasmTool, WasmToolRequest
-
-        if isinstance(tool_req, WasmToolRequest):
-            return WasmTool.from_tool_request(tool_req, **kwargs)
-        raise ValueError("Unknown tool request type")
 
     @classmethod
     def _get_schema_model(

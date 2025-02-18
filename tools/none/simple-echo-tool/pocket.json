@@ -1,0 +1,24 @@
+{
+  "tool": {
+    "name": "simple_echo_tool",
+    "description": "echo the input text",
+    "inputSchema": {
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "EchoRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m simple_echo_tool"
+  }
+}

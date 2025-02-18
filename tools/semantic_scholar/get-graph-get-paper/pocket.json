@@ -1,0 +1,25 @@
+{
+  "tool": {
+    "name": "get_graph_get_paper",
+    "description": "Get paper from Semantic Scholar",
+    "inputSchema": {
+      "properties": {
+        "paper_id": {
+          "title": "Paper Id",
+          "type": "integer",
+          "description": "Semantic Scholar ID"
+        }
+      },
+      "required": [
+        "paper_id"
+      ],
+      "title": "GetGraphGetPaperRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m get_graph_get_paper"
+  }
+}

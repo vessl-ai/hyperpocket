@@ -1,0 +1,54 @@
+{
+  "tool": {
+    "name": "gumloop_retrieve_input_schema",
+    "description": "Retrieve the input schema for flows in Gumloop. If you’re starting a flow and are unsure about its input schema, use this tool to obtain the required schema first.",
+    "inputSchema": {
+      "properties": {
+        "saved_item_id": {
+          "description": "The ID of the saved item for which to retrieve input schemas.",
+          "title": "Saved Item Id",
+          "type": "string"
+        },
+        "user_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "User ID that created the flow. Required if project_id is not provided.",
+          "title": "User Id"
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Project ID that the flow is under. Required if user_id is not provided.",
+          "title": "Project Id"
+        }
+      },
+      "required": [
+        "saved_item_id"
+      ],
+      "title": "GumLoopRetrieveInputSchema",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m retrieve_input_schema"
+  },
+  "auth": {
+    "auth_provider": "gumloop"
+  }
+}

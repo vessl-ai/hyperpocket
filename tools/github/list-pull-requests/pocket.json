@@ -1,0 +1,33 @@
+{
+  "tool": {
+    "name": "github-list-pull-requests",
+    "description": "List GitHub pull requests",
+    "inputSchema": {
+      "properties": {
+        "owner": {
+          "title": "Owner",
+          "type": "string"
+        },
+        "repo": {
+          "title": "Repo",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ],
+      "title": "GithubPRListRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "github",
+    "scopes": ["repo"]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m list_pull_requests"
+  }
+}

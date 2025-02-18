@@ -1,0 +1,210 @@
+{
+  "tool": {
+    "name": "yahoo_search",
+    "description": "serp api yahoo search api",
+    "inputSchema": {
+      "properties": {
+        "p": {
+          "description": "Search query for Yahoo! Search.",
+          "title": "P",
+          "type": "string"
+        },
+        "yahoo_domain": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "search.yahoo.com",
+          "description": "Yahoo! domain to use (default: 'search.yahoo.com').",
+          "title": "Yahoo Domain"
+        },
+        "vc": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Country code for Yahoo! search localization (e.g., 'us', 'uk', 'fr').",
+          "title": "Vc"
+        },
+        "vl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Language restriction for Yahoo! search (e.g., 'lang_fr').",
+          "title": "Vl"
+        },
+        "b": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "description": "Pagination offset for results (default: 1).",
+          "title": "B"
+        },
+        "vm": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filtering level for adult content ('r': Strict, 'i': Moderate, 'p': Off).",
+          "title": "Vm"
+        },
+        "vs": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter results by top-level domains (e.g., '.com,.org').",
+          "title": "Vs"
+        },
+        "vf": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Specify file format to filter results (e.g., 'pdf', 'txt').",
+          "title": "Vf"
+        },
+        "fr2": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Rendering positions and expansions for some elements.",
+          "title": "Fr2"
+        },
+        "d": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Destination parameter for related topics.",
+          "title": "D"
+        },
+        "device": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "desktop",
+          "description": "Device type ('desktop', 'tablet', 'mobile').",
+          "title": "Device"
+        },
+        "no_cache": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Force fetching new results instead of cached results.",
+          "title": "No Cache"
+        },
+        "async": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Submit search asynchronously.",
+          "title": "Async"
+        },
+        "zero_trace": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enterprise-only: Enable ZeroTrace mode.",
+          "title": "Zero Trace"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "json",
+          "description": "Output format ('json' or 'html').",
+          "title": "Output"
+        }
+      },
+      "required": [
+        "p"
+      ],
+      "title": "YahooSearchRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "serpapi"
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m yahoo_search"
+  }
+}

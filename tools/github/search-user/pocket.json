@@ -1,0 +1,77 @@
+{
+  "tool": {
+    "name": "github_search_user",
+    "description": "search github user",
+    "inputSchema": {
+      "title": "GithubUserSearchRequest",
+      "type": "object",
+      "properties": {
+        "sort": {
+          "type": "string",
+          "enum": [
+            "author-date",
+            "committer-date"
+          ],
+          "description": "Sort by author-date or committer-date. Optional"
+        },
+        "order": {
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "description": "Sort order. Optional"
+        },
+        "per_page": {
+          "type": "integer",
+          "default": 30,
+          "description": "Number of items per page. Defaults 30. Optional"
+        },
+        "page": {
+          "type": "integer",
+          "default": 0,
+          "description": "Page number. Defaults 0. Optional"
+        },
+        "user_type": {
+          "type": "string",
+          "enum": [
+            "user",
+            "org"
+          ],
+          "description": "The type of user, one of user or org"
+        },
+        "user_name": {
+          "type": "string",
+          "description": "The name of the user or org"
+        },
+        "org_name": {
+          "type": "string",
+          "description": "The name of the organization"
+        },
+        "search_in": {
+          "type": "string",
+          "enum": [
+            "login",
+            "email",
+            "name"
+          ],
+          "description": "The field to search in, one of login, email, name"
+        },
+        "full_name": {
+          "type": "string",
+          "description": "The full name of the user, in form of `First Last`"
+        }
+      },
+      "required": []
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "github",
+    "scopes": ["repo", "user"]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m search_user"
+  }
+}

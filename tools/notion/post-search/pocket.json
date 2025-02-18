@@ -1,0 +1,60 @@
+{
+  "tool": {
+    "name": "notion_search",
+    "description": "Search notion contents",
+    "inputSchema": {
+      "properties": {
+        "query": {
+          "default": "",
+          "description": "The text that the API compares page and database titles against.",
+          "title": "Query",
+          "type": "string"
+        },
+        "filter": {
+          "type": "string",
+          "enum": [
+            "page",
+            "database"
+          ],
+          "default": "",
+          "description": "A set of criteria, value and property keys, that limits the results to either only pages or only databases.",
+          "title": "Filter"
+        },
+        "sort_direction": {
+          "type": "string",
+          "enum": [
+            "ascending",
+            "descending"
+          ],
+          "default": "",
+          "description": "The direction to sort. Possible values include ascending and descending.",
+          "title": "Sort Direction"
+        },
+        "page_size": {
+          "default": 10,
+          "description": "The number of items from the full list to include in the response. Maximum: 100.",
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "start_cursor": {
+          "type": "string",
+          "default": "",
+          "description": "A cursor value returned in a previous response that, if supplied, limits the response to results starting after the cursor. If not supplied, then the first page of results is returned.",
+          "title": "Start Cursor"
+        }
+      },
+      "title": "NotionSearchRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install -r requirements.txt",
+    "run": "python main.py"
+  },
+  "auth": {
+    "auth_provider": "notion",
+    "auth_handler": "notion-token",
+    "scopes": []
+  }
+}

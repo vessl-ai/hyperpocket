@@ -1,0 +1,31 @@
+{
+  "tool": {
+    "name": "x_user_lookup_me",
+    "description": "get my user data",
+    "inputSchema": {
+      "title": "XUserLookupMeRequest",
+      "type": "object",
+      "properties": {
+        "user_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "A comma-separated list of fields to include in the response. Available options: affiliation, connection_status, created_at, description, entities, id, is_identity_verified, location, most_recent_tweet_id, name, parody, pinned_tweet_id, profile_banner_url, profile_image_url, protected, public_metrics, receives_your_dm, subscription, subscription_type, url, username, verified, verified_followers_count, verified_type, withheld"
+        }
+      }
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "x",
+    "scopes": [
+      "tweet.read",
+      "users.read"
+    ]
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m user_lookup_me"
+  }
+}

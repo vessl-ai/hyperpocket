@@ -1,0 +1,33 @@
+{
+  "tool": {
+    "name": "slack_send_messages",
+    "description": "send a slack message",
+    "inputSchema": {
+      "properties": {
+        "channel": {
+          "title": "Channel",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "channel",
+        "text"
+      ],
+      "title": "SlackPostMessageRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "slack",
+    "scopes": ["channels:history", "chat:write"]
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m post_message"
+  }
+}

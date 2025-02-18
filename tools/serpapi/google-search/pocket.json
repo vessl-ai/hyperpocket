@@ -1,0 +1,355 @@
+{
+  "tool": {
+    "name": "google_search",
+    "description": "serp api google search api",
+    "inputSchema": {
+      "properties": {
+        "q": {
+          "description": "Search query for Google. Supports advanced search operators.",
+          "title": "Q",
+          "type": "string"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Location to originate the search from.",
+          "title": "Location"
+        },
+        "uule": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Google encoded location for search. Can't be used with location.",
+          "title": "Uule"
+        },
+        "ludocid": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Google My Business listing ID (CID) to scrape.",
+          "title": "Ludocid"
+        },
+        "lsig": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Forces knowledge graph map view to show up.",
+          "title": "Lsig"
+        },
+        "kgmid": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Google Knowledge Graph ID to scrape.",
+          "title": "Kgmid"
+        },
+        "si": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Cached search parameters for Google Search.",
+          "title": "Si"
+        },
+        "ibp": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Controls rendering and expansions for specific elements.",
+          "title": "Ibp"
+        },
+        "uds": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter search results using a Google-provided filter string.",
+          "title": "Uds"
+        },
+        "google_domain": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "google.com",
+          "description": "Google domain to use (default: 'google.com').",
+          "title": "Google Domain"
+        },
+        "gl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "us",
+          "description": "Country code for search localization (default: 'us').",
+          "title": "Gl"
+        },
+        "hl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "Language code for search localization (default: 'en').",
+          "title": "Hl"
+        },
+        "cr": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Country restriction for search (e.g., 'countryFR|countryDE').",
+          "title": "Cr"
+        },
+        "lr": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Language restriction for search (e.g., 'lang_fr|lang_de').",
+          "title": "Lr"
+        },
+        "tbs": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Advanced search filters for specific content types.",
+          "title": "Tbs"
+        },
+        "safe": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "off",
+          "description": "Filtering level for adult content ('active' or 'off').",
+          "title": "Safe"
+        },
+        "nfpr": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Exclude results from auto-corrected query (1: Yes, 0: No).",
+          "title": "Nfpr"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "description": "Enable 'Similar Results' and 'Omitted Results' filters (1: On, 0: Off).",
+          "title": "Filter"
+        },
+        "tbm": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Type of Google search (e.g., 'isch' for images, 'vid' for videos).",
+          "title": "Tbm"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Pagination offset for results (default: 0). Google Local Results only accept multiples of 20.",
+          "title": "Start"
+        },
+        "num": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 10,
+          "description": "Number of results to return (default: 10, max: 100).",
+          "title": "Num"
+        },
+        "device": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "desktop",
+          "description": "Device type ('desktop', 'tablet', 'mobile').",
+          "title": "Device"
+        },
+        "no_cache": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Force fetching new results instead of cached results.",
+          "title": "No Cache"
+        },
+        "async": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Submit search asynchronously.",
+          "title": "Async"
+        },
+        "zero_trace": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enterprise-only: Enable ZeroTrace mode.",
+          "title": "Zero Trace"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "json",
+          "description": "Output format ('json' or 'html').",
+          "title": "Output"
+        }
+      },
+      "required": [
+        "q"
+      ],
+      "title": "GoogleSearchRequest",
+      "type": "object"
+    }
+  },
+  "language": "python",
+  "auth": {
+    "auth_provider": "serpapi"
+  },
+  "entrypoint": {
+    "build": "pip install .",
+    "run": "python -m google_search"
+  }
+}
