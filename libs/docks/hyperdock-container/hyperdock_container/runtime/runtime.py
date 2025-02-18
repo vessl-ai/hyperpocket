@@ -178,7 +178,7 @@ class ContainerRuntime(abc.ABC):
                 commit=True,
                 tool_image_tag=tool_image_tag,
                 **tool_request.runtime_arguments) as container_id:
-            self.put_archive(container_id, toolpkg_path, "/tool")
+            self.put_archive(container_id, rootpath, "/tool")
             if build_cmd is not None:
                 self.run(container_id)
 

@@ -46,7 +46,7 @@ class ContainerToolRequest(ToolRequest):
                 if lang := language.lower():
                     if lang == "python":
                         self._base_image = "python:3.11-slim"
-                        return "python"
+                        return "python:3.11-slim"
                     if lang == "node":
                         self._base_image = "node"
                         return "node"

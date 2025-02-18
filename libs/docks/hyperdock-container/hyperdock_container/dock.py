@@ -53,7 +53,10 @@ class ContainerDock(Dock):
                 max_workers=min(len(self.unique_tool_references) + 1, 100), thread_name_prefix="repository_loader"
         ) as executor:
             executor.map(lambda k: k.sync(), self.unique_tool_references.values())
-
+        
+        for tool_req in self._tool_requests:
+            tool_req.tool_ref = self.unique_tool_references[tool_req.tool_ref.key()]
+            
         base_images = set([tool_req.base_image for tool_req in self._tool_requests])
         with ThreadPoolExecutor(
                 max_workers=min(len(base_images) + 1, 100), thread_name_prefix="base_image_loader"

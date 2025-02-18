@@ -37,10 +37,14 @@ class Pocket(object):
             raise e
         
         try:
-            loop = asyncio.get_running_loop()
-            loop.run_until_complete(self.server.plug_core(self._uid, self.core))
+            asyncio.get_running_loop()
         except RuntimeError:
-            asyncio.run(self.server.plug_core(self._uid, self.core))
+            loop = asyncio.new_event_loop()
+        else:
+            import nest_asyncio
+            loop = asyncio.new_event_loop()
+            nest_asyncio.apply(loop=loop)
+        loop.run_until_complete(self.server.plug_core(self._uid, self.core))
 
     def invoke(
         self,

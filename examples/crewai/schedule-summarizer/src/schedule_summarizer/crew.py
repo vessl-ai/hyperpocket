@@ -27,7 +27,7 @@ class ScheduleSummarizer:
     def slack_agent(self) -> Agent:
         return Agent(
             role="slack agent",
-            llm="gpt-4",
+            llm="gpt-4o",
             goal="process slack related job",
             backstory="slack agent",
             tools=self.pocket.get_tools(),
@@ -38,7 +38,7 @@ class ScheduleSummarizer:
     def github_agent(self) -> Agent:
         return Agent(
             role="github agent",
-            llm="gpt-4",
+            llm="gpt-4o",
             goal="process github related job",
             backstory="github agent",
             tools=self.pocket.get_tools(),
@@ -49,7 +49,7 @@ class ScheduleSummarizer:
     def google_calendar_agent(self) -> Agent:
         return Agent(
             role="google calendar agent",
-            llm="gpt-4",
+            llm="gpt-4o",
             goal="process google calendar related job",
             backstory="google calendar agent",
             tools=self.pocket.get_tools(),
