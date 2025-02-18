@@ -28,8 +28,6 @@ jobs:
     needs: extract-version
     steps:
       - name: Check if version already exists
-        env:
-          VERSION: ${{ env.VERSION }}
         run: |
           echo "Checking if version $VERSION already exists for all packages..."
 
@@ -89,8 +87,6 @@ jobs:
 
       # 5. Update Version
       - name: Update version in all packages
-        env:
-          VERSION: ${{ env.VERSION }}
         run: |
           echo "Updating version to $VERSION"
           
@@ -226,8 +222,6 @@ jobs:
     steps:
       # Check if publishing succeeded
       - name: Check if version uploaded successfully
-        env:
-          VERSION: ${{ env.VERSION }}
         run: |
           echo "Checking if version $VERSION uploaded successfully for all packages..."
           
