@@ -5,7 +5,10 @@ description = ""
 authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 requires-python = ">=3.10"
 readme = "README.md"
-dependencies = ["anthropic>=0.40.0", "hyperpocket>=0.0.3"]
+dependencies = [
+ "anthropic>=0.10.0",
+ "hyperpocket>=0.0.3",
+]
 
 [tool.uv.sources]
 hyperpocket = { path = "../../hyperpocket", editable = true }

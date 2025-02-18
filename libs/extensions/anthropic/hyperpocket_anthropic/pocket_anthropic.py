@@ -1,8 +1,6 @@
 import json
 from typing import List, Optional
 
-from pydantic import BaseModel
-
 try:
     from anthropic.types import ToolResultBlockParam, ToolUseBlock
 except ImportError:
@@ -30,9 +28,7 @@ class PocketAnthropic(Pocket):
             thread_id = "default"
             profile = "default"
 
-        if isinstance(body, BaseModel):
-            body = body.model_dump()
-        elif isinstance(body, str):
+        if isinstance(body, str):
             body = json.loads(body)
 
         result, interrupted = self.invoke_with_state(
@@ -71,9 +67,7 @@ class PocketAnthropic(Pocket):
             thread_id = "default"
             profile = "default"
 
-        if isinstance(body, BaseModel):
-            body = body.model_dump()
-        elif isinstance(body, str):
+        if isinstance(body, str):
             body = json.loads(body)
 
         result, interrupted = await self.ainvoke_with_state(

@@ -2,10 +2,8 @@ import asyncio
 import json
 from typing import List, Optional
 
-from openai import OpenAI
-from pydantic import BaseModel
-
 from hyperpocket_openai.util import tool_to_open_ai_spec
+from openai import OpenAI
 
 try:
     from openai.types.chat import ChatCompletionMessageToolCall
@@ -35,8 +33,8 @@ class PocketOpenAI(Pocket):
             thread_id = "default"
             profile = "default"
 
-        if isinstance(body, BaseModel):
-            body = body.model_dump()
+        if isinstance(body, str):
+            body = json.loads(body)
 
         result = await super().ainvoke(
             tool_call.function.name,

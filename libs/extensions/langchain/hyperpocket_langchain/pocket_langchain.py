@@ -1,9 +1,10 @@
+import json
 from typing import List, Optional
+
+from langchain_core.tools import BaseTool, StructuredTool
 
 from hyperpocket import Pocket
 from hyperpocket.tool import Tool
-from langchain_core.tools import BaseTool, StructuredTool
-from pydantic import BaseModel
 
 
 class PocketLangchain(Pocket):
@@ -24,9 +25,6 @@ class PocketLangchain(Pocket):
                 body = kwargs
                 thread_id = "default"
                 profile = "default"
-
-            if isinstance(body, BaseModel):
-                body = body.model_dump()
 
             result, interrupted = self.invoke_with_state(
                 pocket_tool.name,
@@ -50,8 +48,8 @@ class PocketLangchain(Pocket):
                 thread_id = "default"
                 profile = "default"
 
-            if isinstance(body, BaseModel):
-                body = body.model_dump()
+            if isinstance(body, str):
+                body = json.loads(body)
 
             result, interrupted = await self.ainvoke_with_state(
                 pocket_tool.name, body=body, thread_id=thread_id, profile=profile
