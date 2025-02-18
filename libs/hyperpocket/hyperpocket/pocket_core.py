@@ -22,9 +22,6 @@ class PocketCore:
             pocket_logger.info("hyperdock-container is loaded.")
             return ContainerDock()
         except ImportError:
-            import traceback
-            traceback.print_stack()
-            traceback.print_exc()
             pocket_logger.warning("Failed to import hyperdock_container.")
         
         try:

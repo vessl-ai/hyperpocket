@@ -21,7 +21,6 @@ dependencies = [
     "gitpython>=3.1.43",
     "redis>=5.2.1",
     "dynaconf>=3.2.6",
-    "hyperdock-container",
     "nest-asyncio>=1.6.0",
 ]
 
@@ -31,6 +30,11 @@ Repository = "https://github.com/vessl-ai/hyperpocket"
 
 [project.scripts]
 hyperpocket = "hyperpocket.cli.__main__:cli"
+
+[project.optional-dependencies]
+standard = [
+    "hyperdock-container",
+]
 
 [dependency-groups]
 dev = ["pytest>=8.3.4", "pytest-cov>=6.0.0", "ruff>=0.8.6"]

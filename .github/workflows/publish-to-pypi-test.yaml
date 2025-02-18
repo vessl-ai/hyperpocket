@@ -45,6 +45,8 @@ jobs:
             "hyperpocket-gemini"
             "hyperdock-fileio"
             "hyperdock-langchain"
+            "hyperdock-wasm"
+            "hyperdock-container"
           )
 
           for PACKAGE in "${PACKAGES[@]}"; do
@@ -107,6 +109,8 @@ jobs:
             "libs/extensions/gemini"
             "libs/docks/hyperdock-fileio"
             "libs/docks/hyperdock-langchain"
+            "libs/docks/hyperdock-wasm"
+            "libs/docks/hyperdock-container"
           )
           
           for PATH in "${PATHS[@]}"; do
@@ -220,6 +224,22 @@ jobs:
           uv build
           uv publish --publish-url https://test.pypi.org/legacy/
 
+      - name: Publish hyperdock-wasm package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
+        working-directory: libs/docks/hyperdock-wasm
+        run: |
+          uv build
+          uv publish --publish-url https://test.pypi.org/legacy/
+
+      - name: Publish hyperdock-container package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
+        working-directory: libs/docks/hyperdock-container
+        run: |
+          uv build
+          uv publish --publish-url https://test.pypi.org/legacy/
+
 
   check-version-after:
     runs-on: ubuntu-latest
@@ -244,6 +264,8 @@ jobs:
             "hyperpocket-gemini"
             "hyperdock-fileio"
             "hyperdock-langchain"
+            "hyperdock-wasm"
+            "hyperdock-container"
           )
           
           for PACKAGE in "${PACKAGES[@]}"; do

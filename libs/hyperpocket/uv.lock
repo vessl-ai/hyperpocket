@@ -490,7 +490,6 @@ dependencies = [
     { name = "fastapi" },
     { name = "gitpython" },
     { name = "httpx" },
-    { name = "hyperdock-container" },
     { name = "jinja2" },
     { name = "multiprocess" },
     { name = "nest-asyncio" },
@@ -502,6 +501,11 @@ dependencies = [
     { name = "requests" },
     { name = "toml" },
     { name = "uvicorn" },
+]
+
+[package.optional-dependencies]
+standard = [
+    { name = "hyperdock-container" },
 ]
 
 [package.dev-dependencies]
@@ -518,7 +522,7 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.115.5" },
     { name = "gitpython", specifier = ">=3.1.43" },
     { name = "httpx", specifier = "==0.27" },
-    { name = "hyperdock-container", editable = "../docks/hyperdock-container" },
+    { name = "hyperdock-container", marker = "extra == 'standard'", editable = "../docks/hyperdock-container" },
     { name = "jinja2", specifier = ">=3.1.4" },
     { name = "multiprocess", specifier = ">=0.70.17" },
     { name = "nest-asyncio", specifier = ">=1.6.0" },
