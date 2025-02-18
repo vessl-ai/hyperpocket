@@ -1,0 +1,10 @@
+[project]
+name = "create-collection-tool"
+version = "0.1.0"
+description = "Tool to create a collection in Weaviate"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "weaviate-client>=4.10.4",
+    "pydantic",
+] 
