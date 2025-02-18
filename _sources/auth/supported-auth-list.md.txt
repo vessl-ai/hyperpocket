@@ -78,3 +78,5 @@ OAuth2-based authentication.
 | [Wandb](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/wandb)                         | ✅          | ❌           |
 | [Workiom](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/workiom)                     | ✅          | ❌           |
 | [Yelp](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/yelp)                           | ✅          | ❌           |
+| [Semantic Scholar](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/semantic_scholar)   | ✅          | ❌           |
+| [Zinc](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/zinc)                           | ✅          | ❌           |
