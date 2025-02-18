@@ -1,0 +1,17 @@
+[project]
+name = "weaviate-query-agent"
+version = "0.0.1"
+description = "Weaviate tool calling agent with hyperpocket and Langchain"
+authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "hyperpocket",
+    "hyperpocket_langchain",
+    "langchain>=0.3.15",
+    "langchain-openai>=0.3.1",
+]
+
+[tool.uv.sources]
+hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
+hyperpocket_langchain = { path = "../../../libs/extensions/langchain", editable = true }

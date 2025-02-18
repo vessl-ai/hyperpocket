@@ -9,7 +9,9 @@
       "title": "Data Rows",
       "type": "array",
       "items": {
-        "type": "object"
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
       },
       "description": "A list of data rows to import into the collection."
     }

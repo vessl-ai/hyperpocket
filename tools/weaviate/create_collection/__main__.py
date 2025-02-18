@@ -5,6 +5,7 @@ import sys
 from pydantic import BaseModel, Field
 import weaviate
 from weaviate.classes.init import Auth
+import weaviate.classes.config as wc
 
 
 class CreateCollectionRequest(BaseModel):
@@ -13,22 +14,25 @@ class CreateCollectionRequest(BaseModel):
 
 def create_collection(req: CreateCollectionRequest):
     WCD_URL = os.getenv('WCD_URL')
-    WCD_API_KEY = os.getenv("WCD_API_KEY")
+    WEAVIATE_TOKEN = os.getenv("WEAVIATE_TOKEN")
 
     client = weaviate.connect_to_weaviate_cloud(
         cluster_url=WCD_URL,
-        auth_credentials=Auth.api_key(WCD_API_KEY),
+        auth_credentials=Auth.api_key(WEAVIATE_TOKEN),
     )
 
-    result = client.collections.create(req.name)
+    client.collections.create(
+        req.name,
+        vectorizer_config=wc.Configure.Vectorizer.text2vec_openai(),
+    )
     client.close()
-    return result
+    print(f"Collection {req.name} created successfully.")
 
 
 def main():
     req = json.load(sys.stdin.buffer)
     req_typed = CreateCollectionRequest.model_validate(req)
-    print(create_collection(req_typed))
+    create_collection(req_typed)
 
 
 if __name__ == '__main__':

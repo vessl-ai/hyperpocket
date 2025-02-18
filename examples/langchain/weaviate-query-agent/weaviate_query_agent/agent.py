@@ -52,15 +52,39 @@ def agent(pocket: PocketLangchain):
 
 if __name__ == "__main__":
     with PocketLangchain(
-        tools=[
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/read-pull-request",
-        ],
+            tools=[
+                (
+                        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/weaviate/query_near_text",
+                        {
+                            "WCD_URL": os.getenv("WCD_URL"),
+                            "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY"),
+                        },
+                ),
+                (
+                        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/weaviate/create_collection",
+                        {
+                            "WCD_URL": os.getenv("WCD_URL"),
+                        },
+                ),
+                (
+                        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/weaviate/import_data",
+                        {
+                            "WCD_URL": os.getenv("WCD_URL"),
+                            "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY"),
+                        },
+                ),
+                (
+                        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/weaviate/read_all_objects",
+                        {
+                            "WCD_URL": os.getenv("WCD_URL"),
+                        },
+                ),
+                (
+                        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/weaviate/read_object_by_id",
+                        {
+                            "WCD_URL": os.getenv("WCD_URL"),
+                        },
+                ),
+            ],
     ) as pocket:
         agent(pocket)

@@ -14,18 +14,22 @@ class ReadObjectByIdRequest(BaseModel):
 
 def read_object_by_id(req: ReadObjectByIdRequest):
     WCD_URL = os.getenv('WCD_URL')
-    WCD_API_KEY = os.getenv("WCD_API_KEY")
+    WEAVIATE_TOKEN = os.getenv("WEAVIATE_TOKEN")
 
     client = weaviate.connect_to_weaviate_cloud(
         cluster_url=WCD_URL,
-        auth_credentials=Auth.api_key(WCD_API_KEY),
+        auth_credentials=Auth.api_key(WEAVIATE_TOKEN),
     )
 
     collection = client.collections.get(req.collection_name)
     data_object = collection.query.fetch_object_by_id(req.object_id)
-
+    result = {
+        "id": str(data_object.uuid),
+        "properties": data_object.properties,
+        "vector": data_object.vector
+    }
     client.close()
-    return data_object
+    return result
 
 
 def main():
