@@ -224,7 +224,10 @@ jobs:
 
   check-version-after:
     runs-on: ubuntu-latest
-    needs: publish
+    needs:
+      - publish
+      - extract-version
+
     steps:
       # Check if publishing succeeded
       - name: Check if version uploaded successfully
