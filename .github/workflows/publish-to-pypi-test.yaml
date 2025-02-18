@@ -16,7 +16,7 @@ jobs:
 
       - name: export to env
         run: |
-          VERSION=${{ steps.version.outputs.full_without_prefix}}
+          VERSION=${{ needs.extract-version.outputs.version }}
           echo "Version: $VERSION"
           if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Error: Tag name is not in the correct format. Expected format: v<MAJOR>.<MINOR>.<PATCH>"
@@ -29,7 +29,7 @@ jobs:
     steps:
       - name: Check if version already exists
         run: |
-          VERSION=${{ steps.version.outputs.full_without_prefix}}
+          VERSION=${{ needs.extract-version.outputs.version }}
           echo "Version: $VERSION"
           echo "Checking if version $VERSION already exists for all packages..."
 
@@ -90,7 +90,7 @@ jobs:
       # 5. Update Version
       - name: Update version in all packages
         run: |
-          VERSION=${{ steps.version.outputs.full_without_prefix}}
+          VERSION=${{ needs.extract-version.outputs.version }}
           echo "Updating version to $VERSION"
           
           PYTHON_COMMAND=$(which python)
@@ -226,7 +226,7 @@ jobs:
       # Check if publishing succeeded
       - name: Check if version uploaded successfully
         run: |
-          VERSION=${{ steps.version.outputs.full_without_prefix}}
+          VERSION=${{ needs.extract-version.outputs.version }}
           echo "Checking if version $VERSION uploaded successfully for all packages..."
           
           PACKAGES=(
