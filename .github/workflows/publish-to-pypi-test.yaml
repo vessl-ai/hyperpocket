@@ -63,7 +63,9 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    needs: check-version-before
+    needs:
+      - check-version-before
+      - extract-version
 
     steps:
       # 1. Repository Checkout
