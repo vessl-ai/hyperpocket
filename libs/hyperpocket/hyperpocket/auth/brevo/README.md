@@ -2,7 +2,7 @@
 
 ## Supported Authentication Types
 
-- OAuth2
+- Token
 
 ## Additional Resources
 

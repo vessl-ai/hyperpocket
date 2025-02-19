@@ -2,7 +2,6 @@
 
 ## Supported Authentication Types
 
-- OAuth2
 - Token
 
 ## How to Create a Token

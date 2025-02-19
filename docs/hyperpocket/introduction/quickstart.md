@@ -2,38 +2,36 @@
 
 This guide will help you quickly set up **Hyperpocket** with **LangChain** to build a tool-calling AI agent. In this example, **we will integrate Slack API tools that can retrieve and post messages** using Hyperpocket.
 
-## **1️⃣ Prerequisites**
+## 1. Prerequisites
 
 Before we begin, install the required dependencies.
 
-**Python Version**
+### Python Version
 
 Python >= 3.10
 
-**Install Required Packages**
+### Install Required Packages
 
 Run the following commands to install Hyperpocket and LangChain dependencies.
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install hyperpocket_langchain
-pip install langchain_openai
+pip install hyperpocket[standard] hyperpocket_langchain langchain_openai
 ```
 
-**Install Chromium for Playwright (if not already installed)**
+### Install docker for containerized sandboxed tools
+To execute a sandboxed tool, a user must have a container runtime.
+Currently hyperpocket only supports Docker environment.
+If docker is not installed on your local environment,
+visit [Docker](https://www.docker.com/) homepage to install one.
 
-Chromium is used as a runtime for WASM environment and is required to execute WASM tools. You can install and integrate chromium with playwright by:
 
-```bash
-playwright install
-```
-
-## **2️⃣ Configuration**
+## 2. Configuration
 
 To use Hyperpocket, you need to create configuration files for storing credentials and API settings.
 
-**Set Up Hyperpocket Configuration**
+### Set Up Hyperpocket Configuration
 
 Create a configuration file at `<repository-root>/settings.toml` and add the following
 
@@ -61,11 +59,11 @@ In this tutorial, you are going to try get and post some slack messages. To do s
 Visit **Features > OAuth & Permissions** of the app dashboard. In the `Scopes` section, you have to add `channels:history`, `chat:write` as bot token scopes.
 Configuration is done for the app side. Now, install your app into your workspace by following [this Slack guideline](https://slack.com/help/articles/202035138-Add-apps-to-your-Slack-workspace).
 
-## **3️⃣ Writing the Code**
+## 3. Writing the Code
 
 Below is a breakdown of the code to set up and run the AI agent.
 
-### **Step 1: Import Required Modules**
+### Step 1: Import Required Modules
 
 Import the necessary libraries for integrating Hyperpocket and LangChain.
 
@@ -79,7 +77,7 @@ from langchain_openai import ChatOpenAI
 from hyperpocket_langchain import PocketLangchain
 ```
 
-### **Step 2: Initialize Hyperpocket and Load Tools**
+### Step 2: Initialize Hyperpocket and Load Tools
 
 Set up Hyperpocket and fetch the tools from GitHub.
 
@@ -94,7 +92,7 @@ pocket = PocketLangchain(
 tools = pocket.get_tools()
 ```
 
-### **Step 3: Initialize OpenAI LLM**
+### Step 3: Initialize OpenAI LLM
 
 Configure the OpenAI language model (LLM) for use with LangChain.
 
@@ -104,7 +102,7 @@ llm = ChatOpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"))
 llm_with_tools = llm.bind_tools(tools)
 ```
 
-### **Step 4: Define LangChain Prompt and Memory**
+### Step 4: Define LangChain Prompt and Memory
 
 Create a prompt template and initialize memory to manage conversation history.
 
@@ -123,7 +121,7 @@ prompt = ChatPromptTemplate.from_messages(
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 ```
 
-### **Step 5: Create the LangChain Agent**
+### Step 5: Create the LangChain Agent
 
 Combine the tools, LLM, prompt, and memory to create a LangChain agent.
 
@@ -140,7 +138,7 @@ agent_executor = AgentExecutor(
 )
 ```
 
-### **Step 6: Run the Agent (Interactive Mode)**
+### Step 6: Run the Agent (Interactive Mode)
 
 Run the agent interactively in a terminal or Jupyter Notebook to test its functionality.
 
@@ -159,7 +157,7 @@ while True:
     print()
 ```
 
-### **Step 7: Test the Agent with a Single Query**
+### Step 7: Test the Agent with a Single Query
 
 For a simpler test, try running a single query.
 
@@ -172,7 +170,7 @@ print("User Input:", test_input)
 print("Agent Response:", response["output"])
 ```
 
-## **4️⃣ Run the Script**
+## 4. Run the Script
 
 Once everything is set up, execute the script:
 
@@ -180,14 +178,14 @@ Once everything is set up, execute the script:
 python langchain_example.py
 ```
 
-**Expected Output**
+### Expected Output
 
 ```
 Hello, This is a simple Slack agent using Hyperpocket.
 user (q to quit) :
 ```
 
-## **5️⃣ Example Usage**
+## 5. Example Usage
 
 When entering a Slack-related query for the first time, the system will provide an authentication link. Follow these steps to authenticate:
 

@@ -5,7 +5,6 @@
 **Example: Using LangGraph with Slack Integration**
 
 ```python
-from hyperpocket.tool import from_git
 from hyperpocket_langgraph import PocketLanggraph
 from langgraph import AgentGraph
 

@@ -9,7 +9,6 @@ from llama_index.core.agent import AgentRunner, FunctionCallingAgent
 from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.llms.openai import OpenAI
 
-from hyperpocket.tool import from_git
 from hyperpocket_llamaindex import PocketLlamaindex
 
 llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
