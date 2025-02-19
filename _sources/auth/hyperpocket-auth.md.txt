@@ -120,7 +120,7 @@ async def main():
         ]
     )
 
-    # 01. get authenticatio URI
+    # 01. get authentication URI
     prepare_list = await pocket.initialize_tool_auth()
 
     for idx, prepare in enumerate(prepare_list):

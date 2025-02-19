@@ -16,7 +16,7 @@
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
 <link href="../auth/index.html" rel="next" title="Auth"/>
-<link href="using-function-tools.html" rel="prev" title="Using Function Tools"/>
+<link href="using-sandboxed-tools.html" rel="prev" title="Using Sandboxed Tools"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -77,8 +77,8 @@
 </li>
 <li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Tools<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
 <li class="toctree-l2"><a class="reference internal" href="what-are-tools.html">What are tools?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using-wasm-tools.html">Using Sandbox Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using-function-tools.html">Using Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-sandboxed-tools.html">Using Sandboxed Tools</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Tool interfaces</a></li>
 </ul>
 </li>
@@ -132,13 +132,78 @@
 <div id="content" role="main">
 <section id="tool-interfaces">
 <h1>Tool interfaces<a class="headerlink" href="#tool-interfaces" title="Link to this heading"><span>#</span></a></h1>
-<section id="git-tools-and-local-tools">
-<h2>Git Tools and Local Tools<a class="headerlink" href="#git-tools-and-local-tools" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#git-tools-and-local-tools'"><span>#</span></a></h2>
-<p>The two types of tools are implemented in same way, similar as writing a python package.</p>
-
+<section id="function-tools">
+<h2>Function Tools<a class="headerlink" href="#function-tools" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#function-tools'"><span>#</span></a></h2>
+<p>Function Tools are python functions with authentication data supplied through keyword arguments.</p>
+<section id="example-list-gmail-function-tool">
+<h3>Example: <code class="docutils literal notranslate"><span class="pre">list_gmail</span></code> function tool<a class="headerlink" href="#example-list-gmail-function-tool" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#example-list-gmail-function-tool'"><span>#</span></a></h3>
+<p>source: <a class="reference external" href="https://github.com/vessl-ai/hyperpocket/blob/main/examples/openai/personal-email-summarizer/personal_email_summarizer/main.py#L254">examples/openai/personal-email-summarizer#L254</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="nd">@function_tool</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">GOOGLE</span><span class="p">,</span>
+</span><span id="line-3">    <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s2">"https://www.googleapis.com/auth/gmail.readonly"</span><span class="p">],</span>
+</span><span id="line-4"><span class="p">)</span>
+</span><span id="line-5"><span class="k">def</span><span class="w"> </span><span class="nf">list_gmail</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">GOOGLE_TOKEN</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="line-6"><span class="w">    </span><span class="sd">"""</span>
+</span><span id="line-7"><span class="sd">    List gmail with gmail query</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="sd">    Args:</span>
+</span><span id="line-10"><span class="sd">        q(str) : gmail query, see https://support.google.com/mail/answer/7190?hl=en</span>
+</span><span id="line-11"><span class="sd">                 call get_gmail_query_definition to get the definition of gmail query</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="sd">    """</span>
+</span><span id="line-14">
+</span><span id="line-15">    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="line-16">        <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">"https://gmail.googleapis.com/gmail/v1/users/me/messages"</span><span class="p">,</span>
+</span><span id="line-17">        <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-18">            <span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">GOOGLE_TOKEN</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+</span><span id="line-19">        <span class="p">},</span>
+</span><span id="line-20">        <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-21">            <span class="s2">"q"</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span>
+</span><span id="line-22">        <span class="p">},</span>
+</span><span id="line-23">    <span class="p">)</span>
+</span><span id="line-24">
+</span><span id="line-25">    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+</span><span id="line-26">        <span class="k">return</span> <span class="sa">f</span><span class="s2">"failed to get mail list. error : </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="line-27">
+</span><span id="line-28">    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="input-and-output">
+<h3>Input and Output<a class="headerlink" href="#input-and-output" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#input-and-output'"><span>#</span></a></h3>
+<p>Input and output are passed as function arguments and return values.</p>
+</section>
+<section id="authentication-data">
+<h3>Authentication data<a class="headerlink" href="#authentication-data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#authentication-data'"><span>#</span></a></h3>
+<p>Authentication data is passed as keyword arguments. For the example above, the <code class="docutils literal notranslate"><span class="pre">GOOGLE_TOKEN</span></code> is passed as a keyword argument.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">...</span>
+</span><span id="line-2"><span class="nd">@function_tool</span><span class="p">()</span>
+</span><span id="line-3"><span class="k">def</span><span class="w"> </span><span class="nf">my_tool</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="line-4">    <span class="n">token</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"GOOGLE_TOKEN"</span><span class="p">]</span>
+</span><span id="line-5"><span class="o">...</span>
+</span></code></pre></div>
+</div>
+<p>For each auth provider, the key name is different. (See <a class="reference internal" href="#/auth/supported-auth-list.html"><span class="xref myst">Supported Auth List</span></a> for more details.)</p>
+</section>
+</section>
+<section id="sandboxed-tools">
+<h2>Sandboxed Tools<a class="headerlink" href="#sandboxed-tools" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#sandboxed-tools'"><span>#</span></a></h2>
 <section id="example-create-issue-github-tool-in-hyperpocket">
 <h3>Example: <code class="docutils literal notranslate"><span class="pre">create-issue</span></code> github tool in hyperpocket<a class="headerlink" href="#example-create-issue-github-tool-in-hyperpocket" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#example-create-issue-github-tool-in-hyperpocket'"><span>#</span></a></h3>
-<p>source: <a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/create-issue">tools/github/create-issue</a></p>
+<section id="directory-structure">
+<h4>Directory Structure<a class="headerlink" href="#directory-structure" title="Link to this heading"><span>#</span></a></h4>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">/create-issue
+</span><span id="line-2"><span class="w">  </span>/create_issue
+</span><span id="line-3"><span class="w">    </span>/__init__.py
+</span><span id="line-4"><span class="w">    </span>/__main__.py
+</span><span id="line-5"><span class="w">  </span>/requirements.txt
+</span><span id="line-6"><span class="w">  </span>/pocket.json
+</span></code></pre></div>
+</div>
+</section>
+<section id="example-code">
+<h4>Example Code<a class="headerlink" href="#example-code" title="Link to this heading"><span>#</span></a></h4>
+<p>Original source code can be found at <a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/create-issue">tools/github/create-issue</a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># tools/github/create-issue/create-issue/__main__.py</span>
 </span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 </span><span id="line-3"><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -188,100 +253,136 @@
 </span><span id="line-47">    <span class="n">main</span><span class="p">()</span>
 </span></code></pre></div>
 </div>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># tools/github/create-issue/create-issue/config.toml</span>
-</span><span id="line-2"><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"github_create_issue"</span>
-</span><span id="line-3"><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Create a GitHub issue"</span>
-</span><span id="line-4"><span class="n">language</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"python"</span>
-</span><span id="line-5">
-</span><span id="line-6"><span class="k">[auth]</span>
-</span><span id="line-7"><span class="n">auth_provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"github"</span>
-</span><span id="line-8"><span class="n">scopes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"repo"</span><span class="p">]</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="err">#</span><span class="w"> </span><span class="kc">t</span><span class="err">ools/gi</span><span class="kc">t</span><span class="err">hub/crea</span><span class="kc">te</span><span class="mi">-</span><span class="err">issue/crea</span><span class="kc">te</span><span class="mi">-</span><span class="err">issue/pocke</span><span class="kc">t</span><span class="err">.jso</span><span class="kc">n</span>
+</span><span id="line-2"><span class="p">{</span>
+</span><span id="line-3"><span class="w">    </span><span class="nt">"tool"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-4"><span class="w">        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"github_create_issue"</span><span class="p">,</span>
+</span><span id="line-5"><span class="w">        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Create a GitHub issue"</span><span class="p">,</span>
+</span><span id="line-6"><span class="w">        </span><span class="nt">"inputSchema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+</span><span id="line-7"><span class="w">            </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-8"><span class="w">                </span><span class="nt">"owner"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-9"><span class="w">                    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The owner of the repository"</span><span class="p">,</span>
+</span><span id="line-10"><span class="w">                    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner"</span><span class="p">,</span>
+</span><span id="line-11"><span class="w">                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
+</span><span id="line-12"><span class="w">                </span><span class="p">},</span>
+</span><span id="line-13"><span class="w">                </span><span class="nt">"repo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-14"><span class="w">                    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The name of the repository"</span><span class="p">,</span>
+</span><span id="line-15"><span class="w">                    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Repo"</span><span class="p">,</span>
+</span><span id="line-16"><span class="w">                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
+</span><span id="line-17"><span class="w">                </span><span class="p">},</span>
+</span><span id="line-18"><span class="w">                </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-19"><span class="w">                    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The title of the issue"</span><span class="p">,</span>
+</span><span id="line-20"><span class="w">                    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Title"</span><span class="p">,</span>
+</span><span id="line-21"><span class="w">                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
+</span><span id="line-22"><span class="w">                </span><span class="p">},</span>
+</span><span id="line-23"><span class="w">                </span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-24"><span class="w">                    </span><span class="nt">"anyOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="line-25"><span class="w">                        </span><span class="p">{</span>
+</span><span id="line-26"><span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
+</span><span id="line-27"><span class="w">                        </span><span class="p">},</span>
+</span><span id="line-28"><span class="w">                        </span><span class="p">{</span>
+</span><span id="line-29"><span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"null"</span>
+</span><span id="line-30"><span class="w">                        </span><span class="p">}</span>
+</span><span id="line-31"><span class="w">                    </span><span class="p">],</span>
+</span><span id="line-32"><span class="w">                    </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="line-33"><span class="w">                    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The body of the issue"</span><span class="p">,</span>
+</span><span id="line-34"><span class="w">                    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Body"</span>
+</span><span id="line-35"><span class="w">                </span><span class="p">},</span>
+</span><span id="line-36"><span class="w">                </span><span class="nt">"assignee"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-37"><span class="w">                    </span><span class="nt">"anyOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="line-38"><span class="w">                        </span><span class="p">{</span>
+</span><span id="line-39"><span class="w">                            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
+</span><span id="line-40"><span class="w">                        </span><span class="p">},</span>
+</span><span id="line-41"><span class="w">                        </span><span class="p">{</span>
+</span><span id="line-42"><span class="w">                            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"null"</span>
+</span><span id="line-43"><span class="w">                        </span><span class="p">}</span>
+</span><span id="line-44"><span class="w">                    </span><span class="p">],</span>
+</span><span id="line-45"><span class="w">                    </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="line-46"><span class="w">                    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The assignee of the issue"</span><span class="p">,</span>
+</span><span id="line-47"><span class="w">                    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Assignee"</span>
+</span><span id="line-48"><span class="w">                </span><span class="p">},</span>
+</span><span id="line-49"><span class="w">                </span><span class="nt">"labels"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-50"><span class="w">                    </span><span class="nt">"anyOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="line-51"><span class="w">                        </span><span class="p">{</span>
+</span><span id="line-52"><span class="w">                            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-53"><span class="w">                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
+</span><span id="line-54"><span class="w">                            </span><span class="p">},</span>
+</span><span id="line-55"><span class="w">                            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span>
+</span><span id="line-56"><span class="w">                        </span><span class="p">},</span>
+</span><span id="line-57"><span class="w">                        </span><span class="p">{</span>
+</span><span id="line-58"><span class="w">                            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"null"</span>
+</span><span id="line-59"><span class="w">                        </span><span class="p">}</span>
+</span><span id="line-60"><span class="w">                    </span><span class="p">],</span>
+</span><span id="line-61"><span class="w">                    </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="line-62"><span class="w">                    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The labels of the issue"</span><span class="p">,</span>
+</span><span id="line-63"><span class="w">                    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Labels"</span>
+</span><span id="line-64"><span class="w">                </span><span class="p">}</span>
+</span><span id="line-65"><span class="w">            </span><span class="p">},</span>
+</span><span id="line-66"><span class="w">            </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="line-67"><span class="w">                </span><span class="s2">"owner"</span><span class="p">,</span>
+</span><span id="line-68"><span class="w">                </span><span class="s2">"repo"</span><span class="p">,</span>
+</span><span id="line-69"><span class="w">                </span><span class="s2">"title"</span>
+</span><span id="line-70"><span class="w">            </span><span class="p">],</span>
+</span><span id="line-71"><span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GithubCreateIssueRequest"</span><span class="p">,</span>
+</span><span id="line-72"><span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span>
+</span><span id="line-73"><span class="w">        </span><span class="p">}</span>
+</span><span id="line-74"><span class="w">    </span><span class="p">},</span>
+</span><span id="line-75"><span class="w">    </span><span class="nt">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"python"</span><span class="p">,</span>
+</span><span id="line-76"><span class="w">    </span><span class="nt">"auth"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-77"><span class="w">        </span><span class="nt">"auth_provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"github"</span><span class="p">,</span>
+</span><span id="line-78"><span class="w">        </span><span class="nt">"scopes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"repo"</span><span class="p">]</span>
+</span><span id="line-79"><span class="w">    </span><span class="p">},</span>
+</span><span id="line-80"><span class="w">    </span><span class="nt">"entrypoint"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-81"><span class="w">        </span><span class="nt">"build"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pip install -r requirements.txt"</span><span class="p">,</span>
+</span><span id="line-82"><span class="w">        </span><span class="nt">"run"</span><span class="p">:</span><span class="w"> </span><span class="s2">"create_issue/__main__.py"</span>
+</span><span id="line-83"><span class="w">    </span><span class="p">}</span>
+</span><span id="line-84"><span class="p">}</span>
 </span></code></pre></div>
 </div>
-<section id="input-and-output">
-<h4>Input and Output<a class="headerlink" href="#input-and-output" title="Link to this heading"><span>#</span></a></h4>
+<section id="tips-for-building-tool-inputschema">
+<h5>Tips for Building <code class="docutils literal notranslate"><span class="pre">.tool.inputSchema</span></code><a class="headerlink" href="#tips-for-building-tool-inputschema" title="Link to this heading"><span>#</span></a></h5>
+<p>You can obtain tool.inputSchema with <code class="docutils literal notranslate"><span class="pre">GithubCreateIssueRequest.model_json_schema()</span></code>.
+Especially, if there are multiple BaseModels involved, you can get a flattened schema just as the
+following code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.util.flatten_json_schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">flatten_json_schema</span>
+</span><span id="line-2"><span class="n">json_schema</span> <span class="o">=</span> <span class="n">flatten_json_schema</span><span class="p">(</span><span class="n">GithubCreateIssueRequest</span><span class="o">.</span><span class="n">model_json_schema</span><span class="p">())</span>
+</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="id1">
+<h4>Input and Output<a class="headerlink" href="#id1" title="Link to this heading"><span>#</span></a></h4>
 <p>Input is fed from stdin.
-You should return output to stdout.</p>
+You should print the output to stdout.</p>
 </section>
 <section id="using-passed-authentication-token">
 <h4>Using passed authentication token<a class="headerlink" href="#using-passed-authentication-token" title="Link to this heading"><span>#</span></a></h4>
 <p>Authentication resulting token is provided through environment variable. In this case, <code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code>.</p>
-<p>For each auth provider, the key name is different. (See <a class="reference external" href="https://vessl-ai.github.io/hyperpocket/auth/index.html">Auth</a> for more details.)</p>
-
+<p>For each auth provider, the key name is different. (See <a class="reference internal" href="#/auth/supported-auth-list.html"><span class="xref myst">Supported Auth List</span></a> for more details.)</p>
 </section>
-</section>
-</section>
-<section id="function-tools">
-<h2>Function Tools<a class="headerlink" href="#function-tools" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#function-tools'"><span>#</span></a></h2>
-<p>Function Tools are just python functions with authentication data supplied through <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
-<section id="example-list-gmail-function-tool">
-<h3>Example: <code class="docutils literal notranslate"><span class="pre">list_gmail</span></code> function tool<a class="headerlink" href="#example-list-gmail-function-tool" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#example-list-gmail-function-tool'"><span>#</span></a></h3>
-<p>source: <a class="reference external" href="https://github.com/vessl-ai/hyperpocket/blob/main/examples/openai/personal-email-summarizer/personal_email_summarizer/main.py#L254">examples/openai/personal-email-summarizer#L254</a></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="nd">@function_tool</span><span class="p">(</span>
-</span><span id="line-2">    <span class="n">auth_provider</span><span class="o">=</span><span class="n">AuthProvider</span><span class="o">.</span><span class="n">GOOGLE</span><span class="p">,</span>
-</span><span id="line-3">    <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s2">"https://www.googleapis.com/auth/gmail.readonly"</span><span class="p">],</span>
-</span><span id="line-4"><span class="p">)</span>
-</span><span id="line-5"><span class="k">def</span><span class="w"> </span><span class="nf">list_gmail</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span id="line-6"><span class="w">    </span><span class="sd">"""</span>
-</span><span id="line-7"><span class="sd">    List gmail with gmail query</span>
-</span><span id="line-8">
-</span><span id="line-9"><span class="sd">    Args:</span>
-</span><span id="line-10"><span class="sd">        q(str) : gmail query, see https://support.google.com/mail/answer/7190?hl=en</span>
-</span><span id="line-11"><span class="sd">                 call get_gmail_query_definition to get the definition of gmail query</span>
-</span><span id="line-12">
-</span><span id="line-13"><span class="sd">    """</span>
-</span><span id="line-14">    <span class="n">token</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"GOOGLE_TOKEN"</span><span class="p">]</span>
-</span><span id="line-15">
-</span><span id="line-16">    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-</span><span id="line-17">        <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">"https://gmail.googleapis.com/gmail/v1/users/me/messages"</span><span class="p">,</span>
-</span><span id="line-18">        <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
-</span><span id="line-19">            <span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
-</span><span id="line-20">        <span class="p">},</span>
-</span><span id="line-21">        <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-</span><span id="line-22">            <span class="s2">"q"</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span>
-</span><span id="line-23">        <span class="p">},</span>
-</span><span id="line-24">    <span class="p">)</span>
-</span><span id="line-25">
-</span><span id="line-26">    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
-</span><span id="line-27">        <span class="k">return</span> <span class="sa">f</span><span class="s2">"failed to get mail list. error : </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
-</span><span id="line-28">
-</span><span id="line-29">    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</span></code></pre></div>
-</div>
-</section>
-<section id="id1">
-<h3>Input and Output<a class="headerlink" href="#id1" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#id1'"><span>#</span></a></h3>
-<p>Input and output are passed as function arguments and return values.</p>
-</section>
-<section id="authentication-data">
-<h3>Authentication data<a class="headerlink" href="#authentication-data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#authentication-data'"><span>#</span></a></h3>
-<p>Authentication data is passed as keyword arguments. For the example above, the <code class="docutils literal notranslate"><span class="pre">GOOGLE_TOKEN</span></code> is passed as a keyword argument.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">...</span>
-</span><span id="line-2"><span class="nd">@function_tool</span><span class="p">()</span>
-</span><span id="line-3"><span class="k">def</span><span class="w"> </span><span class="nf">my_tool</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span id="line-4"><span class="n">token</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"GOOGLE_TOKEN"</span><span class="p">]</span>
-</span><span id="line-5"><span class="o">...</span>
-</span></code></pre></div>
-</div>
-<p>For each auth provider, the key name is different. (See <a class="reference external" href="https://vessl-ai.github.io/hyperpocket/auth/index.html">Auth</a> for more details.)</p>
 </section>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#git-tools-and-local-tools'" class="reference internal" href="#git-tools-and-local-tools">Git Tools and Local Tools</a><ul>
-<li><a :data-current="activeSection === '#example-create-issue-github-tool-in-hyperpocket'" class="reference internal" href="#example-create-issue-github-tool-in-hyperpocket">Example: <code class="docutils literal notranslate"><span class="pre">create-issue</span></code> github tool in hyperpocket</a><ul>
+<li><a :data-current="activeSection === '#function-tools'" class="reference internal" href="#function-tools">Function Tools</a><ul>
+<li><a :data-current="activeSection === '#example-list-gmail-function-tool'" class="reference internal" href="#example-list-gmail-function-tool">Example: <code class="docutils literal notranslate"><span class="pre">list_gmail</span></code> function tool</a></li>
 <li><a :data-current="activeSection === '#input-and-output'" class="reference internal" href="#input-and-output">Input and Output</a></li>
+<li><a :data-current="activeSection === '#authentication-data'" class="reference internal" href="#authentication-data">Authentication data</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#sandboxed-tools'" class="reference internal" href="#sandboxed-tools">Sandboxed Tools</a><ul>
+<li><a :data-current="activeSection === '#example-create-issue-github-tool-in-hyperpocket'" class="reference internal" href="#example-create-issue-github-tool-in-hyperpocket">Example: <code class="docutils literal notranslate"><span class="pre">create-issue</span></code> github tool in hyperpocket</a><ul>
+<li><a :data-current="activeSection === '#directory-structure'" class="reference internal" href="#directory-structure">Directory Structure</a></li>
+<li><a :data-current="activeSection === '#example-code'" class="reference internal" href="#example-code">Example Code</a><ul>
+<li><a :data-current="activeSection === '#tips-for-building-tool-inputschema'" class="reference internal" href="#tips-for-building-tool-inputschema">Tips for Building <code class="docutils literal notranslate"><span class="pre">.tool.inputSchema</span></code></a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#id1'" class="reference internal" href="#id1">Input and Output</a></li>
 <li><a :data-current="activeSection === '#using-passed-authentication-token'" class="reference internal" href="#using-passed-authentication-token">Using passed authentication token</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a :data-current="activeSection === '#function-tools'" class="reference internal" href="#function-tools">Function Tools</a><ul>
-<li><a :data-current="activeSection === '#example-list-gmail-function-tool'" class="reference internal" href="#example-list-gmail-function-tool">Example: <code class="docutils literal notranslate"><span class="pre">list_gmail</span></code> function tool</a></li>
-<li><a :data-current="activeSection === '#id1'" class="reference internal" href="#id1">Input and Output</a></li>
-<li><a :data-current="activeSection === '#authentication-data'" class="reference internal" href="#authentication-data">Authentication data</a></li>
 </ul>
 </li>
 </ul>

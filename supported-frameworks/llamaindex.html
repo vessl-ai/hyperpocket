@@ -77,8 +77,8 @@
 </li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../tools/index.html">Tools<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
 <li class="toctree-l2"><a class="reference internal" href="../tools/what-are-tools.html">What are tools?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tools/using-wasm-tools.html">Using Sandbox Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tools/using-function-tools.html">Using Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/using-sandboxed-tools.html">Using Sandboxed Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tools/tool-interfaces.html">Tool interfaces</a></li>
 </ul>
 </li>
@@ -138,32 +138,31 @@
 </span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">llama_index.core.memory</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatMemoryBuffer</span>
 </span><span id="line-3"><span class="kn">from</span><span class="w"> </span><span class="nn">llama_index.llms.openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 </span><span id="line-4">
-</span><span id="line-5"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
-</span><span id="line-6"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_llamaindex</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLlamaindex</span>
-</span><span id="line-7">
-</span><span id="line-8"><span class="n">llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_API_KEY"</span><span class="p">))</span>
-</span><span id="line-9">
-</span><span id="line-10"><span class="c1"># Load a tool</span>
-</span><span id="line-11"><span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketLlamaindex</span><span class="p">(</span>
-</span><span id="line-12">    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
-</span><span id="line-13">        <span class="s2">"https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message"</span><span class="p">,</span>
-</span><span id="line-14">        <span class="s2">"https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests"</span><span class="p">,</span>
-</span><span id="line-15">    <span class="p">]</span>
-</span><span id="line-16"><span class="p">)</span>
-</span><span id="line-17"><span class="n">tools</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">get_tools</span><span class="p">()</span>
-</span><span id="line-18">
-</span><span id="line-19"><span class="n">memory</span> <span class="o">=</span> <span class="n">ChatMemoryBuffer</span><span class="o">.</span><span class="n">from_defaults</span><span class="p">(</span><span class="n">chat_history</span><span class="o">=</span><span class="p">[],</span> <span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">)</span>
-</span><span id="line-20">
-</span><span id="line-21"><span class="n">agent</span> <span class="o">=</span> <span class="n">FunctionCallingAgent</span><span class="o">.</span><span class="n">from_tools</span><span class="p">(</span>
-</span><span id="line-22">    <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span> <span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="n">memory</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
-</span><span id="line-23"><span class="p">)</span>
-</span><span id="line-24">
-</span><span id="line-25"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="line-26">    <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
-</span><span id="line-27">    <span class="k">if</span> <span class="n">user_input</span> <span class="o">==</span> <span class="s2">"q"</span><span class="p">:</span>
-</span><span id="line-28">        <span class="k">break</span>
-</span><span id="line-29">
-</span><span id="line-30">    <span class="n">agent</span><span class="o">.</span><span class="n">chat</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
+</span><span id="line-5"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_llamaindex</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLlamaindex</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="n">llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_API_KEY"</span><span class="p">))</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="c1"># Load a tool</span>
+</span><span id="line-10"><span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketLlamaindex</span><span class="p">(</span>
+</span><span id="line-11">    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+</span><span id="line-12">        <span class="s2">"https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message"</span><span class="p">,</span>
+</span><span id="line-13">        <span class="s2">"https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests"</span><span class="p">,</span>
+</span><span id="line-14">    <span class="p">]</span>
+</span><span id="line-15"><span class="p">)</span>
+</span><span id="line-16"><span class="n">tools</span> <span class="o">=</span> <span class="n">pocket</span><span class="o">.</span><span class="n">get_tools</span><span class="p">()</span>
+</span><span id="line-17">
+</span><span id="line-18"><span class="n">memory</span> <span class="o">=</span> <span class="n">ChatMemoryBuffer</span><span class="o">.</span><span class="n">from_defaults</span><span class="p">(</span><span class="n">chat_history</span><span class="o">=</span><span class="p">[],</span> <span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">)</span>
+</span><span id="line-19">
+</span><span id="line-20"><span class="n">agent</span> <span class="o">=</span> <span class="n">FunctionCallingAgent</span><span class="o">.</span><span class="n">from_tools</span><span class="p">(</span>
+</span><span id="line-21">    <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span> <span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="n">memory</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="line-22"><span class="p">)</span>
+</span><span id="line-23">
+</span><span id="line-24"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="line-25">    <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+</span><span id="line-26">    <span class="k">if</span> <span class="n">user_input</span> <span class="o">==</span> <span class="s2">"q"</span><span class="p">:</span>
+</span><span id="line-27">        <span class="k">break</span>
+</span><span id="line-28">
+</span><span id="line-29">    <span class="n">agent</span><span class="o">.</span><span class="n">chat</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 </section>

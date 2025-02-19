@@ -77,8 +77,8 @@
 </li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../tools/index.html">Tools<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
 <li class="toctree-l2"><a class="reference internal" href="../tools/what-are-tools.html">What are tools?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tools/using-wasm-tools.html">Using Sandbox Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tools/using-function-tools.html">Using Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/using-sandboxed-tools.html">Using Sandboxed Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tools/tool-interfaces.html">Tool interfaces</a></li>
 </ul>
 </li>
@@ -134,28 +134,34 @@
 <h1>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"><span>#</span></a></h1>
 <p>This guide will help you quickly set up <strong>Hyperpocket</strong> with <strong>LangChain</strong> to build a tool-calling AI agent. In this example, <strong>we will integrate Slack API tools that can retrieve and post messages</strong> using Hyperpocket.</p>
 <section id="prerequisites">
-<h2><strong>1️⃣ Prerequisites</strong><a class="headerlink" href="#prerequisites" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#prerequisites'"><span>#</span></a></h2>
+<h2>1. Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#prerequisites'"><span>#</span></a></h2>
 <p>Before we begin, install the required dependencies.</p>
-<p><strong>Python Version</strong></p>
+<section id="python-version">
+<h3>Python Version<a class="headerlink" href="#python-version" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#python-version'"><span>#</span></a></h3>
 <p>Python &gt;= 3.10</p>
-<p><strong>Install Required Packages</strong></p>
+</section>
+<section id="install-required-packages">
+<h3>Install Required Packages<a class="headerlink" href="#install-required-packages" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#install-required-packages'"><span>#</span></a></h3>
 <p>Run the following commands to install Hyperpocket and LangChain dependencies.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
 </span><span id="line-2"><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-</span><span id="line-3">pip<span class="w"> </span>install<span class="w"> </span>hyperpocket_langchain
-</span><span id="line-4">pip<span class="w"> </span>install<span class="w"> </span>langchain_openai
-</span></code></pre></div>
-</div>
-<p><strong>Install Chromium for Playwright (if not already installed)</strong></p>
-<p>Chromium is used as a runtime for WASM environment and is required to execute WASM tools. You can install and integrate chromium with playwright by:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">playwright<span class="w"> </span>install
+</span><span id="line-3">pip<span class="w"> </span>install<span class="w"> </span>hyperpocket<span class="o">[</span>standard<span class="o">]</span><span class="w"> </span>hyperpocket_langchain<span class="w"> </span>langchain_openai
 </span></code></pre></div>
 </div>
 </section>
+<section id="install-docker-for-containerized-sandboxed-tools">
+<h3>Install docker for containerized sandboxed tools<a class="headerlink" href="#install-docker-for-containerized-sandboxed-tools" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#install-docker-for-containerized-sandboxed-tools'"><span>#</span></a></h3>
+<p>To execute a sandboxed tool, a user must have a container runtime.
+Currently hyperpocket only supports Docker environment.
+If docker is not installed on your local environment,
+visit <a class="reference external" href="https://www.docker.com/">Docker</a> homepage to install one.</p>
+</section>
+</section>
 <section id="configuration">
-<h2><strong>2️⃣ Configuration</strong><a class="headerlink" href="#configuration" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#configuration'"><span>#</span></a></h2>
+<h2>2. Configuration<a class="headerlink" href="#configuration" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#configuration'"><span>#</span></a></h2>
 <p>To use Hyperpocket, you need to create configuration files for storing credentials and API settings.</p>
-<p><strong>Set Up Hyperpocket Configuration</strong></p>
+<section id="set-up-hyperpocket-configuration">
+<h3>Set Up Hyperpocket Configuration<a class="headerlink" href="#set-up-hyperpocket-configuration" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#set-up-hyperpocket-configuration'"><span>#</span></a></h3>
 <p>Create a configuration file at <code class="docutils literal notranslate"><span class="pre">&lt;repository-root&gt;/settings.toml</span></code> and add the following</p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">log_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"debug"</span>
 </span></code></pre></div>
@@ -175,11 +181,12 @@ If you have a proper manifest, you may use it to build the new slack app. Or you
 Visit <strong>Features &gt; OAuth &amp; Permissions</strong> of the app dashboard. In the <code class="docutils literal notranslate"><span class="pre">Scopes</span></code> section, you have to add <code class="docutils literal notranslate"><span class="pre">channels:history</span></code>, <code class="docutils literal notranslate"><span class="pre">chat:write</span></code> as bot token scopes.
 Configuration is done for the app side. Now, install your app into your workspace by following <a class="reference external" href="https://slack.com/help/articles/202035138-Add-apps-to-your-Slack-workspace">this Slack guideline</a>.</p>
 </section>
+</section>
 <section id="writing-the-code">
-<h2><strong>3️⃣ Writing the Code</strong><a class="headerlink" href="#writing-the-code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#writing-the-code'"><span>#</span></a></h2>
+<h2>3. Writing the Code<a class="headerlink" href="#writing-the-code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#writing-the-code'"><span>#</span></a></h2>
 <p>Below is a breakdown of the code to set up and run the AI agent.</p>
 <section id="step-1-import-required-modules">
-<h3><strong>Step 1: Import Required Modules</strong><a class="headerlink" href="#step-1-import-required-modules" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-1-import-required-modules'"><span>#</span></a></h3>
+<h3>Step 1: Import Required Modules<a class="headerlink" href="#step-1-import-required-modules" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-1-import-required-modules'"><span>#</span></a></h3>
 <p>Import the necessary libraries for integrating Hyperpocket and LangChain.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 </span><span id="line-2">
@@ -192,7 +199,7 @@ Configuration is done for the app side. Now, install your app into your workspac
 </div>
 </section>
 <section id="step-2-initialize-hyperpocket-and-load-tools">
-<h3><strong>Step 2: Initialize Hyperpocket and Load Tools</strong><a class="headerlink" href="#step-2-initialize-hyperpocket-and-load-tools" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-2-initialize-hyperpocket-and-load-tools'"><span>#</span></a></h3>
+<h3>Step 2: Initialize Hyperpocket and Load Tools<a class="headerlink" href="#step-2-initialize-hyperpocket-and-load-tools" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-2-initialize-hyperpocket-and-load-tools'"><span>#</span></a></h3>
 <p>Set up Hyperpocket and fetch the tools from GitHub.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Initialize Hyperpocket and load Slack tools</span>
 </span><span id="line-2"><span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketLangchain</span><span class="p">(</span>
@@ -206,7 +213,7 @@ Configuration is done for the app side. Now, install your app into your workspac
 </div>
 </section>
 <section id="step-3-initialize-openai-llm">
-<h3><strong>Step 3: Initialize OpenAI LLM</strong><a class="headerlink" href="#step-3-initialize-openai-llm" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-3-initialize-openai-llm'"><span>#</span></a></h3>
+<h3>Step 3: Initialize OpenAI LLM<a class="headerlink" href="#step-3-initialize-openai-llm" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-3-initialize-openai-llm'"><span>#</span></a></h3>
 <p>Configure the OpenAI language model (LLM) for use with LangChain.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Initialize OpenAI LLM</span>
 </span><span id="line-2"><span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_API_KEY"</span><span class="p">))</span>
@@ -215,7 +222,7 @@ Configuration is done for the app side. Now, install your app into your workspac
 </div>
 </section>
 <section id="step-4-define-langchain-prompt-and-memory">
-<h3><strong>Step 4: Define LangChain Prompt and Memory</strong><a class="headerlink" href="#step-4-define-langchain-prompt-and-memory" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-4-define-langchain-prompt-and-memory'"><span>#</span></a></h3>
+<h3>Step 4: Define LangChain Prompt and Memory<a class="headerlink" href="#step-4-define-langchain-prompt-and-memory" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-4-define-langchain-prompt-and-memory'"><span>#</span></a></h3>
 <p>Create a prompt template and initialize memory to manage conversation history.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Define the conversation prompt</span>
 </span><span id="line-2"><span class="n">prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_messages</span><span class="p">(</span>
@@ -233,7 +240,7 @@ Configuration is done for the app side. Now, install your app into your workspac
 </div>
 </section>
 <section id="step-5-create-the-langchain-agent">
-<h3><strong>Step 5: Create the LangChain Agent</strong><a class="headerlink" href="#step-5-create-the-langchain-agent" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-5-create-the-langchain-agent'"><span>#</span></a></h3>
+<h3>Step 5: Create the LangChain Agent<a class="headerlink" href="#step-5-create-the-langchain-agent" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-5-create-the-langchain-agent'"><span>#</span></a></h3>
 <p>Combine the tools, LLM, prompt, and memory to create a LangChain agent.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Create LangChain agent</span>
 </span><span id="line-2"><span class="n">agent</span> <span class="o">=</span> <span class="n">create_tool_calling_agent</span><span class="p">(</span><span class="n">llm</span><span class="p">,</span> <span class="n">tools</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
@@ -249,7 +256,7 @@ Configuration is done for the app side. Now, install your app into your workspac
 </div>
 </section>
 <section id="step-6-run-the-agent-interactive-mode">
-<h3><strong>Step 6: Run the Agent (Interactive Mode)</strong><a class="headerlink" href="#step-6-run-the-agent-interactive-mode" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-6-run-the-agent-interactive-mode'"><span>#</span></a></h3>
+<h3>Step 6: Run the Agent (Interactive Mode)<a class="headerlink" href="#step-6-run-the-agent-interactive-mode" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-6-run-the-agent-interactive-mode'"><span>#</span></a></h3>
 <p>Run the agent interactively in a terminal or Jupyter Notebook to test its functionality.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="nb">print</span><span class="p">(</span><span class="s2">"Hello, This is a simple Slack agent using Hyperpocket."</span><span class="p">)</span>
 </span><span id="line-2">
@@ -267,7 +274,7 @@ Configuration is done for the app side. Now, install your app into your workspac
 </div>
 </section>
 <section id="step-7-test-the-agent-with-a-single-query">
-<h3><strong>Step 7: Test the Agent with a Single Query</strong><a class="headerlink" href="#step-7-test-the-agent-with-a-single-query" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-7-test-the-agent-with-a-single-query'"><span>#</span></a></h3>
+<h3>Step 7: Test the Agent with a Single Query<a class="headerlink" href="#step-7-test-the-agent-with-a-single-query" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-7-test-the-agent-with-a-single-query'"><span>#</span></a></h3>
 <p>For a simpler test, try running a single query.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Test the agent with a single input</span>
 </span><span id="line-2"><span class="n">test_input</span> <span class="o">=</span> <span class="s2">"Retrieve the last message from #general"</span>
@@ -280,19 +287,21 @@ Configuration is done for the app side. Now, install your app into your workspac
 </section>
 </section>
 <section id="run-the-script">
-<h2><strong>4️⃣ Run the Script</strong><a class="headerlink" href="#run-the-script" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#run-the-script'"><span>#</span></a></h2>
+<h2>4. Run the Script<a class="headerlink" href="#run-the-script" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#run-the-script'"><span>#</span></a></h2>
 <p>Once everything is set up, execute the script:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">python</span> <span class="n">langchain_example</span><span class="o">.</span><span class="n">py</span>
 </span></code></pre></div>
 </div>
-<p><strong>Expected Output</strong></p>
+<section id="expected-output">
+<h3>Expected Output<a class="headerlink" href="#expected-output" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#expected-output'"><span>#</span></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">Hello</span><span class="p">,</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">simple</span> <span class="n">Slack</span> <span class="n">agent</span> <span class="n">using</span> <span class="n">Hyperpocket</span><span class="o">.</span>
 </span><span id="line-2"><span class="n">user</span> <span class="p">(</span><span class="n">q</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span> <span class="p">:</span>
 </span></code></pre></div>
 </div>
 </section>
+</section>
 <section id="example-usage">
-<h2><strong>5️⃣ Example Usage</strong><a class="headerlink" href="#example-usage" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#example-usage'"><span>#</span></a></h2>
+<h2>5. Example Usage<a class="headerlink" href="#example-usage" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#example-usage'"><span>#</span></a></h2>
 <p>When entering a Slack-related query for the first time, the system will provide an authentication link. Follow these steps to authenticate:</p>
 <ul class="simple">
 <li><p>Enter a query, such as retrieving or posting a message.</p></li>
@@ -399,20 +408,31 @@ Configuration is done for the app side. Now, install your app into your workspac
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#prerequisites'" class="reference internal" href="#prerequisites"><strong>1️⃣ Prerequisites</strong></a></li>
-<li><a :data-current="activeSection === '#configuration'" class="reference internal" href="#configuration"><strong>2️⃣ Configuration</strong></a></li>
-<li><a :data-current="activeSection === '#writing-the-code'" class="reference internal" href="#writing-the-code"><strong>3️⃣ Writing the Code</strong></a><ul>
-<li><a :data-current="activeSection === '#step-1-import-required-modules'" class="reference internal" href="#step-1-import-required-modules"><strong>Step 1: Import Required Modules</strong></a></li>
-<li><a :data-current="activeSection === '#step-2-initialize-hyperpocket-and-load-tools'" class="reference internal" href="#step-2-initialize-hyperpocket-and-load-tools"><strong>Step 2: Initialize Hyperpocket and Load Tools</strong></a></li>
-<li><a :data-current="activeSection === '#step-3-initialize-openai-llm'" class="reference internal" href="#step-3-initialize-openai-llm"><strong>Step 3: Initialize OpenAI LLM</strong></a></li>
-<li><a :data-current="activeSection === '#step-4-define-langchain-prompt-and-memory'" class="reference internal" href="#step-4-define-langchain-prompt-and-memory"><strong>Step 4: Define LangChain Prompt and Memory</strong></a></li>
-<li><a :data-current="activeSection === '#step-5-create-the-langchain-agent'" class="reference internal" href="#step-5-create-the-langchain-agent"><strong>Step 5: Create the LangChain Agent</strong></a></li>
-<li><a :data-current="activeSection === '#step-6-run-the-agent-interactive-mode'" class="reference internal" href="#step-6-run-the-agent-interactive-mode"><strong>Step 6: Run the Agent (Interactive Mode)</strong></a></li>
-<li><a :data-current="activeSection === '#step-7-test-the-agent-with-a-single-query'" class="reference internal" href="#step-7-test-the-agent-with-a-single-query"><strong>Step 7: Test the Agent with a Single Query</strong></a></li>
+<li><a :data-current="activeSection === '#prerequisites'" class="reference internal" href="#prerequisites">1. Prerequisites</a><ul>
+<li><a :data-current="activeSection === '#python-version'" class="reference internal" href="#python-version">Python Version</a></li>
+<li><a :data-current="activeSection === '#install-required-packages'" class="reference internal" href="#install-required-packages">Install Required Packages</a></li>
+<li><a :data-current="activeSection === '#install-docker-for-containerized-sandboxed-tools'" class="reference internal" href="#install-docker-for-containerized-sandboxed-tools">Install docker for containerized sandboxed tools</a></li>
 </ul>
 </li>
-<li><a :data-current="activeSection === '#run-the-script'" class="reference internal" href="#run-the-script"><strong>4️⃣ Run the Script</strong></a></li>
-<li><a :data-current="activeSection === '#example-usage'" class="reference internal" href="#example-usage"><strong>5️⃣ Example Usage</strong></a></li>
+<li><a :data-current="activeSection === '#configuration'" class="reference internal" href="#configuration">2. Configuration</a><ul>
+<li><a :data-current="activeSection === '#set-up-hyperpocket-configuration'" class="reference internal" href="#set-up-hyperpocket-configuration">Set Up Hyperpocket Configuration</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#writing-the-code'" class="reference internal" href="#writing-the-code">3. Writing the Code</a><ul>
+<li><a :data-current="activeSection === '#step-1-import-required-modules'" class="reference internal" href="#step-1-import-required-modules">Step 1: Import Required Modules</a></li>
+<li><a :data-current="activeSection === '#step-2-initialize-hyperpocket-and-load-tools'" class="reference internal" href="#step-2-initialize-hyperpocket-and-load-tools">Step 2: Initialize Hyperpocket and Load Tools</a></li>
+<li><a :data-current="activeSection === '#step-3-initialize-openai-llm'" class="reference internal" href="#step-3-initialize-openai-llm">Step 3: Initialize OpenAI LLM</a></li>
+<li><a :data-current="activeSection === '#step-4-define-langchain-prompt-and-memory'" class="reference internal" href="#step-4-define-langchain-prompt-and-memory">Step 4: Define LangChain Prompt and Memory</a></li>
+<li><a :data-current="activeSection === '#step-5-create-the-langchain-agent'" class="reference internal" href="#step-5-create-the-langchain-agent">Step 5: Create the LangChain Agent</a></li>
+<li><a :data-current="activeSection === '#step-6-run-the-agent-interactive-mode'" class="reference internal" href="#step-6-run-the-agent-interactive-mode">Step 6: Run the Agent (Interactive Mode)</a></li>
+<li><a :data-current="activeSection === '#step-7-test-the-agent-with-a-single-query'" class="reference internal" href="#step-7-test-the-agent-with-a-single-query">Step 7: Test the Agent with a Single Query</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#run-the-script'" class="reference internal" href="#run-the-script">4. Run the Script</a><ul>
+<li><a :data-current="activeSection === '#expected-output'" class="reference internal" href="#expected-output">Expected Output</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#example-usage'" class="reference internal" href="#example-usage">5. Example Usage</a></li>
 <li><a :data-current="activeSection === '#full-code'" class="reference internal" href="#full-code">Full code</a></li>
 </ul>
 </div>

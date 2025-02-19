@@ -77,8 +77,8 @@
 </li>
 <li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="current reference internal expandable" href="#">Tools<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
 <li class="toctree-l2"><a class="reference internal" href="what-are-tools.html">What are tools?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using-wasm-tools.html">Using Sandbox Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using-function-tools.html">Using Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-sandboxed-tools.html">Using Sandboxed Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tool-interfaces.html">Tool interfaces</a></li>
 </ul>
 </li>
@@ -137,13 +137,6 @@
 <li class="toctree-l2"><a class="reference internal" href="what-are-tools.html#why-do-ai-agents-need-tools">Why do AI Agents need tools?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="what-are-tools.html#how-tool-calling-works">How tool calling works</a></li>
 <li class="toctree-l2"><a class="reference internal" href="what-are-tools.html#how-hyperpocket-handles-tools">How Hyperpocket handles tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="what-are-tools.html#tool-categories-in-a-nutshell">Tool categories in a nutshell</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="using-wasm-tools.html">Using Sandbox Tools</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="using-wasm-tools.html#referencing-tools-from-local-directory">Referencing Tools from Local Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using-wasm-tools.html#referencing-tools-from-remote-git-repositories">Referencing Tools from Remote Git Repositories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using-wasm-tools.html#example-directory-structure-of-a-sandbox-tool-with-python">Example Directory Structure of a Sandbox Tool with Python</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="using-function-tools.html">Using Function Tools</a><ul>
@@ -152,9 +145,15 @@
 <li class="toctree-l2"><a class="reference internal" href="using-function-tools.html#guides">Guides</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="using-sandboxed-tools.html">Using Sandboxed Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="using-sandboxed-tools.html#referencing-tools-from-local-directory">Referencing Tools from Local Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-sandboxed-tools.html#referencing-tools-from-remote-git-repositories">Referencing Tools from Remote Git Repositories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-sandboxed-tools.html#writing-your-own-sandboxed-tools">Writing Your Own Sandboxed Tools</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tool-interfaces.html">Tool interfaces</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tool-interfaces.html#git-tools-and-local-tools">Git Tools and Local Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tool-interfaces.html#function-tools">Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tool-interfaces.html#sandboxed-tools">Sandboxed Tools</a></li>
 </ul>
 </li>
 </ul>

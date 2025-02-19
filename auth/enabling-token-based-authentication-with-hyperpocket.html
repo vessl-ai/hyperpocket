@@ -77,8 +77,8 @@
 </li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../tools/index.html">Tools<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
 <li class="toctree-l2"><a class="reference internal" href="../tools/what-are-tools.html">What are tools?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tools/using-wasm-tools.html">Using Sandbox Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tools/using-function-tools.html">Using Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/using-sandboxed-tools.html">Using Sandboxed Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tools/tool-interfaces.html">Tool interfaces</a></li>
 </ul>
 </li>
@@ -135,16 +135,16 @@
 <p>Hyperpocket support token based authentication that is used in case user already have their own token, or you can’t choose OAuth flow.</p>
 <p>This approach is simple and efficient, making it perfect for lightweight workflows.</p>
 <section id="how-to-apply-token-authentication">
-<h2><strong>How to Apply Token Authentication</strong><a class="headerlink" href="#how-to-apply-token-authentication" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#how-to-apply-token-authentication'"><span>#</span></a></h2>
-<ol class="arabic simple">
-<li><p><strong>Define the Token Configuration</strong></p></li>
-</ol>
+<h2>How to Apply Token Authentication<a class="headerlink" href="#how-to-apply-token-authentication" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#how-to-apply-token-authentication'"><span>#</span></a></h2>
+<section id="define-the-token-configuration">
+<h3>1. Define the Token Configuration<a class="headerlink" href="#define-the-token-configuration" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#define-the-token-configuration'"><span>#</span></a></h3>
 <p>Pass the token or API key as part of the auth parameter in the @tool decorator.</p>
-<ol class="arabic simple" start="2">
-<li><p><strong>Define the Tool</strong></p></li>
-</ol>
+</section>
+<section id="define-the-tool">
+<h3>2. Define the Tool<a class="headerlink" href="#define-the-tool" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#define-the-tool'"><span>#</span></a></h3>
 <p>Use the @tool decorator to create a tool with token-based authentication.</p>
-<p><strong>Code Example: Applying Token Authentication</strong></p>
+<section id="code-example-applying-token-authentication">
+<h4>Code Example: Applying Token Authentication<a class="headerlink" href="#code-example-applying-token-authentication" title="Link to this heading"><span>#</span></a></h4>
 <p>Here’s how to define and use a tool with an API key:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">slack_sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebClient</span>
 </span><span id="line-2">
@@ -170,8 +170,10 @@
 </span></code></pre></div>
 </div>
 </section>
-<section id="why-use-token-based-authentication-with-hyperpocket">
-<h2><strong>Why Use Token-Based Authentication with Hyperpocket?</strong><a class="headerlink" href="#why-use-token-based-authentication-with-hyperpocket" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#why-use-token-based-authentication-with-hyperpocket'"><span>#</span></a></h2>
+</section>
+</section>
+<section id="why-do-we-use-token-based-authentication-with-hyperpocket">
+<h2>Why Do We Use Token-Based Authentication with Hyperpocket?<a class="headerlink" href="#why-do-we-use-token-based-authentication-with-hyperpocket" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#why-do-we-use-token-based-authentication-with-hyperpocket'"><span>#</span></a></h2>
 <ul class="simple">
 <li><p><strong>Quick Setup:</strong> Requires minimal configuration.</p></li>
 <li><p><strong>Lightweight Workflow:</strong> Ideal for single-step operations with static credentials.</p></li>
@@ -182,8 +184,15 @@
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#how-to-apply-token-authentication'" class="reference internal" href="#how-to-apply-token-authentication"><strong>How to Apply Token Authentication</strong></a></li>
-<li><a :data-current="activeSection === '#why-use-token-based-authentication-with-hyperpocket'" class="reference internal" href="#why-use-token-based-authentication-with-hyperpocket"><strong>Why Use Token-Based Authentication with Hyperpocket?</strong></a></li>
+<li><a :data-current="activeSection === '#how-to-apply-token-authentication'" class="reference internal" href="#how-to-apply-token-authentication">How to Apply Token Authentication</a><ul>
+<li><a :data-current="activeSection === '#define-the-token-configuration'" class="reference internal" href="#define-the-token-configuration">1. Define the Token Configuration</a></li>
+<li><a :data-current="activeSection === '#define-the-tool'" class="reference internal" href="#define-the-tool">2. Define the Tool</a><ul>
+<li><a :data-current="activeSection === '#code-example-applying-token-authentication'" class="reference internal" href="#code-example-applying-token-authentication">Code Example: Applying Token Authentication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#why-do-we-use-token-based-authentication-with-hyperpocket'" class="reference internal" href="#why-do-we-use-token-based-authentication-with-hyperpocket">Why Do We Use Token-Based Authentication with Hyperpocket?</a></li>
 </ul>
 </div>
 </aside>

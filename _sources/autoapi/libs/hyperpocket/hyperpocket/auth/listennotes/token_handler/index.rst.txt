@@ -44,6 +44,11 @@ Module Contents
 
 
 
+   .. py:method:: provider_default() -> bool
+      :staticmethod:
+
+
+
    .. py:method:: recommended_scopes() -> set[str]
       :staticmethod:
 

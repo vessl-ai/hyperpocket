@@ -77,8 +77,8 @@
 </li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../tools/index.html">Tools<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
 <li class="toctree-l2"><a class="reference internal" href="../tools/what-are-tools.html">What are tools?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tools/using-wasm-tools.html">Using Sandbox Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tools/using-function-tools.html">Using Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/using-sandboxed-tools.html">Using Sandboxed Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tools/tool-interfaces.html">Tool interfaces</a></li>
 </ul>
 </li>
@@ -142,292 +142,364 @@ OAuth2-based authentication.</p>
 <tr class="row-odd"><th class="head"><p>Auth Provider</p></th>
 <th class="head"><p>Token-Based</p></th>
 <th class="head"><p>OAuth2-Based</p></th>
+<th class="head"><p>Expected Variable Name for Token</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/asana">Asana</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/bitbucket">Bitbucket</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/calendly">Calendly</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/discord">Discord</a></p></td>
-<td><p>✅</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/facebook">Facebook</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/github">GitHub</a></p></td>
-<td><p>✅</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/google">Google</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/hubspot">Hubspot</a></p></td>
-<td><p>✅</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/jira">Jira</a></p></td>
-<td><p>✅</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/linear">Linear</a></p></td>
-<td><p>✅</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/linkedin">Linkedin</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/mailchimp">Mailchimp</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/notion">Notion</a></p></td>
-<td><p>✅</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/reddit">Reddit</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/salesforce">Salesforce</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/slack">Slack</a></p></td>
-<td><p>✅</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/spotify">Spotify</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/x">X</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/zoom">Zoom</a></p></td>
-<td><p>❌</p></td>
-<td><p>✅</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/activeloop">Activeloop</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/activeloop">Activeloop</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ACTIVELOOP_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/adobe">Adobe</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/adobe">Adobe</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ADOBE_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/affinity">Affinity</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/affinity">Affinity</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AFFINITY_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/agentql">AgentQL</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/agentql">AgentQL</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AGENTQL_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/ahrefs">Ahrefs</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/ahrefs">Ahrefs</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AHREFS_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/airtable">Airtable</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/airtable">Airtable</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AIRTABLE_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/alchemy">Alchemy</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/alchemy">Alchemy</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ALCHEMY_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/altoviz">Altoviz</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/altoviz">Altoviz</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ALTOVIZ_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/apitoken">API Token</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/apitoken">API Token(Generic)</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">API_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/asana">Asana</a></p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ASANA_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/bamboohr">BambooHR</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BAMBOOHR_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/bitwarden">Bitwarden</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/bitbucket">Bitbucket</a></p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BITBUCKET_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/bitwarden">BitWarden</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BITWARDEN_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/brevo">Brevo</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/brevo">Brevo</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BREVO_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/brex">Brex</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/brex">Brex</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BREX_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/cal">Cal</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/cal">Cal</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CAL_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/calendly">Calendly</a></p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CALENDLY_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/canvas">Canvas</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CANVAS_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/clickup">Clickup</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CLICKUP_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/cloudflare">Cloudflare</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CLOUDFLARE_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/dailybot">Dailybot</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DAILYBOT_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/datadog">Datadog</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DATADOG_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/discordbot">Discordbot</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/discord">Discord</a></p></td>
+<td><p>✅</p></td>
+<td><p>✅ (default)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DISCORD_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/discordbot">Discord(Bot)</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DISCORDBOT_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/elevenlabs">Elevenlabs</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/elevenlabs">ElevenLabs</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ELEVENLABS_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/exa">Exa</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/exa">Exa</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">EXA_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/facebook">Facebook</a></p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FACEBOOK_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/finage">Finage</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FINAGE_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/github">GitHub</a></p></td>
+<td><p>✅</p></td>
+<td><p>✅ (default)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/google">Google</a></p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GOOGLE_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/gumloop">Gumloop</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GUMLOOP_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/happyrobot">Happyrobot</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HAPPYROBOT_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/heygen">Heygen</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HEYGEN_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/hubspot">Hubspot</a></p></td>
+<td><p>✅</p></td>
+<td><p>✅ (default)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HUBSPOT_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/jira">Jira</a></p></td>
+<td><p>✅</p></td>
+<td><p>✅ (default)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">JIRA_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/klaviyo">Klaviyo</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">KLAVIYO_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/lever">Lever</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LEVER_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/lever_sandbox">Lever Sandbox</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/lever_sandbox">Lever(Sandbox)</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LEVER_SANDBOX_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/listennotes">Listennotes</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/linear">Linear</a></p></td>
+<td><p>✅</p></td>
+<td><p>✅ (default)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LINEAR_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/linkedin">Linkedin</a></p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LINKEDIN_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/listennotes">ListenNotes</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LISTENNOTES_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/mem0">Mem0</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/mailchimp">Mailchimp</a></p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MAILCHIMP_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/mem0">Mem0</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MEM0_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/microsoft_clarity">Microsoft Clarity</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/microsoft_clarity">Microsoft Clarity</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MICROSOFT_CLARITY_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/neon">Neon</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/neon">Neon</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NEON_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/ngrok">Ngrok</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/ngrok">Ngrok</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NGROK_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/oncehub">Oncehub</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/notion">Notion</a></p></td>
+<td><p>✅</p></td>
+<td><p>✅ (default)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NOTION_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/oncehub">OnceHub</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ONCEHUB_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/pagerduty">Pagerduty</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/pagerduty">PagerDuty</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PAGERDUTY_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/pandadoc">Pandadoc</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/pandadoc">PandaDoc</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PANDADOC_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/pipedrive">Pipedrive</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PIPEDRIVE_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/posthog">Posthog</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">POSTHOG_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/ravenseotools">Ravenseotools</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/ravenseotools">Raven Tools</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">RAVENSEOTOOLS_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/sendgrid">Sendgrid</a></p></td>
-<td><p>✅</p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/reddit">Reddit</a></p></td>
 <td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">REDDIT_BOT_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/serpapi">Serpapi</a></p></td>
-<td><p>✅</p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/salesforce">Salesforce</a></p></td>
 <td><p>❌</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/stripe">Stripe</a></p></td>
 <td><p>✅</p></td>
-<td><p>❌</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/supabase">Supabase</a></p></td>
-<td><p>✅</p></td>
-<td><p>❌</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/tavily">Tavily</a></p></td>
-<td><p>✅</p></td>
-<td><p>❌</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/timekit">Timekit</a></p></td>
-<td><p>✅</p></td>
-<td><p>❌</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/trello">Trello</a></p></td>
-<td><p>✅</p></td>
-<td><p>❌</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/wandb">Wandb</a></p></td>
-<td><p>✅</p></td>
-<td><p>❌</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/workiom">Workiom</a></p></td>
-<td><p>✅</p></td>
-<td><p>❌</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/yelp">Yelp</a></p></td>
-<td><p>✅</p></td>
-<td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SALESFORCE_TOKEN</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/semantic_scholar">Semantic Scholar</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SEMANTIC_SCHOLAR_TOKEN</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/zinc">Zinc</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/sendgrid">Sendgrid</a></p></td>
 <td><p>✅</p></td>
 <td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SENDGRID_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/serpapi">SerpApi</a></p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SERPAPI_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/slack">Slack</a></p></td>
+<td><p>✅</p></td>
+<td><p>✅ (default)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SLACK_BOT_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/spotify">Spotify</a></p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SPOTIFY_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/stripe">Stripe</a></p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRIPE_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/supabase">Supabase</a></p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SUPABASE_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/tavily">Tavily</a></p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TAVILY_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/timekit">Timekit</a></p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TIMEKIT_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/trello">Trello</a></p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TRELLO_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/wandb">Weights and Biases</a></p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WANDB_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/weaviate">Weaviate</a></p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WEAVIATE_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/workiom">Workiom</a></p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WORKIOM_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/x">X(formerly twitter)</a></p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">X_AUTH_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/zinc">Zinc</a></p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ZINC_TOKEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/zoom">Zoom</a></p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ZOOM_TOKEN</span></code></p></td>
 </tr>
 </tbody>
 </table>

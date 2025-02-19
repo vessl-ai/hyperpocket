@@ -6,7 +6,6 @@
 
 ```python
 from anthropic import Anthropic
-from hyperpocket.tool import from_git
 from hyperpocket_anthropic import PocketAnthropic
 
 # Initialize Anthropic LLM

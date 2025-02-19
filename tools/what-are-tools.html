@@ -15,7 +15,7 @@
 <link href="../_static/graphviz.css?v=4ae1632d" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="using-wasm-tools.html" rel="next" title="Using Sandbox Tools"/>
+<link href="using-function-tools.html" rel="next" title="Using Function Tools"/>
 <link href="index.html" rel="prev" title="Tools"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
@@ -77,8 +77,8 @@
 </li>
 <li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Tools<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">What are tools?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using-wasm-tools.html">Using Sandbox Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using-function-tools.html">Using Function Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-sandboxed-tools.html">Using Sandboxed Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tool-interfaces.html">Tool interfaces</a></li>
 </ul>
 </li>
@@ -162,40 +162,11 @@
 <h2>How Hyperpocket handles tools<a class="headerlink" href="#how-hyperpocket-handles-tools" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#how-hyperpocket-handles-tools'"><span>#</span></a></h2>
 <section id="tool-categorization-by-integration-method">
 <h3>Tool categorization by integration method<a class="headerlink" href="#tool-categorization-by-integration-method" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tool-categorization-by-integration-method'"><span>#</span></a></h3>
-<p><img alt="image.png" src="../_images/image.png"/></p>
-<p>Hyperpocket provides two distinct ways to integrate tools into AI agents:</p>
+<p>Hyperpocket provides two ways to integrate tools into AI agents:</p>
 <ol class="arabic simple">
-<li><p><strong>WASM Tools</strong> : Tools executed securely in an isolated WebAssembly (WASM) environment.</p></li>
 <li><p><strong>Function Tools</strong> : Lightweight Python functions that can be directly integrated into workflows.</p></li>
+<li><p><strong>Sandboxed Tools</strong> : Tools executed securely in an isolated environment.</p></li>
 </ol>
-<section id="wasm-tools">
-<h4>WASM Tools<a class="headerlink" href="#wasm-tools" title="Link to this heading"><span>#</span></a></h4>
-<p>WASM tools are executed in secure, sandboxed environments, making them ideal for scenarios requiring high security and performance isolation. These tools can either be fetched from external repositories like GitHub or loaded directly from local storage.</p>
-<p>WASM Tool has two following variants:</p>
-<p><strong>Git-based Execution</strong></p>
-<ul class="simple">
-<li><p>Tools are fetched from a GitHub repository, downloaded locally, and executed via a WASM interpreter.</p></li>
-<li><p>This approach is useful for managed tools maintained by Hyperpocket or open-source contributions by the community.</p></li>
-</ul>
-<p><strong>Local Execution</strong></p>
-<ul class="simple">
-<li><p>Pre-existing tools stored locally are executed directly using their file paths.</p></li>
-<li><p>Ideal for private tools or custom setups where internet access might be restricted.</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
-</span><span id="line-2">
-</span><span id="line-3"><span class="c1"># git-based execution</span>
-</span><span id="line-4"><span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">"https://github.com/vessl-ai/hyperpocket"</span><span class="p">,</span> <span class="s2">"main"</span><span class="p">,</span> <span class="s2">"managed-tools/slack/get-message"</span><span class="p">)</span>
-</span><span id="line-5">
-</span><span id="line-6"><span class="c1"># local execution</span>
-</span><span id="line-7"><span class="n">tool</span> <span class="o">=</span> <span class="n">from_local</span><span class="p">(</span><span class="s2">"yout/path/to/wasm/tool/in/local/env/slack/get-message"</span><span class="p">)</span>
-</span></code></pre></div>
-</div>
-<p>The tool in the GitHub repository can be used by its URL directly.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">"https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message"</span><span class="p">)</span>
-</span></code></pre></div>
-</div>
-</section>
 <section id="function-tools">
 <h4>Function Tools<a class="headerlink" href="#function-tools" title="Link to this heading"><span>#</span></a></h4>
 <p>Function Tools are lightweight, easy-to-implement tools that utilize Python functions decorated with a specific Hyperpocket interface. These tools are ideal for quick, inline tool development or rapid prototyping. To make Function Tool, the original function must have a docstring or implement <code class="docutils literal notranslate"><span class="pre">__doc__</span></code>.</p>
@@ -216,6 +187,34 @@
 </span></code></pre></div>
 </div>
 </section>
+<section id="sandboxed-tools">
+<h4>Sandboxed Tools<a class="headerlink" href="#sandboxed-tools" title="Link to this heading"><span>#</span></a></h4>
+<p>Sandboxed tools are executed in secure, sandboxed environments, making them ideal for scenarios requiring high security and performance isolation.
+Those environment can be one of containerized environment, WASM runtime environment, or anything else.
+These tools can either be fetched from external repositories like GitHub or loaded directly from local storage.</p>
+<p>Sandboxed Tool has two following variants:</p>
+<p><strong>Git-based Execution</strong></p>
+<ul class="simple">
+<li><p>Tools are fetched from a Git repository, downloaded locally, and executed on top of an isolated environment such as containers.</p></li>
+<li><p>This approach is useful for sharing tools over open-source contributions by the community.</p></li>
+</ul>
+<p><strong>Local Execution</strong></p>
+<ul class="simple">
+<li><p>Pre-existing tools stored locally are executed directly using their file paths.</p></li>
+<li><p>Ideal for testing your tools currently you are building.</p></li>
+</ul>
+<p>Below is an example code that integrates sandboxed tools. For more detail, find more on <a class="reference internal" href="#/tools/using-sandboxed-tools.html"><span class="xref myst">Using Sandboxed Tools</span></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketLangchain</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketLangchain</span><span class="p">(</span>
+</span><span id="line-4">    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+</span><span id="line-5">        <span class="s2">"https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages"</span><span class="p">,</span>
+</span><span id="line-6">        <span class="s2">"/Users/possum/tools/slack/get-messages"</span><span class="p">,</span>
+</span><span id="line-7">    <span class="p">]</span>
+</span><span id="line-8"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
 </section>
 <section id="tool-categorization-by-availability">
 <h3>Tool categorization by availability<a class="headerlink" href="#tool-categorization-by-availability" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tool-categorization-by-availability'"><span>#</span></a></h3>
@@ -225,209 +224,12 @@
 </section>
 <section id="public-tools-open-source">
 <h4>Public Tools (open-source)<a class="headerlink" href="#public-tools-open-source" title="Link to this heading"><span>#</span></a></h4>
-<p>Public tools are open-source and shared by the broader community, including individual contributors, other open-source projects, and Hyperpocket team as well. These tools can be hosted on various platforms such as Hyperpocket repository, other GitHub repositories and LangChain community, etc.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_git</span>
-</span><span id="line-2">
-</span><span id="line-3"><span class="c1"># managed by Hyperpocket Team</span>
-</span><span id="line-4"><span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">"https://github.com/vessl-ai/hyperpocket"</span><span class="p">,</span> <span class="s2">"main"</span><span class="p">,</span> <span class="s2">"slack/post-message"</span><span class="p">)</span>
-</span><span id="line-5">
-</span><span id="line-6"><span class="c1"># managed by community</span>
-</span><span id="line-7"><span class="n">tool</span> <span class="o">=</span> <span class="n">from_git</span><span class="p">(</span><span class="s2">"https://github.com/user/custom-tool-repo"</span><span class="p">,</span> <span class="s2">"main"</span><span class="p">,</span> <span class="s2">"community-tools/custom-task"</span><span class="p">)</span>
-</span></code></pre></div>
-</div>
+<p>Public tools are open-source and shared by the broader community, including individual contributors, other open-source projects, and Hyperpocket team as well. These tools can be hosted on various platforms such as Hyperpocket repository, other GitHub repositories.</p>
 </section>
 <section id="your-own-tools">
 <h4>Your own tools<a class="headerlink" href="#your-own-tools" title="Link to this heading"><span>#</span></a></h4>
 <p>Custom tools are highly personalized tools that users can directly create and deploy in their local environments. These tools are fully managed by the user or their organization and can be implemented as inline functions or packaged modules. Users can execute them using either a local Python interpreter or a secure WASM interpreter, providing maximum flexibility for bespoke workflows.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket.tool</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_tool</span><span class="p">,</span> <span class="n">from_local</span>
-</span><span id="line-2">
-</span><span id="line-3"><span class="nd">@function_tool</span>
-</span><span id="line-4"><span class="k">def</span><span class="w"> </span><span class="nf">custom_task</span><span class="p">():</span>
-</span><span id="line-5"><span class="w">		</span><span class="sd">"""</span>
-</span><span id="line-6"><span class="sd">		A custom inline function tool.</span>
-</span><span id="line-7"><span class="sd">		"""</span>
-</span><span id="line-8">
-</span><span id="line-9">    <span class="k">return</span> <span class="s2">"This is my custom tool!"</span>
-</span><span id="line-10">
-</span><span id="line-11">
-</span><span id="line-12"><span class="n">tool</span> <span class="o">=</span> <span class="n">from_local</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">"./local-tools/simple-echo-tool"</span><span class="p">)</span>
-</span></code></pre></div>
-</div>
 </section>
-<section id="custom-tool-requirements">
-<h4>Custom Tool requirements<a class="headerlink" href="#custom-tool-requirements" title="Link to this heading"><span>#</span></a></h4>
-<p><strong>WASM Tool</strong></p>
-<ul>
-<li><p><strong>config.toml</strong> (Tool Metadata)</p>
-<ul class="simple">
-<li><p>name(str) : tool name</p></li>
-<li><p>description(str) : tool description</p></li>
-<li><p>auth_handlers(list[str]) : auth_handlers name list</p></li>
-<li><p>auth_scopes(dict[str, list[str]]) : auth_scopes per auth_handler</p></li>
-<li><p>tool_vars(dict[str, str]) : tool variables to use in tool</p></li>
-</ul>
-<p><strong>example</strong></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"slack_get_messages"</span>
-</span><span id="line-2"><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"get slack messages"</span>
-</span><span id="line-3"><span class="n">auth_handlers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"slack-oauth2"</span><span class="p">]</span>
-</span><span id="line-4"><span class="k">[auth_scopes]</span>
-</span><span id="line-5"><span class="n">slack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"channels:history"</span><span class="p">]</span>
-</span><span id="line-6">
-</span><span id="line-7"><span class="k">[tool_vars]</span>
-</span><span id="line-8"><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1"</span>
-</span><span id="line-9"><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"2"</span>
-</span></code></pre></div>
-</div>
-</li>
-<li><p><strong>schema.json</strong> (OpenAPI spec for tool request)</p>
-<p><strong>example</strong></p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="p">{</span>
-</span><span id="line-2"><span class="w">  </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="line-3"><span class="w">    </span><span class="nt">"channel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="line-4"><span class="w">      </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Channel"</span><span class="p">,</span>
-</span><span id="line-5"><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
-</span><span id="line-6"><span class="w">    </span><span class="p">},</span>
-</span><span id="line-7"><span class="w">    </span><span class="nt">"limit"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="line-8"><span class="w">      </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Limit"</span><span class="p">,</span>
-</span><span id="line-9"><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span>
-</span><span id="line-10"><span class="w">    </span><span class="p">}</span>
-</span><span id="line-11"><span class="w">  </span><span class="p">},</span>
-</span><span id="line-12"><span class="w">  </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"channel"</span><span class="p">,</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">],</span>
-</span><span id="line-13"><span class="w">  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SlackGetMessageRequest"</span><span class="p">,</span>
-</span><span id="line-14"><span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span>
-</span><span id="line-15"><span class="p">}</span>
-</span></code></pre></div>
-</div>
-</li>
-<li><p><strong>dist</strong> (Build &amp; package the tool for execution)</p>
-<p><strong>example</strong></p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># uv</span>
-</span><span id="line-2">uv<span class="w"> </span>build
-</span><span id="line-3">
-</span><span id="line-4"><span class="c1"># poetry</span>
-</span><span id="line-5">poetry<span class="w"> </span>build
-</span></code></pre></div>
-</div>
-</li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">__main__.py</span></code></strong> (Main execution script)</p>
-<ul class="simple">
-<li><p>input : stdin</p></li>
-<li><p>output : stdout</p></li>
-<li><p>auth : environment variables</p></li>
-<li><p>should call your code in <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">'__main__':</span> <span class="pre">..</span></code></p></li>
-</ul>
-<p><strong>example</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">  <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-</span><span id="line-2">  <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-</span><span id="line-3">  <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-</span><span id="line-4">  <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
-</span><span id="line-5">
-</span><span id="line-6">  <span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-</span><span id="line-7">  <span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
-</span><span id="line-8">
-</span><span id="line-9">  <span class="n">token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'GOOGLE_TOKEN'</span><span class="p">)</span>
-</span><span id="line-10">
-</span><span id="line-11">
-</span><span id="line-12">  <span class="k">class</span><span class="w"> </span><span class="nc">GoogleGetCalendarListRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="line-13">      <span class="k">pass</span>
-</span><span id="line-14">
-</span><span id="line-15">
-</span><span id="line-16">  <span class="k">def</span><span class="w"> </span><span class="nf">get_calendar_list</span><span class="p">():</span>
-</span><span id="line-17">      <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-</span><span id="line-18">          <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">"https://www.googleapis.com/calendar/v3/users/me/calendarList"</span><span class="p">,</span>
-</span><span id="line-19">          <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
-</span><span id="line-20">              <span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
-</span><span id="line-21">          <span class="p">}</span>
-</span><span id="line-22">      <span class="p">)</span>
-</span><span id="line-23">
-</span><span id="line-24">      <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
-</span><span id="line-25">          <span class="k">return</span> <span class="sa">f</span><span class="s2">"failed to get calendar list. error : </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
-</span><span id="line-26">
-</span><span id="line-27">      <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</span><span id="line-28">
-</span><span id="line-29">
-</span><span id="line-30">  <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-</span><span id="line-31">      <span class="n">req</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
-</span><span id="line-32">      <span class="n">response</span> <span class="o">=</span> <span class="n">get_calendar_list</span><span class="p">()</span>
-</span><span id="line-33">
-</span><span id="line-34">      <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-</span><span id="line-35">
-</span><span id="line-36">
-</span><span id="line-37">  <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-</span><span id="line-38">      <span class="n">main</span><span class="p">()</span>
-</span></code></pre></div>
-</div>
-</li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">__init__.py</span></code></strong> (File defines the tool’s main function for execution)</p>
-<p><strong>example</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">your_tool.__main__</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span>
-</span><span id="line-2">
-</span><span id="line-3"><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'main'</span><span class="p">]</span>
-</span></code></pre></div>
-</div>
-</li>
-</ul>
-</section>
-</section>
-</section>
-<section id="tool-categories-in-a-nutshell">
-<h2>Tool categories in a nutshell<a class="headerlink" href="#tool-categories-in-a-nutshell" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tool-categories-in-a-nutshell'"><span>#</span></a></h2>
-<section id="by-integration-method">
-<h3>By integration method<a class="headerlink" href="#by-integration-method" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#by-integration-method'"><span>#</span></a></h3>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Integration Method</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Catagory</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Function</p></td>
-<td><p>Lightweight tools defined as Python functions and executed locally.</p></td>
-<td><p>Function Tool</p></td>
-</tr>
-<tr class="row-odd"><td><p>GitHub-based Execution</p></td>
-<td><p>Tools fetched from GitHub repositories and executed in independent WASM runtime via interpreters.</p></td>
-<td><p>WASM Tool</p></td>
-</tr>
-<tr class="row-even"><td><p>Local Execution</p></td>
-<td><p>Tools stored locally and executed directly.</p></td>
-<td><p>WASM Tool</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="by-availability">
-<h3>By availability<a class="headerlink" href="#by-availability" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#by-availability'"><span>#</span></a></h3>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Tool Type</p></th>
-<th class="head"><p>Category</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Operation by</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Built-in Tools</p></td>
-<td><p>Function</p></td>
-<td><p>Pre-installed tools ready for immediate use.</p></td>
-<td><p>Managed and predefined by Hyperpocket.</p></td>
-</tr>
-<tr class="row-odd"><td><p>Public Tools</p></td>
-<td><p>WASM, Function</p></td>
-<td><p>Community-developed tools, officially maintained.</p></td>
-<td><p>Developed by community.</p></td>
-</tr>
-<tr class="row-even"><td><p>Custom Tools</p></td>
-<td><p>WASM, Function</p></td>
-<td><p>Personalized tools created and deployed by users.</p></td>
-<td><p>Fully managed by the user, supporting inline and packaged implementations.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
-</span></code></pre></div>
-</div>
 </section>
 </section>
 </section>
@@ -438,22 +240,16 @@
 <li><a :data-current="activeSection === '#how-tool-calling-works'" class="reference internal" href="#how-tool-calling-works">How tool calling works</a></li>
 <li><a :data-current="activeSection === '#how-hyperpocket-handles-tools'" class="reference internal" href="#how-hyperpocket-handles-tools">How Hyperpocket handles tools</a><ul>
 <li><a :data-current="activeSection === '#tool-categorization-by-integration-method'" class="reference internal" href="#tool-categorization-by-integration-method">Tool categorization by integration method</a><ul>
-<li><a :data-current="activeSection === '#wasm-tools'" class="reference internal" href="#wasm-tools">WASM Tools</a></li>
 <li><a :data-current="activeSection === '#function-tools'" class="reference internal" href="#function-tools">Function Tools</a></li>
+<li><a :data-current="activeSection === '#sandboxed-tools'" class="reference internal" href="#sandboxed-tools">Sandboxed Tools</a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#tool-categorization-by-availability'" class="reference internal" href="#tool-categorization-by-availability">Tool categorization by availability</a><ul>
 <li><a :data-current="activeSection === '#built-in-tools'" class="reference internal" href="#built-in-tools">Built-in Tools</a></li>
 <li><a :data-current="activeSection === '#public-tools-open-source'" class="reference internal" href="#public-tools-open-source">Public Tools (open-source)</a></li>
 <li><a :data-current="activeSection === '#your-own-tools'" class="reference internal" href="#your-own-tools">Your own tools</a></li>
-<li><a :data-current="activeSection === '#custom-tool-requirements'" class="reference internal" href="#custom-tool-requirements">Custom Tool requirements</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a :data-current="activeSection === '#tool-categories-in-a-nutshell'" class="reference internal" href="#tool-categories-in-a-nutshell">Tool categories in a nutshell</a><ul>
-<li><a :data-current="activeSection === '#by-integration-method'" class="reference internal" href="#by-integration-method">By integration method</a></li>
-<li><a :data-current="activeSection === '#by-availability'" class="reference internal" href="#by-availability">By availability</a></li>
 </ul>
 </li>
 </ul>
