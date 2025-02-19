@@ -161,7 +161,7 @@ client_secret = "<YOUR_GOOGLE_APP_CLIENT_SECRET>"
 #### 2. Define `.auth` in `pocket.json` of your tool
 
 - Add `.auth` field to `pocket.json`.
-- For more information about `pocket.json`, check [here](/tools/using-sandboxed-tools)
+- For more information about `pocket.json`, check [here](https://vessl-ai.github.io/hyperpocket/tools/using-sandboxed-tools.html)
 
 ```json
 {
