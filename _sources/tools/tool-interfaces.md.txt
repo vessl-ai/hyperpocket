@@ -55,7 +55,7 @@ def my_tool(args, **kwargs):
 ...
 ```
 
-For each auth provider, the key name is different. (See [Supported Auth List](/auth/supported-auth-list.html) for more details.)
+For each auth provider, the key name is different. (See [Supported Auth List](https://vessl-ai.github.io/hyperpocket/auth/supported-auth-list.html) for more details.)
 
 ## Sandboxed Tools
 
@@ -232,5 +232,5 @@ You should print the output to stdout.
 
 Authentication resulting token is provided through environment variable. In this case, `GITHUB_TOKEN`.
 
-For each auth provider, the key name is different. (See [Supported Auth List](/auth/supported-auth-list.html) for more details.)
+For each auth provider, the key name is different. (See [Supported Auth List](https://vessl-ai.github.io/hyperpocket/auth/supported-auth-list.html) for more details.)
 

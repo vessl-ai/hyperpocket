@@ -91,7 +91,7 @@ Example structure for python tool is as follows:
 The file contains some crucial information to execute your code as a tool.
 - The information specified in `pocket.json` is the followings:
   - Tool name, description, the JSON schema of the input argument (`.tool`)
-  - Authentication handlers to use for a tool (`.auth`, for supported auth handlers, see [Auth](/auth/supported-auth-list.html))
+  - Authentication handlers to use for a tool (`.auth`, for supported auth handlers, see [Auth](https://vessl-ai.github.io/hyperpocket/auth/supported-auth-list.html))
   - Language, or base image of a tool (`.language` or `.baseImage`)
     - For `.language == python`, `python:3.11-slim` image will be used as a base image.
     - For `.language == node`, `node` image will be used as a base image.

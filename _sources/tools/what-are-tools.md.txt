@@ -70,7 +70,7 @@ Sandboxed Tool has two following variants:
 - Pre-existing tools stored locally are executed directly using their file paths.
 - Ideal for testing your tools currently you are building.
 
-Below is an example code that integrates sandboxed tools. For more detail, find more on [Using Sandboxed Tools](/tools/using-sandboxed-tools.html)
+Below is an example code that integrates sandboxed tools. For more detail, find more on [Using Sandboxed Tools](https://vessl-ai.github.io/hyperpocket/tools/using-sandboxed-tools.html)
 
 ```python
 from hyperpocket_langchain import PocketLangchain
