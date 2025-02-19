@@ -30,6 +30,10 @@ class ListennotesTokenAuthHandler(AuthHandlerInterface):
         return AuthProvider.LISTENNOTES
 
     @staticmethod
+    def provider_default() -> bool:
+        return True
+
+    @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
 

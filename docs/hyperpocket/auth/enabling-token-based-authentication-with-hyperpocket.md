@@ -4,17 +4,17 @@ Hyperpocket support token based authentication that is used in case user already
 
 This approach is simple and efficient, making it perfect for lightweight workflows.
 
-## **How to Apply Token Authentication**
+## How to Apply Token Authentication
 
-1. **Define the Token Configuration**
+### 1. Define the Token Configuration
 
 Pass the token or API key as part of the auth parameter in the @tool decorator.
 
-2. **Define the Tool**
+### 2. Define the Tool
 
 Use the @tool decorator to create a tool with token-based authentication.
 
-**Code Example: Applying Token Authentication**
+#### Code Example: Applying Token Authentication
 
 Here’s how to define and use a tool with an API key:
 
@@ -42,7 +42,7 @@ def slack_get_messages(channel: str, limit: int = 10, **kwargs) -> list:
     return list(response)
 ```
 
-## **Why Use Token-Based Authentication with Hyperpocket?**
+## Why Do We Use Token-Based Authentication with Hyperpocket?
 
 - **Quick Setup:** Requires minimal configuration.
 - **Lightweight Workflow:** Ideal for single-step operations with static credentials.

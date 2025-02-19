@@ -5,13 +5,15 @@ securely.
 
 OAuth is particularly useful for tools that require user authorization, such as Slack, GitHub, or Google APIs.
 
-## **How to Apply OAuth in Hyperpocket**
+## How to Apply OAuth in Hyperpocket
 
-### Hyperpocket WasmTool
+### For FunctionTool
 
 #### 1. Set the OAuth Configuration
 
-Set an OAuth configuration. It varies by OAuth Provider,
+Set an OAuth configuration on `.secrets.toml`, on your working directory.
+Most of the OAuth handler requires `client_id`, and `client_secret`, but it may vary over the providers.
+To look over which fields are required, see [this code](https://github.com/vessl-ai/hyperpocket/blob/main/libs/hyperpocket/hyperpocket/config/auth.py)
 
 Example(Slack):
 
@@ -21,22 +23,167 @@ client_id = "<YOUR_GOOGLE_APP_CLIENT_ID>"
 client_secret = "<YOUR_GOOGLE_APP_CLIENT_SECRET>"
 ```
 
-#### 2. Define `wasm-tool-path/config.toml` in your wasm tool
+#### 2. Implement Your Tool and Define Auth Provider of the Tool
 
-- Add fields about authentication to `config.toml`
+Use the `@function_tool` decorator to create a tool with the OAuth configuration.
 
-```toml
-name = "slack_get_messages"
-description = "get slack messages"
-language = "python"
+Example(Slack):
 
-# needed fields for authentication
-[auth]
-auth_provider = "slack"
-scopes = ["channels:history"]
+Here’s how to define and use a Google tool with OAuth authentication:
+
+```python
+from slack_sdk import WebClient
+
+from hyperpocket.auth import AuthProvider
+from hyperpocket.tool import function_tool
+
+
+@function_tool(
+    auth_provider=AuthProvider.SLACK,
+    scopes=["channels:history", "im:history", "mpim:history", "groups:history", "mpim:read", "im:read"])
+def slack_get_messages(channel: str, limit: int = 10, SLACK_BOT_TOKEN: str, **kwargs) -> list:
+    """
+    Get recent messages from a Slack channel.
+
+    Args:
+        channel(str): slack channel to be fetched
+        limit(int): maximum message limit
+    """
+    client = WebClient(token=SLACK_BOT_TOKEN)
+    response = client.conversations_history(channel=channel, limit=limit)
+    return list(response)
 ```
 
-#### 3. Plug in the tool in Hyperpocket`
+- `auth_provider`: This field specifies which authentication provider token is needed in your tool.
+- `auth_handler`: This field specifies which authentication handler to use if there are multiple of handlers are available. (e.g. `auth_handler = slack-token` is available.)
+- `scopes`: This field specifies required OAuth2 permission set when performing tool invocation.
+
+#### 3. Plug the tool in Hyperpocket`
+
+```python
+from hyperpocket import Pocket
+
+pocket = Pocket(tools=[slack_get_messages])
+```
+
+#### 4. Invoke tool with authentication
+
+```python
+# initialize tool authentication.
+authentication_url = await pocket.initialize_tool_auth()
+
+# send this authentication_url to user.
+print(authentication_url)
+
+# wait for your authentication process.
+await pocket.wait_tool_auth()
+
+# invoke tool and get result
+result = pocket.invoke(
+    tool_name="get_slack_messages",
+    body={
+        "channel": "<YOUR_CHANNEL>",
+        "limit": 10}
+)
+```
+
+#### Full Code
+
+```python
+import asyncio
+
+from slack_sdk import WebClient
+
+from hyperpocket import Pocket
+from hyperpocket.auth import AuthProvider
+from hyperpocket.tool import function_tool
+
+
+@function_tool(
+    auth_provider=AuthProvider.SLACK,
+    scopes=["channels:history", "im:history", "mpim:history", "groups:history", "mpim:read", "im:read"])
+def slack_get_messages(channel: str, limit: int = 10, SLACK_BOT_TOKEN: str, **kwargs) -> list:
+    """
+    Get recent messages from a Slack channel.
+
+    Args:
+        channel(str): slack channel to be fetched
+        limit(int): maximum message limit
+    """
+    client = WebClient(token=SLACK_BOT_TOKEN)
+    response = client.conversations_history(channel=channel, limit=limit)
+    return list(response)
+
+
+async def main():
+    # init pocket with your tool.
+    pocket = Pocket(tools=[slack_get_messages])
+
+    # initialize tool authentication.
+    authentication_url = await pocket.initialize_tool_auth()
+
+    # send this authentication_url to user.
+    print(authentication_url)
+
+    # wait for your authentication process.
+    await pocket.wait_tool_auth()
+
+    # invoke tool and get result
+    result = pocket.invoke(
+        tool_name="get_slack_messages",
+        body={
+            "channel": "<YOUR_CHANNEL>",
+            "limit": 10}
+    )
+
+    print(result)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+### For Sandboxed Tools
+
+#### 1. Set the OAuth Configuration
+
+Set an OAuth configuration on `.secrets.toml`, on your working directory.
+Most of the OAuth handler requires `client_id`, and `client_secret`, but it may vary over the providers.
+To look over which fields are required, see [this code](https://github.com/vessl-ai/hyperpocket/blob/main/libs/hyperpocket/hyperpocket/config/auth.py)
+
+Example(Slack):
+
+```toml
+[auth.slack]
+client_id = "<YOUR_GOOGLE_APP_CLIENT_ID>"
+client_secret = "<YOUR_GOOGLE_APP_CLIENT_SECRET>"
+```
+
+#### 2. Define `.auth` in `pocket.json` of your tool
+
+- Add `.auth` field to `pocket.json`.
+- For more information about `pocket.json`, check [here](/tools/using-sandboxed-tools)
+
+```json
+{
+    ...
+    "auth": {
+        "auth_provider": "slack",
+        "scopes": ["channels:history"]
+    }
+}
+```
+
+#### 3. Implement Your Tool
+
+One can simply get auth tokens from environment variables.
+For the slack auth provider, one can obtain slack token with `SLACK_BOT_TOKEN` environment variable.
+
+```python
+from slack_sdk import WebClient
+client = WebClient(token=os.getenv("SLACK_BOT_TOKEN"))
+```
+
+#### 4. Plug the Tool in Hyperpocket
 
 ```python
 pocket = Pocket(tools=["your/local/auth/tool/path"])
@@ -44,7 +191,7 @@ pocket = Pocket(tools=["your/local/auth/tool/path"])
 pocket = Pocket(tools=["https://github.com/your-organizaion/your-repository"])
 ```
 
-#### 4. Invoke tool with authentication
+#### 5. Invoke Tool with Authentication
 
 ```python
 # initialize tool authentication.
@@ -101,140 +248,9 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-### Hyperpocket FunctionTool
-
-#### 1. Set the OAuth Configuration
-
-Set a OAuth configuration. It varies by OAuth Provider.
-
-Example(Slack):
-
-```toml
-[auth.slack]
-client_id = "<YOUR_GOOGLE_APP_CLIENT_ID>"
-client_secret = "<YOUR_GOOGLE_APP_CLIENT_SECRET>"
-```
-
-#### 2. Define the Tool
-
-Use the `@function_tool` decorator to create a tool with the OAuth configuration.
-
-Example(Slack):
-
-Here’s how to define and use a Google tool with OAuth authentication:
-
-```python
-from slack_sdk import WebClient
-
-from hyperpocket.auth import AuthProvider
-from hyperpocket.tool import function_tool
 
 
-@function_tool(
-    auth_provider=AuthProvider.SLACK,
-    scopes=["channels:history", "im:history", "mpim:history", "groups:history", "mpim:read", "im:read"])
-def slack_get_messages(channel: str, limit: int = 10, **kwargs) -> list:
-    """
-    Get recent messages from a Slack channel.
-
-    Args:
-        channel(str): slack channel to be fetched
-        limit(int): maximum message limit
-    """
-    client = WebClient(token=kwargs["SLACK_BOT_TOKEN"])
-    response = client.conversations_history(channel=channel, limit=limit)
-    return list(response)
-```
-
-- `auth_provider`: Define which authentication provider token is needed in your tool
-- `scopes`: needed authentication scopes in your tool
-
-#### 3. Plug in the tool in Hyperpocket`
-
-```python
-from hyperpocket import Pocket
-
-pocket = Pocket(tools=[slack_get_messages])
-```
-
-#### 4. Invoke tool with authentication
-
-```python
-# initialize tool authentication.
-authentication_url = await pocket.initialize_tool_auth()
-
-# send this authentication_url to user.
-print(authentication_url)
-
-# wait for your authentication process.
-await pocket.wait_tool_auth()
-
-# invoke tool and get result
-result = pocket.invoke(
-    tool_name="get_slack_messages",
-    body={
-        "channel": "<YOUR_CHANNEL>",
-        "limit": 10}
-)
-```
-
-### Full code
-
-```python
-import asyncio
-
-from slack_sdk import WebClient
-
-from hyperpocket import Pocket
-from hyperpocket.auth import AuthProvider
-from hyperpocket.tool import function_tool
-
-
-@function_tool(
-    auth_provider=AuthProvider.SLACK,
-    scopes=["channels:history", "im:history", "mpim:history", "groups:history", "mpim:read", "im:read"])
-def slack_get_messages(channel: str, limit: int = 10, **kwargs) -> list:
-    """
-    Get recent messages from a Slack channel.
-
-    Args:
-        channel(str): slack channel to be fetched
-        limit(int): maximum message limit
-    """
-    client = WebClient(token=kwargs["SLACK_BOT_TOKEN"])
-    response = client.conversations_history(channel=channel, limit=limit)
-    return list(response)
-
-
-async def main():
-    # init pocket with your tool.
-    pocket = Pocket(tools=[slack_get_messages])
-
-    # initialize tool authentication.
-    authentication_url = await pocket.initialize_tool_auth()
-
-    # send this authentication_url to user.
-    print(authentication_url)
-
-    # wait for your authentication process.
-    await pocket.wait_tool_auth()
-
-    # invoke tool and get result
-    result = pocket.invoke(
-        tool_name="get_slack_messages",
-        body={
-            "channel": "<YOUR_CHANNEL>",
-            "limit": 10}
-    )
-
-    print(result)
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
-```
-
-## Why Use OAuth with Hyperpocket?
+## Why Using OAuth2 with Hyperpocket Is a Better Option?
 
 - **Dynamic Token Management:** Handles token issuance, storage, and refresh cycles internally.
 - **Secure Authentication:** No exposure of sensitive credentials like access tokens.

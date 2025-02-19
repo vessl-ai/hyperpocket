@@ -30,6 +30,10 @@ class BitwardenTokenAuthHandler(AuthHandlerInterface):
         return AuthProvider.BITWARDEN
 
     @staticmethod
+    def provider_default() -> bool:
+        return True
+
+    @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
 

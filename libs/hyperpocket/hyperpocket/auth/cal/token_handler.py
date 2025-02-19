@@ -25,6 +25,10 @@ class CalTokenAuthHandler(AuthHandlerInterface):
         return AuthProvider.CAL
 
     @staticmethod
+    def provider_default() -> bool:
+        return True
+
+    @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
 

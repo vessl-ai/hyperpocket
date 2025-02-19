@@ -26,44 +26,10 @@ AI models with **tool-calling capabilities** can recognize when a tool is needed
 
 ### Tool categorization by integration method
 
-![image.png](what-are-tools/image.png)
+Hyperpocket provides two ways to integrate tools into AI agents:
 
-Hyperpocket provides two distinct ways to integrate tools into AI agents:
-
-1. **WASM Tools** : Tools executed securely in an isolated WebAssembly (WASM) environment.
-2. **Function Tools** : Lightweight Python functions that can be directly integrated into workflows.
-
-#### WASM Tools
-
-WASM tools are executed in secure, sandboxed environments, making them ideal for scenarios requiring high security and performance isolation. These tools can either be fetched from external repositories like GitHub or loaded directly from local storage.
-
-WASM Tool has two following variants:
-
-**Git-based Execution**
-
-- Tools are fetched from a GitHub repository, downloaded locally, and executed via a WASM interpreter.
-- This approach is useful for managed tools maintained by Hyperpocket or open-source contributions by the community.
-
-**Local Execution**
-
-- Pre-existing tools stored locally are executed directly using their file paths.
-- Ideal for private tools or custom setups where internet access might be restricted.
-
-```python
-from hyperpocket.tool import from_git
-
-# git-based execution
-tool = from_git("https://github.com/vessl-ai/hyperpocket", "main", "managed-tools/slack/get-message")
-
-# local execution
-tool = from_local("yout/path/to/wasm/tool/in/local/env/slack/get-message")
-```
-
-The tool in the GitHub repository can be used by its URL directly.
-
-```python
-tool = from_git("https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message")
-```
+1. **Function Tools** : Lightweight Python functions that can be directly integrated into workflows.
+2. **Sandboxed Tools** : Tools executed securely in an isolated environment.
 
 #### Function Tools
 
@@ -86,6 +52,38 @@ def get_weather(location: str) -> str:
     return f"The weather in {location} is sunny."
 ```
 
+#### Sandboxed Tools
+
+Sandboxed tools are executed in secure, sandboxed environments, making them ideal for scenarios requiring high security and performance isolation.
+Those environment can be one of containerized environment, WASM runtime environment, or anything else.
+These tools can either be fetched from external repositories like GitHub or loaded directly from local storage.
+
+Sandboxed Tool has two following variants:
+
+**Git-based Execution**
+
+- Tools are fetched from a Git repository, downloaded locally, and executed on top of an isolated environment such as containers.
+- This approach is useful for sharing tools over open-source contributions by the community.
+
+**Local Execution**
+
+- Pre-existing tools stored locally are executed directly using their file paths.
+- Ideal for testing your tools currently you are building.
+
+Below is an example code that integrates sandboxed tools. For more detail, find more on [Using Sandboxed Tools](/tools/using-sandboxed-tools.html)
+
+```python
+from hyperpocket_langchain import PocketLangchain
+
+pocket = PocketLangchain(
+    tools=[
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
+        "/Users/possum/tools/slack/get-messages",
+    ]
+)
+```
+
+
 ### Tool categorization by availability
 
 #### Built-in Tools
@@ -94,175 +92,8 @@ Built-in tools are pre-installed and included in Hyperpocket to manage authentic
 
 #### Public Tools (open-source)
 
-Public tools are open-source and shared by the broader community, including individual contributors, other open-source projects, and Hyperpocket team as well. These tools can be hosted on various platforms such as Hyperpocket repository, other GitHub repositories and LangChain community, etc.
-
-```python
-from hyperpocket.tool import from_git
-
-# managed by Hyperpocket Team
-tool = from_git("https://github.com/vessl-ai/hyperpocket", "main", "slack/post-message")
-
-# managed by community
-tool = from_git("https://github.com/user/custom-tool-repo", "main", "community-tools/custom-task")
-```
+Public tools are open-source and shared by the broader community, including individual contributors, other open-source projects, and Hyperpocket team as well. These tools can be hosted on various platforms such as Hyperpocket repository, other GitHub repositories.
 
 #### Your own tools
 
 Custom tools are highly personalized tools that users can directly create and deploy in their local environments. These tools are fully managed by the user or their organization and can be implemented as inline functions or packaged modules. Users can execute them using either a local Python interpreter or a secure WASM interpreter, providing maximum flexibility for bespoke workflows.
-
-```python
-from hyperpocket.tool import function_tool, from_local
-
-@function_tool
-def custom_task():
-		"""
-		A custom inline function tool.
-		"""
-
-    return "This is my custom tool!"
-
-
-tool = from_local(path="./local-tools/simple-echo-tool")
-```
-
-#### Custom Tool requirements
-
-**WASM Tool**
-
-- **config.toml** (Tool Metadata)
-
-  - name(str) : tool name
-  - description(str) : tool description
-  - auth_handlers(list[str]) : auth_handlers name list
-  - auth_scopes(dict[str, list[str]]) : auth_scopes per auth_handler
-  - tool_vars(dict[str, str]) : tool variables to use in tool
-
-  **example**
-
-  ```toml
-  name = "slack_get_messages"
-  description = "get slack messages"
-  auth_handlers = ["slack-oauth2"]
-  [auth_scopes]
-  slack = ["channels:history"]
-
-  [tool_vars]
-  a = "1"
-  b = "2"
-  ```
-
-- **schema.json** (OpenAPI spec for tool request)
-
-  **example**
-
-  ```json
-  {
-    "properties": {
-      "channel": {
-        "title": "Channel",
-        "type": "string"
-      },
-      "limit": {
-        "title": "Limit",
-        "type": "integer"
-      }
-    },
-    "required": ["channel", "limit"],
-    "title": "SlackGetMessageRequest",
-    "type": "object"
-  }
-  ```
-
-- **dist** (Build & package the tool for execution)
-
-  **example**
-
-  ```shell
-  # uv
-  uv build
-
-  # poetry
-  poetry build
-  ```
-
-- **`__main__.py`** (Main execution script)
-
-  - input : stdin
-  - output : stdout
-  - auth : environment variables
-  - should call your code in `if __name__ == '__main__': ..`
-
-  **example**
-
-  ```python
-    import json
-    import os
-    import sys
-    from typing import Optional
-
-    import requests
-    from pydantic import BaseModel, Field
-
-    token = os.getenv('GOOGLE_TOKEN')
-
-
-    class GoogleGetCalendarListRequest(BaseModel):
-        pass
-
-
-    def get_calendar_list():
-        response = requests.get(
-            url=f"https://www.googleapis.com/calendar/v3/users/me/calendarList",
-            headers={
-                "Authorization": f"Bearer {token}",
-            }
-        )
-
-        if response.status_code != 200:
-            return f"failed to get calendar list. error : {response.text}"
-
-        return response.json()
-
-
-    def main():
-        req = json.load(sys.stdin.buffer)
-        response = get_calendar_list()
-
-        print(response)
-
-
-    if __name__ == "__main__":
-        main()
-  ```
-
-- **`__init__.py`** (File defines the tool's main function for execution)
-
-  **example**
-
-  ```python
-  from your_tool.__main__ import main
-
-  __all__ = ['main']
-  ```
-
-## Tool categories in a nutshell
-
-### By integration method
-
-| Integration Method     | Description                                                                                       | Catagory      |
-| ---------------------- | ------------------------------------------------------------------------------------------------- | ------------- |
-| Function               | Lightweight tools defined as Python functions and executed locally.                               | Function Tool |
-| GitHub-based Execution | Tools fetched from GitHub repositories and executed in independent WASM runtime via interpreters. | WASM Tool     |
-| Local Execution        | Tools stored locally and executed directly.                                                       | WASM Tool     |
-
-### By availability
-
-| Tool Type      | Category       | Description                                       | Operation by                                                               |
-| -------------- | -------------- | ------------------------------------------------- | -------------------------------------------------------------------------- |
-| Built-in Tools | Function       | Pre-installed tools ready for immediate use.      | Managed and predefined by Hyperpocket.                                     |
-| Public Tools   | WASM, Function | Community-developed tools, officially maintained. | Developed by community.                                                    |
-| Custom Tools   | WASM, Function | Personalized tools created and deployed by users. | Fully managed by the user, supporting inline and packaged implementations. |
-
-```
-
-```

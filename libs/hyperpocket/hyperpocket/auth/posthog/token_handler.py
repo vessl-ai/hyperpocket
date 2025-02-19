@@ -30,6 +30,10 @@ class PosthogTokenAuthHandler(AuthHandlerInterface):
         return AuthProvider.POSTHOG
 
     @staticmethod
+    def provider_default() -> bool:
+        return True
+
+    @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
 

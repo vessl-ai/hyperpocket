@@ -27,6 +27,10 @@ class BrexTokenAuthHandler(AuthHandlerInterface):
         return AuthProvider.BREX
 
     @staticmethod
+    def provider_default() -> bool:
+        return True
+
+    @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
 

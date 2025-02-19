@@ -30,6 +30,10 @@ class PipedriveTokenAuthHandler(AuthHandlerInterface):
         return AuthProvider.PIPEDRIVE
 
     @staticmethod
+    def provider_default() -> bool:
+        return True
+
+    @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
 

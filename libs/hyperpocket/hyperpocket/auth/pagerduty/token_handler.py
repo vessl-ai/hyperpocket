@@ -30,6 +30,10 @@ class PagerdutyTokenAuthHandler(AuthHandlerInterface):
         return AuthProvider.PAGERDUTY
 
     @staticmethod
+    def provider_default() -> bool:
+        return True
+
+    @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
 

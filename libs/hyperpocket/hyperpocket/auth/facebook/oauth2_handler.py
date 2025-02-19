@@ -32,6 +32,10 @@ class FacebookOAuth2AuthHandler(AuthHandlerInterface):
         return True
 
     @staticmethod
+    def provider_default() -> bool:
+        return True
+
+    @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
 

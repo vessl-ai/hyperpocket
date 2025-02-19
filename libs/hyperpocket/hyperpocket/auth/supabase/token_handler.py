@@ -30,6 +30,10 @@ class SupabaseTokenAuthHandler(AuthHandlerInterface):
         return AuthProvider.SUPABASE
 
     @staticmethod
+    def provider_default() -> bool:
+        return True
+
+    @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
 

@@ -7,7 +7,6 @@
 ```python
 from openai import OpenAI
 from hyperpocket_openai import PocketOpenAI
-from hyperpocket.tool import from_git
 
 # Load a tool
 pocket = PocketOpenAI(
