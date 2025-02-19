@@ -31,23 +31,23 @@ OAuth2-based authentication.
 | [Cloudflare](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/cloudflare)                   | ✅          | ❌           | `CLOUDFLARE_TOKEN` |
 | [Dailybot](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/dailybot)                   | ✅          | ❌           | `DAILYBOT_TOKEN` |
 | [Datadog](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/datadog)                   | ✅          | ❌           | `DATADOG_TOKEN` |
-| [Discord](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/discord)                     | ✅          | ✅           | `DISCORD_TOKEN` |
+| [Discord](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/discord)                     | ✅          | ✅ (default)        | `DISCORD_TOKEN` |
 | [Discord(Bot)](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/discordbot)                     | ✅          | ❌           | `DISCORDBOT_TOKEN` |
 | [ElevenLabs](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/elevenlabs)                     | ✅          | ❌           | `ELEVENLABS_TOKEN` |
 | [Exa](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/exa)                     | ✅          | ❌           | `EXA_TOKEN` |
 | [Facebook](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/facebook)                   | ❌          | ✅           | `FACEBOOK_TOKEN` |
 | [Finage](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/finage)                     | ✅          | ❌           | `FINAGE_TOKEN` |
-| [GitHub](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/github)                       | ✅          | ✅           | `GITHUB_TOKEN` |
+| [GitHub](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/github)                       | ✅          | ✅ (default)          | `GITHUB_TOKEN` |
 | [Google](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/google)                       | ❌          | ✅           | `GOOGLE_TOKEN` |
 | [Gumloop](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/gumloop)                     | ✅          | ❌           | `GUMLOOP_TOKEN` |
 | [Happyrobot](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/happyrobot)                     | ✅          | ❌           | `HAPPYROBOT_TOKEN` |
 | [Heygen](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/heygen)                     | ✅          | ❌           | `HEYGEN_TOKEN` |
-| [Hubspot](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/hubspot)                     | ✅          | ✅           | `HUBSPOT_TOKEN` |
-| [Jira](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/jira)                           | ✅          | ✅           | `JIRA_TOKEN` |
+| [Hubspot](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/hubspot)                     | ✅          | ✅ (default)         | `HUBSPOT_TOKEN` |
+| [Jira](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/jira)                           | ✅          | ✅ (default)          | `JIRA_TOKEN` |
 | [Klaviyo](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/klaviyo)                     | ✅          | ❌           | `KLAVIYO_TOKEN` |
 | [Lever](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/lever)                     | ✅          | ❌           | `LEVER_TOKEN` |
 | [Lever(Sandbox)](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/lever_sandbox)                     | ✅          | ❌           | `LEVER_SANDBOX_TOKEN` |
-| [Linear](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/linear)                       | ✅          | ✅           | `LINEAR_TOKEN` |
+| [Linear](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/linear)                       | ✅          | ✅ (default)          | `LINEAR_TOKEN` |
 | [Linkedin](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/linkedin)                   | ❌          | ✅           | `LINKEDIN_TOKEN` |
 | [ListenNotes](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/listennotes)                     | ✅          | ❌           | `LISTENNOTES_TOKEN` |
 | [Mailchimp](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/mailchimp)                 | ❌          | ✅           | `MAILCHIMP_TOKEN` |
@@ -55,7 +55,7 @@ OAuth2-based authentication.
 | [Microsoft Clarity](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/microsoft_clarity)                     | ✅          | ❌           | `MICROSOFT_CLARITY_TOKEN` |
 | [Neon](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/neon)                     | ✅          | ❌           | `NEON_TOKEN` |
 | [Ngrok](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/ngrok)                     | ✅          | ❌           | `NGROK_TOKEN` |
-| [Notion](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/notion)                       | ✅          | ✅           | `NOTION_TOKEN` |
+| [Notion](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/notion)                       | ✅          | ✅ (default)          | `NOTION_TOKEN` |
 | [OnceHub](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/oncehub)                     | ✅          | ❌           | `ONCEHUB_TOKEN` |
 | [PagerDuty](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/pagerduty)                     | ✅          | ❌           | `PAGERDUTY_TOKEN` |
 | [PandaDoc](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/pandadoc)                     | ✅          | ❌           | `PANDADOC_TOKEN` |
@@ -67,7 +67,7 @@ OAuth2-based authentication.
 | [Semantic Scholar](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/semantic_scholar)               | ✅          | ❌           | `SEMANTIC_SCHOLAR_TOKEN` |
 | [Sendgrid](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/sendgrid)               | ✅          | ❌           | `SENDGRID_TOKEN` |
 | [SerpApi](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/serpapi)               | ✅          | ❌           | `SERPAPI_TOKEN` |
-| [Slack](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/slack)                         | ✅          | ✅           | `SLACK_BOT_TOKEN` |
+| [Slack](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/slack)                         | ✅          | ✅ (default)          | `SLACK_BOT_TOKEN` |
 | [Spotify](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/spotify)                     | ❌          | ✅           | `SPOTIFY_TOKEN` |
 | [Stripe](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/stripe)               | ✅          | ❌           | `STRIPE_TOKEN` |
 | [Supabase](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/supabase)               | ✅          | ❌           | `SUPABASE_TOKEN` |

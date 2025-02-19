@@ -30,6 +30,10 @@ class DatadogTokenAuthHandler(AuthHandlerInterface):
         return AuthProvider.DATADOG
 
     @staticmethod
+    def provider_default() -> bool:
+        return True
+
+    @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
 

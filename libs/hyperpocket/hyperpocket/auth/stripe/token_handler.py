@@ -27,6 +27,10 @@ class StripeTokenAuthHandler(AuthHandlerInterface):
         return AuthProvider.STRIPE
 
     @staticmethod
+    def provider_default() -> bool:
+        return True
+
+    @staticmethod
     def recommended_scopes() -> set[str]:
         return set()
 

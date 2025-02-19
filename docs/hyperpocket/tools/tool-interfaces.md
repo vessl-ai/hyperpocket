@@ -64,7 +64,7 @@ For each auth provider, the key name is different. (See [Supported Auth List](/a
 #### Directory Structure
 
 ```shell
-/create_issue
+/create-issue
   /create_issue
     /__init__.py
     /__main__.py
@@ -133,7 +133,6 @@ if __name__ == "__main__":
         "name": "github_create_issue",
         "description": "Create a GitHub issue",
         "inputSchema": { 
-            # you can obtain this with `GithubCreateIssueRequest.model_json_schema()`
             "properties": {
                 "owner": {
                     "description": "The owner of the repository",
@@ -212,6 +211,16 @@ if __name__ == "__main__":
         "run": "create_issue/__main__.py"
     }
 }
+```
+
+##### Tips for Building `.tool.inputSchema`
+You can obtain tool.inputSchema with `GithubCreateIssueRequest.model_json_schema()`.
+Especially, if there are multiple BaseModels involved, you can get a flattened schema just as the
+following code.
+
+```python
+from hyperpocket.util.flatten_json_schema import flatten_json_schema
+json_schema = flatten_json_schema(GithubCreateIssueRequest.model_json_schema())
 ```
 
 #### Input and Output

@@ -23,7 +23,7 @@ client_id = "<YOUR_GOOGLE_APP_CLIENT_ID>"
 client_secret = "<YOUR_GOOGLE_APP_CLIENT_SECRET>"
 ```
 
-#### 2. Define the Tool
+#### 2. Implement Your Tool and Define Auth Provider of the Tool
 
 Use the `@function_tool` decorator to create a tool with the OAuth configuration.
 
@@ -54,8 +54,9 @@ def slack_get_messages(channel: str, limit: int = 10, SLACK_BOT_TOKEN: str, **kw
     return list(response)
 ```
 
-- `auth_provider`: Define which authentication provider token is needed in your tool
-- `scopes`: needed authentication scopes in your tool
+- `auth_provider`: This field specifies which authentication provider token is needed in your tool.
+- `auth_handler`: This field specifies which authentication handler to use if there are multiple of handlers are available. (e.g. `auth_handler = slack-token` is available.)
+- `scopes`: This field specifies required OAuth2 permission set when performing tool invocation.
 
 #### 3. Plug the tool in Hyperpocket`
 
@@ -86,7 +87,7 @@ result = pocket.invoke(
 )
 ```
 
-### Full Code
+#### Full Code
 
 ```python
 import asyncio
@@ -172,7 +173,17 @@ client_secret = "<YOUR_GOOGLE_APP_CLIENT_SECRET>"
 }
 ```
 
-#### 3. Plug the tool in Hyperpocket`
+#### 3. Implement Your Tool
+
+One can simply get auth tokens from environment variables.
+For the slack auth provider, one can obtain slack token with `SLACK_BOT_TOKEN` environment variable.
+
+```python
+from slack_sdk import WebClient
+client = WebClient(token=os.getenv("SLACK_BOT_TOKEN"))
+```
+
+#### 4. Plug the Tool in Hyperpocket
 
 ```python
 pocket = Pocket(tools=["your/local/auth/tool/path"])
@@ -180,7 +191,7 @@ pocket = Pocket(tools=["your/local/auth/tool/path"])
 pocket = Pocket(tools=["https://github.com/your-organizaion/your-repository"])
 ```
 
-#### 4. Invoke tool with authentication
+#### 5. Invoke Tool with Authentication
 
 ```python
 # initialize tool authentication.
