@@ -97,8 +97,11 @@ class DockerContainerRuntime(ContainerRuntime):
         if stdin_str is not None:
             sock = container.attach_socket(params={"stdin": 1, "stream": 1})
             container.start()
-            sock._sock.send(stdin_str.encode("utf-8"))
-            sock._sock.close()
+            if hasattr(sock, "_sock"):
+                sock._sock.send(stdin_str.encode("utf-8"))
+                sock._sock.close()
+            else:
+                sock.send(stdin_str.encode("utf-8"))
             sock.close()
         else:
             container.start()
