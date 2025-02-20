@@ -1,3 +1,4 @@
+import inspect
 from typing import Callable, List, Optional
 
 from hyperpocket.auth import AuthProvider
@@ -23,6 +24,9 @@ def function_tool(
                 scopes=scopes if scopes else [],
                 auth_handler=auth_handler,
             )
+
+        if inspect.iscoroutinefunction(inner_func):
+            return FunctionTool.from_func(afunc=func, auth=auth, tool_vars=tool_vars)
 
         return FunctionTool.from_func(func=inner_func, auth=auth, tool_vars=tool_vars)
 
