@@ -16,7 +16,7 @@ llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # Load a tool
 pocket = PocketLlamaindex(
     tools=[
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
     ]
 )

@@ -14,7 +14,7 @@ async def _agent():
     client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
     pocket = PocketAnthropic(
         tools=[
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",

@@ -18,7 +18,7 @@ from hyperpocket_langchain import PocketLangchain
 # Initialize Hyperpocket
 pocket = PocketLangchain(
     tools=[
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message"
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages"
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message"
     ],
 )

@@ -17,7 +17,7 @@ class YourCrew:
         # Initialize PocketCrewAI with the desired tools.
         self.pocket = PocketCrewAI(
             tools=[
-                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
                 "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
                 "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
                 "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",

@@ -75,7 +75,7 @@ from hyperpocket_langchain import PocketLangchain
 if __name__ == '__main__':
     pocket = PocketLangchain(
         tools=[
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
         ],
     )
@@ -148,7 +148,7 @@ from hyperpocket_langchain import PocketLangchain
 
 pklc = PocketLangchain(
     tools=[
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
     ]
 )
@@ -207,7 +207,7 @@ from hyperpocket_langgraph import PocketLanggraph
 
 pklg = PocketLanggraph(
     tools=[
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
     ],
 )
@@ -244,7 +244,7 @@ from hyperpocket_llamaindex import PocketLlamaindex
 llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 pocket = PocketLlamaindex(
     tools=[
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
