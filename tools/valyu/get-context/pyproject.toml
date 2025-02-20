@@ -1,0 +1,10 @@
+[project]
+name = "get-context"
+version = "0.1.0"
+description = "Connect your AI agents to proprietary data sources and the web using the Valyu API"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic",
+    "valyu",
+]

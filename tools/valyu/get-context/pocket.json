@@ -1,0 +1,34 @@
+{
+    "tool": {
+      "name": "get_context",
+      "description": "Connect your AI agents to proprietary data sources and the web using the Valyu API.",
+      "inputSchema": {
+        "properties": {
+          "query": {
+            "title": "Query",
+            "type": "string"
+          },
+          "max_num_results": {
+            "title": "Max Num Results",
+            "type": "integer"
+          },
+          "max_price": {
+            "title": "Max Price",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "query",
+          "max_num_results",
+          "max_price"
+        ],
+        "title": "ValyuGetContextRequest",
+        "type": "object"
+      }
+    },
+    "language": "python",
+    "entrypoint": {
+      "build": "pip install .",
+      "run": "python -m get_context"
+    }
+  }
