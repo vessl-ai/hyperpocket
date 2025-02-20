@@ -8,7 +8,7 @@ class Runtime(enum.Enum):
     DOCKER = "docker"
 
 class DockerSettings(BaseModel):
-    base_url: str = "unix://var/run/docker.sock"
+    base_url: Optional[str] = None
     credstore_env: dict = None
 
 class HyperdockSettings(BaseModel):
