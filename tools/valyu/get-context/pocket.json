@@ -8,19 +8,24 @@
             "title": "Query",
             "type": "string"
           },
+          "search_type": {
+            "title": "Search Type",
+            "type": "string",
+            "description": "The type of search to perform, defaults to 'all' which is proprietary data sources and the web, or 'proprietary' which is proprietary data sources only"
+          },
           "max_num_results": {
             "title": "Max Num Results",
-            "type": "integer"
+            "type": "integer",
+            "description": "The maximum number of results to return, defaults to 10"
           },
           "max_price": {
             "title": "Max Price",
-            "type": "integer"
+            "type": "integer",
+            "description": "The maximum price to return, defaults to 10, must be greater than the max_num_results"
           }
         },
         "required": [
-          "query",
-          "max_num_results",
-          "max_price"
+          "query"
         ],
         "title": "ValyuGetContextRequest",
         "type": "object"

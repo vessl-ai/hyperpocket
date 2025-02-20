@@ -7,6 +7,7 @@ This tool connects your AI agents to proprietary data sources and the web using 
 To use this tool, you need to provide a JSON object with the following properties:
 
 * `query`: The search query to fetch context for.
+* `search_type`: The type of search to perform, defaults to 'all' which is proprietary data sources and the web, or 'proprietary' which is proprietary data sources only.
 * `max_num_results`: The maximum number of results to return. Defaults to 10.
 * `max_price`: The maximum price to consider for the results. Defaults to 10.
 
@@ -14,6 +15,7 @@ Example input:
 ```json
 {
   "query": "example query",
+  "search_type": "all",
   "max_num_results": 5,
   "max_price": 5
 }

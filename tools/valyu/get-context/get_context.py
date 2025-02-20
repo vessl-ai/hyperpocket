@@ -9,6 +9,7 @@ valyu = Valyu(api_key=os.getenv("VALYU_API_KEY"))
 
 class ValyuGetContextRequest(BaseModel):
     query: str
+    search_type: str = "all"
     max_num_results: int = 10
     max_price: int = 10
 
