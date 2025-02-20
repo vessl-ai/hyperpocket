@@ -28,7 +28,7 @@
     },
     "language": "python",
     "entrypoint": {
-      "build": "pip install .",
-      "run": "python -m get_context"
+      "build": "pip install -r requirements.txt",
+      "run": "python get_context.py"
     }
   }
