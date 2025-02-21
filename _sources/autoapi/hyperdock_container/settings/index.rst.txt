@@ -31,8 +31,8 @@ Package Contents
 
 
    .. py:attribute:: base_url
-      :type:  str
-      :value: 'unix://var/run/docker.sock'
+      :type:  Optional[str]
+      :value: None
 
 
 
