@@ -45,15 +45,13 @@ crewai_agent = Agent(
 )
 ```
 
-3. (Optional) Trigger authentication in initialization of your agent
+3. Trigger authentication in initialization of your agent.
 
 ```python
 pocket.init()
 ```
 
 This will trigger the authentication process when the agent fires up.
-
-If you skip this, authentication process will be triggered when the tool is called.
 
 4. Execute task
 
