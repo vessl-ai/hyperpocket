@@ -133,7 +133,73 @@
 <section id="crewai">
 <h1>CrewAI<a class="headerlink" href="#crewai" title="Link to this heading"><span>#</span></a></h1>
 <p><strong>CrewAI</strong> CrewAI is an opensource-framework for orchestrating autonomous AI agents. Hyperpocket tools can be seamlessly integrated for dynamic actions.</p>
-<p><strong>Example: Using Hyperpocket with CrewAI</strong></p>
+<p>Just use the following example to get started.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#installation'"><span>#</span></a></h2>
+<p>To incorporate this tool into your project, follow the installation steps below:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">pip<span class="w"> </span>install<span class="w"> </span>hyperpocket
+</span><span id="line-2">pip<span class="w"> </span>install<span class="w"> </span>hyperpocket_crewai
+</span><span id="line-3">pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'crewai[tools]'</span>
+</span></code></pre></div>
+</div>
+<p>if you like <code class="docutils literal notranslate"><span class="pre">uv</span></code> instead of <code class="docutils literal notranslate"><span class="pre">pip</span></code>, you can use the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">uv<span class="w"> </span>add<span class="w"> </span>hyperpocket<span class="w"> </span>hyperpocket_crewai<span class="w"> </span>crewai
+</span></code></pre></div>
+</div>
+</section>
+<section id="step-by-step-guide">
+<h2>Step-by-step guide<a class="headerlink" href="#step-by-step-guide" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-by-step-guide'"><span>#</span></a></h2>
+<ol class="arabic simple">
+<li><p>Initialize HyperPocket</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">pocket</span> <span class="o">=</span> <span class="n">PocketCrewAI</span><span class="p">(</span>
+</span><span id="line-2">  <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
+</span><span id="line-3">    <span class="s2">"https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/list-gmail"</span><span class="p">,</span>
+</span><span id="line-4">  <span class="p">]</span>
+</span><span id="line-5"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Define crewai agent</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">crewai_agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span>
+</span><span id="line-2">  <span class="n">role</span><span class="o">=</span><span class="s2">"Gmail Agent"</span><span class="p">,</span>
+</span><span id="line-3">  <span class="n">goal</span><span class="o">=</span><span class="s2">"You take action on Gmail using Gmail APIs"</span><span class="p">,</span>
+</span><span id="line-4">  <span class="n">backstory</span><span class="o">=</span><span class="p">(</span>
+</span><span id="line-5">    <span class="s2">"You are AI agent that is responsible for taking actions on Gmail"</span>
+</span><span id="line-6">  <span class="p">),</span>
+</span><span id="line-7">  <span class="n">tools</span><span class="o">=</span><span class="n">pocket</span><span class="o">.</span><span class="n">get_tools</span><span class="p">()</span>
+</span><span id="line-8"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Trigger authentication in initialization of your agent.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">pocket</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<p>This will trigger the authentication process when the agent fires up.</p>
+<ol class="arabic simple" start="4">
+<li><p>Execute task</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">description</span><span class="o">=</span><span class="s2">"List all emails in Gmail inbox"</span><span class="p">,</span>
+</span><span id="line-3">    <span class="n">agent</span><span class="o">=</span><span class="n">crewai_agent</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">expected_output</span><span class="o">=</span><span class="s2">"A list of emails from Gmail inbox with their details"</span><span class="p">,</span>
+</span><span id="line-5"><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="n">task</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="more-details">
+<h2>More details<a class="headerlink" href="#more-details" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#more-details'"><span>#</span></a></h2>
+<ul class="simple">
+<li><p>More detailed list of tools can be found <a class="reference external" href="https://github.com/vessl-ai/hyperpocket/tree/main/tools">here</a></p></li>
+</ul>
+</section>
+<section id="example-using-google-calendar-slack-github-with-crewai">
+<h2>Example: Using google calendar, slack, github with CrewAI<a class="headerlink" href="#example-using-google-calendar-slack-github-with-crewai" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#example-using-google-calendar-slack-github-with-crewai'"><span>#</span></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">crewai</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
 </span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">crewai.project</span><span class="w"> </span><span class="kn">import</span> <span class="n">CrewBase</span><span class="p">,</span> <span class="n">agent</span>
 </span><span id="line-3"><span class="kn">from</span><span class="w"> </span><span class="nn">hyperpocket_crewai</span><span class="w"> </span><span class="kn">import</span> <span class="n">PocketCrewAI</span>
@@ -169,7 +235,17 @@
 </span></code></pre></div>
 </div>
 </section>
-</div></div>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#installation'" class="reference internal" href="#installation">Installation</a></li>
+<li><a :data-current="activeSection === '#step-by-step-guide'" class="reference internal" href="#step-by-step-guide">Step-by-step guide</a></li>
+<li><a :data-current="activeSection === '#more-details'" class="reference internal" href="#more-details">More details</a></li>
+<li><a :data-current="activeSection === '#example-using-google-calendar-slack-github-with-crewai'" class="reference internal" href="#example-using-google-calendar-slack-github-with-crewai">Example: Using google calendar, slack, github with CrewAI</a></li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">

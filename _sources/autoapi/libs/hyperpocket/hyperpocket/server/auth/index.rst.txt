@@ -77,6 +77,7 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/timekit/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/token/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/trello/index
+   /autoapi/libs/hyperpocket/hyperpocket/server/auth/valyu/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/wandb/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/weaviate/index
    /autoapi/libs/hyperpocket/hyperpocket/server/auth/workiom/index

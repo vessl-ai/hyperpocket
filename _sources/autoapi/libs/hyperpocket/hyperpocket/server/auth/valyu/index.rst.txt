@@ -1,0 +1,32 @@
+libs.hyperpocket.hyperpocket.server.auth.valyu
+==============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.valyu
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.valyu.valyu_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.valyu.valyu_token_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: valyu_auth_router
+
+.. py:function:: valyu_token_callback(state: str, token: str)
+   :async:
+
+

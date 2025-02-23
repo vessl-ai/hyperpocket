@@ -376,6 +376,11 @@ Module Contents
 
 
 
+   .. py:attribute:: VALYU
+      :value: 'valyu'
+
+
+
    .. py:method:: get_auth_provider(auth_provider_name: str) -> AuthProvider
       :classmethod:
 
