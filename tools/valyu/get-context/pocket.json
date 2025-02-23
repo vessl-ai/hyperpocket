@@ -35,5 +35,9 @@
     "entrypoint": {
       "build": "pip install -r requirements.txt",
       "run": "python get_context.py"
+    },
+    "auth": {
+      "auth_provider": "valyu",
+      "scopes": []
     }
   }

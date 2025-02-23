@@ -74,6 +74,7 @@ OAuth2-based authentication.
 | [Tavily](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/tavily)               | ✅          | ❌           | `TAVILY_TOKEN` |
 | [Timekit](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/timekit)               | ✅          | ❌           | `TIMEKIT_TOKEN` |
 | [Trello](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/trello)               | ✅          | ❌           | `TRELLO_TOKEN` |
+| [Valyu](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/valyu)               | ✅          | ❌           | `VALYU_API_KEY` |
 | [Weights and Biases](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/wandb)               | ✅          | ❌           | `WANDB_TOKEN` |
 | [Weaviate](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/weaviate)               | ✅          | ❌           | `WEAVIATE_TOKEN` |
 | [Workiom](https://github.com/vessl-ai/hyperpocket/tree/main/libs/hyperpocket/hyperpocket/auth/workiom)               | ✅          | ❌           | `WORKIOM_TOKEN` |
