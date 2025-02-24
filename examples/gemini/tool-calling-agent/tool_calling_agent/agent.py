@@ -17,7 +17,7 @@ def agent():
 async def _agent():
     pocket = PocketGemini(
         tools=[
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
         ]
     )
 
@@ -34,32 +34,33 @@ async def _agent():
             break
 
         user_prompt_content = types.Content(
-            role='user',
+            role="user",
             parts=[types.Part.from_text(text=user_input)],
         )
         messages.append(user_prompt_content)
 
         while True:
             response = client.models.generate_content(
-                model='gemini-2.0-flash-001',
+                model="gemini-2.0-flash-001",
                 contents=messages,
-                config=types.GenerateContentConfig(tools=tool_specs)
+                config=types.GenerateContentConfig(tools=tool_specs),
             )
 
             if response.function_calls is None or len(response.function_calls) == 0:
                 response_content = types.Content(
-                    role="model",
-                    parts=[{"text": response.text}]
+                    role="model", parts=[{"text": response.text}]
                 )
                 messages.append(response_content)
                 break
 
             for i in range(len(response.function_calls)):
-                function_response_part = await pocket.ainvoke(response.function_calls[i])
+                function_response_part = await pocket.ainvoke(
+                    response.function_calls[i]
+                )
 
                 func_call_content = response.candidates[0].content
                 func_response_content = types.Content(
-                    role='user',
+                    role="user",
                     parts=[function_response_part],
                 )
                 messages.append(func_call_content)

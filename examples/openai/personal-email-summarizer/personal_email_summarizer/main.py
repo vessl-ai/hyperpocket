@@ -49,7 +49,7 @@ class BuiltinTools:
     @classmethod
     def slack(cls):
         return [
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
         ]
 

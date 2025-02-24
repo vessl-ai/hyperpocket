@@ -53,7 +53,7 @@ def agent(pocket: PocketLangchain):
 if __name__ == "__main__":
     with PocketLangchain(
         tools=[
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",

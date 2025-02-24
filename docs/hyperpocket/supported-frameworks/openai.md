@@ -11,7 +11,7 @@ from hyperpocket_openai import PocketOpenAI
 # Load a tool
 pocket = PocketOpenAI(
     tools=[
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
     ]
 )

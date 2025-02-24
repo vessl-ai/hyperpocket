@@ -11,7 +11,7 @@ from google.genai import types
 from hyperpocket_gemini import PocketGemini
 
 pocket = PocketGemini(tools=[
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
     "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
 

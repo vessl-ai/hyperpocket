@@ -12,6 +12,7 @@ from hyperpocket.tool import from_git
 if "GOOGLE_API_KEY" not in os.environ:
     os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter your Google AI API key: ")
 
+
 def agent(pocket: PocketLangchain):
     tools = pocket.get_tools()
 
@@ -61,9 +62,9 @@ def agent(pocket: PocketLangchain):
 
 if __name__ == "__main__":
     with PocketLangchain(
-            tools=[
-                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
-                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
-            ],
+        tools=[
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+        ],
     ) as pocket:
         agent(pocket)

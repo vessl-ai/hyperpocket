@@ -7,7 +7,7 @@
 from hyperpocket_openai import PocketOpenAI
 
 pocket = PocketOpenAI(tools=[
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
     "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ]
 )
@@ -71,7 +71,7 @@ from openai import OpenAI
 from hyperpocket_openai import PocketOpenAI
 
 pocket = PocketOpenAI(tools=[
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
     "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ]
 )
@@ -115,7 +115,7 @@ from hyperpocket_openai import PocketOpenAI
 
 pocket = PocketOpenAI(
     tools=[
-        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-message"),
+        from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/get-messages"),
         from_git("https://github.com/vessl-ai/hyperawesometools", "main", "managed-tools/slack/post-message"),
     ]
 )

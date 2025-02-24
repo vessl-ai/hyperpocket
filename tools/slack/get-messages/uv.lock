@@ -15,7 +15,7 @@ wheels = [
 ]
 
 [[package]]
-name = "get-message"
+name = "get-messages"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

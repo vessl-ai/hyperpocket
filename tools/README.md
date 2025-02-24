@@ -163,7 +163,7 @@
 
 ### Slack
 
-- **[slack_get_messages](slack/get-message)**
+- **[slack_get_messages](slack/get-messages)**
     - Get slack messages
     - Auth: slack (scopes: channels:history)
 - **[slack_send_messages](slack/post-message)**

@@ -13,7 +13,7 @@
 from hyperpocket_langgraph import PocketLanggraph
 
 pocket = PocketLanggraph(tools=[
-  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
   "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
   "https://github.com/my-org/some-awesome-tool",
 ])
@@ -32,7 +32,7 @@ from langchain_openai import ChatOpenAI
 from hyperpocket_langgraph import PocketLanggraph
 
 pocket = PocketLanggraph(tools=[
-  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
   "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
 
@@ -62,7 +62,7 @@ from hyperpocket_langgraph import PocketLanggraph
 
 # Define pocket tools
 pocket = PocketLanggraph(tools=[
-  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
   "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
 
@@ -126,7 +126,7 @@ from hyperpocket_langgraph import PocketLanggraph
 
 # Define pocket tools
 pocket = PocketLanggraph(tools=[
-  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
   "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
 
@@ -143,7 +143,7 @@ from hyperpocket_langgraph import PocketLanggraph
 
 # Define pocket tools
 pocket = PocketLanggraph(tools=[
-  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+  "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
   "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
 

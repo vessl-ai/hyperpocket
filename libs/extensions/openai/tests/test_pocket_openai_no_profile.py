@@ -20,7 +20,7 @@ class TestPocketOpenAINoProfile(IsolatedAsyncioTestCase):
 
         self.pocket = PocketOpenAI(
             tools=[
-                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/get-message",
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/get-messages",
                 "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/post-message",
                 "https://github.com/vessl-ai/hyperpocket/main/tree/tools/none/simple-echo-tool",
                 self.add,
