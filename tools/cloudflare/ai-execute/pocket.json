@@ -1,0 +1,34 @@
+{
+    "tool": {
+      "name": "ai_execute",
+      "description": "Execute AI Model in Cloudflare",
+      "inputSchema": {
+        "properties": {
+              "model_name": {
+                "title": "Model Name",
+                "type": "string",
+                "description": "The name of the AI model to execute"
+              },
+              "text": {
+                "title": "Text",
+                "type": "string",
+                "description": "Input text to the AI model"
+              }
+            },
+            "required": [
+              "model_name",
+              "text"
+            ],
+            "title": "AiExecuteRequest",
+            "type": "object"
+        }
+    },
+    "language": "python",
+    "auth": {
+      "auth_provider": "cloudflare"
+    },
+    "entrypoint": {
+      "build": "pip install .",
+      "run": "python __main__.py"
+    }
+  }

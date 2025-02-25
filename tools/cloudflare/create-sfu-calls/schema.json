@@ -1,0 +1,14 @@
+{
+    "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "description": "The name of sfu calls app"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "CreateSfuCallsRequest",
+        "type": "object"
+}
