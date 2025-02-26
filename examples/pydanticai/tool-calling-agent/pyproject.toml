@@ -1,0 +1,18 @@
+[project]
+name = "tool-calling-agent"
+version = "0.0.1"
+description = "Tool calling agent with hyperpocket and PydanticAI"
+authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "hyperdock-container",
+    "hyperpocket>=0.0.3",
+    "hyperpocket_pydanticai>=0.0.3",
+    "pydantic-ai>=0.0.1",
+]
+
+[tool.uv.sources]
+hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
+hyperpocket_pydanticai = { path = "../../../libs/extensions/pydanticai", editable = true }
+hyperdock-container = { path = "../../../libs/docks/hyperdock-container", editable = true }
