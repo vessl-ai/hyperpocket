@@ -7,14 +7,14 @@ import requests
 
 token = os.getenv('CLOUDFLARE_TOKEN')
 account_id = os.getenv('CLOUDFLARE_ACCOUNT_ID')
+model_name = os.getenv('CLOUDFLARE_MODEL_NAME')
 
 
 class AiExecuteRequest(BaseModel):
-    model_name: str = Field(default="", description="The name of the AI model to execute")
-    text: str = Field(default="", description="Input text to the AI model")
+    messages: list = Field(default="", description="Input messages to the AI model")
 
 def ai_execute(req: AiExecuteRequest):
-    url = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{req.model_name}"
+    url = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_name}"
     headers = {
         'Content-Type': 'application/json',
         'Authorization': f'Bearer {token}'
@@ -23,14 +23,13 @@ def ai_execute(req: AiExecuteRequest):
     response = requests.post(url, 
                              headers=headers, 
                              json={
-                                 "text": req.text
+                                 "messages": req.messages,
                              })
 
     if response.status_code != 200:
         return f"Failed to execute AI model. Error: {response.text}"
 
     return f"Successfully executed AI model. Response: {response.json()}"
-    return
 
 
 def main():

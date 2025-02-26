@@ -1,20 +1,14 @@
 {
     "properties": {
-          "model_name": {
-            "title": "Model Name",
-            "type": "string",
-            "description": "The name of the AI model to execute"
-          },
-          "text": {
-            "title": "Text",
-            "type": "string",
-            "description": "Input text to the AI model"
-          }
-        },
-        "required": [
-          "model_name",
-          "text"
-        ],
-        "title": "AiExecuteRequest",
-        "type": "object"
-}
+        "messages": {
+            "title": "Messages",
+            "type": "array",
+            "description": "Input message to the AI model"
+        }
+    },
+    "required": [
+        "messages"
+    ],
+    "title": "AiExecuteRequest",
+    "type": "object"
+    }
