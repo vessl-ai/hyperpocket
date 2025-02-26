@@ -105,6 +105,10 @@ def create_signature(json_schema: dict, return_type: Any = str | None) -> Signat
         param = Parameter(param_name, kind, default=default, annotation=annotation)
         parameters.append(param)
 
+    # Sort parameters so that parameters without default values come first
+    # This is required by Python's syntax rules for function signatures
+    parameters.sort(key=lambda p: p.default is not Parameter.empty)
+
     # Add a kwargs parameter to handle any additional arguments if additionalProperties is true
     if json_schema.get("additionalProperties", False):
         kwargs_param = Parameter("kwargs", Parameter.VAR_KEYWORD)
