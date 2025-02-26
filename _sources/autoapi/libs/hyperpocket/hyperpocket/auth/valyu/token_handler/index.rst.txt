@@ -54,7 +54,7 @@ Module Contents
 
 
 
-   .. py:method:: prepare(auth_req: hyperpocket.auth.ahrefs.token_schema.AhrefsTokenRequest, thread_id: str, profile: str, future_uid: str, *args, **kwargs) -> str
+   .. py:method:: prepare(auth_req: hyperpocket.auth.valyu.token_schema.ValyuTokenRequest, thread_id: str, profile: str, future_uid: str, *args, **kwargs) -> str
 
 
    .. py:method:: authenticate(auth_req: hyperpocket.auth.valyu.token_schema.ValyuTokenRequest, future_uid: str, *args, **kwargs) -> hyperpocket.auth.context.AuthContext

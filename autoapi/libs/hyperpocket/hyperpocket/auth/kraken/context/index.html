@@ -7,16 +7,16 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema | Hyperpocket  documentation</title>
-<meta content="libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema | Hyperpocket  documentation" property="og:title"/>
-<meta content="libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema | Hyperpocket  documentation" name="twitter:title"/>
+<title>libs.hyperpocket.hyperpocket.auth.kraken.context | Hyperpocket  documentation</title>
+<meta content="libs.hyperpocket.hyperpocket.auth.kraken.context | Hyperpocket  documentation" property="og:title"/>
+<meta content="libs.hyperpocket.hyperpocket.auth.kraken.context | Hyperpocket  documentation" name="twitter:title"/>
 <link href="../../../../../../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../../_static/graphviz.css?v=4ae1632d" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../../search.html" rel="search" title="Search"/>
 <link href="../../../../../../../genindex.html" rel="index" title="Index"/>
-<link href="../../kraken/index.html" rel="next" title="libs.hyperpocket.hyperpocket.auth.kraken"/>
-<link href="../token_handler/index.html" rel="prev" title="libs.hyperpocket.hyperpocket.auth.klaviyo.token_handler"/>
+<link href="../keypair_context/index.html" rel="next" title="libs.hyperpocket.hyperpocket.auth.kraken.keypair_context"/>
+<link href="../index.html" rel="prev" title="libs.hyperpocket.hyperpocket.auth.kraken"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -130,20 +130,17 @@
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../../../index.html">libs.hyperpocket</a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../../index.html">libs.hyperpocket.hyperpocket</a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../index.html">libs.hyperpocket.hyperpocket.auth</a>
-<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">libs.hyperpocket.hyperpocket.auth.klaviyo</a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema</span>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">libs.hyperpocket.hyperpocket.auth.kraken</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">libs.hyperpocket.hyperpocket.auth.kraken.context</span>
 </nav>
 <div id="content" role="main">
-<section id="module-libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema">
-<span id="libs-hyperpocket-hyperpocket-auth-klaviyo-token-schema"></span><h1>libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema" title="Link to this heading"><span>#</span></a></h1>
+<section id="module-libs.hyperpocket.hyperpocket.auth.kraken.context">
+<span id="libs-hyperpocket-hyperpocket-auth-kraken-context"></span><h1>libs.hyperpocket.hyperpocket.auth.kraken.context<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.auth.kraken.context" title="Link to this heading"><span>#</span></a></h1>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#classes'"><span>#</span></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenRequest" title="libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenRequest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KlaviyoTokenRequest</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse" title="libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KlaviyoTokenResponse</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext" title="libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KrakenAuthContext</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -152,17 +149,16 @@
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#module-contents'"><span>#</span></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenRequest">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.</span></span><span class="sig-name descname"><span class="pre">KlaviyoTokenRequest</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenRequest" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenRequest'"><span>#</span></a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperpocket.auth.schema.AuthenticateRequest</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.</span></span><span class="sig-name descname"><span class="pre">KlaviyoTokenResponse</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse'"><span>#</span></a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperpocket.auth.schema.AuthenticateResponse</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse.access_token">
-<span class="sig-name descname"><span class="pre">access_token</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse.access_token" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse.access_token'"><span>#</span></a></dt>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.auth.kraken.context.</span></span><span class="sig-name descname"><span class="pre">KrakenAuthContext</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext'"><span>#</span></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperpocket.auth.context.AuthContext</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext.to_dict" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext.to_dict'"><span>#</span></a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext.to_profiled_dict">
+<span class="sig-name descname"><span class="pre">to_profiled_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext.to_profiled_dict" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext.to_profiled_dict'"><span>#</span></a></dt>
 <dd></dd></dl>
 </dd></dl>
 </section>
@@ -172,9 +168,9 @@
 <ul>
 <li><a :data-current="activeSection === '#classes'" class="reference internal" href="#classes">Classes</a></li>
 <li><a :data-current="activeSection === '#module-contents'" class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenRequest'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenRequest"><code class="docutils literal notranslate"><span class="pre">KlaviyoTokenRequest</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse"><code class="docutils literal notranslate"><span class="pre">KlaviyoTokenResponse</span></code></a><ul>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse.access_token'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.klaviyo.token_schema.KlaviyoTokenResponse.access_token"><code class="docutils literal notranslate"><span class="pre">KlaviyoTokenResponse.access_token</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext"><code class="docutils literal notranslate"><span class="pre">KrakenAuthContext</span></code></a><ul>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext.to_dict'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext.to_dict"><code class="docutils literal notranslate"><span class="pre">KrakenAuthContext.to_dict()</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext.to_profiled_dict'" class="reference internal" href="#libs.hyperpocket.hyperpocket.auth.kraken.context.KrakenAuthContext.to_profiled_dict"><code class="docutils literal notranslate"><span class="pre">KrakenAuthContext.to_profiled_dict()</span></code></a></li>
 </ul>
 </li>
 </ul>

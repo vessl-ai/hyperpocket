@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.kraken.keypair_context
+========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.kraken.keypair_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.kraken.keypair_context.KrakenKeypairAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: KrakenKeypairAuthContext
+
+   Bases: :py:obj:`hyperpocket.auth.kraken.context.KrakenAuthContext`
+
+
+   .. py:method:: from_kraken_keypair_response(response: hyperpocket.auth.kraken.keypair_schema.KrakenKeypairResponse)
+      :classmethod:
+
+
+

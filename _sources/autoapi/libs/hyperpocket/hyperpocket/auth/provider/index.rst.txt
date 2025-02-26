@@ -381,6 +381,11 @@ Module Contents
 
 
 
+   .. py:attribute:: KRAKEN
+      :value: 'kraken'
+
+
+
    .. py:method:: get_auth_provider(auth_provider_name: str) -> AuthProvider
       :classmethod:
 

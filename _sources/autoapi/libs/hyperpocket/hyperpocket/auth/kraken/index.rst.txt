@@ -1,0 +1,19 @@
+libs.hyperpocket.hyperpocket.auth.kraken
+========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.kraken
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/hyperpocket/hyperpocket/auth/kraken/context/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/kraken/keypair_context/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/kraken/keypair_handler/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/kraken/keypair_schema/index
+
+

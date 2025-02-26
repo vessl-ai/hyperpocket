@@ -1,0 +1,42 @@
+libs.hyperpocket.hyperpocket.server.auth.kraken
+===============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.kraken
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.kraken.kraken_auth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.kraken.keypair_form
+   libs.hyperpocket.hyperpocket.server.auth.kraken.submit_keypair
+   libs.hyperpocket.hyperpocket.server.auth.kraken.kraken_keypair_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: kraken_auth_router
+
+.. py:function:: keypair_form(redirect_uri: str, state: str = '')
+   :async:
+
+
+.. py:function:: submit_keypair(kraken_api_key: str = Form(...), kraken_api_secret: str = Form(...), redirect_uri: str = Form(...), state: str = Form(...))
+   :async:
+
+
+.. py:function:: kraken_keypair_callback(state: str, kraken_api_key: str, kraken_api_secret: str)
+   :async:
+
+

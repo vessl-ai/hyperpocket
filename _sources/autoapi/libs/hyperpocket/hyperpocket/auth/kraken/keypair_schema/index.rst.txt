@@ -1,0 +1,37 @@
+libs.hyperpocket.hyperpocket.auth.kraken.keypair_schema
+=======================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.kraken.keypair_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.kraken.keypair_schema.KrakenKeypairRequest
+   libs.hyperpocket.hyperpocket.auth.kraken.keypair_schema.KrakenKeypairResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: KrakenKeypairRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: KrakenKeypairResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: kraken_api_key
+      :type:  str
+
+
+   .. py:attribute:: kraken_api_secret
+      :type:  str
+
+

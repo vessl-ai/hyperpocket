@@ -165,3 +165,6 @@ Module Contents
 
 
 
+   .. py:method:: teardown()
+
+

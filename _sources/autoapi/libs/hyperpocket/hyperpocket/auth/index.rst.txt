@@ -49,6 +49,7 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/auth/hubspot/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/jira/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/klaviyo/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/kraken/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/lever/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/lever_sandbox/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/linear/index
