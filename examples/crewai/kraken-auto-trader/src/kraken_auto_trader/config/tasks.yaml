@@ -1,0 +1,51 @@
+read_ticker:
+  description: |-
+    Read the ticker information for the {pair} chart.
+  expected_output: |-
+    A ticker information of pair {pair}. The data should include the
+    current price, volume, and other relevant information.
+  agent: market_trend_reader
+
+read_recent_trades:
+  description: |-
+    Read the recent trades for the pair {pair}.
+  expected_output: |-
+    A list of recent trades for pair {pair}. The list should include the
+    trade price, volume, and other relevant information.
+  agent: market_trend_reader
+
+analyze_pair_trend:
+  description: |-
+    Analyze the current market trend of the pair {pair}.
+  expected_output: |-
+    An analysis of the current trend of the {pair} market. The analysis
+    should include information on whether the trend is bullish, bearish, or
+    neutral, and any other relevant details.
+  agent: market_trend_reader
+
+make_trading_decision:
+  description: |-
+    Make trading decisions based on the user's balance and the
+    analysis of the {pair} market.
+  expected_output: |-
+    A trading decision based on the analysis of the {pair} chart. The
+    decision should include whether to buy, sell, or hold, and any other
+    relevant details.
+  agent: trader
+
+trade:
+  description: |-
+    Execute the trading decision by placing an order on the Kraken exchange.
+  expected_output: |-
+    A confirmation that the trading decision has been executed and an order has
+    been placed on the Kraken exchange.
+  agent: trader
+
+review_balance:
+  description: |-
+    Review the current balance and portfolio on the Kraken exchange.
+  expected_output: |-
+    A summary of the current balance and portfolio on the Kraken exchange. The
+    summary should include the current balance, holdings, and any other relevant
+    information.
+  agent: trader

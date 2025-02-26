@@ -1,0 +1,58 @@
+{
+  "tool": {
+    "name": "kraken-create-order",
+    "description": "Create an order on kraken",
+    "inputSchema": {
+      "properties": {
+        "ordertype": {
+          "description": "Type of order",
+          "enum": [
+            "market",
+            "limit",
+            "iceberg",
+            "stop-loss",
+            "take-profit",
+            "stop-loss-limit",
+            "take-profit-limit",
+            "trailing-stop",
+            "trailing-stop-limit",
+            "settle-position"
+          ],
+          "type": "string"
+        },
+        "type": {
+          "description": "Type of order (buy/sell)",
+          "enum": ["buy", "sell"],
+          "type": "string"
+        },
+        "volume": {
+          "description": "Order quantity in terms of the base asset",
+          "type": "string"
+        },
+        "pair": {
+          "description": "Asset pair to trade",
+          "type": "string"
+        },
+        "price": {
+          "description": "Price per unit of base asset. Set to limit price for limit and iceberg orders. Trigger price for stop-loss, stop-loss-limit, take-profit, take-profit-limit, trailing-stop and trailing-stop-limit orders.",
+          "type": "string"
+        },
+        "modifying_order_id": {
+          "description": "If modifying an order, the order id of the order to modify",
+          "type": "string"
+        }
+      },
+      "required": ["ordertype", "type", "volume", "pair", "price"],
+      "title": "KrakenGetAccountBalanceRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "kraken"
+  },
+  "baseImage": "golang",
+  "entrypoint": {
+    "build": "go build -o app main.go",
+    "run": "./app"
+  }
+}

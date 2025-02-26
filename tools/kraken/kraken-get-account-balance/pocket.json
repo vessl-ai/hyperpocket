@@ -1,0 +1,19 @@
+{
+  "tool": {
+    "name": "kraken-get-account-balance",
+    "description": "Get the extended account balance from kraken",
+    "inputSchema": {
+      "properties": {},
+      "title": "KrakenGetAccountBalanceRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "kraken"
+  },
+  "baseImage": "golang",
+  "entrypoint": {
+    "build": "go build -o app main.go",
+    "run": "./app"
+  }
+}

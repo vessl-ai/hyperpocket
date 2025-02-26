@@ -1,0 +1,31 @@
+{
+  "tool": {
+    "name": "kraken-get-recent-trades",
+    "description": "Get the recent trades for a given asset pair from kraken",
+    "inputSchema": {
+      "properties": {
+        "pair": {
+          "type": "string",
+          "description": "Asset pair to get data for"
+        },
+        "since": {
+          "type": "string",
+          "description": "Return trade data since given unix seconds timestamp (optional)"
+        },
+        "count": {
+          "type": "integer",
+          "description": "Maximum number of trades to return (optional, default: 1000)",
+          "default": 50
+        }
+      },
+      "required": ["pair"],
+      "title": "KrakenGetRecentTradesRequest",
+      "type": "object"
+    }
+  },
+  "baseImage": "golang",
+  "entrypoint": {
+    "build": "go build -o app main.go",
+    "run": "./app"
+  }
+}
