@@ -1,4 +1,4 @@
-from typing import Type, Union
+from typing import Type, Union, Optional
 
 from pydantic import BaseModel, Field, create_model
 
@@ -42,7 +42,7 @@ def json_schema_to_model(
             fields[property_name] = (field_type, Field(description=field_description))
         else:
             fields[property_name] = (
-                field_type,
+                Optional[field_type],
                 Field(default=field_default, description=field_description),
             )
 

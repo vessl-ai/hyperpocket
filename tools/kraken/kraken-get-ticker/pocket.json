@@ -1,0 +1,21 @@
+{
+  "tool": {
+    "name": "kraken-get-ticker",
+    "description": "Get the ticker for a given asset pair from kraken",
+    "inputSchema": {
+      "properties": {
+        "pair": {
+          "type": "string",
+          "description": "Asset pair to get data for (optional, default: all tradeable exchange pairs)"
+        }
+      },
+      "title": "KrakenGetTickerRequest",
+      "type": "object"
+    }
+  },
+  "baseImage": "golang",
+  "entrypoint": {
+    "build": "go build -o app main.go",
+    "run": "./app"
+  }
+}

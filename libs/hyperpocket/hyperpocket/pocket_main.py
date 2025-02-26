@@ -30,10 +30,9 @@ class Pocket(object):
                 auth=auth,
             )
         except Exception as e:
-            if hasattr(self, "server"):
-                self.server.refcnt_down(self._uid)
+            self.teardown()
             pocket_logger.error(f"Failed to initialize pocket server. error : {e}")
-            self._teardown_server()
+            # self._teardown_server()
             raise e
         
         try:
@@ -337,15 +336,19 @@ class Pocket(object):
 
     def _teardown_server(self):
         self.server.teardown()
+    
+    def teardown(self):
+        if hasattr(self, 'server'):
+            self.server.refcnt_down(self._uid)
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.server.refcnt_down(self._uid)
+        self.teardown()
 
     def __del__(self):
-        self.server.refcnt_down(self._uid)
+        self.teardown()
 
     def __getstate__(self):
         state = self.__dict__.copy()
