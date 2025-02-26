@@ -33,8 +33,8 @@ class KrakenAutoTrader():
 	def market_trend_reader(self) -> Agent:
 		self.analyzer_pocket = PocketCrewAI(
 			tools=[
-				"~/Projects/hyperpocket/tools/kraken/kraken-get-ticker",
-				"~/Projects/hyperpocket/tools/kraken/kraken-get-recent-trades"
+				"https://github.com/vessl-ai/hyperpocket/tree/main/tools/kraken/kraken-get-ticker",
+				"https://github.com/vessl-ai/hyperpocket/tree/main/tools/kraken/kraken-get-recent-trades"
 			]
 		)
 		self.analyzer_pocket.init()
@@ -48,8 +48,8 @@ class KrakenAutoTrader():
 	def trader(self) -> Agent:
 		self.trader_pocket = PocketCrewAI(
 			tools=[
-				"~/Projects/hyperpocket/tools/kraken/kraken-get-account-balance",
-				"~/Projects/hyperpocket/tools/kraken/kraken-create-order",
+				"https://github.com/vessl-ai/hyperpocket/tree/main/tools/kraken/kraken-get-account-balance",
+				"https://github.com/vessl-ai/hyperpocket/tree/main/tools/kraken/kraken-create-order",
 			]
 		)
 		self.trader_pocket.init()
