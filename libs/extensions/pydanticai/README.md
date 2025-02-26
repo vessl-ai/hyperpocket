@@ -9,7 +9,7 @@ pocket = PocketPydanticAI(tools=[
     "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
     "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
-# get langchain compatible tools from pocket
+# get pydantic-ai compatible tools from pocket
 tools = pocket.get_tools()
 
 # get agent 
