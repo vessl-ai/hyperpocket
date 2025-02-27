@@ -31,7 +31,7 @@ class GmailSummarizer:
     def gmail_agent(self) -> Agent:
         self.gmail_agent_pocket = PocketCrewAI(
             tools=[
-                "https://github.com/vessl-ai/hyperpocket/tree/moon/example/crew-ai-gmail-summarize/tools/google/list-gmail"
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/list-gmail"
             ]
         )
         self.gmail_agent_pocket.init()
@@ -46,9 +46,9 @@ class GmailSummarizer:
     def sheets_agent(self) -> Agent:
         self.sheets_agent_pocket = PocketCrewAI(
             tools=[
-                "https://github.com/vessl-ai/hyperpocket/tree/moon/example/crew-ai-gmail-summarize/tools/google/create-spreadsheet",
-                "https://github.com/vessl-ai/hyperpocket/tree/moon/example/crew-ai-gmail-summarize/tools/google/update-spreadsheet-cells",
-                "https://github.com/vessl-ai/hyperpocket/tree/moon/example/crew-ai-gmail-summarize/tools/google/get-spreadsheet",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/create-spreadsheet",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/update-spreadsheet-cells",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-spreadsheet",
             ]
         )
         self.sheets_agent_pocket.init()

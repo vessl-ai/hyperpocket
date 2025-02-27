@@ -6,8 +6,9 @@ authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<3.13"
 dependencies = [
     "crewai[tools]>=0.102.0,<1.0.0",
-    "hyperpocket-crewai>=0.4.5",
-    "hyperpocket[standard]>=0.4.5",
+    "hyperdock-container",
+    "hyperpocket",
+    "hyperpocket-crewai",
 ]
 
 [project.scripts]
@@ -23,3 +24,8 @@ build-backend = "hatchling.build"
 
 [tool.crewai]
 type = "crew"
+
+[tool.uv.sources]
+hyperpocket-crewai = { path = "../../../libs/extensions/crewai", editable = true }
+hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
+hyperdock-container = { path = "../../../libs/docks/hyperdock-container", editable = true }

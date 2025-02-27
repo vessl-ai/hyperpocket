@@ -18,7 +18,7 @@ def run():
     """
 
     inputs = {
-        'num_emails': 10,
+        'num_emails': 20,
         'date': datetime.now().strftime("%Y%m%d"),
         'slack_channel': 'engr-test'
     }

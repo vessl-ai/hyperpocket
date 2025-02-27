@@ -923,15 +923,17 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "crewai", extra = ["tools"] },
-    { name = "hyperpocket", extra = ["standard"] },
+    { name = "hyperdock-container" },
+    { name = "hyperpocket" },
     { name = "hyperpocket-crewai" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "crewai", extras = ["tools"], specifier = ">=0.102.0,<1.0.0" },
-    { name = "hyperpocket", extras = ["standard"], specifier = ">=0.4.5" },
-    { name = "hyperpocket-crewai", specifier = ">=0.4.5" },
+    { name = "hyperdock-container", editable = "../../../libs/docks/hyperdock-container" },
+    { name = "hyperpocket", editable = "../../../libs/hyperpocket" },
+    { name = "hyperpocket-crewai", editable = "../../../libs/extensions/crewai" },
 ]
 
 [[package]]
@@ -1400,16 +1402,19 @@ wheels = [
 
 [[package]]
 name = "hyperdock-container"
-version = "0.4.5"
-source = { registry = "https://pypi.org/simple" }
+version = "0.1.0"
+source = { editable = "../../../libs/docks/hyperdock-container" }
 dependencies = [
     { name = "docker" },
     { name = "hyperpocket" },
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a4/e6/7e25837ef0d084b7a5b6927c165136c82d2d33ad4b426503e5b5684800fd/hyperdock_container-0.4.5.tar.gz", hash = "sha256:7523bd4c3e115b077c04b9e910668259471ef0c29d1955f72f774616af0046b0", size = 8164 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c9/d6/5367e1f0735bcd7e812340db384ad65c60254d246af77c8bb64cf5d6d4cb/hyperdock_container-0.4.5-py3-none-any.whl", hash = "sha256:44a597a1c7054dfc066d5c942bead5848b724c6c01a31444c03b58971c6e1873", size = 11364 },
+
+[package.metadata]
+requires-dist = [
+    { name = "docker", specifier = ">=7.1.0" },
+    { name = "hyperpocket", editable = "../../../libs/hyperpocket" },
+    { name = "pydantic", specifier = ">=2.10.6" },
 ]
 
 [[package]]
@@ -1423,8 +1428,8 @@ wheels = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.4.5"
-source = { registry = "https://pypi.org/simple" }
+version = "0.3.6"
+source = { editable = "../../../libs/hyperpocket" }
 dependencies = [
     { name = "click" },
     { name = "dynaconf" },
@@ -1443,28 +1448,56 @@ dependencies = [
     { name = "toml" },
     { name = "uvicorn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f0/f6/065e8439fb01e4df7dcd38ba11b2e19911b25833b0fbb3fedf570ad6a16a/hyperpocket-0.4.5.tar.gz", hash = "sha256:643acbf44d33abb9c7caadf0eef3528e7855586b0b4eff38fe82c872fac48256", size = 153750 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/34/0e/0e2bf88adf92b015851150d7c3a3bb887fdb6555a6fff33a41b29e07bd2a/hyperpocket-0.4.5-py3-none-any.whl", hash = "sha256:567da82824c4143afb2a0cff4f796c0dce6297f3c05113bf9f1277b027cb4627", size = 332234 },
+
+[package.metadata]
+requires-dist = [
+    { name = "click", specifier = ">=8.1.7" },
+    { name = "dynaconf", specifier = ">=3.2.6" },
+    { name = "fastapi", specifier = ">=0.115.5" },
+    { name = "gitpython", specifier = ">=3.1.43" },
+    { name = "httpx", specifier = "==0.27" },
+    { name = "hyperdock-container", marker = "extra == 'standard'", editable = "../../../libs/docks/hyperdock-container" },
+    { name = "jinja2", specifier = ">=3.1.4" },
+    { name = "multiprocess", specifier = ">=0.70.17" },
+    { name = "nest-asyncio", specifier = ">=1.6.0" },
+    { name = "playwright", specifier = ">=1.49.0" },
+    { name = "pydantic", specifier = ">=2.10.2" },
+    { name = "pygithub", specifier = ">=2.5.0" },
+    { name = "python-multipart", specifier = ">=0.0.19" },
+    { name = "redis", specifier = ">=5.2.1" },
+    { name = "requests", specifier = ">=2.32.3" },
+    { name = "toml", specifier = ">=0.10.2" },
+    { name = "uvicorn", specifier = ">=0.32.1" },
 ]
 
-[package.optional-dependencies]
-standard = [
-    { name = "hyperdock-container" },
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=8.3.4" },
+    { name = "pytest-cov", specifier = ">=6.0.0" },
+    { name = "ruff", specifier = ">=0.8.6" },
 ]
 
 [[package]]
 name = "hyperpocket-crewai"
-version = "0.4.5"
-source = { registry = "https://pypi.org/simple" }
+version = "0.3.6"
+source = { editable = "../../../libs/extensions/crewai" }
 dependencies = [
     { name = "crewai" },
     { name = "crewai-tools" },
     { name = "hyperpocket" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/62/73/cfe59ecc8f8a6757b5aeb5cc335a3fad3a3adf35efdb14ab854b13b1c654/hyperpocket_crewai-0.4.5.tar.gz", hash = "sha256:81275020fa3cb3196fd24d9a0fe9768f8ca70d40a6b9285bd29d17e218015ce2", size = 227305 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/fc/6e/281734ff5d55195977f18d86660628e3dc88c3e1ff2a7d6d301243baeebc/hyperpocket_crewai-0.4.5-py3-none-any.whl", hash = "sha256:b434d80278f5ea2285be0121edcaa7e5e187d7f34ec6e3ee1d92c10b52d70004", size = 2764 },
+
+[package.metadata]
+requires-dist = [
+    { name = "crewai", specifier = ">=0.30.0" },
+    { name = "crewai-tools", specifier = ">=0.32.1" },
+    { name = "hyperpocket", editable = "../../../libs/hyperpocket" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=8.3.4" },
+    { name = "ruff", specifier = ">=0.9.2" },
 ]
 
 [[package]]
