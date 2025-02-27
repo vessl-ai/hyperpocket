@@ -1,0 +1,21 @@
+fetch_and_summarize_emails:
+  description: >
+    Retrieve the most recent {num_emails} emails from Gmail, summarize it, and generate an insightful summary.
+  expected_output: >
+    A structured summary of the {num_emails} most recent emails.
+  agent: gmail_agent
+
+create_spreadsheet:
+  description: >
+    Create a new Google Spreadsheet named 'email_summarization_{date}' 
+    and populate it with the email summaries.
+  expected_output: >
+    A Google Spreadsheet URL containing the summarized emails.
+  agent: sheets_agent
+
+send_slack_notification:
+  description: >
+    Send the Google Spreadsheet link to Slack.
+  expected_output: >
+    A confirmation message that the spreadsheet link has been successfully sent to Slack.
+  agent: slack_agent
