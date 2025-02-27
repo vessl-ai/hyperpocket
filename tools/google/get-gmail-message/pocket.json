@@ -1,0 +1,31 @@
+{
+  "tool": {
+    "name": "google_get_gmail_message",
+    "description": "get google gmail message",
+    "inputSchema": {
+      "properties": {
+        "id": {
+          "description": "The ID of the message to retrieve. This ID is usually retrieved using messages.list.",
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "GoogleGetGmailMessageRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "google",
+    "scopes": [
+      "https://www.googleapis.com/auth/gmail.readonly"
+    ]
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install -r requirements.txt",
+    "run": "python get_gmail_message.py"
+  }
+}
