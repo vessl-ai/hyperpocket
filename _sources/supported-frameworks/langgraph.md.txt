@@ -10,7 +10,7 @@ from langgraph import AgentGraph
 
 # Load tools with Hyperpocket
 pocket = PocketLanggraph(tools=[
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
     ])
 

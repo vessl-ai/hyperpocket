@@ -85,7 +85,7 @@ Set up Hyperpocket and fetch the tools from GitHub.
 # Initialize Hyperpocket and load Slack tools
 pocket = PocketLangchain(
     tools=[
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
     ],
 )
@@ -245,7 +245,7 @@ from hyperpocket_langchain import PocketLangchain
 if __name__ == '__main__':
     pocket = PocketLangchain(
         tools=[
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
             "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
         ],
     )

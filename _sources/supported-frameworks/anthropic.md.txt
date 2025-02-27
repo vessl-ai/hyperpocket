@@ -14,7 +14,7 @@ client = Anthropic(api_key="YOUR_ANTHROPIC_API_KEY")
 # Load a Hyperpocket tool
 pocket = PocketAnthropic(
     tools=[
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
         "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
     ]
 )
