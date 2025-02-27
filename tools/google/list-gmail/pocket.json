@@ -13,8 +13,8 @@
               "type": "null"
             }
           ],
-          "default": 5,
-          "description": "Maximum number of messages to return. This field defaults to 5. The maximum allowed value for this field is 5.",
+          "default": 10,
+          "description": "Maximum number of messages to return. This field must not exceed **10**.",
           "title": "Max Results"
         },
         "page_token": {
@@ -40,8 +40,34 @@
             }
           ],
           "default": null,
-          "description": "gmail query, see https://support.google.com/mail/answer/7190?hl=en",
+          "description": "gmail query, Only return messages matching the specified query. Supports the same query format as the Gmail search box. For example, \"from:someuser@example.com rfc822msgid:<somemsgid@example.com> is:unread\". Parameter cannot be used when accessing the api using the gmail.metadata scope.",
           "title": "Q"
+        },
+        "truncate_content": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": true,
+          "description": "Truncate the email body if it exceeds a certain length. default setting is true",
+          "title": "Truncate Content"
+        },
+        "truncate_length": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 300,
+          "description": "Truncated length of the email body. default length is 300",
+          "title": "Truncate Length"
         }
       },
       "title": "GoogleListGmailRequest",
@@ -56,7 +82,7 @@
   },
   "entrypoint": {
     "build": "pip install .",
-    "run": "python -m list-gmail"
+    "run": "python -m list_gmail"
   },
   "language": "python"
 }

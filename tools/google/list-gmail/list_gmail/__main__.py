@@ -11,26 +11,32 @@ token = os.getenv("GOOGLE_TOKEN")
 
 
 class GoogleListGmailRequest(BaseModel):
-    max_results: Optional[int] = Field(default=3,
-                                       description="Maximum number of messages to return. This field defaults to 10. The maximum allowed value for this field is 10.")
+    max_results: Optional[int] = Field(default=10,
+                                       description="Maximum number of messages to return. This field must not exceed 10.")
     page_token: Optional[str] = Field(default=None,
                                       description="Page token to retrieve a specific page of results in the list.")
     q: Optional[str] = Field(
         default=None,
         description="""gmail query, Only return messages matching the specified query. Supports the same query format as the Gmail search box. For example, "from:someuser@example.com rfc822msgid:<somemsgid@example.com> is:unread". Parameter cannot be used when accessing the api using the gmail.metadata scope.""",
     )
+    truncate_content: Optional[bool] = Field(default=True,
+                                             description="Truncate the email body if it exceeds a certain length. default setting is true.")
+    truncate_length: Optional[int] = Field(default=300, description="Truncated length of the email body. default length is 200.")
 
 
-def get_message_body(parts):
+def get_message_body(parts, truncate_content, truncate_length):
     body_content = []
     for part in parts:
         if part.get('parts'):
-            nested_body_content = get_message_body(part['parts'])
+            nested_body_content = get_message_body(part['parts'], truncate_content, truncate_length)
             body_content.extend(nested_body_content)
 
         elif part.get('mimeType') == 'text/plain':
             body = part['body']['data']
             decoded_body = base64.urlsafe_b64decode(body).decode('utf-8')
+            if truncate_content and len(decoded_body) > truncate_length:
+                decoded_body = decoded_body[:truncate_length] + "..."
+
             body_content.append({
                 "partId": part['partId'],
                 "filename": part["filename"],
@@ -81,7 +87,7 @@ def list_gmail(req: GoogleListGmailRequest):
             if header["name"] in ["Delivered-To", "Date", "From", "Subject", "To"]:
                 headers.append(header)
 
-        body = get_message_body(payload.get('parts', []))
+        body = get_message_body(payload.get('parts', []), req.truncate_content, req.truncate_length)
         messages.append({
             "headers": headers,
             "body": body,
