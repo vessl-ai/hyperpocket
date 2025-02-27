@@ -11,51 +11,66 @@ class GmailSummarizer:
     agents_config = "config/agents.yaml"
     tasks_config = "config/tasks.yaml"
 
+    gmail_agent_pocket: PocketCrewAI
+    sheets_agent_pocket: PocketCrewAI
+    slack_agent_pocket: PocketCrewAI
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.gmail_agent_pocket is not None:
+            self.gmail_agent_pocket.teardown()
+        if self.sheets_agent_pocket is not None:
+            self.sheets_agent_pocket.teardown()
+        if self.slack_agent_pocket is not None:
+            self.slack_agent_pocket.teardown()
+
     # Agents
     @agent
     def gmail_agent(self) -> Agent:
-        gmail_agent_pocket = PocketCrewAI(
+        self.gmail_agent_pocket = PocketCrewAI(
             tools=[
-                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/list-gmail"
+                "https://github.com/vessl-ai/hyperpocket/tree/moon/example/crew-ai-gmail-summarize/tools/google/list-gmail"
             ]
         )
-        gmail_agent_pocket.init()
+        self.gmail_agent_pocket.init()
 
         return Agent(
             config=self.agents_config["gmail_agent"],
-            tools=gmail_agent_pocket.get_tools(),
+            tools=self.gmail_agent_pocket.get_tools(),
             verbose=True,
         )
 
     @agent
     def sheets_agent(self) -> Agent:
-        sheets_agent_pocket = PocketCrewAI(
+        self.sheets_agent_pocket = PocketCrewAI(
             tools=[
-                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/create-spreadsheet",
-                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/spreadsheet-cells",
-                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-spreadsheet",
+                "https://github.com/vessl-ai/hyperpocket/tree/moon/example/crew-ai-gmail-summarize/tools/google/create-spreadsheet",
+                "https://github.com/vessl-ai/hyperpocket/tree/moon/example/crew-ai-gmail-summarize/tools/google/update-spreadsheet-cells",
+                "https://github.com/vessl-ai/hyperpocket/tree/moon/example/crew-ai-gmail-summarize/tools/google/get-spreadsheet",
             ]
         )
-        sheets_agent_pocket.init()
+        self.sheets_agent_pocket.init()
 
         return Agent(
             config=self.agents_config["sheets_agent"],
-            tools=sheets_agent_pocket.get_tools(),
+            tools=self.sheets_agent_pocket.get_tools(),
             verbose=True,
         )
 
     @agent
     def slack_agent(self) -> Agent:
-        slack_agent_pocket = PocketCrewAI(
+        self.slack_agent_pocket = PocketCrewAI(
             tools=[
                 "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
             ]
         )
-        slack_agent_pocket.init()
+        self.slack_agent_pocket.init()
 
         return Agent(
             config=self.agents_config["slack_agent"],
-            tools=slack_agent_pocket.get_tools(),
+            tools=self.slack_agent_pocket.get_tools(),
             verbose=True,
         )
 
