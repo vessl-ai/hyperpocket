@@ -49,7 +49,7 @@ class TestPocketCore(IsolatedAsyncioTestCase):
     def test_parse_specific_github_url_tool_like(self):
         # given
         test_github_url = (
-            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message"
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages"
         )
 
         # when
@@ -57,7 +57,7 @@ class TestPocketCore(IsolatedAsyncioTestCase):
 
         # then
         self.assertIsInstance(parsed_tool_like, WasmToolRequest)
-        self.assertEqual(parsed_tool_like.rel_path, "tools/slack/get-message")
+        self.assertEqual(parsed_tool_like.rel_path, "tools/slack/get-messages")
         self.assertIsInstance(parsed_tool_like.lock, GitLock)
         self.assertEqual(
             parsed_tool_like.lock.repository_url,

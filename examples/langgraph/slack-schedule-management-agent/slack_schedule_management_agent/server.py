@@ -45,29 +45,33 @@ def get_current_utc_time() -> str:
 
 
 def build():
-    pocket = PocketLanggraph(tools=[
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
-        "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/read-pull-requests",
-        get_user_slack_threads,
-        fetch_user_prs_from_organization
-    ])
+    pocket = PocketLanggraph(
+        tools=[
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
+            "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/read-pull-requests",
+            get_user_slack_threads,
+            fetch_user_prs_from_organization,
+        ]
+    )
 
-    llm = ChatOpenAI(model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"), streaming=True)
+    llm = ChatOpenAI(
+        model="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"), streaming=True
+    )
     llm_with_tools = llm.bind_tools(pocket.get_tools())
 
     graph_builder = StateGraph(MessagesState)
 
     async def agent(state: MessagesState, config: RunnableConfig) -> dict:
-        print('---CALL AGENT---')
-        messages = state['messages']
+        print("---CALL AGENT---")
+        messages = state["messages"]
         msg = [
             SystemMessage(
-                content=f'''
+                content=f"""
 [current utc time] : {config["configurable"].get("current_utc_time")}
 You are an intelligent scheduling assistant. When the user asks about their schedule, your job is to fetch and organize relevant information from the following data sources:
 	1.	Ongoing github pull requests (PRs).
@@ -92,7 +96,7 @@ Based on the complete and accurate data:
 	- Schedule their tasks by proper order based on their tasks and urgency
 
 Always ensure your response is clear, actionable, and structured, making it easy for the user to understand their current commitments and next steps.
-'''
+"""
             )
         ]
 
@@ -100,11 +104,17 @@ Always ensure your response is clear, actionable, and structured, making it easy
             response = await llm_with_tools.ainvoke(msg + messages, config=config)
         except Exception as e:
             print("error occur : ", e)
-            response = await llm_with_tools.ainvoke([messages[-1], SystemMessage(
-                content=f"currently failed to calling first analyze the reason, and notify this reason to user. [reason : {e}]")])
+            response = await llm_with_tools.ainvoke(
+                [
+                    messages[-1],
+                    SystemMessage(
+                        content=f"currently failed to calling first analyze the reason, and notify this reason to user. [reason : {e}]"
+                    ),
+                ]
+            )
 
         print(response)
-        return {'messages': [response]}
+        return {"messages": [response]}
 
     graph_builder.add_node("agent", agent)
     graph_builder.add_node("tools", pocket.get_tool_node())
@@ -116,7 +126,7 @@ Always ensure your response is clear, actionable, and structured, making it easy
         {
             "tools": "tools",
             END: END,
-        }
+        },
     )
     graph_builder.add_edge("tools", "agent")
 
@@ -136,12 +146,21 @@ def server_example(graph):
             timestamp = request.headers.get("X-Slack-Request-Timestamp")
             signature = request.headers.get("X-Slack-Signature")
 
-            if not verifier.is_valid_request(body,
-                                             {"x-slack-signature": signature, "x-slack-request-timestamp": timestamp}):
-                return JSONResponse(status_code=403, content={"detail": "Invalid request signature"})
+            if not verifier.is_valid_request(
+                body,
+                {
+                    "x-slack-signature": signature,
+                    "x-slack-request-timestamp": timestamp,
+                },
+            ):
+                return JSONResponse(
+                    status_code=403, content={"detail": "Invalid request signature"}
+                )
 
         except Exception as e:
-            return JSONResponse(status_code=400, content={"detail": f"Invalid request: {str(e)}"})
+            return JSONResponse(
+                status_code=400, content={"detail": f"Invalid request: {str(e)}"}
+            )
 
         payload = await request.json()
 
@@ -153,13 +172,24 @@ def server_example(graph):
         if "event" in payload:
             event = payload["event"]
             print("event : ", event)
-            if event.get("type") == "message" and event.get("bot_id") is None and event.get("app_id") is None:
+            if (
+                event.get("type") == "message"
+                and event.get("bot_id") is None
+                and event.get("app_id") is None
+            ):
                 thread_id = event.get("user")
                 if thread_id is not None:
                     text = event.get("text", "")
                     channel = event.get("channel", "")
                     response = send_slack_message(channel, "답변을 생성 중입니다..")
-                    asyncio.create_task(chat(msg=text, channel=channel, ts=response.get("ts"), thread_id=thread_id))
+                    asyncio.create_task(
+                        chat(
+                            msg=text,
+                            channel=channel,
+                            ts=response.get("ts"),
+                            thread_id=thread_id,
+                        )
+                    )
 
         return {"status": "ok"}
 
@@ -168,31 +198,51 @@ def server_example(graph):
             recursion_limit=30,
             configurable={
                 "thread_id": thread_id,
-                "current_utc_time": get_current_utc_time()
+                "current_utc_time": get_current_utc_time(),
             },
         )
 
-        if conversation_paused.get(config['configurable']["thread_id"], False):
-            conversation_paused.pop(config['configurable']["thread_id"])
-            async for _, chunk in graph.astream(Command(resume={'action': 'continue'}), config=config,
-                                                stream_mode="updates", subgraphs=True):
-                if intr := chunk.get('__interrupt__'):
-                    conversation_paused[config['configurable']["thread_id"]] = True
+        if conversation_paused.get(config["configurable"]["thread_id"], False):
+            conversation_paused.pop(config["configurable"]["thread_id"])
+            async for _, chunk in graph.astream(
+                Command(resume={"action": "continue"}),
+                config=config,
+                stream_mode="updates",
+                subgraphs=True,
+            ):
+                if intr := chunk.get("__interrupt__"):
+                    conversation_paused[config["configurable"]["thread_id"]] = True
                     update_slack_message(channel=channel, text=intr[0].value, ts=ts)
                 else:
-                    message = list(chunk.values())[0]['messages'][-1]
-                    if message.type == "ai" and message.content is not None and message.content != "":
-                        update_slack_message(channel=channel, text=message.content, ts=ts)
+                    message = list(chunk.values())[0]["messages"][-1]
+                    if (
+                        message.type == "ai"
+                        and message.content is not None
+                        and message.content != ""
+                    ):
+                        update_slack_message(
+                            channel=channel, text=message.content, ts=ts
+                        )
         else:
-            async for _, chunk in graph.astream({"messages": [("user", msg)]}, config=config,
-                                                stream_mode="updates", subgraphs=True):
-                if intr := chunk.get('__interrupt__'):
-                    conversation_paused[config['configurable']["thread_id"]] = True
+            async for _, chunk in graph.astream(
+                {"messages": [("user", msg)]},
+                config=config,
+                stream_mode="updates",
+                subgraphs=True,
+            ):
+                if intr := chunk.get("__interrupt__"):
+                    conversation_paused[config["configurable"]["thread_id"]] = True
                     update_slack_message(channel=channel, text=intr[0].value, ts=ts)
                 else:
-                    message = list(chunk.values())[0]['messages'][-1]
-                    if message.type == "ai" and message.content is not None and message.content != "":
-                        update_slack_message(channel=channel, text=message.content, ts=ts)
+                    message = list(chunk.values())[0]["messages"][-1]
+                    if (
+                        message.type == "ai"
+                        and message.content is not None
+                        and message.content != ""
+                    ):
+                        update_slack_message(
+                            channel=channel, text=message.content, ts=ts
+                        )
 
     add_callback_proxy(app)
     uvicorn.run(app, host="0.0.0.0", port=8008)

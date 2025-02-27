@@ -66,7 +66,7 @@ class TestPocketAnthropicNoProfile(IsolatedAsyncioTestCase):
         # given
         pocket = PocketAnthropic(
             tools=[
-                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/get-message",
+                "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/get-messages",
                 "https://github.com/vessl-ai/hyperpocket/main/tree/tools/slack/post-message",
             ]
         )

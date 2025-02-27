@@ -9,7 +9,7 @@ from hyperpocket.config.settings import settings
 from hyperpocket_langchain import PocketLangchain
 
 pocket = PocketLangchain(tools=[
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
     "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
 # get langchain compatible tools from pocket
@@ -37,7 +37,7 @@ from langchain_openai import ChatOpenAI
 from hyperpocket_langchain import PocketLangchain
 
 pocket = PocketLangchain(tools=[
-    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
+    "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
     "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
 ])
 
