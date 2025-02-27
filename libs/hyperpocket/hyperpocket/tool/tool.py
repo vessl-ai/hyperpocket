@@ -17,17 +17,17 @@ class ToolAuth(BaseModel):
     scopes: list[str] = Field(
         default=None,
         description="Indicates which authentication provider’s credentials are required to invoke the tool. "
-        "If auth_provider is not specified, the tool is considered to require no authentication.",
+                    "If auth_provider is not specified, the tool is considered to require no authentication.",
     )
     auth_provider: Optional[AuthProvider] = Field(
         default=None,
         description="Specifies which authentication handler should be used when invoking the tool. "
-        "If auth_handler is not specified, the default handler of the authentication provider will be used.",
+                    "If auth_handler is not specified, the default handler of the authentication provider will be used.",
     )
     auth_handler: Optional[str] = Field(
         default=None,
         description="Indicates the authentication scopes required to invoke the tool. "
-        "If authentication is not performed or the authentication handler is non-scoped, the value should be None.",
+                    "If authentication is not performed or the authentication handler is non-scoped, the value should be None.",
     )
 
 
@@ -191,3 +191,6 @@ class Tool(BaseModel, abc.ABC):
         else:
             self.postprocessings.extend(postprocessings)
         return self
+
+    def __str__(self) -> str:
+        return self.name
