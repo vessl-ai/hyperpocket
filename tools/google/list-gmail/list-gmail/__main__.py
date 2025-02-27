@@ -77,10 +77,10 @@ def list_gmail(req: GoogleListGmailRequest):
         full_headers = payload.get('headers', [])
 
         headers = []
-        for header_name in full_headers:
-            if header_name in ["Delivered-To", "Received", "Date", "From", "Mime-Version", "Message-ID", "Subject",
-                               "To"]:
-                headers.append(header_name)
+        for header in full_headers:
+            if header["name"] in ["Delivered-To", "Received", "Date", "From", "Mime-Version", "Message-ID", "Subject",
+                                  "To"]:
+                headers.append(header)
 
         body = get_message_body(payload.get('parts', []))
         messages.append({
