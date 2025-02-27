@@ -23,15 +23,15 @@ class PocketCore:
             return ContainerDock()
         except ImportError:
             pocket_logger.warning("Failed to import hyperdock_container.")
-        
+
         try:
             from hyperdock_wasm.dock import WasmDock
             pocket_logger.info("hyperdock-wasm is loaded.")
             return WasmDock()
         except ImportError:
-            raise ImportError("No default dock available. To register a remote tool, you need to install either hyperdock_wasm or hyperdock_container.")
-        
-    
+            raise ImportError(
+                "No default dock available. To register a remote tool, you need to install either hyperdock_wasm or hyperdock_container.")
+
     def __init__(
         self,
         tools: list[ToolLike],
@@ -43,10 +43,11 @@ class PocketCore:
 
         # filter strs out first and register the tools to default dock
         str_tool_likes = [tool for tool in tools if (isinstance(tool, str) or isinstance(tool, tuple))]
-        function_tool_likes = [tool for tool in tools if (not isinstance(tool, str) and not isinstance(tool, Dock) and not isinstance(tool, tuple))]
+        function_tool_likes = [tool for tool in tools if (
+                not isinstance(tool, str) and not isinstance(tool, Dock) and not isinstance(tool, tuple))]
         # especially, docks are maintained by core
         self.docks = [dock for dock in tools if isinstance(dock, Dock)]
-        
+
         if len(str_tool_likes) > 0:
             default_dock = self._default_dock()
             for str_tool_like in str_tool_likes:
@@ -55,11 +56,11 @@ class PocketCore:
             self.docks.append(default_dock)
 
         self.tools = dict()
-        
+
         # for each tool like, load the tool 
         for tool_like in function_tool_likes:
             self._load_tool(tool_like)
-        
+
         for dock in self.docks:
             tools = dock.tools()
             for tool in tools:
@@ -104,6 +105,7 @@ class PocketCore:
         Returns:
             tuple[str, bool]: tool result and state.
         """
+        pocket_logger.debug(f"{tool_name} tool call. body: {body}")
         tool = self._tool_instance(tool_name)
         if tool.auth is not None:
             callback_info = self.prepare_auth(tool_name, thread_id, profile, **kwargs)
@@ -113,6 +115,7 @@ class PocketCore:
         credentials = await self.authenticate(tool_name, thread_id, profile, **kwargs)
         # 03. call tool
         result = await self.tool_call(tool_name, body=body, envs=credentials, **kwargs)
+        pocket_logger.debug(f"{tool_name} tool call result: {result}")
         return result, False
 
     def prepare_auth(
