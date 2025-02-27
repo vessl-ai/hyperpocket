@@ -1,12 +1,47 @@
 {
   "tool": {
     "name": "google_list_gmail",
-    "description": "get gmail list",
+    "description": "get gmail list. this only return gmail id list. if you want to get mail content, you should call 'get gmail message api' ",
     "inputSchema": {
       "properties": {
-        "date": {
-          "title": "Date",
-          "type": "string"
+        "max_results": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 5,
+          "description": "Maximum number of messages to return. This field defaults to 5. The maximum allowed value for this field is 5.",
+          "title": "Max Results"
+        },
+        "page_token": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Page token to retrieve a specific page of results in the list.",
+          "title": "Page Token"
+        },
+        "q": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "gmail query, see https://support.google.com/mail/answer/7190?hl=en",
+          "title": "Q"
         }
       },
       "title": "GoogleListGmailRequest",
@@ -21,7 +56,7 @@
   },
   "entrypoint": {
     "build": "pip install .",
-    "run": "python -m list_gmail"
+    "run": "python -m list-gmail"
   },
   "language": "python"
 }

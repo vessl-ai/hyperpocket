@@ -1,10 +1,47 @@
 {
   "properties": {
-    "date": {
-      "title": "Date",
-      "type": "string"
+    "max_results": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 100,
+      "description": "Maximum number of messages to return. This field defaults to 100. The maximum allowed value for this field is 500.",
+      "title": "Max Results"
+    },
+    "page_token": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Page token to retrieve a specific page of results in the list.",
+      "title": "Page Token"
+    },
+    "q": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "gmail query, see https://support.google.com/mail/answer/7190?hl=en",
+      "title": "Q"
     }
   },
+  "required": [
+    "page_token"
+  ],
   "title": "GoogleListGmailRequest",
   "type": "object"
 }
