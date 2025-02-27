@@ -1,0 +1,28 @@
+{
+    "tool": {
+      "name": "create_sfu_calls",
+      "description": "Create SFU Calls App in Cloudflare",
+      "inputSchema": {
+        "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string",
+                "description": "The name of sfu calls app"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "CreateSfuCallsRequest",
+            "type": "object"
+        }
+    },
+    "language": "python",
+    "auth": {
+      "auth_provider": "cloudflare"
+    },
+    "entrypoint": {
+      "build": "pip install .",
+      "run": "python __main__.py"
+    }
+  }

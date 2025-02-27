@@ -1,0 +1,6 @@
+name = "ai_execute"
+description = ""
+language = "python"
+
+[auth]
+auth_provider = "cloudflare"

@@ -1,0 +1,7 @@
+name = "create_sfu_calls"
+description = ""
+language = "python"
+
+[auth]
+auth_provider = "cloudflare"
+
