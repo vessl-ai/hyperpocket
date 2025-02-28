@@ -1,0 +1,49 @@
+{
+  "tool": {
+    "name": "get_google_spreadsheet_list",
+    "description": "get google spreadsheet list",
+    "inputSchema": {
+      "properties": {
+        "pageSize": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The maximum number of files to return per page. Partial or empty result pages are possible even before the end of the files list has been reached.",
+          "title": "Pagesize"
+        },
+        "pageToken": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response.",
+          "title": "Pagetoken"
+        }
+      },
+      "title": "GoogleGetSpreadsheetListRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "google",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive.readonly"
+    ]
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install -r requirements.txt",
+    "run": "python list_spreadsheet.py"
+  }
+}
