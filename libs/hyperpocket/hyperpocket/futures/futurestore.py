@@ -7,6 +7,7 @@ from hyperpocket.config import pocket_logger
 class FutureData:
     future: asyncio.Future
     data: dict
+    loop: asyncio.AbstractEventLoop
 
     def __init__(self, future: asyncio.Future, data: dict):
         self.future = future
@@ -15,6 +16,7 @@ class FutureData:
 
 class FutureStore(object):
     futures: dict[str, FutureData]
+    loop: asyncio.AbstractEventLoop
 
     def __init__(self):
         self.futures = dict()
@@ -25,8 +27,9 @@ class FutureStore(object):
                 f"the future already exists. the existing future is returned. uid: {uid}"
             )
             return future
-
         loop = asyncio.get_running_loop()
+        FutureStore.loop = loop
+
         future = loop.create_future()
         future_data = FutureData(future=future, data=data)
 
@@ -42,7 +45,7 @@ class FutureStore(object):
         if not future_data:
             raise ValueError(f"Future not found for uid={uid}")
         if not future_data.future.done():
-            future_data.future.set_result(value)
+            FutureStore.loop.call_soon_threadsafe(future_data.future.set_result, value)
 
     def delete_future(self, uid: str):
         self.futures.pop(uid, None)
