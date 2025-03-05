@@ -1,0 +1,31 @@
+[project]
+name = "gmail_summarizer"
+version = "0.1.0"
+description = "gmail-summarizer using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.102.0,<1.0.0",
+    "hyperdock-container",
+    "hyperpocket",
+    "hyperpocket-crewai",
+]
+
+[project.scripts]
+gmail_summarizer = "gmail_summarizer.main:run"
+run_crew = "gmail_summarizer.main:run"
+train = "gmail_summarizer.main:train"
+replay = "gmail_summarizer.main:replay"
+test = "gmail_summarizer.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
+
+[tool.uv.sources]
+hyperpocket-crewai = { path = "../../../libs/extensions/crewai", editable = true }
+hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
+hyperdock-container = { path = "../../../libs/docks/hyperdock-container", editable = true }

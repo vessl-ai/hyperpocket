@@ -1,0 +1,31 @@
+{
+  "tool": {
+    "name": "google_create_spreadsheet",
+    "description": "create google spreadsheet",
+    "inputSchema": {
+      "properties": {
+        "title": {
+          "description": "The title of the new spreadsheet.",
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "GoogleCreateSpreadsheetRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "google",
+    "scopes": [
+      "https://www.googleapis.com/auth/spreadsheets"
+    ]
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install -r requirements.txt",
+    "run": "python create_spreadsheet.py"
+  }
+} 

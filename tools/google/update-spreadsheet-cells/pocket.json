@@ -1,0 +1,57 @@
+{
+  "tool": {
+    "name": "google_update_cells",
+    "description": "update cells in google spreadsheet",
+    "inputSchema": {
+      "properties": {
+        "spreadsheet_id": {
+          "description": "The ID of the spreadsheet to update.",
+          "title": "Spreadsheet Id",
+          "type": "string"
+        },
+        "sheet_id": {
+          "description": "The ID of the sheet to update. this sheet_id can be get in spreadsheet object.",
+          "title": "Sheet Id",
+          "type": "integer"
+        },
+        "range": {
+          "description": "The A1 notation of the range to update.",
+          "title": "Range",
+          "type": "string"
+        },
+        "values": {
+          "description": "The values to input into the spreadsheet.",
+          "items": {},
+          "title": "Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "spreadsheet_id",
+        "sheet_id",
+        "range",
+        "values"
+      ],
+      "title": "GoogleUpdateCellsRequest",
+      "type": "object"
+    },
+    "required": [
+      "spreadsheet_id",
+      "range",
+      "values"
+    ],
+    "title": "GoogleUpdateCellsRequest",
+    "type": "object"
+  },
+  "auth": {
+    "auth_provider": "google",
+    "scopes": [
+      "https://www.googleapis.com/auth/spreadsheets"
+    ]
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install -r requirements.txt",
+    "run": "python update_spreadsheet_cells.py"
+  }
+} 

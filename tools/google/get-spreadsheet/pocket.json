@@ -1,0 +1,60 @@
+{
+  "tool": {
+    "name": "get_google_spreadsheet",
+    "description": "get a google spreadsheet.",
+    "inputSchema": {
+      "properties": {
+        "spreadsheetId": {
+          "description": "The spreadsheet to request.",
+          "title": "Spreadsheetid",
+          "type": "string"
+        },
+        "ranges": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The ranges to retrieve from the spreadsheet.",
+          "title": "Ranges"
+        },
+        "includeGridData": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "True if grid data should be returned. This parameter is ignored if a field mask was set in the request.",
+          "title": "Includegriddata"
+        }
+      },
+      "required": [
+        "spreadsheetId"
+      ],
+      "title": "GoogleGetSpreadsheetRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "google",
+    "scopes": [
+      "https://www.googleapis.com/auth/spreadsheets.readonly"
+    ]
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install -r requirements.txt",
+    "run": "python get_spreadsheet.py"
+  }
+}
