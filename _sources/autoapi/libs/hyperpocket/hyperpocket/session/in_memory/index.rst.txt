@@ -34,20 +34,31 @@ Module Contents
    Bases: :py:obj:`hyperpocket.session.interface.SessionStorageInterface`\ [\ :py:obj:`InMemorySessionKey`\ , :py:obj:`InMemorySessionValue`\ ]
 
 
+   .. py:attribute:: storage
+
+
    .. py:method:: session_storage_type() -> hyperpocket.config.session.SessionType
       :classmethod:
 
 
 
    .. py:method:: get(auth_provider: hyperpocket.auth.AuthProvider, thread_id: str, profile: str, **kwargs) -> Optional[hyperpocket.session.interface.V]
+      :classmethod:
+
 
 
    .. py:method:: get_by_thread_id(thread_id: str, auth_provider: Optional[hyperpocket.auth.AuthProvider] = None, **kwargs) -> List[hyperpocket.session.interface.V]
+      :classmethod:
+
 
 
    .. py:method:: set(auth_provider: hyperpocket.auth.AuthProvider, thread_id: str, profile: str, auth_scopes: List[str], auth_resolve_uid: Optional[str], auth_context: Optional[hyperpocket.auth.context.AuthContext], is_auth_scope_universal: bool, **kwargs) -> hyperpocket.session.interface.V
+      :classmethod:
+
 
 
    .. py:method:: delete(auth_provider: hyperpocket.auth.AuthProvider, thread_id: str, profile: str, **kwargs) -> bool
+      :classmethod:
+
 
 
