@@ -1,0 +1,20 @@
+[project]
+name = "hyperpocket-pydanticai"
+version = "0.4.4"
+description = ""
+requires-python = ">=3.10"
+readme = "README.md"
+dependencies = ["hyperpocket>=0.4.4", "pydantic-ai>=0.0.25"]
+
+[tool.uv.sources]
+hyperpocket = { path = "../../hyperpocket", editable = true }
+
+[dependency-groups]
+dev = ["pytest>=8.3.4", "ruff>=0.8.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+extend = "../../../.ruff.toml"
