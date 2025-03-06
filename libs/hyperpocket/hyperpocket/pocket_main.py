@@ -1,4 +1,5 @@
 import asyncio
+from threading import Lock
 from typing import Any, List, Union
 
 from hyperpocket.config import pocket_logger
@@ -13,6 +14,7 @@ class Pocket(object):
     core: PocketCore
 
     _cnt_pocket_count: int = 0
+    _pocket_count_lock = Lock()
 
     def __init__(
         self,
@@ -27,7 +29,8 @@ class Pocket(object):
                 tools=tools,
                 auth=auth,
             )
-            Pocket._cnt_pocket_count += 1
+            with Pocket._pocket_count_lock:
+                Pocket._cnt_pocket_count += 1
         except Exception as e:
             self.teardown()
             pocket_logger.error(f"Failed to initialize pocket server. error : {e}")
@@ -308,7 +311,8 @@ class Pocket(object):
 
     def teardown(self):
         if hasattr(self, 'server'):
-            Pocket._cnt_pocket_count -= 1
+            with Pocket._pocket_count_lock:
+                Pocket._cnt_pocket_count -= 1
             if Pocket._cnt_pocket_count <= 0:
                 self.server.teardown()
 
