@@ -22,7 +22,7 @@ class WasmGitToolReference(ToolReference):
 
     def toolpkg_path(self) -> pathlib.Path:
         if not self.ref_sha:
-            raise ValueError("ref_sha is not set")
+            raise ValueError(f"ref_sha is not set. {self}")
         cleansed_url = self.repository_url
         if self.repository_url.startswith("http://"):
             cleansed_url = self.repository_url[7:]
