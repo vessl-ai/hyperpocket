@@ -57,7 +57,7 @@ class PocketServer(object):
                 self.proxy_server.should_exit = True
 
             while self.thread.is_alive():
-                await asyncio.sleep(0.1)
+                await asyncio.sleep(0)
 
         self.thread.join()
 
