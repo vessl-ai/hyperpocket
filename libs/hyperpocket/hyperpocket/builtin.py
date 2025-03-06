@@ -12,7 +12,7 @@ def get_builtin_tools(pocket_auth: PocketAuth) -> List[Tool]:
     Builtin Tool can access to Pocket Core.
     """
 
-    def __get_current_thread_session_state(thread_id: str = "default") -> str:
+    async def __get_current_thread_session_state(thread_id: str = "default") -> str:
         """
         This tool retrieves the current session state list for the specified thread.
 
@@ -31,7 +31,7 @@ def get_builtin_tools(pocket_auth: PocketAuth) -> List[Tool]:
 
         This tool ensures transparency about the current session but must respect user-driven intent and should never be called automatically or without a specific user request.
         """
-        session_list = pocket_auth.list_session_state(thread_id)
+        session_list = await pocket_auth.list_session_state(thread_id)
         return str(session_list)
 
     def __delete_session(
@@ -58,7 +58,7 @@ def get_builtin_tools(pocket_auth: PocketAuth) -> List[Tool]:
         return str(is_deleted)
 
     builtin_tools = [
-        from_func(func=__get_current_thread_session_state),
+        from_func(func=__get_current_thread_session_state, afunc=__get_current_thread_session_state),
         from_func(func=__delete_session),
     ]
 

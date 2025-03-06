@@ -201,7 +201,7 @@ class Pocket(object):
         prepare_list = {}
         for provider, tools in tool_by_provider.items():
             tool_name_list = [tool.name for tool in tools]
-            prepare = self.core.prepare_auth(
+            prepare = await self.core.prepare_auth(
                 tool_name=tool_name_list,
                 thread_id=thread_id,
                 profile=profile,
@@ -259,7 +259,7 @@ class Pocket(object):
         *args,
         **kwargs,
     ):
-        prepare = self.core.prepare_auth(
+        prepare = await self.core.prepare_auth(
             tool_name=tool_name,
             thread_id=thread_id,
             profile=profile,

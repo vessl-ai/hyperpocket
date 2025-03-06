@@ -78,7 +78,7 @@ class PocketAuth(object):
         handler = self.find_handler_instance(auth_handler_name, auth_provider)
         return handler.make_request(auth_scopes, **kwargs)
 
-    def check(
+    async def check(
         self,
         auth_req: AuthenticateRequest,
         auth_handler_name: Optional[str] = None,
@@ -112,19 +112,21 @@ class PocketAuth(object):
         """
         handler = self.find_handler_instance(auth_handler_name, auth_provider)
         session = self.session_storage.get(handler.provider(), thread_id, profile)
-        auth_state = self.get_session_state(session=session, auth_req=auth_req)
+        auth_state = await self.get_session_state(session=session, auth_req=auth_req)
 
         return auth_state
 
     @staticmethod
-    def get_session_state(
+    async def get_session_state(
         session: Optional[BaseSessionValue], auth_req: Optional[AuthenticateRequest]
     ) -> AuthState:
         if not session:
             return AuthState.NO_SESSION
 
         if session.auth_resolve_uid:
+            await asyncio.sleep(0)
             future_data = FutureStore.get_future(session.auth_resolve_uid)
+            await asyncio.sleep(0)
             if future_data is not None and future_data.future.done():
                 return AuthState.RESOLVED
 
@@ -140,7 +142,7 @@ class PocketAuth(object):
 
         return AuthState.SKIP_AUTH
 
-    def prepare(
+    async def prepare(
         self,
         auth_req: AuthenticateRequest,
         auth_handler_name: Optional[str] = None,
@@ -166,7 +168,7 @@ class PocketAuth(object):
         Returns:
             Optional[str]: authentication URL
         """
-        auth_state = self.check(
+        auth_state = await self.check(
             auth_req=auth_req,
             auth_handler_name=auth_handler_name,
             auth_provider=auth_provider,
@@ -263,7 +265,7 @@ class PocketAuth(object):
         Returns:
             AuthContext: authentication context
         """
-        auth_state = self.check(
+        auth_state = await self.check(
             auth_req=auth_req,
             auth_handler_name=auth_handler_name,
             auth_provider=auth_provider,
@@ -353,7 +355,7 @@ class PocketAuth(object):
 
         return session.auth_context
 
-    def list_session_state(
+    async def list_session_state(
         self, thread_id: str, auth_provider: Optional[AuthProvider] = None
     ):
         session_list = self.session_storage.get_by_thread_id(
@@ -361,7 +363,7 @@ class PocketAuth(object):
         )
         session_state_list = []
         for session in session_list:
-            state = self.get_session_state(session=session, auth_req=None)
+            state = await self.get_session_state(session=session, auth_req=None)
 
             session_state_list.append(
                 {
