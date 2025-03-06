@@ -108,7 +108,7 @@ class PocketCore:
         pocket_logger.debug(f"{tool_name} tool call. body: {body}")
         tool = self._tool_instance(tool_name)
         if tool.auth is not None:
-            callback_info = self.prepare_auth(tool_name, thread_id, profile, **kwargs)
+            callback_info = await self.prepare_auth(tool_name, thread_id, profile, **kwargs)
             if callback_info:
                 return callback_info, True
         # 02. authenticate
@@ -118,7 +118,7 @@ class PocketCore:
         pocket_logger.debug(f"{tool_name} tool call result: {result}")
         return result, False
 
-    def prepare_auth(
+    async def prepare_auth(
         self,
         tool_name: Union[str, List[str]],
         thread_id: str = "default",
@@ -176,7 +176,7 @@ class PocketCore:
             auth_scopes=list(auth_scopes),
         )
 
-        return self.auth.prepare(
+        return await self.auth.prepare(
             auth_req=auth_req,
             auth_handler_name=auth_handler_name,
             auth_provider=auth_provider,

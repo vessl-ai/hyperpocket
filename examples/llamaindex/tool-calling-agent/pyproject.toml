@@ -6,8 +6,10 @@ authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "hyperdock-container",
     "hyperpocket-llamaindex",
 ]
 
 [tool.uv.sources]
 hyperpocket-llamaindex = { path = "../../../libs/extensions/llamaindex", editable = true }
+hyperdock-container = { path = "../../../libs/docks/hyperdock-container", editable = true }

@@ -1,18 +1,20 @@
 import asyncio
-import uuid
+from threading import Lock
 from typing import Any, List, Union
 
 from hyperpocket.config import pocket_logger
 from hyperpocket.pocket_auth import PocketAuth
 from hyperpocket.pocket_core import PocketCore
-from hyperpocket.server.server import PocketServer, PocketServerOperations
+from hyperpocket.server.server import PocketServer
 from hyperpocket.tool_like import ToolLike
 
 
 class Pocket(object):
     server: PocketServer
     core: PocketCore
-    _uid: str
+
+    _cnt_pocket_count: int = 0
+    _pocket_count_lock = Lock()
 
     def __init__(
         self,
@@ -21,29 +23,18 @@ class Pocket(object):
         use_profile: bool = False,
     ):
         try:
-            self._uid = str(uuid.uuid4())
             self.use_profile = use_profile
-            self.server = PocketServer.get_instance_and_refcnt_up(self._uid)
-            self.server.wait_initialized()
+            self.server = PocketServer.get_instance()
             self.core = PocketCore(
                 tools=tools,
                 auth=auth,
             )
+            with Pocket._pocket_count_lock:
+                Pocket._cnt_pocket_count += 1
         except Exception as e:
             self.teardown()
             pocket_logger.error(f"Failed to initialize pocket server. error : {e}")
-            # self._teardown_server()
             raise e
-        
-        try:
-            asyncio.get_running_loop()
-        except RuntimeError:
-            loop = asyncio.new_event_loop()
-        else:
-            import nest_asyncio
-            loop = asyncio.new_event_loop()
-            nest_asyncio.apply(loop=loop)
-        loop.run_until_complete(self.server.plug_core(self._uid, self.core))
 
     def invoke(
         self,
@@ -176,17 +167,12 @@ class Pocket(object):
             **kwargs,
         }
 
-        result, paused = await self.server.call_in_subprocess(
-            PocketServerOperations.CALL,
-            self._uid,
-            args,
-            {
-                "tool_name": tool_name,
-                "body": body,
-                "thread_id": thread_id,
-                "profile": profile,
-                **kwargs,
-            },
+        result, paused = await self.core.acall(
+            tool_name=tool_name,
+            body=body,
+            thread_id=thread_id,
+            profile=profile,
+            **kwargs
         )
         if not isinstance(result, str):
             result = str(result)
@@ -218,10 +204,11 @@ class Pocket(object):
         prepare_list = {}
         for provider, tools in tool_by_provider.items():
             tool_name_list = [tool.name for tool in tools]
-            prepare = await self.prepare_in_subprocess(
-                tool_name=tool_name_list, thread_id=thread_id, profile=profile
+            prepare = await self.core.prepare_auth(
+                tool_name=tool_name_list,
+                thread_id=thread_id,
+                profile=profile,
             )
-
             if prepare is not None:
                 prepare_list[provider] = prepare
 
@@ -251,10 +238,11 @@ class Pocket(object):
             for provider, tools in tool_by_provider.items():
                 if len(tools) == 0:
                     continue
-
                 waiting_futures.append(
-                    self.authenticate_in_subprocess(
-                        tool_name=tools[0].name, thread_id=thread_id, profile=profile
+                    self.core.authenticate(
+                        tool_name=tools[0].name,
+                        thread_id=thread_id,
+                        profile=profile,
                     )
                 )
 
@@ -266,7 +254,7 @@ class Pocket(object):
             pocket_logger.error("authentication time out.")
             raise e
 
-    async def prepare_in_subprocess(
+    async def prepare_auth(
         self,
         tool_name: Union[str, List[str]],
         thread_id: str = "default",
@@ -274,21 +262,16 @@ class Pocket(object):
         *args,
         **kwargs,
     ):
-        prepare = await self.server.call_in_subprocess(
-            PocketServerOperations.PREPARE_AUTH,
-            self._uid,
-            args,
-            {
-                "tool_name": tool_name,
-                "thread_id": thread_id,
-                "profile": profile,
-                **kwargs,
-            },
+        prepare = await self.core.prepare_auth(
+            tool_name=tool_name,
+            thread_id=thread_id,
+            profile=profile,
+            **kwargs,
         )
 
         return prepare
 
-    async def authenticate_in_subprocess(
+    async def authenticate(
         self,
         tool_name: str,
         thread_id: str = "default",
@@ -296,21 +279,16 @@ class Pocket(object):
         *args,
         **kwargs,
     ):
-        credentials = await self.server.call_in_subprocess(
-            PocketServerOperations.AUTHENTICATE,
-            self._uid,
-            args,
-            {
-                "tool_name": tool_name,
-                "thread_id": thread_id,
-                "profile": profile,
-                **kwargs,
-            },
+        credentials = await self.core.authenticate(
+            tool_name=tool_name,
+            thread_id=thread_id,
+            profile=profile,
+            **kwargs,
         )
 
         return credentials
 
-    async def tool_call_in_subprocess(
+    async def tool_call(
         self,
         tool_name: str,
         body: Any,
@@ -319,42 +297,27 @@ class Pocket(object):
         *args,
         **kwargs,
     ):
-        result = await self.server.call_in_subprocess(
-            PocketServerOperations.TOOL_CALL,
-            self._uid,
-            args,
-            {
-                "tool_name": tool_name,
-                "body": body,
-                "thread_id": thread_id,
-                "profile": profile,
-                **kwargs,
-            },
+        result = await self.core.tool_call(
+            tool_name, body=body,
+            thread_id=thread_id,
+            profile=profile,
+            **kwargs
         )
 
         return result
 
     def _teardown_server(self):
-        self.server.teardown()
-    
+        self.teardown()
+
     def teardown(self):
         if hasattr(self, 'server'):
-            self.server.refcnt_down(self._uid)
+            with Pocket._pocket_count_lock:
+                Pocket._cnt_pocket_count -= 1
+            if Pocket._cnt_pocket_count <= 0:
+                self.server.teardown()
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.teardown()
-
-    def __del__(self):
-        self.teardown()
-
-    def __getstate__(self):
-        state = self.__dict__.copy()
-        if "server" in state:
-            del state["server"]
-        return state
-
-    def __setstate__(self, state):
-        self.__dict__.update(state)

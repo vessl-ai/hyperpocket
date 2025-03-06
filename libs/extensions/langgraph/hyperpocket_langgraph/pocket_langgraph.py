@@ -67,7 +67,7 @@ class PocketLanggraph(Pocket):
                     body = tool_args
                     profile = "default"
 
-                prepare = await self.prepare_in_subprocess(
+                prepare = await self.prepare_auth(
                     tool_name, body=body, thread_id=thread_id, profile=profile
                 )
                 need_prepare |= True if prepare else False
@@ -124,7 +124,7 @@ class PocketLanggraph(Pocket):
                     body = json.loads(body)
 
                 try:
-                    auth = await self.authenticate_in_subprocess(
+                    auth = await self.authenticate(
                         tool_name, body=body, thread_id=thread_id, profile=profile
                     )
                 except Exception as e:
@@ -141,7 +141,7 @@ class PocketLanggraph(Pocket):
                     continue
 
                 try:
-                    result = await self.tool_call_in_subprocess(
+                    result = await self.tool_call(
                         tool_name,
                         body=body,
                         envs=auth,
