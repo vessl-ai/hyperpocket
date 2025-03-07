@@ -1,11 +1,15 @@
 import os
+import json
+import sys
 import shutil
 import subprocess
 from pathlib import Path
+import importlib
 
 import click
 
 from hyperpocket.cli.codegen.tool import get_tool_main_template
+from hyperpocket.util.flatten_json_schema import flatten_json_schema
 
 
 @click.command()
@@ -19,7 +23,6 @@ def create_tool_template(tool_name, language="python"):
             "tool_name must be lowercase and contain only letters and underscores"
         )
 
-    tool_directory_name = tool_name.replace("_", "-")
     capitalized_tool_name = "".join(
         [word.capitalize() for word in tool_name.split("_")]
     )
@@ -27,13 +30,8 @@ def create_tool_template(tool_name, language="python"):
     # Create tool directory
     print(f"Generating tool package directory for {tool_name}")
     cwd = Path.cwd()
-    tool_path = cwd / tool_directory_name
+    tool_path = cwd / tool_name
     tool_path.mkdir(parents=True, exist_ok=True)
-
-    # Create tool module directory
-    print(f"Generating tool module directory for {tool_name}")
-    tool_module_path = tool_path / tool_name
-    tool_module_path.mkdir(parents=True, exist_ok=True)
 
     # Create uv or poetry init
     print(f"Generating pyproject.toml file for {tool_name}")
@@ -48,7 +46,7 @@ def create_tool_template(tool_name, language="python"):
         raise ValueError("uv or poetry must be installed to generate tool project")
 
     # Create __init__.py file
-    init_file = tool_module_path / "__init__.py"
+    init_file = tool_path / "__init__.py"
     if not init_file.exists():
         init_file.write_text(f"""from .__main__ import main
 
@@ -57,27 +55,42 @@ __all__ = ["main"]
 
     # Create __main__.py file
     print(f"Generating tool main file for {tool_name}")
-    main_file = tool_module_path / "__main__.py"
+    main_file = tool_path / "__main__.py"
     if not main_file.exists():
         main_content = get_tool_main_template().render(
             capitalized_tool_name=capitalized_tool_name, tool_name=tool_name
         )
         main_file.write_text(main_content)
 
-    # Create config.toml
-    print(f"Generating config.toml file for {tool_name}")
-    config_file = tool_path / "config.toml"
-    if not config_file.exists():
-        config_file.write_text(f'''name = "{tool_name}"
-description = ""
-language = "{language}"
-
-[auth]
-auth_provider = ""
-auth_handler = ""
-scopes = []
-''')
-
+    # Create pocket.json
+    print(f"Generating pocket.json file for {tool_name}")
+    pocket_dict = {
+        "tool": {
+            "name": tool_name,
+            "description": "",
+            "inputSchema": {
+                "properties": {},
+                "required": [],
+                "title": f"{capitalized_tool_name}Request",
+                "type": "object"
+            }
+        },
+        "language": language,
+        "auth": {
+            "auth_provider": "",
+            "auth_handler": "",
+            "scopes": [],
+        },
+        "variables": {},
+        "entrypoint": {
+            "build": "pip install .",
+            "run": "python __main__.py"
+        }
+    }
+    pocket_json = json.dumps(pocket_dict, indent=2)
+    pocket_file = tool_path / "pocket.json"
+    pocket_file.write_text(pocket_json)
+    
     # Create .gitignore
     print(f"Generating .gitignore file for {tool_name}")
     gitignore_file = tool_path / ".gitignore"
@@ -89,38 +102,49 @@ scopes = []
     if not readme_file.exists():
         readme_file.write_text(f"# {tool_name}\n\n")
 
-    # Create schema.json
-    print(f"Generating schema.json file for {tool_name}")
-    schema_file = tool_path / "schema.json"
-    schema_file.touch()
-
-
 @click.command()
 @click.argument("tool_path", type=str, required=False)
-def build_tool(tool_path):
-    """Build the tool at the specified path or current directory."""
+def sync_tool_schema(tool_path):
+    """Sync the schema of the tool at the main.py file from specified path or current directory."""
 
     cwd = Path.cwd()
+    
+    working_dir = cwd / tool_path
+    if os.path.isabs(tool_path):
+        working_dir = Path(tool_path)
+        
+    pocket_file = working_dir / "pocket.json"
+    if not pocket_file.exists():
+        raise ValueError("pocket.json file does not exist")
 
-    # Determine the tool directory
-    if tool_path is None:
-        if not (cwd / "config.toml").exists():
-            raise ValueError("Current working directory must be a tool directory")
-    else:
-        potential_path = Path(tool_path)
-        if (cwd / potential_path).exists():
-            cwd = cwd / potential_path
-        elif potential_path.exists():
-            cwd = potential_path
+    with open(pocket_file, "r", encoding="utf-8") as f:
+        pocket_dict = json.load(f)
+    
+    model_name = pocket_dict["tool"]["inputSchema"]["title"]
+    
+    model_object = import_class_from_file(working_dir / "__main__.py", model_name)
+
+    schema_json = model_object.model_json_schema()
+    flatten_schema_json = flatten_json_schema(schema_json)
+    
+    pocket_dict["tool"]["inputSchema"]["properties"] = flatten_schema_json["properties"]
+    pocket_dict["tool"]["inputSchema"]["required"] = flatten_schema_json["required"]
+    
+    pocket_json = json.dumps(pocket_dict, indent=2)
+    pocket_file.write_text(pocket_json)
+    
+def import_class_from_file(file_path: Path, class_name: str):
+    """Import a class from a Python file using its path and class name."""
+    spec = importlib.util.spec_from_file_location(class_name, file_path)
+    
+    if spec and spec.loader:
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[class_name] = module
+        spec.loader.exec_module(module)
+
+        if hasattr(module, class_name):
+            return getattr(module, class_name)
         else:
-            raise ValueError(f"Tool path '{tool_path}' does not exist")
-
-    # Build the tool
-    print(f"Building tool in {cwd}")
-    if shutil.which("uv"):
-        subprocess.run(["uv", "build"], cwd=cwd, check=True)
-        os.remove(cwd / "dist/.gitignore")
-    elif shutil.which("poetry"):
-        subprocess.run(["poetry", "build"], cwd=cwd, check=True)
+            raise AttributeError(f"Class '{class_name}' not found in {file_path}")
     else:
-        raise ValueError("Tool must be a poetry or uv project")
+        raise ImportError(f"Could not load module from {file_path}")
