@@ -166,7 +166,7 @@ name = "click"
 version = "8.1.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "platform_system == 'Windows'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz", hash = "sha256:ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a", size = 226593 }
 wheels = [
@@ -477,7 +477,7 @@ dependencies = [
 requires-dist = [
     { name = "docker", specifier = ">=7.1.0" },
     { name = "hyperpocket", editable = "." },
-    { name = "pydantic", specifier = ">=2.10.6" },
+    { name = "pydantic", specifier = ">=2.8.2" },
 ]
 
 [[package]]
@@ -527,7 +527,7 @@ requires-dist = [
     { name = "multiprocess", specifier = ">=0.70.17" },
     { name = "nest-asyncio", specifier = ">=1.6.0" },
     { name = "playwright", specifier = ">=1.49.0" },
-    { name = "pydantic", specifier = ">=2.10.2" },
+    { name = "pydantic", specifier = ">=2.8.2" },
     { name = "pygithub", specifier = ">=2.5.0" },
     { name = "python-multipart", specifier = ">=0.0.19" },
     { name = "redis", specifier = ">=5.2.1" },
