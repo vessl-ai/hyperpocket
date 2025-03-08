@@ -30,8 +30,8 @@ VESSL_CONFIG = {
 GPU_CONFIG = {
     "cluster_name": "Your gpu cluster name",
     "preset": "Your gpu preset name",
-    "memory": 84557184,
-    "number": 2
+    "memory": 84557184, # Memory size in MB
+    "number": 2 # Number of GPUs
 }
 
 access_token = vessl_configure(
@@ -311,7 +311,7 @@ def agent(pocket: PocketLangchain) -> None:
             break
 
         response = agent_executor.invoke({"input": user_input})
-        print("slack agent : ", response["output"])
+        print("vessl agent : ", response["output"])
         print()
 
 
@@ -320,11 +320,11 @@ if __name__ == "__main__":
     # dataset_name = "HuggingFaceH4/no_robots"
     with PocketLangchain(
         tools=[
+            get_model_config,
+            get_dataset_info,
             construct_finetuning_yaml,
             copy_file_local_to_storage,
             create_run,
-            get_model_config,
-            get_dataset_info,
         ],
     ) as pocket:
         agent(pocket)
