@@ -9,6 +9,17 @@ from hyperpocket.server.server import PocketServer, PocketServerOperations
 from hyperpocket.tool_like import ToolLike
 
 
+def print_banner():
+    banner = """
+______  __                                               ______      _____ 
+___  / / /____  ____________________________________________  /________  /_
+__  /_/ /__  / / /__  __ \  _ \_  ___/__  __ \  __ \  ___/_  //_/  _ \  __/
+_  __  / _  /_/ /__  /_/ /  __/  /   __  /_/ / /_/ / /__ _  ,<  /  __/ /_  
+/_/ /_/  _\__, / _  .___/\___//_/    _  .___/\____/\___/ /_/|_| \___/\__/  
+         /____/  /_/                 /_/                                   
+    """
+    print(banner)
+
 class Pocket(object):
     server: PocketServer
     core: PocketCore
@@ -21,6 +32,7 @@ class Pocket(object):
         use_profile: bool = False,
     ):
         try:
+            print_banner()  # Print the banner when Pocket is initialized
             self._uid = str(uuid.uuid4())
             self.use_profile = use_profile
             self.server = PocketServer.get_instance_and_refcnt_up(self._uid)
