@@ -31,38 +31,6 @@ class ToolAuth(BaseModel):
     )
 
 
-class ToolRequest(abc.ABC):
-    postprocessings: Optional[list[Callable]] = None
-    overridden_tool_vars: dict[str, str] = Field(
-        default_factory=dict, description="overridden tool variables"
-    )
-
-    @abc.abstractmethod
-    def __str__(self):
-        raise NotImplementedError
-
-    def add_postprocessing(self, postprocessing: Callable):
-        if self.postprocessings is None:
-            self.postprocessings = [postprocessing]
-        else:
-            self.postprocessings.append(postprocessing)
-
-    def __or__(self, other: Callable):
-        self.add_postprocessing(other)
-        return self
-
-    def with_postprocessings(self, postprocessings: list[Callable]):
-        if self.postprocessings is None:
-            self.postprocessings = postprocessings
-        else:
-            self.postprocessings.extend(postprocessings)
-        return self
-
-    def override_tool_variables(self, override_vars: dict[str, str]) -> "ToolRequest":
-        self.overridden_tool_vars = override_vars
-        return self
-
-
 class Tool(BaseModel, abc.ABC):
     """
     Pocket Tool Interface

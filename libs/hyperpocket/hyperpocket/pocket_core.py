@@ -1,4 +1,5 @@
 import asyncio
+import concurrent.futures
 from typing import Any, Callable, List, Optional, Union
 
 from hyperpocket.builtin import get_builtin_tools
@@ -13,7 +14,6 @@ from hyperpocket.tool_like import ToolLike
 class PocketCore:
     auth: PocketAuth
     tools: dict[str, Tool]
-    docks: list[Dock]
 
     @staticmethod
     def _default_dock() -> Dock:
@@ -28,7 +28,8 @@ class PocketCore:
             from hyperdock_wasm.dock import WasmDock
             pocket_logger.info("hyperdock-wasm is loaded.")
             return WasmDock()
-        except ImportError:
+        except ImportError as e:
+            print(">>>", e)
             raise ImportError(
                 "No default dock available. To register a remote tool, you need to install either hyperdock_wasm or hyperdock_container.")
 
@@ -41,31 +42,7 @@ class PocketCore:
             auth = PocketAuth()
         self.auth = auth
 
-        # filter strs out first and register the tools to default dock
-        str_tool_likes = [tool for tool in tools if (isinstance(tool, str) or isinstance(tool, tuple))]
-        function_tool_likes = [tool for tool in tools if (
-                not isinstance(tool, str) and not isinstance(tool, Dock) and not isinstance(tool, tuple))]
-        # especially, docks are maintained by core
-        self.docks = [dock for dock in tools if isinstance(dock, Dock)]
-
-        if len(str_tool_likes) > 0:
-            default_dock = self._default_dock()
-            for str_tool_like in str_tool_likes:
-                default_dock.plug(req_like=str_tool_like)
-            # append default dock
-            self.docks.append(default_dock)
-
-        self.tools = dict()
-
-        # for each tool like, load the tool 
-        for tool_like in function_tool_likes:
-            self._load_tool(tool_like)
-
-        for dock in self.docks:
-            tools = dock.tools()
-            for tool in tools:
-                self._load_tool(tool)
-
+        self._load_tools(tools)
         pocket_logger.info(
             f"All Registered Tools Loaded successfully. total registered tools : {len(self.tools)}"
         )
@@ -77,6 +54,26 @@ class PocketCore:
         pocket_logger.info(
             f"All BuiltIn Tools Loaded successfully. total tools : {len(self.tools)}"
         )
+
+    def _load_tools(self, tools):
+        self.tools = dict()
+        dock = self._default_dock()
+
+        def _load(tool_like):
+            if isinstance(tool_like, str) or isinstance(tool_like, tuple):
+                return dock(tool_like)
+            elif isinstance(tool_like, Tool):
+                return tool_like
+            elif isinstance(tool_like, Callable):
+                return from_func(tool_like)
+            else:
+                raise ValueError(f"Invalid tool type: {type(tool_like)}")
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=10, thread_name_prefix="tool-loader") as executor:
+            futures = [executor.submit(_load, tool_like) for tool_like in tools]
+            for future in concurrent.futures.as_completed(futures):
+                tool = future.result()
+                self.tools[tool.name] = tool
 
     async def acall(
         self,
@@ -267,20 +264,3 @@ class PocketCore:
 
     def _tool_instance(self, tool_name: str) -> Tool:
         return self.tools[tool_name]
-
-    def _load_tool(self, tool_like: ToolLike) -> Tool:
-        pocket_logger.info(f"Loading Tool {tool_like}")
-        if isinstance(tool_like, Tool):
-            tool = tool_like
-        elif isinstance(tool_like, Callable):
-            tool = from_func(tool_like)
-        else:
-            raise ValueError(f"Invalid tool type: {type(tool_like)}")
-
-        if tool.name in self.tools:
-            pocket_logger.error(f"Duplicate tool name: {tool.name}.")
-            raise ValueError(f"Duplicate tool name: {tool.name}")
-        self.tools[tool.name] = tool
-
-        pocket_logger.info(f"Complete Loading Tool {tool.name}")
-        return tool

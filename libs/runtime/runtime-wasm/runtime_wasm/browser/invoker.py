@@ -4,11 +4,11 @@ import uuid
 from typing import Any
 from urllib.parse import urljoin
 
+from runtime_wasm.browser.invoker_browser import InvokerBrowser
+from runtime_wasm.browser.script import ScriptRuntime, Script, ScriptStore
+from runtime_wasm.browser.templates import render
 from hyperpocket.config import config
 from hyperpocket.futures import FutureStore
-from hyperdock_wasm.runtime.browser.invoker_browser import InvokerBrowser
-from hyperdock_wasm.runtime.browser.script import Script, ScriptRuntime, ScriptStore
-from hyperdock_wasm.runtime.browser.templates import render
 
 
 class Invoker(object):

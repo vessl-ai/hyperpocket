@@ -1,7 +1,7 @@
 from fastapi.responses import FileResponse, HTMLResponse
 
 import hyperdock_wasm.dto as scriptdto
-from hyperdock_wasm.runtime.browser.script import ScriptStore
+from runtime_wasm.browser.script import ScriptStore
 from hyperpocket.futures import FutureStore
 
 

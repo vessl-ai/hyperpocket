@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from hyperdock_wasm.runtime.browser.script import ScriptFileNode
+from runtime_wasm.browser.script import ScriptFileNode
 
 
 class BrowserScript(BaseModel):
