@@ -33,7 +33,7 @@ def {{ tool_name }}(req: {{ capitalized_tool_name }}Request):
 
     return f"successfully deleted calendar events {req.event_id}"
     """
-    return
+    return ""
 
 
 def main():
