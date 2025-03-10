@@ -1,27 +1,34 @@
 import enum
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+
 from hyperpocket.config.settings import config
 
-class Runtime(enum.Enum):
+
+class ContainerRuntimeType(enum.Enum):
     DOCKER = "docker"
 
-class DockerSettings(BaseModel):
+
+class DockerRuntimeSettings(BaseModel):
     base_url: Optional[str] = None
     credstore_env: dict = None
 
-class HyperdockSettings(BaseModel):
-    runtime: Runtime = Runtime.DOCKER
-    docker: Optional[DockerSettings] = None
 
-HYPERDOCK_NAME = "container"
+class HyperdockSettings(BaseModel):
+    runtime: ContainerRuntimeType = ContainerRuntimeType.DOCKER
+    docker: Optional[DockerRuntimeSettings] = None
+
+
+DOCK_NAME = "container"
+
 
 def settings():
-    return HyperdockSettings(**config().docks.get(HYPERDOCK_NAME, dict()))
+    return HyperdockSettings(**config().docks.get(DOCK_NAME, dict()))
+
 
 __all__ = [
     "settings",
-    "DockerSettings",
+    "DockerRuntimeSettings",
     "HyperdockSettings",
 ]

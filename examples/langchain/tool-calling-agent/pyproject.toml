@@ -14,6 +14,6 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-hyperdock-container = { path = "../../../libs/docks/hyperdock-container", editable = true }
 hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
 hyperpocket-langchain = { path = "../../../libs/extensions/langchain", editable = true }
+hyperdock-container = { path = "../../../libs/docks/hyperdock-container", editable = true }

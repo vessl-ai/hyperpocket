@@ -1,5 +1,6 @@
 import logging
 import os
+import pathlib
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
@@ -27,9 +28,7 @@ class ColorFormatter(logging.Formatter):
 
 
 def get_logger():
-    # init log file
-    package_path = Path(os.path.dirname(hyperpocket.__file__))
-    log_dir = package_path / ".log"
+    log_dir = pathlib.Path(os.getcwd()) / ".log"
     os.makedirs(log_dir, exist_ok=True)
     log_file = log_dir / "pocket.log"
     if not log_file.exists():

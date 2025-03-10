@@ -166,7 +166,7 @@ name = "click"
 version = "8.1.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "platform_system == 'Windows'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz", hash = "sha256:ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a", size = 226593 }
 wheels = [
@@ -418,7 +418,7 @@ requires-dist = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.3.1"
+version = "0.3.6"
 source = { editable = "../../hyperpocket" }
 dependencies = [
     { name = "click" },
@@ -428,6 +428,7 @@ dependencies = [
     { name = "httpx" },
     { name = "jinja2" },
     { name = "multiprocess" },
+    { name = "nest-asyncio" },
     { name = "playwright" },
     { name = "pydantic" },
     { name = "pygithub" },
@@ -445,8 +446,10 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.115.5" },
     { name = "gitpython", specifier = ">=3.1.43" },
     { name = "httpx", specifier = "==0.27" },
+    { name = "hyperdock-container", marker = "extra == 'standard'", editable = "." },
     { name = "jinja2", specifier = ">=3.1.4" },
     { name = "multiprocess", specifier = ">=0.70.17" },
+    { name = "nest-asyncio", specifier = ">=1.6.0" },
     { name = "playwright", specifier = ">=1.49.0" },
     { name = "pydantic", specifier = ">=2.10.2" },
     { name = "pygithub", specifier = ">=2.5.0" },
@@ -561,6 +564,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/c8/b7/2e9a4fcd871b81e1f2a812cd5c6fb52ad1e8da7bf0d7646c55eaae220484/multiprocess-0.70.17-py313-none-any.whl", hash = "sha256:20c28ca19079a6c879258103a6d60b94d4ffe2d9da07dda93fb1c8bc6243f522", size = 149843 },
     { url = "https://files.pythonhosted.org/packages/ae/d7/fd7a092fc0ab1845a1a97ca88e61b9b7cc2e9d6fcf0ed24e9480590c2336/multiprocess-0.70.17-py38-none-any.whl", hash = "sha256:1d52f068357acd1e5bbc670b273ef8f81d57863235d9fbf9314751886e141968", size = 132635 },
     { url = "https://files.pythonhosted.org/packages/f9/41/0618ac724b8a56254962c143759e04fa01c73b37aa69dd433f16643bd38b/multiprocess-0.70.17-py39-none-any.whl", hash = "sha256:c3feb874ba574fbccfb335980020c1ac631fbf2a3f7bee4e2042ede62558a021", size = 133359 },
+]
+
+[[package]]
+name = "nest-asyncio"
+version = "1.6.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/83/f8/51569ac65d696c8ecbee95938f89d4abf00f47d58d48f6fbabfe8f0baefe/nest_asyncio-1.6.0.tar.gz", hash = "sha256:6f172d5449aca15afd6c646851f4e31e02c598d553a667e38cafa997cfec55fe", size = 7418 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a0/c4/c2971a3ba4c6103a3d10c4b0f24f461ddc027f0f09763220cf35ca1401b3/nest_asyncio-1.6.0-py3-none-any.whl", hash = "sha256:87af6efd6b5e897c81050477ef65c62e2b2f35d51703cae01aff2905b1852e1c", size = 5195 },
 ]
 
 [[package]]
