@@ -6,14 +6,13 @@ import git
 from pydantic import BaseModel
 from typing_extensions import override
 
+from hyperdock_container.runtime import ContainerRuntime
 from hyperpocket.auth import AuthProvider
 from hyperpocket.config import pocket_logger, settings
 from hyperpocket.tool import ToolAuth
 from hyperpocket.tool.dock import Dock
 from hyperpocket.tool.function import FunctionTool
-from hyperpocket.util.get_encoded_str import get_encoded_str
 from hyperpocket.util.git_parser import GitParser
-from runtime_container import ContainerRuntime
 
 ContainerToolLike = Union[str, tuple]
 
@@ -64,8 +63,9 @@ class ContainerDock(Dock[ContainerToolLike]):
         elif req_path.startswith("https://github.com"):
             tool_source = "github"
             base_repo, branch_name, directory_path = GitParser.parse_repo_url(req_path)
-            encoded_path = get_encoded_str(req_path)
-            base_tool_path = settings.toolpkg_path / encoded_path
+            cleaned_base_repo = base_repo[8:]
+            last_directory_name = directory_path.split("/")[-1]  # usually tool name
+            base_tool_path = settings.toolpkg_path / last_directory_name / cleaned_base_repo
             tool_path = base_tool_path / directory_path
 
             # NOTE(moon): supporting overwriting it?
@@ -81,8 +81,10 @@ class ContainerDock(Dock[ContainerToolLike]):
                     no_checkout=True,
                     filter="blob:none"
                 )
-                repo.git.sparse_checkout("init", "--no-cone")
-                repo.git.sparse_checkout("set", directory_path)
+
+                if directory_path:
+                    repo.git.sparse_checkout("init", "--no-cone")
+                    repo.git.sparse_checkout("set", directory_path)
                 repo.git.checkout()
         else:
             raise RuntimeError(f"not supported container tool_like {tool_like}")
@@ -102,14 +104,14 @@ class ContainerDock(Dock[ContainerToolLike]):
         with (dock_args.tool_path / "pocket.json").open("r") as f:
             pocket_config = json.load(f)
 
-        encoded_path = get_encoded_str(dock_args.request_tool_path)
+        tool_name = pocket_config["tool"]["name"]
         entrypoint = pocket_config["entrypoint"]
         build_cmd = entrypoint.get("build")
         base_image = self.get_base_image(pocket_config)
 
-        if self.runtime.list_image(name=f"hyperpocket:{encoded_path}"):
+        if self.runtime.list_image(name=f"hyperpocket:{tool_name}"):
             pocket_logger.debug("built image already exists. skip build.")
-            return f"hyperpocket:{encoded_path}"
+            return f"hyperpocket:{tool_name}"
 
         container_id = self.runtime.create(
             base_image,
@@ -123,8 +125,8 @@ class ContainerDock(Dock[ContainerToolLike]):
             self.runtime.put_archive(container_id, dock_args.tool_path, "/tool")
             if build_cmd is not None:
                 self.runtime.run(container_id)
-            self.runtime.commit(container_id, "hyperpocket", encoded_path)
-            return f"hyperpocket:{encoded_path}"
+            self.runtime.commit(container_id, "hyperpocket", tool_name)
+            return f"hyperpocket:{tool_name}"
         except Exception as e:
             raise e
         finally:
@@ -133,7 +135,6 @@ class ContainerDock(Dock[ContainerToolLike]):
             pocket_logger.info(f"end building dock. {dock_args.request_tool_path}")
 
     def _dock(self, dock_args: DockArguments, *args, **kwargs):
-        encoded_path = get_encoded_str(dock_args.request_tool_path)
         with (dock_args.tool_path / "pocket.json").open("r") as f:
             pocket_config = json.load(f)
 
@@ -163,7 +164,7 @@ class ContainerDock(Dock[ContainerToolLike]):
             raise ValueError("entrypoint.run is required in pocket tool configuration")
 
         run_command = pocket_config["entrypoint"]["run"]
-        tool_image = f"hyperpocket:{encoded_path}"
+        tool_image = f"hyperpocket:{name}"
 
         def _invoke(body: Any, envs: dict, **kwargs) -> str:
             container_id = self.runtime.create(
