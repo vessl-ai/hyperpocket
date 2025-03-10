@@ -6,19 +6,19 @@ from typing import Optional
 
 import docker as docker_sdk
 
-from hyperdock_container.settings import DockerSettings
+from hyperdock_container.runtime import ContainerRuntime
+from hyperdock_container.settings import DockerRuntimeSettings
 from hyperpocket.config.logger import pocket_logger
-from runtime_container.runtime import ContainerRuntime
 
 
 class DockerContainerRuntime(ContainerRuntime):
     _client: docker_sdk.DockerClient
-    settings: DockerSettings
+    settings: DockerRuntimeSettings
 
-    def __init__(self, docker_settings: DockerSettings):
+    def __init__(self, docker_settings: DockerRuntimeSettings):
         self.settings = docker_settings
         if self.settings is None:
-            self.settings = DockerSettings()
+            self.settings = DockerRuntimeSettings()
 
     @property
     def client(self):

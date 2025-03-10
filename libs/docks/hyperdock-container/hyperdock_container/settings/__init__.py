@@ -10,25 +10,25 @@ class ContainerRuntimeType(enum.Enum):
     DOCKER = "docker"
 
 
-class DockerSettings(BaseModel):
+class DockerRuntimeSettings(BaseModel):
     base_url: Optional[str] = None
     credstore_env: dict = None
 
 
-class HyperRuntimeSettings(BaseModel):
+class HyperdockSettings(BaseModel):
     runtime: ContainerRuntimeType = ContainerRuntimeType.DOCKER
-    docker: Optional[DockerSettings] = None
+    docker: Optional[DockerRuntimeSettings] = None
 
 
-HYPERRUNTIME_NAME = "container"
+DOCK_NAME = "container"
 
 
 def settings():
-    return HyperRuntimeSettings(**config().docks.get(HYPERRUNTIME_NAME, dict()))
+    return HyperdockSettings(**config().docks.get(DOCK_NAME, dict()))
 
 
 __all__ = [
     "settings",
-    "DockerSettings",
-    "HyperRuntimeSettings",
+    "DockerRuntimeSettings",
+    "HyperdockSettings",
 ]

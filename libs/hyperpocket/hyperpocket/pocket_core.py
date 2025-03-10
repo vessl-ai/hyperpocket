@@ -1,6 +1,6 @@
 import asyncio
 import concurrent.futures
-from typing import Any, Callable, List, Optional, Union
+from typing import Any, Callable, List, Optional, Union, Type
 
 from hyperpocket.builtin import get_builtin_tools
 from hyperpocket.config import pocket_logger
@@ -21,17 +21,9 @@ class PocketCore:
             from hyperdock_container.dock import ContainerDock
             pocket_logger.info("hyperdock-container is loaded.")
             return ContainerDock()
-        except ImportError:
-            pocket_logger.warning("Failed to import hyperdock_container.")
-
-        try:
-            from hyperdock_wasm.dock import WasmDock
-            pocket_logger.info("hyperdock-wasm is loaded.")
-            return WasmDock()
         except ImportError as e:
-            print(">>>", e)
-            raise ImportError(
-                "No default dock available. To register a remote tool, you need to install either hyperdock_wasm or hyperdock_container.")
+            pocket_logger.warning("Failed to import hyperdock_container.")
+            raise e
 
     def __init__(
         self,

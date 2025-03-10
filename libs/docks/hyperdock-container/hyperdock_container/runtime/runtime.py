@@ -97,6 +97,6 @@ class ContainerRuntime:
     @classmethod
     def get_runtime_from_settings(cls) -> "ContainerRuntime":
         if settings().runtime == ContainerRuntimeType.DOCKER:
-            from runtime_container.docker import DockerContainerRuntime
+            from hyperdock_container.runtime.docker import DockerContainerRuntime
             return DockerContainerRuntime(settings().docker)
         raise ValueError(f"Unsupported runtime: {settings().runtime}")

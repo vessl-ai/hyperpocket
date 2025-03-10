@@ -122,14 +122,6 @@ class PocketServer(object):
         app = FastAPI()
         app.add_api_route("/health", lambda: {"status": "ok"}, methods=["GET"])
         app.include_router(auth_router)
-
-        # Attempt to register hyperdock endpoints if available
-        try:
-            from hyperdock_wasm import register_hyperdock_wasm_endpoints
-            register_hyperdock_wasm_endpoints(app)
-        except ImportError:
-            pocket_logger.debug("Hyperdock_wasm package not found. Skipping hyperdock-wasm endpoint registration.")
-
         return app
 
     def _create_main_server(self, app: FastAPI) -> Server:

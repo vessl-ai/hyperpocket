@@ -8,9 +8,7 @@ dependencies = [
     "hyperpocket",
     "pydantic>=2.10.6",
     "docker>=7.1.0",
-    "runtime-container",
 ]
 
 [tool.uv.sources]
 hyperpocket = { path = "../../hyperpocket", editable = true }
-runtime-container = { path = "../../runtime/runtime-container", editable = true }
