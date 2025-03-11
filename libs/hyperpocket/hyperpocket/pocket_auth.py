@@ -124,6 +124,7 @@ class PocketAuth(object):
             return AuthState.NO_SESSION
 
         if session.auth_resolve_uid:
+            # it yields before checking future's state, because the future is being resolved on another thread's event loop.
             await asyncio.sleep(0)
             future_data = FutureStore.get_future(session.auth_resolve_uid)
             await asyncio.sleep(0)
