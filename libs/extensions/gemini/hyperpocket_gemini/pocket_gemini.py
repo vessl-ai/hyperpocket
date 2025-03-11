@@ -57,7 +57,7 @@ class PocketGemini(Pocket):
             self.use_profile = use_profile
 
         specs = []
-        for tool in self.core.tools.values():
+        for tool in self.tools.values():
             spec = self.get_gemini_tool_spec(tool)
             specs.append(spec)
         return specs
