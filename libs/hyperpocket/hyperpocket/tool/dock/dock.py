@@ -1,34 +1,15 @@
 import abc
-from typing import Any
+from typing import TypeVar, Generic
 
-from fastapi import APIRouter
-
-from hyperpocket.tool import ToolRequest
 from hyperpocket.tool.function import FunctionTool
 
+DockToolLike = TypeVar("DockToolLike")
 
-class Dock(abc.ABC):
-    _tool_requests: list[ToolRequest]
-    _dock_http_router: APIRouter
-    _dock_vars: dict[str, str]
 
-    def __init__(self, dock_vars: dict[str, str] = None):
-        self._dock_http_router = APIRouter()
-        self._tool_requests = []
-        self._dock_vars = dock_vars if dock_vars is not None else {}
-
-    @property
-    def router(self):
-        return self._dock_http_router
-
+class Dock(Generic[DockToolLike], abc.ABC):
     @abc.abstractmethod
-    def plug(self, req_like: Any, **kwargs):
+    def dock(self, tool_like: DockToolLike, *args, **kwargs) -> FunctionTool:
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def tools(self) -> list[FunctionTool]:
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    async def teardown(self):
-        raise NotImplementedError
+    def __call__(self, *args, **kwargs):
+        return self.dock(*args, **kwargs)

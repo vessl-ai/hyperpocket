@@ -30,7 +30,7 @@ class PocketCrewAI(Pocket):
         if use_profile is not None:
             self.use_profile = use_profile
 
-        tools = [self.get_tool(pk) for pk in self.core.tools.values() if not pk.name.startswith("__")]
+        tools = [self.get_tool(pk) for pk in self.tools.values() if not pk.name.startswith("__")]
         return tools
 
     def get_tool(self, pocket_tool: HyperpocketTool) -> BaseTool:

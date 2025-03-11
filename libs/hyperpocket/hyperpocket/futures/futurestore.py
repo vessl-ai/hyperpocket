@@ -25,7 +25,6 @@ class FutureStore(object):
                 f"the future already exists. the existing future is returned. uid: {uid}"
             )
             return future
-
         loop = asyncio.get_running_loop()
         future = loop.create_future()
         future_data = FutureData(future=future, data=data)
@@ -42,7 +41,13 @@ class FutureStore(object):
         if not future_data:
             raise ValueError(f"Future not found for uid={uid}")
         if not future_data.future.done():
-            future_data.future.set_result(value)
+            # if the future loop is running, it should be executed in same event loop
+            loop = future_data.future.get_loop()
+            if loop.is_running():
+                loop.call_soon_threadsafe(future_data.future.set_result, value)
+            # if the future loop is not running, it can be executed from anywhere.
+            else:
+                future_data.future.set_result(value)
 
     def delete_future(self, uid: str):
         self.futures.pop(uid, None)

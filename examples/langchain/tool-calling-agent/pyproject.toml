@@ -6,14 +6,14 @@ authors = [{ name = "Hyperpocket Team", email = "hyperpocket@vessl.ai" }]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "hyperdock-wasm",
-    "hyperpocket>=0.0.3",
-    "hyperpocket_langchain>=0.0.3",
+    "hyperdock-container",
+    "hyperpocket",
+    "hyperpocket-langchain",
     "langchain>=0.3.15",
     "langchain-openai>=0.3.1",
 ]
 
 [tool.uv.sources]
 hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
-hyperpocket_langchain = { path = "../../../libs/extensions/langchain", editable = true }
-hyperdock-wasm = { path = "../../../libs/docks/hyperdock-wasm", editable = true }
+hyperpocket-langchain = { path = "../../../libs/extensions/langchain", editable = true }
+hyperdock-container = { path = "../../../libs/docks/hyperdock-container", editable = true }
