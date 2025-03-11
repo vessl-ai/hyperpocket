@@ -30,6 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: extract-version
     strategy:
+      fail-fast: false
       matrix:
         package:
           - { name: "hyperpocket", path: "libs/hyperpocket" }
@@ -62,6 +63,7 @@ jobs:
           pip install tomlkit
 
       - name: Check if version already exists
+        id: check_version
         run: |
           VERSION=${{ needs.extract-version.outputs.version }}
           PACKAGE_NAME=${{ matrix.package.name }}
@@ -70,10 +72,13 @@ jobs:
           responses=$( curl -s -o /dev/null -w "%{http_code}" $URL)
           if [ "$responses" -eq "200" ]; then
             echo "Version $VERSION for package $PACKAGE_NAME already exists on Test PyPI. Skipping publish."
-            exit 0
+            echo "::set-output name=exists::true"
+          else
+            echo "::set-output name=exists::false"
           fi
 
       - name: Update version in package
+        if: steps.check_version.outputs.exists == 'false'
         run: |
           VERSION=${{ needs.extract-version.outputs.version }}
           PACKAGE_PATH=${{ matrix.package.path }}
@@ -82,6 +87,7 @@ jobs:
           $PYTHON_COMMAND scripts/version.py "$VERSION" --path "$PACKAGE_PATH"
 
       - name: Git Push
+        if: steps.check_version.outputs.exists == 'false'
         env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
@@ -97,6 +103,7 @@ jobs:
           fi
 
       - name: Publish package to Test PyPI
+        if: steps.check_version.outputs.exists == 'false'
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
         working-directory: ${{ matrix.package.path }}
