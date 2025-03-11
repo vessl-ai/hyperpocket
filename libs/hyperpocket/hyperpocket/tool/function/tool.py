@@ -133,7 +133,7 @@ class FunctionTool(Tool):
             raise ValueError("FunctionTool can only be created from a callable")
 
         name = name or (func and func.__name__) or (afunc and afunc.__name__)
-        description = description or (func and func.__doc__) or (afunc and func.__doc__)
+        description = description or (func and func.__doc__) or (afunc and func.__doc__) or name
         schema = json_schema or \
                  (func and function_to_model(func).model_json_schema()) or \
                  (afunc and function_to_model(afunc).model_json_schema())

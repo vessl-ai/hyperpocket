@@ -12,7 +12,7 @@ class PocketLangchain(Pocket):
         if use_profile is not None:
             self.use_profile = use_profile
 
-        tools = [self.get_tool(pk) for pk in self.core.tools.values()]
+        tools = [self.get_tool(pk) for pk in self.tools.values()]
         return tools
 
     def get_tool(self, pocket_tool: Tool) -> BaseTool:

@@ -51,7 +51,7 @@ class PocketOpenAI(Pocket):
         if use_profile is not None:
             self.use_profile = use_profile
         specs = []
-        for tool in self.core.tools.values():
+        for tool in self.tools.values():
             spec = self.get_open_ai_tool_spec(tool)
             specs.append(spec)
         return specs

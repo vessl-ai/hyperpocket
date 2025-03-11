@@ -32,7 +32,7 @@ class PocketLanggraph(Pocket):
             self.use_profile = use_profile
         return [
             self._get_langgraph_tool(tool_impl)
-            for tool_impl in self.core.tools.values()
+            for tool_impl in self.tools.values()
         ]
 
     def get_tool_node(
