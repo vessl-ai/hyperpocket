@@ -7,6 +7,8 @@ on:
 jobs:
   extract-version:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.full_without_prefix }}
     steps:
       - uses: nowsprinting/check-version-format-action@v3
         name: extract version
@@ -16,116 +18,65 @@ jobs:
 
       - name: export to env
         run: |
-          VERSION=${{ needs.extract-version.outputs.version }}
+          VERSION=${{ steps.version.outputs.full_without_prefix}}
           echo "Version: $VERSION"
           if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Error: Tag name is not in the correct format. Expected format: v<MAJOR>.<MINOR>.<PATCH>"
             exit 1
           fi
 
-  check-version-before:
+# Define a matrix job for each package
+  publish-package-test:
     runs-on: ubuntu-latest
     needs: extract-version
+    strategy:
+      matrix:
+        package: 
+          - { name: "hyperpocket", path: "libs/hyperpocket" }
+          - { name: "hyperpocket-anthropic", path: "libs/extensions/anthropic" }
+          - { name: "hyperpocket-langchain", path: "libs/extensions/langchain" }
+          - { name: "hyperpocket-langgraph", path: "libs/extensions/langgraph" }
+          - { name: "hyperpocket-openai", path: "libs/extensions/openai" }
+          - { name: "hyperpocket-llamaindex", path: "libs/extensions/llamaindex" }
+          - { name: "hyperpocket-crewai", path: "libs/extensions/crewai" }
+          - { name: "hyperpocket-gemini", path: "libs/extensions/gemini" }
+          - { name: "hyperdock-fileio", path: "libs/docks/hyperdock-fileio" }
+          - { name: "hyperdock-langchain", path: "libs/docks/hyperdock-langchain" }
+          - { name: "hyperdock-container", path: "libs/docks/hyperdock-container" }
     steps:
-      - name: Check if version already exists
-        run: |
-          VERSION=${{ needs.extract-version.outputs.version }}
-          echo "Version: $VERSION"
-          echo "Checking if version $VERSION already exists for all packages..."
-
-          # Define package names
-          PACKAGES=(
-            "hyperpocket"
-            "hyperpocket-anthropic"
-            "hyperpocket-langchain"
-            "hyperpocket-langgraph"
-            "hyperpocket-openai"
-            "hyperpocket-llamaindex"
-            "hyperpocket-crewai"
-            "hyperpocket-gemini"
-            "hyperdock-fileio"
-            "hyperdock-langchain"
-            "hyperdock-wasm"
-            "hyperdock-container"
-          )
-
-          for PACKAGE in "${PACKAGES[@]}"; do
-            echo "Checking package: $PACKAGE"
-            URL=https://test.pypi.org/pypi/${PACKAGE}/${VERSION}/json
-            echo "Request URL: $URL"
-
-            responses=$( curl -s -o /dev/null -w "%{http_code}" $URL)
-            if [ "$responses" -ne "200" ]; then
-              echo "Version $VERSION for package $PACKAGE does not exist. Continuing..."
-            else
-              echo "Version $VERSION for package $PACKAGE already exists on Test PyPI. Stopping workflow."
-              exit 1
-            fi
-          done
-
-  publish:
-    runs-on: ubuntu-latest
-    needs:
-      - check-version-before
-      - extract-version
-
-    steps:
-      # 1. Repository Checkout
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           ssh-key: ${{ secrets.DEPLOY_KEY }}
 
-      # 2. Setup uv
-      - name: Set up UV
-        uses: astral-sh/setup-uv@v5
-
-      # 3. Setup Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      # 4. Install Dependencies
       - name: Install Dependencies
         run: |
           pip install tomlkit
 
-      # 5. Update Version
-      - name: Update version in all packages
+      - name: Check if version already exists
         run: |
           VERSION=${{ needs.extract-version.outputs.version }}
-          echo "Updating version to $VERSION"
-          
-          PYTHON_COMMAND=$(which python)
-          PATHS=(
-            "libs/hyperpocket"
-            "libs/extensions/anthropic"
-            "libs/extensions/langchain"
-            "libs/extensions/langgraph"
-            "libs/extensions/llamaindex"
-            "libs/extensions/openai"
-            "libs/extensions/crewai"
-            "libs/extensions/gemini"
-            "libs/docks/hyperdock-fileio"
-            "libs/docks/hyperdock-langchain"
-            "libs/docks/hyperdock-wasm"
-            "libs/docks/hyperdock-container"
-          )
-          
-          for PATH in "${PATHS[@]}"; do
-            echo "Running: python scripts/version.py $VERSION --path $PATH"
-            $PYTHON_COMMAND scripts/version.py "$VERSION" --path "$PATH"
-          
-            if [ $? -ne 0 ]; then
-              echo "Error: Command failed for path $PATH"
-              exit 1
-            fi
-          done
+          PACKAGE_NAME=${{ matrix.package.name }}
+          echo "Checking if version $VERSION already exists for package $PACKAGE_NAME..."
+          URL=https://test.pypi.org/pypi/${PACKAGE_NAME}/${VERSION}/json
+          responses=$( curl -s -o /dev/null -w "%{http_code}" $URL)
+          if [ "$responses" -eq "200" ]; then
+            echo "Version $VERSION for package $PACKAGE_NAME already exists on Test PyPI. Skipping publish."
+            exit 0
+          fi
 
-          echo "All version dumped successfully"
+      - name: Update version in package
+        run: |
+          VERSION=${{ needs.extract-version.outputs.version }}
+          PACKAGE_PATH=${{ matrix.package.path }}
+          echo "Updating version to $VERSION in $PACKAGE_PATH"
+          python scripts/version.py "$VERSION" --path "$PACKAGE_PATH"
 
-      # 6. Git Push
       - name: Git Push
         env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
@@ -133,9 +84,7 @@ jobs:
           echo "Git Branch name : $BRANCH_NAME"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
           git add .
-          
           if ! git diff-index --quiet HEAD --; then
             git commit -m "uv version up"
             git push origin $BRANCH_NAME
@@ -143,155 +92,36 @@ jobs:
             echo "No changes to commit. Skipping push."
           fi
 
-      # 7. Publish
-      - name: Publish hyperpocket package
+      - name: Publish package to Test PyPI
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/hyperpocket
+        working-directory: ${{ matrix.package.path }}
         run: |
           uv build
           uv publish --publish-url https://test.pypi.org/legacy/
 
-      - name: Publish hyperpocket anthropic package
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/extensions/anthropic
-        run: |
-          uv build
-          uv publish --publish-url https://test.pypi.org/legacy/
-
-      - name: Publish hyperpocket langchain package
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/extensions/langchain
-        run: |
-          uv build
-          uv publish --publish-url https://test.pypi.org/legacy/
-
-      - name: Publish hyperpocket langgraph package
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/extensions/langgraph
-        run: |
-          uv build
-          uv publish --publish-url https://test.pypi.org/legacy/
-
-      - name: Publish hyperpocket llamaindex package
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/extensions/llamaindex
-        run: |
-          uv build
-          uv publish --publish-url https://test.pypi.org/legacy/
-
-      - name: Publish hyperpocket openai package
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/extensions/openai
-        run: |
-          uv build
-          uv publish --publish-url https://test.pypi.org/legacy/
-
-      - name: Publish hyperpocket crewai package
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/extensions/crewai
-        run: |
-          uv build
-          uv publish --publish-url https://test.pypi.org/legacy/
-
-      - name: Publish hyperpocket gemini package
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/extensions/gemini
-        run: |
-          uv build
-          uv publish --publish-url https://test.pypi.org/legacy/
-
-      - name: Publish hyperdock-fileio package
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/docks/hyperdock-fileio
-        run: |
-          uv build
-          uv publish --publish-url https://test.pypi.org/legacy/
-
-      - name: Publish hyperdock-langchain package
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/docks/hyperdock-langchain
-        run: |
-          uv build
-          uv publish --publish-url https://test.pypi.org/legacy/
-
-      - name: Publish hyperdock-wasm package
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/docks/hyperdock-wasm
-        run: |
-          uv build
-          uv publish --publish-url https://test.pypi.org/legacy/
-
-      - name: Publish hyperdock-container package
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
-        working-directory: libs/docks/hyperdock-container
-        run: |
-          uv build
-          uv publish --publish-url https://test.pypi.org/legacy/
-
-
-  check-version-after:
-    runs-on: ubuntu-latest
-    needs:
-      - publish
-      - extract-version
-    steps:
-      # Check if publishing succeeded
       - name: Check if version uploaded successfully
         run: |
           VERSION=${{ needs.extract-version.outputs.version }}
-          echo "Checking if version $VERSION uploaded successfully for all packages..."
-          
-          PACKAGES=(
-            "hyperpocket"
-            "hyperpocket-anthropic"
-            "hyperpocket-langchain"
-            "hyperpocket-langgraph"
-            "hyperpocket-openai"
-            "hyperpocket-llamaindex"
-            "hyperpocket-crewai"
-            "hyperpocket-gemini"
-            "hyperdock-fileio"
-            "hyperdock-langchain"
-            "hyperdock-wasm"
-            "hyperdock-container"
-          )
-          
-          for PACKAGE in "${PACKAGES[@]}"; do
-            echo "Checking package: $PACKAGE"
-            URL=https://test.pypi.org/pypi/${PACKAGE}/${VERSION}/json
-            echo "Request URL: $URL"
-          
-            ATTEMPTS=0
-            MAX_ATTEMPTS=10
-          
-            while [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; do
-          
-              responses=$( curl -s -o /dev/null -w "%{http_code}" $URL)
-              if [ "$responses" -eq "200" ]; then
-                echo "Version $VERSION for package $PACKAGE uploaded on Test PyPI successfully. Continuing..."
-                break
+          PACKAGE_NAME=${{ matrix.package.name }}
+          echo "Checking if version $VERSION uploaded successfully for package $PACKAGE_NAME..."
+          URL=https://test.pypi.org/pypi/${PACKAGE_NAME}/${VERSION}/json
+          ATTEMPTS=0
+          MAX_ATTEMPTS=10
+          while [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; do
+            responses=$( curl -s -o /dev/null -w "%{http_code}" $URL)
+            if [ "$responses" -eq "200" ]; then
+              echo "Version $VERSION for package $PACKAGE_NAME uploaded on Test PyPI successfully."
+              break
+            else
+              echo "Attempt $((ATTEMPTS + 1)) failed for package $PACKAGE_NAME. HTTP status: $responses"
+              ATTEMPTS=$((ATTEMPTS + 1))
+              if [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; then
+                echo "Retrying in 10 seconds..."
+                sleep 10
               else
-                echo "Attempt $((ATTEMPTS + 1)) failed for package $PACKAGE. HTTP status: $responses"
-                ATTEMPTS=$((ATTEMPTS + 1))
-                if [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; then
-                  echo "Retrying in 10 seconds..."
-                  sleep 10
-                else
-                  echo "Version $VERSION for package $PACKAGE does not appear to be uploaded on Test PyPI after $MAX_ATTEMPTS attempts."
-                  exit 1
-                fi
+                echo "Version $VERSION for package $PACKAGE_NAME does not appear to be uploaded on Test PyPI after $MAX_ATTEMPTS attempts."
+                exit 1
               fi
-            done
+            fi
           done

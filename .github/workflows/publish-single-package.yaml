@@ -1,0 +1,115 @@
+name: Publish Single Package
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Select the package to publish'
+        required: true
+        type: choice
+        options:
+          - hyperpocket
+          - hyperpocket-anthropic
+          - hyperpocket-langchain
+          - hyperpocket-langgraph
+          - hyperpocket-openai
+          - hyperpocket-llamaindex
+          - hyperpocket-crewai
+          - hyperpocket-gemini
+          - hyperdock-fileio
+          - hyperdock-langchain
+          - hyperdock-container
+
+jobs:
+  publish-single-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install tomlkit
+
+      - name: Determine package path
+        id: determine-path
+        run: |
+          case "${{ github.event.inputs.package }}" in
+            "hyperpocket")
+              echo "path=libs/hyperpocket" >> $GITHUB_ENV
+              ;;
+            "hyperpocket-anthropic")
+              echo "path=libs/extensions/anthropic" >> $GITHUB_ENV
+              ;;
+            "hyperpocket-langchain")
+              echo "path=libs/extensions/langchain" >> $GITHUB_ENV
+              ;;
+            "hyperpocket-langgraph")
+              echo "path=libs/extensions/langgraph" >> $GITHUB_ENV
+              ;;
+            "hyperpocket-openai")
+              echo "path=libs/extensions/openai" >> $GITHUB_ENV
+              ;;
+            "hyperpocket-llamaindex")
+              echo "path=libs/extensions/llamaindex" >> $GITHUB_ENV
+              ;;
+            "hyperpocket-crewai")
+              echo "path=libs/extensions/crewai" >> $GITHUB_ENV
+              ;;
+            "hyperpocket-gemini")
+              echo "path=libs/extensions/gemini" >> $GITHUB_ENV
+              ;;
+            "hyperdock-fileio")
+              echo "path=libs/docks/hyperdock-fileio" >> $GITHUB_ENV
+              ;;
+            "hyperdock-langchain")
+              echo "path=libs/docks/hyperdock-langchain" >> $GITHUB_ENV
+              ;;
+            "hyperdock-container")
+              echo "path=libs/docks/hyperdock-container" >> $GITHUB_ENV
+              ;;
+            *)
+              echo "Invalid package selected"
+              exit 1
+              ;;
+          esac
+
+      - name: Publish package
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        working-directory: ${{ env.path }}
+        run: |
+          uv build
+          uv publish
+
+      - name: Check if version uploaded successfully
+        run: |
+          PACKAGE_NAME=${{ github.event.inputs.package }}
+          VERSION=$(python -c "import tomlkit; print(tomlkit.loads(open('${{ env.path }}/pyproject.toml').read())['tool']['poetry']['version'])")
+          echo "Checking if version $VERSION uploaded successfully for package $PACKAGE_NAME..."
+          URL=https://pypi.org/pypi/${PACKAGE_NAME}/${VERSION}/json
+          ATTEMPTS=0
+          MAX_ATTEMPTS=10
+          while [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; do
+            responses=$( curl -s -o /dev/null -w "%{http_code}" $URL)
+            if [ "$responses" -eq "200" ]; then
+              echo "Version $VERSION for package $PACKAGE_NAME uploaded on PyPI successfully."
+              break
+            else
+              echo "Attempt $((ATTEMPTS + 1)) failed for package $PACKAGE_NAME. HTTP status: $responses"
+              ATTEMPTS=$((ATTEMPTS + 1))
+              if [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; then
+                echo "Retrying in 10 seconds..."
+                sleep 10
+              else
+                echo "Version $VERSION for package $PACKAGE_NAME does not appear to be uploaded on PyPI after $MAX_ATTEMPTS attempts."
+                exit 1
+              fi
+            fi
+          done 
