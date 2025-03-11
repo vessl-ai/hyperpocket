@@ -12,6 +12,7 @@ from hyperpocket.config import pocket_logger, settings
 from hyperpocket.tool import ToolAuth
 from hyperpocket.tool.dock import Dock
 from hyperpocket.tool.function import FunctionTool
+from hyperpocket.util.encoding_str import short_hashing_str
 from hyperpocket.util.git_parser import GitParser
 
 ContainerToolLike = Union[str, tuple]
@@ -108,10 +109,12 @@ class ContainerDock(Dock[ContainerToolLike]):
         entrypoint = pocket_config["entrypoint"]
         build_cmd = entrypoint.get("build")
         base_image = self.get_base_image(pocket_config)
+        encoded_path = short_hashing_str(dock_args.request_tool_path)
+        image_tag = f"{tool_name}-{encoded_path}"
 
-        if self.runtime.list_image(name=f"hyperpocket:{tool_name}"):
+        if self.runtime.list_image(name=f"hyperpocket:{image_tag}"):
             pocket_logger.debug("built image already exists. skip build.")
-            return f"hyperpocket:{tool_name}"
+            return f"hyperpocket:{image_tag}"
 
         container_id = self.runtime.create(
             base_image,
@@ -125,14 +128,14 @@ class ContainerDock(Dock[ContainerToolLike]):
             self.runtime.put_archive(container_id, dock_args.tool_path, "/tool")
             if build_cmd is not None:
                 self.runtime.run(container_id)
-            self.runtime.commit(container_id, "hyperpocket", tool_name)
-            return f"hyperpocket:{tool_name}"
+            self.runtime.commit(container_id, "hyperpocket", image_tag)
+            return f"hyperpocket:{image_tag}"
         except Exception as e:
             raise e
         finally:
             self.runtime.stop(container_id)
             self.runtime.remove(container_id)
-            pocket_logger.info(f"end building dock. {dock_args.request_tool_path}")
+            pocket_logger.info(f"end building dock. {dock_args.request_tool_path}. image_tag: {image_tag}")
 
     def _dock(self, dock_args: DockArguments, *args, **kwargs):
         with (dock_args.tool_path / "pocket.json").open("r") as f:
@@ -143,6 +146,8 @@ class ContainerDock(Dock[ContainerToolLike]):
         name = tool_config["name"]
         description = tool_config.get("description", "")
         json_schema = tool_config.get("inputSchema", {})
+        encoded_path = short_hashing_str(dock_args.request_tool_path)
+        image_tag = f"{name}-{encoded_path}"
 
         # 2. variable section
         default_tool_vars = pocket_config.get("variables", {})
@@ -164,7 +169,7 @@ class ContainerDock(Dock[ContainerToolLike]):
             raise ValueError("entrypoint.run is required in pocket tool configuration")
 
         run_command = pocket_config["entrypoint"]["run"]
-        tool_image = f"hyperpocket:{name}"
+        tool_image = f"hyperpocket:{image_tag}"
 
         def _invoke(body: Any, envs: dict, **kwargs) -> str:
             container_id = self.runtime.create(
