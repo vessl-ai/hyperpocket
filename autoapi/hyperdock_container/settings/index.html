@@ -133,7 +133,7 @@
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#classes'"><span>#</span></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hyperdock_container.settings.DockerSettings" title="hyperdock_container.settings.DockerSettings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DockerSettings</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hyperdock_container.settings.DockerRuntimeSettings" title="hyperdock_container.settings.DockerRuntimeSettings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DockerRuntimeSettings</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#hyperdock_container.settings.HyperdockSettings" title="hyperdock_container.settings.HyperdockSettings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HyperdockSettings</span></code></a></p></td>
@@ -155,16 +155,16 @@
 <section id="package-contents">
 <h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#package-contents'"><span>#</span></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="hyperdock_container.settings.DockerSettings">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperdock_container.settings.</span></span><span class="sig-name descname"><span class="pre">DockerSettings</span></span><a class="headerlink" href="#hyperdock_container.settings.DockerSettings" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperdock_container.settings.DockerSettings'"><span>#</span></a></dt>
+<dt class="sig sig-object py" id="hyperdock_container.settings.DockerRuntimeSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperdock_container.settings.</span></span><span class="sig-name descname"><span class="pre">DockerRuntimeSettings</span></span><a class="headerlink" href="#hyperdock_container.settings.DockerRuntimeSettings" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperdock_container.settings.DockerRuntimeSettings'"><span>#</span></a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pydantic.BaseModel</span></code></p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="hyperdock_container.settings.DockerSettings.base_url">
-<span class="sig-name descname"><span class="pre">base_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hyperdock_container.settings.DockerSettings.base_url" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperdock_container.settings.DockerSettings.base_url'"><span>#</span></a></dt>
+<dt class="sig sig-object py" id="hyperdock_container.settings.DockerRuntimeSettings.base_url">
+<span class="sig-name descname"><span class="pre">base_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hyperdock_container.settings.DockerRuntimeSettings.base_url" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperdock_container.settings.DockerRuntimeSettings.base_url'"><span>#</span></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="hyperdock_container.settings.DockerSettings.credstore_env">
-<span class="sig-name descname"><span class="pre">credstore_env</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hyperdock_container.settings.DockerSettings.credstore_env" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperdock_container.settings.DockerSettings.credstore_env'"><span>#</span></a></dt>
+<dt class="sig sig-object py" id="hyperdock_container.settings.DockerRuntimeSettings.credstore_env">
+<span class="sig-name descname"><span class="pre">credstore_env</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hyperdock_container.settings.DockerRuntimeSettings.credstore_env" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperdock_container.settings.DockerRuntimeSettings.credstore_env'"><span>#</span></a></dt>
 <dd></dd></dl>
 </dd></dl>
 <dl class="py class">
@@ -173,11 +173,11 @@
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pydantic.BaseModel</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="hyperdock_container.settings.HyperdockSettings.runtime">
-<span class="sig-name descname"><span class="pre">runtime</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Runtime</span></em><a class="headerlink" href="#hyperdock_container.settings.HyperdockSettings.runtime" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperdock_container.settings.HyperdockSettings.runtime'"><span>#</span></a></dt>
+<span class="sig-name descname"><span class="pre">runtime</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ContainerRuntimeType</span></em><a class="headerlink" href="#hyperdock_container.settings.HyperdockSettings.runtime" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperdock_container.settings.HyperdockSettings.runtime'"><span>#</span></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="hyperdock_container.settings.HyperdockSettings.docker">
-<span class="sig-name descname"><span class="pre">docker</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#hyperdock_container.settings.DockerSettings" title="hyperdock_container.settings.DockerSettings"><span class="pre">DockerSettings</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hyperdock_container.settings.HyperdockSettings.docker" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperdock_container.settings.HyperdockSettings.docker'"><span>#</span></a></dt>
+<span class="sig-name descname"><span class="pre">docker</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#hyperdock_container.settings.DockerRuntimeSettings" title="hyperdock_container.settings.DockerRuntimeSettings"><span class="pre">DockerRuntimeSettings</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hyperdock_container.settings.HyperdockSettings.docker" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperdock_container.settings.HyperdockSettings.docker'"><span>#</span></a></dt>
 <dd></dd></dl>
 </dd></dl>
 <dl class="py function">
@@ -192,9 +192,9 @@
 <li><a :data-current="activeSection === '#classes'" class="reference internal" href="#classes">Classes</a></li>
 <li><a :data-current="activeSection === '#functions'" class="reference internal" href="#functions">Functions</a></li>
 <li><a :data-current="activeSection === '#package-contents'" class="reference internal" href="#package-contents">Package Contents</a><ul>
-<li><a :data-current="activeSection === '#hyperdock_container.settings.DockerSettings'" class="reference internal" href="#hyperdock_container.settings.DockerSettings"><code class="docutils literal notranslate"><span class="pre">DockerSettings</span></code></a><ul>
-<li><a :data-current="activeSection === '#hyperdock_container.settings.DockerSettings.base_url'" class="reference internal" href="#hyperdock_container.settings.DockerSettings.base_url"><code class="docutils literal notranslate"><span class="pre">DockerSettings.base_url</span></code></a></li>
-<li><a :data-current="activeSection === '#hyperdock_container.settings.DockerSettings.credstore_env'" class="reference internal" href="#hyperdock_container.settings.DockerSettings.credstore_env"><code class="docutils literal notranslate"><span class="pre">DockerSettings.credstore_env</span></code></a></li>
+<li><a :data-current="activeSection === '#hyperdock_container.settings.DockerRuntimeSettings'" class="reference internal" href="#hyperdock_container.settings.DockerRuntimeSettings"><code class="docutils literal notranslate"><span class="pre">DockerRuntimeSettings</span></code></a><ul>
+<li><a :data-current="activeSection === '#hyperdock_container.settings.DockerRuntimeSettings.base_url'" class="reference internal" href="#hyperdock_container.settings.DockerRuntimeSettings.base_url"><code class="docutils literal notranslate"><span class="pre">DockerRuntimeSettings.base_url</span></code></a></li>
+<li><a :data-current="activeSection === '#hyperdock_container.settings.DockerRuntimeSettings.credstore_env'" class="reference internal" href="#hyperdock_container.settings.DockerRuntimeSettings.credstore_env"><code class="docutils literal notranslate"><span class="pre">DockerRuntimeSettings.credstore_env</span></code></a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#hyperdock_container.settings.HyperdockSettings'" class="reference internal" href="#hyperdock_container.settings.HyperdockSettings"><code class="docutils literal notranslate"><span class="pre">HyperdockSettings</span></code></a><ul>

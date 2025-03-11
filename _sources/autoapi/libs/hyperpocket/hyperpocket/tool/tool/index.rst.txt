@@ -11,7 +11,6 @@ Classes
 .. autoapisummary::
 
    libs.hyperpocket.hyperpocket.tool.tool.ToolAuth
-   libs.hyperpocket.hyperpocket.tool.tool.ToolRequest
    libs.hyperpocket.hyperpocket.tool.tool.Tool
 
 
@@ -36,34 +35,6 @@ Module Contents
 
    .. py:attribute:: auth_handler
       :type:  Optional[str]
-
-
-.. py:class:: ToolRequest
-
-   Bases: :py:obj:`abc.ABC`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
-   .. py:attribute:: postprocessings
-      :type:  Optional[list[Callable]]
-      :value: None
-
-
-
-   .. py:attribute:: overridden_tool_vars
-      :type:  dict[str, str]
-
-
-   .. py:method:: add_postprocessing(postprocessing: Callable)
-
-
-   .. py:method:: with_postprocessings(postprocessings: list[Callable])
-
-
-   .. py:method:: override_tool_variables(override_vars: dict[str, str]) -> ToolRequest
 
 
 .. py:class:: Tool

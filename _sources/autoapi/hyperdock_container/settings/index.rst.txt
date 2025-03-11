@@ -10,7 +10,7 @@ Classes
 
 .. autoapisummary::
 
-   hyperdock_container.settings.DockerSettings
+   hyperdock_container.settings.DockerRuntimeSettings
    hyperdock_container.settings.HyperdockSettings
 
 
@@ -25,7 +25,7 @@ Functions
 Package Contents
 ----------------
 
-.. py:class:: DockerSettings
+.. py:class:: DockerRuntimeSettings
 
    Bases: :py:obj:`pydantic.BaseModel`
 
@@ -48,11 +48,11 @@ Package Contents
 
 
    .. py:attribute:: runtime
-      :type:  Runtime
+      :type:  ContainerRuntimeType
 
 
    .. py:attribute:: docker
-      :type:  Optional[DockerSettings]
+      :type:  Optional[DockerRuntimeSettings]
       :value: None
 
 

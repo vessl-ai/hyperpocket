@@ -7,16 +7,15 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>libs.hyperpocket.hyperpocket.util.json_schema_to_model | Hyperpocket  documentation</title>
-<meta content="libs.hyperpocket.hyperpocket.util.json_schema_to_model | Hyperpocket  documentation" property="og:title"/>
-<meta content="libs.hyperpocket.hyperpocket.util.json_schema_to_model | Hyperpocket  documentation" name="twitter:title"/>
+<title>libs.hyperpocket.hyperpocket.util.short_hashing_str | Hyperpocket  documentation</title>
+<meta content="libs.hyperpocket.hyperpocket.util.short_hashing_str | Hyperpocket  documentation" property="og:title"/>
+<meta content="libs.hyperpocket.hyperpocket.util.short_hashing_str | Hyperpocket  documentation" name="twitter:title"/>
 <link href="../../../../../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../_static/graphviz.css?v=4ae1632d" rel="stylesheet" type="text/css"/>
 <link href="../../../../../../search.html" rel="search" title="Search"/>
 <link href="../../../../../../genindex.html" rel="index" title="Index"/>
-<link href="../short_hashing_str/index.html" rel="next" title="libs.hyperpocket.hyperpocket.util.short_hashing_str"/>
-<link href="../git_parser/index.html" rel="prev" title="libs.hyperpocket.hyperpocket.util.git_parser"/>
+<link href="../json_schema_to_model/index.html" rel="prev" title="libs.hyperpocket.hyperpocket.util.json_schema_to_model"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -130,17 +129,17 @@
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../../index.html">libs.hyperpocket</a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../../index.html">libs.hyperpocket.hyperpocket</a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">libs.hyperpocket.hyperpocket.util</a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">libs.hyperpocket.hyperpocket.util.json_schema_to_model</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">libs.hyperpocket.hyperpocket.util.short_hashing_str</span>
 </nav>
 <div id="content" role="main">
-<section id="module-libs.hyperpocket.hyperpocket.util.json_schema_to_model">
-<span id="libs-hyperpocket-hyperpocket-util-json-schema-to-model"></span><h1>libs.hyperpocket.hyperpocket.util.json_schema_to_model<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.util.json_schema_to_model" title="Link to this heading"><span>#</span></a></h1>
+<section id="module-libs.hyperpocket.hyperpocket.util.short_hashing_str">
+<span id="libs-hyperpocket-hyperpocket-util-short-hashing-str"></span><h1>libs.hyperpocket.hyperpocket.util.short_hashing_str<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.util.short_hashing_str" title="Link to this heading"><span>#</span></a></h1>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#functions'"><span>#</span></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.util.json_schema_to_model.json_schema_to_model" title="libs.hyperpocket.hyperpocket.util.json_schema_to_model.json_schema_to_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">json_schema_to_model</span></code></a>(→ Type[pydantic.BaseModel])</p></td>
-<td><p>Recursively create a Pydantic model from a JSON Schema.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.util.short_hashing_str.short_hashing_str" title="libs.hyperpocket.hyperpocket.util.short_hashing_str.short_hashing_str"><code class="xref py py-obj docutils literal notranslate"><span class="pre">short_hashing_str</span></code></a>(text[, length])</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -148,10 +147,9 @@
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#module-contents'"><span>#</span></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.util.json_schema_to_model.json_schema_to_model">
-<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.util.json_schema_to_model.</span></span><span class="sig-name descname"><span class="pre">json_schema_to_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'DynamicModel'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">pydantic.BaseModel</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.util.json_schema_to_model.json_schema_to_model" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.util.json_schema_to_model.json_schema_to_model'"><span>#</span></a></dt>
-<dd><p>Recursively create a Pydantic model from a JSON Schema.</p>
-</dd></dl>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.util.short_hashing_str.short_hashing_str">
+<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.util.short_hashing_str.</span></span><span class="sig-name descname"><span class="pre">short_hashing_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.util.short_hashing_str.short_hashing_str" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.util.short_hashing_str.short_hashing_str'"><span>#</span></a></dt>
+<dd></dd></dl>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
@@ -159,7 +157,7 @@
 <ul>
 <li><a :data-current="activeSection === '#functions'" class="reference internal" href="#functions">Functions</a></li>
 <li><a :data-current="activeSection === '#module-contents'" class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.util.json_schema_to_model.json_schema_to_model'" class="reference internal" href="#libs.hyperpocket.hyperpocket.util.json_schema_to_model.json_schema_to_model"><code class="docutils literal notranslate"><span class="pre">json_schema_to_model()</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.util.short_hashing_str.short_hashing_str'" class="reference internal" href="#libs.hyperpocket.hyperpocket.util.short_hashing_str.short_hashing_str"><code class="docutils literal notranslate"><span class="pre">short_hashing_str()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -136,6 +136,16 @@
 <div id="content" role="main">
 <section id="module-libs.hyperpocket.hyperpocket.tool.dock.dock">
 <span id="libs-hyperpocket-hyperpocket-tool-dock-dock"></span><h1>libs.hyperpocket.hyperpocket.tool.dock.dock<a class="headerlink" href="#module-libs.hyperpocket.hyperpocket.tool.dock.dock" title="Link to this heading"><span>#</span></a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#attributes'"><span>#</span></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.DockToolLike" title="libs.hyperpocket.hyperpocket.tool.dock.dock.DockToolLike"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DockToolLike</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#classes'"><span>#</span></a></h2>
 <table class="autosummary longtable docutils align-default">
@@ -148,45 +158,32 @@
 </section>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#module-contents'"><span>#</span></a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.dock.dock.DockToolLike">
+<span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.tool.dock.dock.</span></span><span class="sig-name descname"><span class="pre">DockToolLike</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.DockToolLike" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.dock.dock.DockToolLike'"><span>#</span></a></dt>
+<dd></dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.dock.dock.Dock">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.tool.dock.dock.</span></span><span class="sig-name descname"><span class="pre">Dock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dock_vars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock'"><span>#</span></a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.tool.dock.dock.</span></span><span class="sig-name descname"><span class="pre">Dock</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock'"><span>#</span></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Generic</span></code>[<a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.DockToolLike" title="libs.hyperpocket.hyperpocket.tool.dock.dock.DockToolLike"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DockToolLike</span></code></a>], <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <p>Helper class that provides a standard way to create an ABC using
 inheritance.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.router">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">router</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.router" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.router'"><span>#</span></a></dt>
-<dd></dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.plug">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req_like</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.plug" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.plug'"><span>#</span></a></dt>
+<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.dock">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool_like</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DockToolLike</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">hyperpocket.tool.function.FunctionTool</span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.dock" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.dock'"><span>#</span></a></dt>
 <dd></dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.tools">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tools</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">hyperpocket.tool.function.FunctionTool</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.tools" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.tools'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.teardown">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">teardown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.teardown" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.teardown'"><span>#</span></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Async<span class="colon">:</span></dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
-</dd></dl>
 </dd></dl>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
+<li><a :data-current="activeSection === '#attributes'" class="reference internal" href="#attributes">Attributes</a></li>
 <li><a :data-current="activeSection === '#classes'" class="reference internal" href="#classes">Classes</a></li>
 <li><a :data-current="activeSection === '#module-contents'" class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.dock.dock.DockToolLike'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.DockToolLike"><code class="docutils literal notranslate"><span class="pre">DockToolLike</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock"><code class="docutils literal notranslate"><span class="pre">Dock</span></code></a><ul>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.router'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.router"><code class="docutils literal notranslate"><span class="pre">Dock.router</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.plug'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.plug"><code class="docutils literal notranslate"><span class="pre">Dock.plug()</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.tools'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.tools"><code class="docutils literal notranslate"><span class="pre">Dock.tools()</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.teardown'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.teardown"><code class="docutils literal notranslate"><span class="pre">Dock.teardown()</span></code></a></li>
+<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.dock'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.dock.dock.Dock.dock"><code class="docutils literal notranslate"><span class="pre">Dock.dock()</span></code></a></li>
 </ul>
 </li>
 </ul>

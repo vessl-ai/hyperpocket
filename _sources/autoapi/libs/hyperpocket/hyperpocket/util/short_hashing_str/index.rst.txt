@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.util.short_hashing_str
+===================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.util.short_hashing_str
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.util.short_hashing_str.short_hashing_str
+
+
+Module Contents
+---------------
+
+.. py:function:: short_hashing_str(text, length=10)
+

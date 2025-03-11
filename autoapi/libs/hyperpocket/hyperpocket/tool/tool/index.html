@@ -142,10 +142,7 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolAuth" title="libs.hyperpocket.hyperpocket.tool.tool.ToolAuth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolAuth</span></code></a></p></td>
 <td><p>ToolAuth is an object that represents the authentication information required to invoke a tool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest" title="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolRequest</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.Tool" title="libs.hyperpocket.hyperpocket.tool.tool.Tool"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tool</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.Tool" title="libs.hyperpocket.hyperpocket.tool.tool.Tool"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tool</span></code></a></p></td>
 <td><p>Pocket Tool Interface</p></td>
 </tr>
 </tbody>
@@ -169,33 +166,6 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.ToolAuth.auth_handler">
 <span class="sig-name descname"><span class="pre">auth_handler</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolAuth.auth_handler" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.tool.ToolAuth.auth_handler'"><span>#</span></a></dt>
-<dd></dd></dl>
-</dd></dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">libs.hyperpocket.hyperpocket.tool.tool.</span></span><span class="sig-name descname"><span class="pre">ToolRequest</span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest'"><span>#</span></a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.postprocessings">
-<span class="sig-name descname"><span class="pre">postprocessings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.postprocessings" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.postprocessings'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.overridden_tool_vars">
-<span class="sig-name descname"><span class="pre">overridden_tool_vars</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.overridden_tool_vars" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.overridden_tool_vars'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.add_postprocessing">
-<span class="sig-name descname"><span class="pre">add_postprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">postprocessing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.add_postprocessing" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.add_postprocessing'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.with_postprocessings">
-<span class="sig-name descname"><span class="pre">with_postprocessings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">postprocessings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.with_postprocessings" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.with_postprocessings'"><span>#</span></a></dt>
-<dd></dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.override_tool_variables">
-<span class="sig-name descname"><span class="pre">override_tool_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">override_vars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest" title="libs.hyperpocket.hyperpocket.tool.tool.ToolRequest"><span class="pre">ToolRequest</span></a></span></span><a class="headerlink" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.override_tool_variables" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.override_tool_variables'"><span>#</span></a></dt>
 <dd></dd></dl>
 </dd></dl>
 <dl class="py class">
@@ -290,14 +260,6 @@ Returns the tool itself</p>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.tool.ToolAuth.scopes'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolAuth.scopes"><code class="docutils literal notranslate"><span class="pre">ToolAuth.scopes</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.tool.ToolAuth.auth_provider'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolAuth.auth_provider"><code class="docutils literal notranslate"><span class="pre">ToolAuth.auth_provider</span></code></a></li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.tool.ToolAuth.auth_handler'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolAuth.auth_handler"><code class="docutils literal notranslate"><span class="pre">ToolAuth.auth_handler</span></code></a></li>
-</ul>
-</li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest"><code class="docutils literal notranslate"><span class="pre">ToolRequest</span></code></a><ul>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.postprocessings'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.postprocessings"><code class="docutils literal notranslate"><span class="pre">ToolRequest.postprocessings</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.overridden_tool_vars'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.overridden_tool_vars"><code class="docutils literal notranslate"><span class="pre">ToolRequest.overridden_tool_vars</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.add_postprocessing'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.add_postprocessing"><code class="docutils literal notranslate"><span class="pre">ToolRequest.add_postprocessing()</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.with_postprocessings'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.with_postprocessings"><code class="docutils literal notranslate"><span class="pre">ToolRequest.with_postprocessings()</span></code></a></li>
-<li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.override_tool_variables'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.ToolRequest.override_tool_variables"><code class="docutils literal notranslate"><span class="pre">ToolRequest.override_tool_variables()</span></code></a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#libs.hyperpocket.hyperpocket.tool.tool.Tool'" class="reference internal" href="#libs.hyperpocket.hyperpocket.tool.tool.Tool"><code class="docutils literal notranslate"><span class="pre">Tool</span></code></a><ul>

@@ -5,6 +5,14 @@ libs.hyperpocket.hyperpocket.tool.dock.dock
 
 
 
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.tool.dock.dock.DockToolLike
+
+
 Classes
 -------
 
@@ -16,32 +24,19 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Dock(dock_vars: dict[str, str] = None)
+.. py:data:: DockToolLike
 
-   Bases: :py:obj:`abc.ABC`
+.. py:class:: Dock
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`DockToolLike`\ ], :py:obj:`abc.ABC`
 
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
 
-   .. py:property:: router
-
-
-   .. py:method:: plug(req_like: Any, **kwargs)
+   .. py:method:: dock(tool_like: DockToolLike, *args, **kwargs) -> hyperpocket.tool.function.FunctionTool
       :abstractmethod:
-
-
-
-   .. py:method:: tools() -> list[hyperpocket.tool.function.FunctionTool]
-      :abstractmethod:
-
-
-
-   .. py:method:: teardown()
-      :abstractmethod:
-
-      :async:
 
 
 

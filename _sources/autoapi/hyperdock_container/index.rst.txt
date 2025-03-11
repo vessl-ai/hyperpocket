@@ -14,7 +14,5 @@ Submodules
    /autoapi/hyperdock_container/dock/index
    /autoapi/hyperdock_container/runtime/index
    /autoapi/hyperdock_container/settings/index
-   /autoapi/hyperdock_container/tool/index
-   /autoapi/hyperdock_container/tool_reference/index
 
 

@@ -82,6 +82,8 @@ Module Contents
 
 
    .. py:method:: check(auth_req: hyperpocket.auth.handler.AuthenticateRequest, auth_handler_name: Optional[str] = None, auth_provider: Optional[hyperpocket.auth.AuthProvider] = None, thread_id: str = 'default', profile: str = 'default', *args, **kwargs) -> AuthState
+      :async:
+
 
       Check current authentication state.
 
@@ -113,9 +115,13 @@ Module Contents
    .. py:method:: get_session_state(session: Optional[hyperpocket.session.interface.BaseSessionValue], auth_req: Optional[hyperpocket.auth.handler.AuthenticateRequest]) -> AuthState
       :staticmethod:
 
+      :async:
+
 
 
    .. py:method:: prepare(auth_req: hyperpocket.auth.handler.AuthenticateRequest, auth_handler_name: Optional[str] = None, auth_provider: Optional[hyperpocket.auth.AuthProvider] = None, thread_id: str = 'default', profile: str = 'default', **kwargs) -> Optional[str]
+      :async:
+
 
       Prepare authentication.
 
@@ -172,6 +178,8 @@ Module Contents
 
 
    .. py:method:: list_session_state(thread_id: str, auth_provider: Optional[hyperpocket.auth.AuthProvider] = None)
+      :async:
+
 
 
    .. py:method:: delete_session(auth_provider: hyperpocket.auth.AuthProvider, thread_id: str = 'default', profile: str = 'default') -> bool

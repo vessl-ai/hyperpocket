@@ -5,41 +5,82 @@ hyperdock_container.dock
 
 
 
+Attributes
+----------
+
+.. autoapisummary::
+
+   hyperdock_container.dock.ContainerToolLike
+
+
 Classes
 -------
 
 .. autoapisummary::
 
+   hyperdock_container.dock.DockArguments
    hyperdock_container.dock.ContainerDock
 
 
 Module Contents
 ---------------
 
-.. py:class:: ContainerDock(*args, dock_vars: dict[str, str] = None, **kwargs)
+.. py:data:: ContainerToolLike
 
-   Bases: :py:obj:`hyperpocket.tool.dock.Dock`
+.. py:class:: DockArguments
+
+   Bases: :py:obj:`pydantic.BaseModel`
 
 
-   .. py:attribute:: unique_tool_references
-      :type:  dict[tuple[str, Ellipsis], hyperdock_container.tool_reference.ContainerToolReference]
+   .. py:attribute:: request_tool_path
+      :type:  str
+
+
+   .. py:attribute:: tool_path
+      :type:  pathlib.Path
+
+
+   .. py:attribute:: tool_vars
+      :type:  dict
+
+
+   .. py:attribute:: runtime_arguments
+      :type:  dict
+
+
+   .. py:attribute:: tool_source
+      :type:  str
+
+
+   .. py:attribute:: image_tag_postfix
+      :type:  str
+
+
+.. py:class:: ContainerDock
+
+   Bases: :py:obj:`hyperpocket.tool.dock.Dock`\ [\ :py:obj:`ContainerToolLike`\ ]
 
 
    .. py:attribute:: runtime
       :type:  hyperdock_container.runtime.ContainerRuntime
 
 
-   .. py:method:: try_parse(req_like: str, inline_tool_vars: Optional[dict] = None) -> hyperdock_container.tool.ContainerToolRequest
+   .. py:method:: dock(tool_like: ContainerToolLike, dock_vars: dict[str, str] = None, runtime_arguments: dict = None, *args, **kwargs) -> hyperpocket.tool.function.FunctionTool
 
 
-   .. py:method:: plug(req_like: Any, **kwargs)
+   .. py:method:: load(tool_like: ContainerToolLike, dock_vars: dict = None, runtime_arguments: dict = None, *args, **kwargs) -> DockArguments
 
 
-   .. py:method:: teardown()
-      :async:
+   .. py:method:: build(dock_args: DockArguments, *args, **kwargs) -> str
+
+
+   .. py:method:: get_base_image(pocket_config: dict) -> str
+      :classmethod:
 
 
 
-   .. py:method:: tools() -> list[hyperpocket.tool.function.FunctionTool]
+   .. py:method:: normalize_url(url)
+      :classmethod:
+
 
 

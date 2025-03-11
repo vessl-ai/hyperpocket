@@ -28,13 +28,6 @@ Package Contents
 
 .. py:class:: ContainerRuntime
 
-   Bases: :py:obj:`abc.ABC`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:method:: create(image_tag: str, workdir: str, command: str, envs: dict, **kwargs) -> str
       :abstractmethod:
 
@@ -88,7 +81,7 @@ Package Contents
 
 
 
-   .. py:method:: list_image() -> list[tuple[str, list[str]]]
+   .. py:method:: list_image(name: str = None) -> list[tuple[str, list[str]]]
       :abstractmethod:
 
 
@@ -130,17 +123,6 @@ Package Contents
       :param tag:
       :return: image id
 
-
-
-   .. py:method:: from_tool_request(tool_request: hyperdock_container.tool.ContainerToolRequest) -> list[hyperpocket.tool.function.FunctionTool]
-
-      Create a FunctionTool from a tool request
-      :param tool_request:
-      :return:
-
-
-
-   .. py:method:: from_single_tool_config(tool_image_tag: str, pocket_schema_path: pathlib.Path, overridden_tool_vars: dict[str, str] = None, runtime_arguments: dict = None) -> hyperpocket.tool.function.FunctionTool
 
 
    .. py:method:: get_runtime_from_settings() -> ContainerRuntime

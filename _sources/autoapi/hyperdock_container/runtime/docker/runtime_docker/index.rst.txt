@@ -16,17 +16,13 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DockerContainerRuntime(settings: hyperdock_container.settings.DockerSettings)
+.. py:class:: DockerContainerRuntime(docker_settings: hyperdock_container.settings.DockerRuntimeSettings)
 
-   Bases: :py:obj:`hyperdock_container.runtime.runtime.ContainerRuntime`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Bases: :py:obj:`hyperdock_container.runtime.ContainerRuntime`
 
 
    .. py:attribute:: settings
-      :type:  hyperdock_container.settings.DockerSettings
+      :type:  hyperdock_container.settings.DockerRuntimeSettings
 
 
    .. py:property:: client
@@ -85,7 +81,7 @@ Module Contents
 
 
 
-   .. py:method:: list_image() -> list[tuple[str, list[str]]]
+   .. py:method:: list_image(name: str = None) -> list[tuple[str, list[str]]]
 
       List all images
       :return: list of image id and tag list

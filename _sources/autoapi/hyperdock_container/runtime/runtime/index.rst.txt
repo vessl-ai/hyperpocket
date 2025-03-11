@@ -10,54 +10,13 @@ Classes
 
 .. autoapisummary::
 
-   hyperdock_container.runtime.runtime.ToolContainer
    hyperdock_container.runtime.runtime.ContainerRuntime
 
 
 Module Contents
 ---------------
 
-.. py:class:: ToolContainer(runtime: ContainerRuntime, image_tag: str, cmd: str, envs: dict, commit: bool = False, tool_image_tag: Optional[str] = None, **kwargs)
-
-   Bases: :py:obj:`object`
-
-
-   .. py:attribute:: runtime
-      :type:  ContainerRuntime
-
-
-   .. py:attribute:: base_image_tag
-      :type:  str
-
-
-   .. py:attribute:: commit
-      :type:  bool
-
-
-   .. py:attribute:: tool_image_tag
-      :type:  Optional[str]
-
-
-   .. py:attribute:: container_args
-      :type:  dict
-
-
-   .. py:attribute:: cmd
-      :type:  str
-
-
-   .. py:attribute:: envs
-      :type:  dict
-
-
 .. py:class:: ContainerRuntime
-
-   Bases: :py:obj:`abc.ABC`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
 
    .. py:method:: create(image_tag: str, workdir: str, command: str, envs: dict, **kwargs) -> str
       :abstractmethod:
@@ -112,7 +71,7 @@ Module Contents
 
 
 
-   .. py:method:: list_image() -> list[tuple[str, list[str]]]
+   .. py:method:: list_image(name: str = None) -> list[tuple[str, list[str]]]
       :abstractmethod:
 
 
@@ -154,17 +113,6 @@ Module Contents
       :param tag:
       :return: image id
 
-
-
-   .. py:method:: from_tool_request(tool_request: hyperdock_container.tool.ContainerToolRequest) -> list[hyperpocket.tool.function.FunctionTool]
-
-      Create a FunctionTool from a tool request
-      :param tool_request:
-      :return:
-
-
-
-   .. py:method:: from_single_tool_config(tool_image_tag: str, pocket_schema_path: pathlib.Path, overridden_tool_vars: dict[str, str] = None, runtime_arguments: dict = None) -> hyperpocket.tool.function.FunctionTool
 
 
    .. py:method:: get_runtime_from_settings() -> ContainerRuntime

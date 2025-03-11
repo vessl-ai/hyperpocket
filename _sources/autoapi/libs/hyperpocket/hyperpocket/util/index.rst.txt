@@ -16,8 +16,9 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/util/find_all_subclass_in_package/index
    /autoapi/libs/hyperpocket/hyperpocket/util/flatten_json_schema/index
    /autoapi/libs/hyperpocket/hyperpocket/util/function_to_model/index
-   /autoapi/libs/hyperpocket/hyperpocket/util/generate_slug/index
    /autoapi/libs/hyperpocket/hyperpocket/util/get_objects_from_subpackage/index
+   /autoapi/libs/hyperpocket/hyperpocket/util/git_parser/index
    /autoapi/libs/hyperpocket/hyperpocket/util/json_schema_to_model/index
+   /autoapi/libs/hyperpocket/hyperpocket/util/short_hashing_str/index
 
 

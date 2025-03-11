@@ -1,0 +1,40 @@
+libs.hyperpocket.hyperpocket.util.git_parser
+============================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.util.git_parser
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.util.git_parser.GitParser
+
+
+Module Contents
+---------------
+
+.. py:class:: GitParser
+
+   .. py:attribute:: git_branches_cache
+      :type:  dict[str, dict[str, str]]
+
+
+   .. py:method:: get_git_branches(repo_url) -> dict[str, str]
+      :classmethod:
+
+
+
+   .. py:method:: parse_repo_url(repo_url: str) -> tuple[str, str, str, str]
+      :classmethod:
+
+
+      Parses a GitHub repository URL with optional branch and path information.
+
+      :returns: base_repo, branch_name, directory_path, git_sha
+      :rtype: Tuple[str, str, str, str]
+
+
+
