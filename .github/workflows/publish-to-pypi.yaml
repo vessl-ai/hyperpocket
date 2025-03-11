@@ -49,6 +49,9 @@ jobs:
         with:
           ssh-key: ${{ secrets.DEPLOY_KEY }}
 
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v5
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -74,8 +77,9 @@ jobs:
         run: |
           VERSION=${{ needs.extract-version.outputs.version }}
           PACKAGE_PATH=${{ matrix.package.path }}
-          echo "Updating version to $VERSION in $PACKAGE_PATH"
-          python scripts/version.py "$VERSION" --path "$PACKAGE_PATH"
+          PYTHON_COMMAND=$(which python)
+          echo "Update Version: python scripts/version.py $VERSION --path $PACKAGE_PATH"
+          $PYTHON_COMMAND scripts/version.py "$VERSION" --path "$PACKAGE_PATH"
 
       - name: Git Push
         env:
