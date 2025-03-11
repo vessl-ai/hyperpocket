@@ -1,6 +1,6 @@
 import json
 import pathlib
-from typing import Any, Union
+from typing import Any, Union, Optional
 
 import git
 from pydantic import BaseModel
@@ -12,7 +12,6 @@ from hyperpocket.config import pocket_logger, settings
 from hyperpocket.tool import ToolAuth
 from hyperpocket.tool.dock import Dock
 from hyperpocket.tool.function import FunctionTool
-from hyperpocket.util.encoding_str import short_hashing_str
 from hyperpocket.util.git_parser import GitParser
 
 ContainerToolLike = Union[str, tuple]
@@ -24,6 +23,7 @@ class DockArguments(BaseModel):
     tool_vars: dict
     runtime_arguments: dict
     tool_source: str
+    git_sha: str
 
 
 class ContainerDock(Dock[ContainerToolLike]):
@@ -57,16 +57,21 @@ class ContainerDock(Dock[ContainerToolLike]):
 
         tool_path = None
         tool_source = None
+        git_sha = None
+
+        # sources: local
         if pathlib.Path(req_path).expanduser().exists():
             tool_source = "local"
             tool_path = pathlib.Path(req_path).expanduser().resolve()
+            git_sha = "none"
 
+        # sources: github
         elif req_path.startswith("https://github.com"):
             tool_source = "github"
-            base_repo, branch_name, directory_path = GitParser.parse_repo_url(req_path)
+            base_repo, branch_name, directory_path, git_sha = GitParser.parse_repo_url(req_path)
             cleaned_base_repo = base_repo[8:]
             last_directory_name = directory_path.split("/")[-1]  # usually tool name
-            base_tool_path = settings.toolpkg_path / last_directory_name / cleaned_base_repo
+            base_tool_path = settings.toolpkg_path / last_directory_name / cleaned_base_repo / git_sha
             tool_path = base_tool_path / directory_path
 
             # NOTE(moon): supporting overwriting it?
@@ -97,6 +102,7 @@ class ContainerDock(Dock[ContainerToolLike]):
             request_tool_path=req_path,
             tool_vars=dock_vars | inline_tool_vars,
             runtime_arguments=runtime_arguments,
+            git_sha=git_sha
         )
 
     def build(self, dock_args: DockArguments, *args, **kwargs) -> str:
@@ -109,8 +115,7 @@ class ContainerDock(Dock[ContainerToolLike]):
         entrypoint = pocket_config["entrypoint"]
         build_cmd = entrypoint.get("build")
         base_image = self.get_base_image(pocket_config)
-        encoded_path = short_hashing_str(dock_args.request_tool_path)
-        image_tag = f"{tool_name}-{encoded_path}"
+        image_tag = f"{tool_name}-{dock_args.git_sha}"
 
         if self.runtime.list_image(name=f"hyperpocket:{image_tag}"):
             pocket_logger.debug("built image already exists. skip build.")
@@ -146,8 +151,7 @@ class ContainerDock(Dock[ContainerToolLike]):
         name = tool_config["name"]
         description = tool_config.get("description", "")
         json_schema = tool_config.get("inputSchema", {})
-        encoded_path = short_hashing_str(dock_args.request_tool_path)
-        image_tag = f"{name}-{encoded_path}"
+        image_tag = f"{name}-{dock_args.git_sha}"
 
         # 2. variable section
         default_tool_vars = pocket_config.get("variables", {})
