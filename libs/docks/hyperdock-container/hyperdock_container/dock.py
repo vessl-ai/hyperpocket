@@ -1,6 +1,7 @@
 import json
 import pathlib
-from typing import Any, Union, Optional
+from typing import Any, Union
+from urllib.parse import urlparse
 
 import git
 from pydantic import BaseModel
@@ -13,6 +14,7 @@ from hyperpocket.tool import ToolAuth
 from hyperpocket.tool.dock import Dock
 from hyperpocket.tool.function import FunctionTool
 from hyperpocket.util.git_parser import GitParser
+from hyperpocket.util.short_hashing_str import short_hashing_str
 
 ContainerToolLike = Union[str, tuple]
 
@@ -23,7 +25,7 @@ class DockArguments(BaseModel):
     tool_vars: dict
     runtime_arguments: dict
     tool_source: str
-    git_sha: str
+    image_tag_postfix: str
 
 
 class ContainerDock(Dock[ContainerToolLike]):
@@ -57,13 +59,12 @@ class ContainerDock(Dock[ContainerToolLike]):
 
         tool_path = None
         tool_source = None
-        git_sha = None
-
+        image_tag_postfix = None
         # sources: local
         if pathlib.Path(req_path).expanduser().exists():
             tool_source = "local"
             tool_path = pathlib.Path(req_path).expanduser().resolve()
-            git_sha = "none"
+            image_tag_postfix = short_hashing_str(f"{str(tool_path)}-none")
 
         # sources: github
         elif req_path.startswith("https://github.com"):
@@ -73,6 +74,7 @@ class ContainerDock(Dock[ContainerToolLike]):
             last_directory_name = directory_path.split("/")[-1]  # usually tool name
             base_tool_path = settings.toolpkg_path / last_directory_name / cleaned_base_repo / git_sha
             tool_path = base_tool_path / directory_path
+            image_tag_postfix = short_hashing_str(f"{self.normalize_url(req_path)}-{git_sha}")
 
             # NOTE(moon): supporting overwriting it?
             if tool_path.expanduser().exists():
@@ -102,7 +104,7 @@ class ContainerDock(Dock[ContainerToolLike]):
             request_tool_path=req_path,
             tool_vars=dock_vars | inline_tool_vars,
             runtime_arguments=runtime_arguments,
-            git_sha=git_sha
+            image_tag_postfix=image_tag_postfix
         )
 
     def build(self, dock_args: DockArguments, *args, **kwargs) -> str:
@@ -115,7 +117,7 @@ class ContainerDock(Dock[ContainerToolLike]):
         entrypoint = pocket_config["entrypoint"]
         build_cmd = entrypoint.get("build")
         base_image = self.get_base_image(pocket_config)
-        image_tag = f"{tool_name}-{dock_args.git_sha}"
+        image_tag = f"{tool_name}-{dock_args.image_tag_postfix}"
 
         if self.runtime.list_image(name=f"hyperpocket:{image_tag}"):
             pocket_logger.debug("built image already exists. skip build.")
@@ -151,7 +153,7 @@ class ContainerDock(Dock[ContainerToolLike]):
         name = tool_config["name"]
         description = tool_config.get("description", "")
         json_schema = tool_config.get("inputSchema", {})
-        image_tag = f"{name}-{dock_args.git_sha}"
+        image_tag = f"{name}-{dock_args.image_tag_postfix}"
 
         # 2. variable section
         default_tool_vars = pocket_config.get("variables", {})
@@ -217,3 +219,14 @@ class ContainerDock(Dock[ContainerToolLike]):
                 if lang == "node":
                     return "node"
         raise ValueError("failed to determine base image")
+
+    @classmethod
+    def normalize_url(cls, url):
+        parsed = urlparse(url)
+
+        base = parsed.netloc
+        path = parsed.path
+        if path is None:
+            path = "/"
+
+        return base + path
