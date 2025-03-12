@@ -32,13 +32,16 @@ class Pocket(object):
 
     def __init__(
         self,
-        tools: list[ToolLike],
+        tools: list[ToolLike] = None,
         auth: PocketAuth = None,
         use_profile: bool = False,
     ):
         try:
             if auth is None:
                 auth = PocketAuth()
+            if tools is None:
+                tools = []
+
             self.auth = auth
             self.use_profile = use_profile
             self.server = PocketServer.get_instance()
@@ -509,7 +512,7 @@ class Pocket(object):
         Remove a tool from the pocket.
 
         This method removes a tool identified by the given tool_name.
-        
+
         Args:
             tool_name (str): The tool name to be removed.
 
