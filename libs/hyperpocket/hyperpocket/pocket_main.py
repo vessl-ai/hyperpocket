@@ -42,8 +42,9 @@ class Pocket(object):
             self.auth = auth
             self.use_profile = use_profile
             self.server = PocketServer.get_instance()
+            self.tools = {}
 
-            self._load_tools(tools)
+            self.load_tools(tools)
             pocket_logger.info(
                 f"All Registered Tools Loaded successfully. total registered tools : {len(self.tools)}"
             )
@@ -468,25 +469,56 @@ class Pocket(object):
                 tool_by_provider[auth_provider_name] = [tool]
         return tool_by_provider
 
-    def _load_tools(self, tools):
-        self.tools = dict()
-        dock = self._default_dock()
+    def load_tools(self, tools: Union[List[ToolLike], ToolLike]):
+        """
+        Load a list of tools into the pocket.
 
-        def _load(tool_like):
-            if isinstance(tool_like, str) or isinstance(tool_like, tuple):
-                return dock(tool_like)
-            elif isinstance(tool_like, Tool):
-                return tool_like
-            elif isinstance(tool_like, Callable):
-                return from_func(tool_like)
-            else:
-                raise ValueError(f"Invalid tool type: {type(tool_like)}")
+        This method takes a list of tool identifiers(tool like) and loads them into the
+        pocket for use.
+
+        Args:
+            tools (Union[List[ToolLike], ToolLike]): A list of tool identifiers to be loaded.
+        """
+        dock = self._default_dock()
+        if not isinstance(tools, list):
+            tools = [tools]
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=10, thread_name_prefix="tool-loader") as executor:
-            futures = [executor.submit(_load, tool_like) for tool_like in tools]
+            futures = [executor.submit(self._load_tool, tool_like, dock) for tool_like in tools]
             for future in concurrent.futures.as_completed(futures):
                 tool = future.result()
+                if tool.name in self.tools:
+                    raise RuntimeError(f"{tool.name} already exists. duplicated tool name.")
                 self.tools[tool.name] = tool
+
+    def _load_tool(self, tool_like, dock: Dock = None) -> Tool:
+        if dock is None:
+            dock = self._default_dock()
+
+        if isinstance(tool_like, str) or isinstance(tool_like, tuple):
+            return dock(tool_like)
+        elif isinstance(tool_like, Tool):
+            return tool_like
+        elif isinstance(tool_like, Callable):
+            return from_func(tool_like)
+        else:
+            raise ValueError(f"Invalid tool type: {type(tool_like)}")
+
+    def remove_tool(self, tool_name: str) -> bool:
+        """
+        Remove a tool from the pocket.
+
+        This method removes a tool identified by the given tool_name.
+        
+        Args:
+            tool_name (str): The tool name to be removed.
+
+        Returns:
+            bool: True if the tool is removed successfully, False otherwise.
+        """
+        if not tool_name in self.tools:
+            return False
+        del self.tools[tool_name]
 
     def _tool_instance(self, tool_name: str) -> Tool:
         return self.tools[tool_name]
