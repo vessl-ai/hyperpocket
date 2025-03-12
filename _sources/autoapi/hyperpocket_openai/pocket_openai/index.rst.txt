@@ -30,6 +30,11 @@ Module Contents
    Bases: :py:obj:`hyperpocket.Pocket`
 
 
+   .. py:method:: init_auth_async(thread_id='default', profile='default') -> None
+      :async:
+
+
+
    .. py:method:: invoke(tool_call: openai.types.chat.ChatCompletionMessageToolCall, **kwargs)
 
 
@@ -42,6 +47,15 @@ Module Contents
 
 
    .. py:method:: get_open_ai_tool_spec(tool: hyperpocket.tool.Tool) -> dict
+
+
+   .. py:method:: create_run_function(spec: dict) -> Callable
+
+
+   .. py:method:: get_openai_agents_tools() -> List[agents.FunctionTool]
+
+      wrapper for schema change
+
 
 
 .. py:function:: handle_tool_call_async(llm: openai.OpenAI, pocket: PocketOpenAI, model: str, tool_specs: List[dict], messages: List[dict])
