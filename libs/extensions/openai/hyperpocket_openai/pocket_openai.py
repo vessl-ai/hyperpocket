@@ -1,5 +1,6 @@
 import asyncio
 import json
+from functools import partial
 from typing import List, Optional
 
 from hyperpocket_openai.util import tool_to_open_ai_spec
@@ -47,12 +48,23 @@ class PocketOpenAI(Pocket):
 
         return tool_message
 
+    async def ainvoke_for_agents(self, context, arguments, tool_context:Tool, **kwargs):
+        arguments = json.loads(arguments)
+        
+        result = await super().ainvoke(
+            tool_context.name,
+            body=arguments,
+            **kwargs,
+        )
+        return result
+
     def get_open_ai_tool_specs(self, use_profile: Optional[bool] = None) -> List[dict]:
         if use_profile is not None:
             self.use_profile = use_profile
         specs = []
         for tool in self.tools.values():
             spec = self.get_open_ai_tool_spec(tool)
+            spec["callable"] = partial(self.ainvoke_for_agents, tool_context=tool)
             specs.append(spec)
         return specs
 
