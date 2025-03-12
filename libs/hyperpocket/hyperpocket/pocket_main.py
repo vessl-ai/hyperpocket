@@ -472,7 +472,7 @@ class Pocket(object):
                 tool_by_provider[auth_provider_name] = [tool]
         return tool_by_provider
 
-    def load_tools(self, tools: Union[List[ToolLike], ToolLike]):
+    def load_tools(self, tools: Union[List[ToolLike], ToolLike]) -> List[Tool]:
         """
         Load a list of tools into the pocket.
 
@@ -486,13 +486,17 @@ class Pocket(object):
         if not isinstance(tools, list):
             tools = [tools]
 
+        loaded_tools = []
         with concurrent.futures.ThreadPoolExecutor(max_workers=10, thread_name_prefix="tool-loader") as executor:
             futures = [executor.submit(self._load_tool, tool_like, dock) for tool_like in tools]
-            for future in concurrent.futures.as_completed(futures):
-                tool = future.result()
-                if tool.name in self.tools:
-                    raise RuntimeError(f"{tool.name} already exists. duplicated tool name.")
-                self.tools[tool.name] = tool
+            loaded_tools = [future.result() for future in concurrent.futures.as_completed(futures)]
+
+        for tool in loaded_tools:
+            if tool.name in self.tools:
+                raise RuntimeError(f"{tool.name} already exists. duplicated tool name.")
+            self.tools[tool.name] = tool
+
+        return loaded_tools
 
     def _load_tool(self, tool_like, dock: Dock = None) -> Tool:
         if dock is None:
@@ -522,6 +526,7 @@ class Pocket(object):
         if not tool_name in self.tools:
             return False
         del self.tools[tool_name]
+        return True
 
     def _tool_instance(self, tool_name: str) -> Tool:
         return self.tools[tool_name]
