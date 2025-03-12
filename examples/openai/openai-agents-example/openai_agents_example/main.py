@@ -14,21 +14,21 @@ pocket = PocketOpenAI(
 
 gmail_fetch_agent = Agent(
     name="Gmail Fetch Agent",
-    tools=pocket.get_openai_agent_tools(),
+    tools=pocket.get_openai_agents_tools(),
     handoff_description="Specialist agent for fetching emails from Gmail",
     instructions="You fetch emails from Gmail and return the results.",
 )
 
 slack_agent = Agent(
     name="Slack Agent",
-    tools=pocket.get_openai_agent_tools(),
+    tools=pocket.get_openai_agents_tools(),
     handoff_description="Specialist agent for posting messages to Slack",
     instructions="You post messages to Slack channels when requested.",
 )
 
 summarize_agent = Agent(
     name="Summarize Agent",
-    tools=pocket.get_openai_agent_tools(),
+    tools=pocket.get_openai_agents_tools(),
     handoff_description="Specialist agent for summarizing emails",
     instructions="You summarize emails and return the results.",
 )

@@ -85,7 +85,7 @@ class PocketOpenAI(Pocket):
 
         return run_function
 
-    def get_openai_agent_tools(self) -> List[FunctionTool]:
+    def get_openai_agents_tools(self) -> List[FunctionTool]:
         """wrapper for schema change"""
 
         def format_parameter(param: dict) -> dict:
