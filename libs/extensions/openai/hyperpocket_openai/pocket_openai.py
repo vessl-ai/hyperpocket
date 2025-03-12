@@ -1,7 +1,8 @@
 import asyncio
 import json
-from typing import List, Optional
+from typing import Any, Callable, List, Optional
 
+from agents import FunctionTool, RunContextWrapper
 from hyperpocket_openai.util import tool_to_open_ai_spec
 from openai import OpenAI
 
@@ -16,6 +17,16 @@ from hyperpocket.tool import Tool
 
 
 class PocketOpenAI(Pocket):
+    async def init_auth_async(self, thread_id="default", profile="default") -> None:
+        prepare_url = await self.initialize_tool_auth(
+            thread_id=thread_id, profile=profile
+        )
+
+        for provider, url in prepare_url.items():
+            print(f"[{provider}]\n\t{url}")
+
+        await self.wait_tool_auth(thread_id=thread_id, profile=profile)
+
     def invoke(self, tool_call: ChatCompletionMessageToolCall, **kwargs):
         loop = asyncio.get_running_loop()
         result = loop.run_until_complete(self.ainvoke(tool_call, **kwargs))
@@ -59,6 +70,50 @@ class PocketOpenAI(Pocket):
     def get_open_ai_tool_spec(self, tool: Tool) -> dict:
         open_ai_spec = tool_to_open_ai_spec(tool, use_profile=self.use_profile)
         return open_ai_spec
+
+    def create_run_function(self, spec: dict) -> Callable:
+        invoker = super().ainvoke
+
+        async def run_function(ctx: RunContextWrapper[Any], args: str) -> Any:
+            body = json.loads(args)
+            result = await invoker(
+                tool_name=spec["function"]["name"],
+                body=body,
+            )
+
+            return result
+
+        return run_function
+
+    def get_openai_agent_tools(self) -> List[FunctionTool]:
+        """wrapper for schema change"""
+
+        def format_parameter(param: dict) -> dict:
+            param["additionalProperties"] = False
+
+            if "properties" in param:
+                properties = param["properties"]
+                param["required"] = list(properties.keys())
+                for prop in properties.values():
+                    if "default" in prop:
+                        del prop["default"]
+            return param
+
+        tool_specs = self.get_open_ai_tool_specs()
+        tools = []
+        for spec in tool_specs:
+            formatted_params = format_parameter(spec["function"]["parameters"])
+
+            tools.append(
+                FunctionTool(
+                    name=spec["function"]["name"],
+                    description=spec["function"]["description"],
+                    params_json_schema=formatted_params,
+                    on_invoke_tool=self.create_run_function(spec),
+                )
+            )
+
+        return tools
 
 
 async def handle_tool_call_async(
