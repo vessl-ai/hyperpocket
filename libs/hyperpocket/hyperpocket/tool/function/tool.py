@@ -121,6 +121,9 @@ class FunctionTool(Tool):
         if tool_vars is None:
             tool_vars = dict()
 
+        if afunc is None and inspect.iscoroutinefunction(func):
+            afunc = func
+
         if isinstance(func, FunctionTool):
             if tool_vars is not None:
                 func.override_tool_variables(tool_vars)

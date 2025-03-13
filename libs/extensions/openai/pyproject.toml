@@ -8,6 +8,7 @@ readme = "README.md"
 dependencies = [
  "hyperpocket>=0.0.3",
  "openai>=1.7.0",
+ "openai-agents>=0.0.3",
 ]
 
 [tool.uv.sources]
