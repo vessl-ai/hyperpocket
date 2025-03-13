@@ -16,7 +16,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Pocket(tools: list[hyperpocket.tool_like.ToolLike], auth: hyperpocket.pocket_auth.PocketAuth = None, use_profile: bool = False)
+.. py:class:: Pocket(tools: list[hyperpocket.tool_like.ToolLike] = None, auth: hyperpocket.pocket_auth.PocketAuth = None, use_profile: bool = False)
 
    Bases: :py:obj:`object`
 
@@ -223,6 +223,32 @@ Module Contents
 
 
    .. py:method:: grouping_tool_by_auth_provider() -> dict[str, List[hyperpocket.tool.Tool]]
+
+
+   .. py:method:: load_tools(tools: Union[List[hyperpocket.tool_like.ToolLike], hyperpocket.tool_like.ToolLike]) -> List[hyperpocket.tool.Tool]
+
+      Load a list of tools into the pocket.
+
+      This method takes a list of tool identifiers(tool like) and loads them into the
+      pocket for use.
+
+      :param tools: A list of tool identifiers to be loaded.
+      :type tools: Union[List[ToolLike], ToolLike]
+
+
+
+   .. py:method:: remove_tool(tool_name: str) -> bool
+
+      Remove a tool from the pocket.
+
+      This method removes a tool identified by the given tool_name.
+
+      :param tool_name: The tool name to be removed.
+      :type tool_name: str
+
+      :returns: True if the tool is removed successfully, False otherwise.
+      :rtype: bool
+
 
 
    .. py:method:: teardown()
