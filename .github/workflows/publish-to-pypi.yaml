@@ -25,7 +25,6 @@ jobs:
             exit 1
           fi
 
-  # Define a matrix job for each package
   publish-package:
     runs-on: ubuntu-latest
     needs: extract-version
@@ -86,22 +85,6 @@ jobs:
           echo "Update Version: python scripts/version.py $VERSION --path $PACKAGE_PATH"
           $PYTHON_COMMAND scripts/version.py "$VERSION" --path "$PACKAGE_PATH"
 
-      - name: Git Push
-        if: steps.check_version.outputs.exists == 'false'
-        env:
-          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
-        run: |
-          echo "Git Branch name : $BRANCH_NAME"
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          if ! git diff-index --quiet HEAD --; then
-            git commit -m "uv version up"
-            git push origin $BRANCH_NAME
-          else
-            echo "No changes to commit. Skipping push."
-          fi
-
       - name: Publish package
         if: steps.check_version.outputs.exists == 'false'
         env:
@@ -136,3 +119,24 @@ jobs:
               fi
             fi
           done
+
+  push-changes:
+    runs-on: ubuntu-latest
+    needs: publish-package
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Git Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          if ! git diff-index --quiet HEAD --; then
+            git commit -m "package version updates"
+            git push origin main
+          else
+            echo "No changes to commit. Skipping push."
+          fi
