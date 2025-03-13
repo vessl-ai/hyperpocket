@@ -11,12 +11,19 @@ try:
 except ImportError:
     raise ImportError("You need to install openai to use pocket PocketOpenAI.")
 
-from hyperpocket import Pocket
+from hyperpocket import Pocket, PocketAuth
 from hyperpocket.config import pocket_logger
-from hyperpocket.tool import Tool
+from hyperpocket.tool import Tool, ToolLike
 
 
 class PocketOpenAI(Pocket):
+    client: OpenAI
+
+    def __init__(self, client: OpenAI, tools: list[ToolLike] = None, auth: PocketAuth = None, use_profile: bool = False):
+        tools.extend([self.find_tool, self.invoke_tool])
+        super().__init__(tools=tools, auth=auth, use_profile=use_profile)
+        self.client = client
+
     async def init_auth_async(self, thread_id="default", profile="default") -> None:
         prepare_url = await self.initialize_tool_auth(
             thread_id=thread_id, profile=profile
@@ -26,6 +33,96 @@ class PocketOpenAI(Pocket):
             print(f"[{provider}]\n\t{url}")
 
         await self.wait_tool_auth(thread_id=thread_id, profile=profile)
+    
+    def find_tool(self, query: str) -> str:
+        """
+        Search the web to find a tool that can meet the user's request.
+        Args:
+            query (str): The role of the tool which is capable of doing the task the user wants to do.
+        Returns:
+            str: The name of the tool and the JSON schema of the tool arguments.
+        """
+        tool_lists = [
+            (
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
+                "Get messages from Slack",
+            ),
+            (
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+                "Post a message to Slack",
+            ),
+            (
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
+                "Get issues from Linear",
+            ),
+            (
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
+                "Get calendar events from Google Calendar",
+            ),
+            (
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
+                "Get calendar list from Google Calendar",
+            ),
+            (
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
+                "Insert calendar events to Google Calendar",
+            ),
+            (
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
+                "List pull requests from GitHub",
+            ),
+        ]
+        system_prompt = f"""
+These are the available tools you can use to help the user. Each tuple describes an url of the tool and the description of the tool:
+{tool_lists}
+
+You are a helpful assistant that can use the available tools to help the user.
+Your mission is to say the URL of the tool that can meet the user's request.
+You can only say the URL of the tool, not the description of the tool."""
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": query},
+        ]
+        response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=messages,
+        )
+        print(response)
+        choice = response.choices[0]
+        tool = self.load_tools([choice.message.content])[0]
+        return json.dumps({"name": tool.name, "argument_schema": tool.argument_json_schema})
+    
+    async def invoke_tool(self, tool_name: str, arguments: dict):
+        """
+        Invokes found tool.
+        Args:
+            tool_name (str): The name of the tool.
+            arguments (dict): The arguments of the tool.
+        Returns:
+            str: The result of the tool.
+        """
+        tool = self._tool_instance(tool_name)
+
+        if self.use_profile:
+            body = arguments["body"]
+            thread_id = arguments.pop("thread_id", "default")
+            profile = arguments.pop("profile", "default")
+        else:
+            body = arguments
+            thread_id = "default"
+            profile = "default"
+
+        if isinstance(body, str):
+            body = json.loads(body)
+
+        result = await super().ainvoke(
+            tool_name=tool_name,
+            body=body,
+            thread_id=thread_id,
+            profile=profile,
+        )
+
+        return result
 
     def invoke(self, tool_call: ChatCompletionMessageToolCall, **kwargs):
         loop = asyncio.get_running_loop()

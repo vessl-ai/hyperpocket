@@ -1,5 +1,5 @@
 import abc
-from typing import Callable, Optional, Type
+from typing import Callable, Optional, Type, Union
 
 from pydantic import BaseModel, Field
 
@@ -162,3 +162,5 @@ class Tool(BaseModel, abc.ABC):
 
     def __str__(self) -> str:
         return self.name
+
+ToolLike = Union[Tool, str, tuple, Callable]
