@@ -7,9 +7,8 @@ from hyperpocket.builtin import get_builtin_tools
 from hyperpocket.config import pocket_logger
 from hyperpocket.pocket_auth import PocketAuth
 from hyperpocket.server.server import PocketServer
-from hyperpocket.tool import Tool, from_func
+from hyperpocket.tool import Tool, ToolLike, from_func
 from hyperpocket.tool.dock import Dock
-from hyperpocket.tool_like import ToolLike
 
 
 class Pocket(object):
@@ -471,6 +470,12 @@ class Pocket(object):
             else:
                 tool_by_provider[auth_provider_name] = [tool]
         return tool_by_provider
+
+    def load_or_get_tool(self, tool_like: ToolLike) -> Tool:
+        tool = self._load_tool(tool_like)
+        if tool.name not in self.tools:
+            self.tools[tool.name] = tool
+        return tool
 
     def load_tools(self, tools: Union[List[ToolLike], ToolLike]) -> List[Tool]:
         """
