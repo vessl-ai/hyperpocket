@@ -1,0 +1,23 @@
+[project]
+name = "vessl-llm-finetuning-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "hyperdock-container",
+    "hyperdock-fileio",
+    "hyperpocket",
+    "hyperpocket_langchain",
+    "vessl>=0.1.191",
+    "langchain>=0.3.15",
+    "langchain-openai>=0.3.1",
+    "huggingface-hub>=0.29.2",
+    "openai>=1.65.4",
+]
+
+[tool.uv.sources]
+hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
+hyperpocket_langchain = { path = "../../../libs/extensions/langchain", editable = true }
+hyperdock-container = { path = "../../../libs/docks/hyperdock-container", editable = true }
+hyperdock-fileio = { path = "../../../libs/docks/hyperdock-fileio", editable = true }
