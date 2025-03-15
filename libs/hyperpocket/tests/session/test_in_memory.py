@@ -20,7 +20,7 @@ class TestInMemorySessionStorage(unittest.TestCase):
         )
 
     def tearDown(self):
-        del self.storage
+        self.storage.storage.clear()
         del self.auth_context
 
     def test_make_session_key(self):
