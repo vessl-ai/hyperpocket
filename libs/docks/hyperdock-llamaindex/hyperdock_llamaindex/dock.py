@@ -46,7 +46,6 @@ class LlamaIndexDock(Dock):
         if isinstance(tool_func, list):
             tool_func = tool_func[0]
         
-        tool_spec = inspect._findclass(tool_func._fn)
         original_func = tool_func._fn.__func__
         
         @wraps(original_func)

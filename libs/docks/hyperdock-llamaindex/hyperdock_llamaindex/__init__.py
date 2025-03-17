@@ -1,3 +1,3 @@
-from .connector import LlamaIndexDock
+from .dock import LlamaIndexDock
 
 __all__ = ["LlamaIndexDock"]

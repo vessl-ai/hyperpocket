@@ -21,7 +21,7 @@ async def _build():
     )
     pocket = PocketLlamaindex(
         tools=[
-            *dock,
+            dock,
         ],
     )
     tools = pocket.get_tools()

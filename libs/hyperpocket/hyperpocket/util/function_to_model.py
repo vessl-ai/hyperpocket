@@ -21,7 +21,6 @@ def function_to_model(func: callable) -> Type[BaseModel]:
     fields: Dict[str, Tuple[Type, Any]] = {}
     sig = signature(func)
     param_desc_map = extract_param_docstring_mapping(func)
-    allowed_param_typing_types = ["Optional", "List"]
 
     for param_name, param in sig.parameters.items():
         if param_name in ("self", "cls"):
@@ -39,18 +38,15 @@ def function_to_model(func: callable) -> Type[BaseModel]:
             raise Exception(
                 f"Should all arguments be annotated but {param_name} is not annotated"
             )
+        
+        if param.annotation.__module__ == "typing":
+            for arg in param.annotation.__args__:
+                if arg.__module__ != "builtins" and not issubclass(arg, BaseModel):
+                    raise Exception(
+                        f"currently only support builtin types and pydantic BaseModel but {param_name} is not builtin type"
+                    )
 
-        if (
-            param.annotation.__module__ == "typing"
-            and param.annotation.__name__ in allowed_param_typing_types
-        ):
-            fields[param_name] = (
-                param.annotation.__args__[0],
-                FieldInfo(
-                    default=param.default,
-                    description=param_desc_map.get(param_name, ""),
-                ),
-            )
+        # if annotation type isn't typing, check this type directly.
         elif param.annotation.__module__ != "builtins" and not issubclass(
             param.annotation, BaseModel
         ):

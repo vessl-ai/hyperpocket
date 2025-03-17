@@ -13,11 +13,11 @@ async def _build():
     tool_spec = SlackToolSpec()
     
     # Case 1: with llamaindex auth
-    dock = LlamaIndexDock.dock(
+    dock = [LlamaIndexDock.dock(
         tool_func=tool_spec.to_tool_list(
             spec_functions=["send_message"]
         ),
-    )
+    )]
     pocket = PocketLlamaindex(
         tools=[
             *dock,
