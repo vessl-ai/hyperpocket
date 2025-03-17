@@ -482,13 +482,12 @@ class Pocket(object):
         Args:
             tools (Union[List[ToolLike], ToolLike]): A list of tool identifiers to be loaded.
         """
-        dock = self._default_dock()
         if not isinstance(tools, list):
             tools = [tools]
 
         loaded_tools = []
         with concurrent.futures.ThreadPoolExecutor(max_workers=10, thread_name_prefix="tool-loader") as executor:
-            futures = [executor.submit(self._load_tool, tool_like, dock) for tool_like in tools]
+            futures = [executor.submit(self._load_tool, tool_like) for tool_like in tools]
             loaded_tools = [future.result() for future in concurrent.futures.as_completed(futures)]
 
         for tool in loaded_tools:
@@ -498,11 +497,9 @@ class Pocket(object):
 
         return loaded_tools
 
-    def _load_tool(self, tool_like, dock: Dock = None) -> Tool:
-        if dock is None:
-            dock = self._default_dock()
-
+    def _load_tool(self, tool_like) -> Tool:
         if isinstance(tool_like, str) or isinstance(tool_like, tuple):
+            dock = self._default_dock()
             return dock(tool_like)
         elif isinstance(tool_like, Tool):
             return tool_like
