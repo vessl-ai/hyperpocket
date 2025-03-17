@@ -16,7 +16,7 @@ def build():
             spec_functions=["duckduckgo_instant_search", "duckduckgo_full_search"]
         ),
         llamaindex_tool_args={
-            "max_results": 10,
+            "max_results": 5,
         },
     )
 
