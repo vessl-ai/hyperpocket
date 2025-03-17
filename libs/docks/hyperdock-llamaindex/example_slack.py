@@ -1,35 +1,67 @@
 import os
 import ssl
-
+import asyncio
 from llama_index.core.agent import AgentRunner, FunctionCallingAgent
 from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.llms.openai import OpenAI
-from hyperdock_llamaindex import LlamaIndexToolRequest, dock as llamaindex_dock
+from hyperdock_llamaindex import llamaindex_dock
 from llama_index.tools.slack import SlackToolSpec
-from hyperpocket.tool import from_dock, from_local
 from hyperpocket_llamaindex import PocketLlamaindex
 
-def build():
+async def _build():
     llm = OpenAI(model="gpt-4o")
     tool_spec = SlackToolSpec()
+    
+    # Case 1: with llamaindex auth
     dock = llamaindex_dock(
-        LlamaIndexToolRequest(
-            tool_func=tool_spec.to_tool_list(
-                spec_functions=["send_message"]
-            ),
-        )
+        tool_func=tool_spec.to_tool_list(
+            spec_functions=["send_message"]
+        ),
     )
-
     pocket = PocketLlamaindex(
         tools=[
-            *from_dock(dock),
+            *dock,
         ],
+    )
+    tools = pocket.get_tools()
+    
+    # do nothing
+    print("Case 1: with llamaindex auth")
+    prepare_url = await pocket.initialize_tool_auth()
+
+    for provider, url in prepare_url.items():
+        print(f"[{provider}]\n\t{url}")
+
+    await pocket.wait_tool_auth()
+    
+    # Case 2: with pocket auth
+    dock = llamaindex_dock(
+        tool_func=tool_spec.to_tool_list(
+            spec_functions=["send_message"]
+        ),
         auth={
             "auth_provider": "slack",
             "auth_handler": "slack-token",
+        },
+        tool_vars={
+            "key": "value",
         }
     )
+    pocket = PocketLlamaindex(
+        tools=[
+            *dock,
+        ],
+    )
     tools = pocket.get_tools()
+    
+    print("Case 2: with pocket auth")
+    prepare_url = await pocket.initialize_tool_auth()
+    print(prepare_url)
+
+    for provider, url in prepare_url.items():
+        print(f"[{provider}]\n\t{url}")
+
+    await pocket.wait_tool_auth()
 
     memory = ChatMemoryBuffer.from_defaults(chat_history=[], llm=llm)
 
@@ -54,5 +86,5 @@ def run(agent: AgentRunner):
 
 
 if __name__ == "__main__":
-    agent = build()
+    agent = asyncio.run(_build())
     run(agent)

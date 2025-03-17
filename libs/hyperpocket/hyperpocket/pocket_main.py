@@ -232,7 +232,6 @@ class Pocket(object):
             List[str]: A list of authentication URIs for the tools that require authentication.
         """
         tool_by_provider = self.grouping_tool_by_auth_provider()
-
         prepare_list = {}
         for provider, tools in tool_by_provider.items():
             tool_name_list = [tool.name for tool in tools]
