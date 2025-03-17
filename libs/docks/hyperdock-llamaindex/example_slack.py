@@ -4,7 +4,7 @@ import asyncio
 from llama_index.core.agent import AgentRunner, FunctionCallingAgent
 from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.llms.openai import OpenAI
-from hyperdock_llamaindex import llamaindex_dock
+from hyperdock_llamaindex import LlamaIndexDock
 from llama_index.tools.slack import SlackToolSpec
 from hyperpocket_llamaindex import PocketLlamaindex
 
@@ -13,7 +13,7 @@ async def _build():
     tool_spec = SlackToolSpec()
     
     # Case 1: with llamaindex auth
-    dock = llamaindex_dock(
+    dock = LlamaIndexDock.dock(
         tool_func=tool_spec.to_tool_list(
             spec_functions=["send_message"]
         ),
@@ -35,7 +35,7 @@ async def _build():
     await pocket.wait_tool_auth()
     
     # Case 2: with pocket auth
-    dock = llamaindex_dock(
+    dock = LlamaIndexDock.dock(
         tool_func=tool_spec.to_tool_list(
             spec_functions=["send_message"]
         ),

@@ -2,7 +2,7 @@ import asyncio
 from llama_index.core.agent import AgentRunner, FunctionCallingAgent
 from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.llms.openai import OpenAI
-from hyperdock_llamaindex import llamaindex_dock
+from hyperdock_llamaindex import LlamaIndexDock
 from llama_index.tools.google import GmailToolSpec
 from hyperpocket_llamaindex import PocketLlamaindex
 
@@ -11,7 +11,7 @@ async def _build():
     tool_spec = GmailToolSpec()
     
     # Case 1: with llamaindex auth
-    dock = llamaindex_dock(
+    dock = LlamaIndexDock.dock(
         tool_func=tool_spec.to_tool_list(
             spec_functions=["search_messages"]
         ),

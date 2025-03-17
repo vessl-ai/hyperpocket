@@ -5,51 +5,58 @@ import multiprocess
 from functools import wraps
 from typing import Any, Callable, Optional, Tuple, Type, Union, List
 from types import MethodType
-from hyperpocket.config import pocket_logger
+from hyperpocket.tool.function.tool import FunctionTool as PocketFunctionTool
+from hyperpocket.tool.tool import ToolAuth
 from llama_index.core.tools.function_tool import FunctionTool
 from llama_index.core.tools.tool_spec.base import BaseToolSpec
-from hyperpocket.tool_like import ToolLike
+from hyperpocket.util.flatten_json_schema import flatten_json_schema
+from hyperpocket.util.function_to_model import function_to_model
 from hyperpocket.tool.dock import Dock
-
-def _run(
-    tool_func: FunctionTool,
-    tool_spec: Type[BaseToolSpec],
-    envs: dict[str, str],
-    llamaindex_tool_args: dict[str, Any],
-    pipe: multiprocess.Pipe,
-    **kwargs,
-) -> None:
-    for key, value in envs.items():
-        os.environ[key] = value
-    
-    merged_args = kwargs.copy()
-    for key in kwargs:
-        if key in llamaindex_tool_args:
-            merged_args[key] = llamaindex_tool_args[key]
+from hyperpocket.config import pocket_logger
+class LlamaIndexDock(Dock):
+    @staticmethod
+    def _run(
+        tool_func: FunctionTool,
+        envs: dict[str, str],
+        llamaindex_tool_args: dict[str, Any],
+        pipe: multiprocess.Pipe,
+        **kwargs,
+    ) -> None:
+        for key, value in envs.items():
+            os.environ[key] = value
             
-    result = tool_func(**merged_args)
-    _, conn = pipe
-    conn.send(result)
+        merged_args = kwargs.copy()
+        for key in kwargs:
+            if key in llamaindex_tool_args:
+                merged_args[key] = llamaindex_tool_args[key]
+        pocket_logger.info(f"Argument overried: {merged_args}")
 
-def llamaindex_dock(
-    tool_func: List[FunctionTool],
-    auth: Optional[dict[str, str]] = None,
-    tool_vars: Optional[dict[str, str]] = None,
-    llamaindex_tool_args: Optional[dict[str, str]] = None
-) -> list[ToolLike]:
-    result = []
-    for tool in tool_func:
-        tool_spec = inspect._findclass(tool._fn)
-        original_func = tool._fn.__func__
+        result = tool_func(**merged_args)
+        _, conn = pipe
+        conn.send(result)
+    
+    @classmethod
+    def dock(
+        cls,
+        tool_func: FunctionTool,
+        auth: Optional[dict[str, str]] = None,
+        tool_vars: Optional[dict[str, str]] = None,
+        llamaindex_tool_args: Optional[dict[str, str]] = None
+    ) -> PocketFunctionTool:
+        if isinstance(tool_func, list):
+            tool_func = tool_func[0]
+        
+        tool_spec = inspect._findclass(tool_func._fn)
+        original_func = tool_func._fn.__func__
         
         @wraps(original_func)
-        def wrapper(*args, **kwargs) -> str:
+        async def wrapper(*args, **kwargs) -> str:
             try:
                 child_env = os.environ.copy()
                 pipe = multiprocess.Pipe()
                 process = multiprocess.Process(
-                    target=_run,
-                    args=(tool, tool_spec, child_env, llamaindex_tool_args, pipe),
+                    target=LlamaIndexDock._run,
+                    args=(tool_func, child_env, llamaindex_tool_args, pipe),
                     kwargs=kwargs,
                 )
                 process.start()
@@ -64,9 +71,14 @@ def llamaindex_dock(
             except Exception as e:
                 return "\n".join(traceback.format_exception(e))
         
-        wrapper.__auth__ = auth
-        wrapper.__vars__ = tool_vars
-        wrapper.__name__ = tool._metadata.name
-        
-        result.append(MethodType(wrapper, tool_spec))
-    return result
+        schema = function_to_model(original_func).model_json_schema()                 
+        argument_json_schema = flatten_json_schema(schema)
+        return PocketFunctionTool(
+            func=wrapper,
+            afunc=wrapper,
+            name=tool_func._metadata.name,
+            description=tool_func._metadata.description,
+            argument_json_schema=argument_json_schema,
+            auth=ToolAuth(**auth) if auth else None,
+            tool_vars=tool_vars,
+        )

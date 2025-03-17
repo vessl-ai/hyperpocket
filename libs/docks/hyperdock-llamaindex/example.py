@@ -3,7 +3,7 @@ import os
 from llama_index.core.agent import AgentRunner, FunctionCallingAgent
 from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.llms.openai import OpenAI
-from hyperdock_llamaindex import llamaindex_dock
+from hyperdock_llamaindex import LlamaIndexDock
 from llama_index.tools.duckduckgo import DuckDuckGoSearchToolSpec
 from hyperpocket_llamaindex import PocketLlamaindex
 
@@ -11,14 +11,17 @@ from hyperpocket_llamaindex import PocketLlamaindex
 def build():
     llm = OpenAI(model="gpt-4o")
     tool_spec = DuckDuckGoSearchToolSpec()
-    dock = llamaindex_dock(
-        tool_func=tool_spec.to_tool_list(
-            spec_functions=["duckduckgo_instant_search", "duckduckgo_full_search"]
-        ),
-        llamaindex_tool_args={
-            "max_results": 5,
-        },
-    )
+    dock = [
+        LlamaIndexDock.dock(
+            tool_func=tool_spec.to_tool_list(
+                spec_functions=[spec]
+            ),
+            llamaindex_tool_args={
+                "max_results": 5,
+            },
+        )
+        for spec in ["duckduckgo_instant_search", "duckduckgo_full_search"]
+    ]
 
     pocket = PocketLlamaindex(
         tools=[

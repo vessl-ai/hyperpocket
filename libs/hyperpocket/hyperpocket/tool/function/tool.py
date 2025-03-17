@@ -120,10 +120,6 @@ class FunctionTool(Tool):
     ) -> "FunctionTool":
         if tool_vars is None:
             tool_vars = dict()
-        if func.__dict__.get("__auth__") is not None:
-            auth = ToolAuth(**func.__dict__["__auth__"])
-        if func.__dict__.get("__vars__") is not None:
-            tool_vars |= func.__dict__["__vars__"]
 
         if afunc is None and inspect.iscoroutinefunction(func):
             afunc = func
