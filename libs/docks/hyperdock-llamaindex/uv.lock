@@ -695,7 +695,7 @@ requires-dist = [
 
 [[package]]
 name = "hyperpocket"
-version = "0.2.1"
+version = "0.3.6"
 source = { editable = "../../hyperpocket" }
 dependencies = [
     { name = "click" },
@@ -705,6 +705,7 @@ dependencies = [
     { name = "httpx" },
     { name = "jinja2" },
     { name = "multiprocess" },
+    { name = "nest-asyncio" },
     { name = "playwright" },
     { name = "pydantic" },
     { name = "pygithub" },
@@ -722,8 +723,10 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.115.5" },
     { name = "gitpython", specifier = ">=3.1.43" },
     { name = "httpx", specifier = "==0.27" },
+    { name = "hyperdock-container", marker = "extra == 'standard'", editable = "../hyperdock-container" },
     { name = "jinja2", specifier = ">=3.1.4" },
     { name = "multiprocess", specifier = ">=0.70.17" },
+    { name = "nest-asyncio", specifier = ">=1.6.0" },
     { name = "playwright", specifier = ">=1.49.0" },
     { name = "pydantic", specifier = ">=2.10.2" },
     { name = "pygithub", specifier = ">=2.5.0" },
@@ -743,7 +746,7 @@ dev = [
 
 [[package]]
 name = "hyperpocket-llamaindex"
-version = "0.2.1"
+version = "0.3.6"
 source = { directory = "../../extensions/llamaindex" }
 dependencies = [
     { name = "hyperpocket" },
@@ -753,7 +756,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "hyperpocket", editable = "../../hyperpocket" },
-    { name = "llama-index", specifier = ">=0.12.5" },
+    { name = "llama-index", specifier = ">=0.10.10" },
 ]
 
 [package.metadata.requires-dev]
