@@ -14,8 +14,6 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/cli/auth_oauth2/index
    /autoapi/libs/hyperpocket/hyperpocket/cli/auth_token/index
    /autoapi/libs/hyperpocket/hyperpocket/cli/codegen/index
-   /autoapi/libs/hyperpocket/hyperpocket/cli/eject/index
-   /autoapi/libs/hyperpocket/hyperpocket/cli/pull/index
    /autoapi/libs/hyperpocket/hyperpocket/cli/tool_create/index
    /autoapi/libs/hyperpocket/hyperpocket/cli/tool_export/index
 
