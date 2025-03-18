@@ -10,19 +10,15 @@ from hyperpocket_llamaindex import PocketLlamaindex
 
 def build():
     llm = OpenAI(model="gpt-4o")
-    tool_spec = DuckDuckGoSearchToolSpec()
-    dock = [
-        LlamaIndexDock.dock(
-            tool_func=tool_spec.to_tool_list(
-                spec_functions=[spec]
-            ),
-            llamaindex_tool_args={
-                "max_results": 5,
-            },
-        )
-        for spec in ["duckduckgo_instant_search", "duckduckgo_full_search"]
-    ]
-
+    tool_spec = DuckDuckGoSearchToolSpec()    
+    dock = LlamaIndexDock.dock(
+        tool_func=tool_spec.to_tool_list(
+            spec_functions=["duckduckgo_instant_search", "duckduckgo_full_search"]
+        ),
+        llamaindex_tool_args={
+            "max_results": 5,
+        },
+    )
     pocket = PocketLlamaindex(
         tools=[
             *dock,

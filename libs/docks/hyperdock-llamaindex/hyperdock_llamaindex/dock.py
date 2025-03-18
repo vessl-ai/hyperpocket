@@ -8,7 +8,6 @@ from types import MethodType
 from hyperpocket.tool.function.tool import FunctionTool as PocketFunctionTool
 from hyperpocket.tool.tool import ToolAuth
 from llama_index.core.tools.function_tool import FunctionTool
-from llama_index.core.tools.tool_spec.base import BaseToolSpec
 from hyperpocket.util.flatten_json_schema import flatten_json_schema
 from hyperpocket.util.function_to_model import function_to_model
 from hyperpocket.tool.dock import Dock
@@ -36,6 +35,21 @@ class LlamaIndexDock(Dock):
         conn.send(result)
     
     @classmethod
+    def dock_list(
+        cls,
+        tool_func: List[FunctionTool],
+        auth: Optional[dict[str, str]] = None,
+        tool_vars: Optional[dict[str, str]] = None,
+        llamaindex_tool_args: Optional[dict[str, str]] = None
+    ) -> List[PocketFunctionTool]:
+        return [
+            cls.dock(
+                tool, auth, tool_vars, llamaindex_tool_args
+            )
+            for tool in tool_func
+        ]
+    
+    @classmethod
     def dock(
         cls,
         tool_func: FunctionTool,
@@ -44,9 +58,16 @@ class LlamaIndexDock(Dock):
         llamaindex_tool_args: Optional[dict[str, str]] = None
     ) -> PocketFunctionTool:
         if isinstance(tool_func, list):
-            tool_func = tool_func[0]
-        
-        original_func = tool_func._fn.__func__
+            if isinstance(tool_func[0], list):
+                raise ValueError("Nested list is not supported")
+            return cls.dock_list(
+                tool_func, auth, tool_vars, llamaindex_tool_args
+            )
+            
+        if inspect.ismethod(tool_func):
+            original_func = tool_func.__func__
+        else:
+            original_func = tool_func._fn.__func__
         
         @wraps(original_func)
         async def wrapper(*args, **kwargs) -> str:
@@ -75,8 +96,8 @@ class LlamaIndexDock(Dock):
         return PocketFunctionTool(
             func=wrapper,
             afunc=wrapper,
-            name=tool_func._metadata.name,
-            description=tool_func._metadata.description,
+            name=original_func.__name__,
+            description=original_func.__doc__,
             argument_json_schema=argument_json_schema,
             auth=ToolAuth(**auth) if auth else None,
             tool_vars=tool_vars,
