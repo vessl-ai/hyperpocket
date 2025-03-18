@@ -12,3 +12,8 @@ dependencies = [
 
 [tool.uv.sources]
 hyperpocket = { path = "../../hyperpocket", editable = true }
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]

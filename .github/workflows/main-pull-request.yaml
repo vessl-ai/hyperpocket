@@ -38,15 +38,16 @@ jobs:
         run: |
           uv sync --dev
 
-      - name: Install Playwright Browsers
-        working-directory: libs/hyperpocket
-        run: |
-          uv run playwright install
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
 
-      - name: Install Google Chrome
+      - name: Start Docker service
         run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+          sudo service docker start
+          sudo service docker status
+
+      - name: Pull Docker Image (Manually)
+        run: docker pull python:3.11-slim
 
       - name: Lint code with Ruff
         run: |

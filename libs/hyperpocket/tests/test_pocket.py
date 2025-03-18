@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 from hyperpocket import Pocket
 from hyperpocket.auth import AuthProvider
-from hyperpocket.tool import function_tool
+from hyperpocket.tool import function_tool, Tool
 
 
 class FirstNumber(BaseModel):
@@ -22,11 +22,101 @@ class TestPocket(IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         self.profile = "test-profile"
         self.thread_id = "test_thread_id"
-        self.pocket: Pocket = None
 
-    async def asyncTearDown(self):
-        if self.pocket:
-            self.pocket._teardown_server()
+    @pytest.mark.asyncio
+    async def test_load_tools_str(self):
+        """
+        Test Load tools in case str type
+        """
+        # when
+        pocket = Pocket(
+            tools=[
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/none/simple-echo-tool"
+            ]
+        )
+
+        # then
+        simple_echo_tool = pocket.tools["simple_echo_tool"]
+        self.assertIsInstance(simple_echo_tool, Tool)
+        self.assertEqual(simple_echo_tool.name, "simple_echo_tool")
+
+    async def test_load_tools_tuple(self):
+        """
+        Test Load tools in case tuple type
+        """
+        # when
+        pocket = Pocket(
+            tools=[
+                ("https://github.com/vessl-ai/hyperpocket/tree/main/tools/none/simple-echo-tool",
+                 {"TEST_VAR": "TEST"})
+            ]
+        )
+
+        # then
+        simple_echo_tool = pocket.tools["simple_echo_tool"]
+        self.assertEqual(simple_echo_tool.tool_vars["TEST_VAR"], "TEST")
+
+    async def test_load_tools_tool(self):
+        """
+        Test Load tools in case tool type
+        """
+        # given
+        pocket = Pocket()
+
+        # when
+        tool_before_load = pocket.tools.get("simple_echo_tool")
+        pocket.load_tools(
+            tools=[
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/none/simple-echo-tool"
+            ]
+        )
+        tool_after_load = pocket.tools.get("simple_echo_tool")
+
+        # then
+        self.assertIsNone(tool_before_load)
+        self.assertIsInstance(tool_after_load, Tool)
+
+    async def test_remove_tool(self):
+        """
+        Test Load tools in case tuple type
+        """
+        # given
+        pocket = Pocket(
+            tools=[
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/none/simple-echo-tool"
+            ])
+
+        # when
+        tool_before_remove = pocket.tools.get("simple_echo_tool")
+        pocket.remove_tool("simple_echo_tool")
+        tool_after_remove = pocket.tools.get("simple_echo_tool")
+
+        # then
+        self.assertIsInstance(tool_before_remove, Tool)
+        self.assertIsNone(tool_after_remove)
+
+    async def test_grouping_tool_by_auth_provider(self):
+        """
+        Test grouping tool by auth provider
+        It should return dict which groups tools by auth provider.
+        """
+        # given
+        pocket = Pocket(
+            tools=[
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/none/simple-echo-tool",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/create-spreadsheet",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/list-gmail",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-messages",
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
+            ])
+
+        # when
+        grouped = pocket.grouping_tool_by_auth_provider()
+
+        # then
+        self.assertEqual(len(grouped), 2)
+        self.assertEqual(len(grouped["GOOGLE"]), 2)
+        self.assertEqual(len(grouped["SLACK"]), 2)
 
     async def test_function_tool(self):
         # given
@@ -87,13 +177,12 @@ class TestPocket(IsolatedAsyncioTestCase):
         # then
         self.assertEqual(result, "4")
 
-    @pytest.mark.skip(reason="after open repo")
-    async def test_wasm_tool(self):
+    async def test_container_tool(self):
         # given
-        tool_name = "simple_echo_text"
+        tool_name = "simple_echo_tool"
         self.pocket = Pocket(
             tools=[
-                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/none/simple-echo-tool"
+                "https://github.com/vessl-ai/hyperpocket/tree/main/tools/none/simple-echo-tool",
             ]
         )
 
@@ -104,14 +193,20 @@ class TestPocket(IsolatedAsyncioTestCase):
             thread_id=self.thread_id,
             profile=self.profile,
         )
-        output = ast.literal_eval(result)
 
         # then
-        self.assertTrue(output["stdout"].startswith("echo message : test"))
+        self.assertTrue("echo message : test" in result)
 
-    @pytest.mark.skip("config error")
     async def test_initialize_tool_auth(self):
         # given
+        from hyperpocket.config.auth import GoogleAuthConfig
+        from hyperpocket.config.settings import config
+
+        config().auth.google = GoogleAuthConfig(
+            client_id="test",
+            client_secret="test",
+        )
+
         @function_tool(auth_provider=AuthProvider.GOOGLE, scopes=["scope1", "scope2"])
         def google_function_a(**kwargs):
             """
