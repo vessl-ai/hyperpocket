@@ -119,6 +119,10 @@ class ContainerDock(Dock[ContainerToolLike]):
         base_image = self.get_base_image(pocket_config)
         image_tag = f"{tool_name}-{dock_args.image_tag_postfix}"
 
+        if not self.runtime.list_image(name=base_image):
+            pocket_logger.debug(f"base image({base_image}) doesn't exist. pull {base_image}.")
+            self.runtime.pull(base_image)
+
         if self.runtime.list_image(name=f"hyperpocket:{image_tag}"):
             pocket_logger.debug("built image already exists. skip build.")
             return f"hyperpocket:{image_tag}"
