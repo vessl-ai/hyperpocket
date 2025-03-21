@@ -1,0 +1,30 @@
+example_slack
+=============
+
+.. py:module:: example_slack
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   example_slack.agent
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   example_slack.run
+
+
+Module Contents
+---------------
+
+.. py:function:: run(agent: llama_index.core.agent.AgentRunner)
+
+.. py:data:: agent
+

@@ -1,0 +1,33 @@
+example
+=======
+
+.. py:module:: example
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   example.agent
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   example.build
+   example.run
+
+
+Module Contents
+---------------
+
+.. py:function:: build()
+
+.. py:function:: run(agent: llama_index.core.agent.AgentRunner)
+
+.. py:data:: agent
+

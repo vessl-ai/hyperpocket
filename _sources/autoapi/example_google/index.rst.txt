@@ -1,0 +1,30 @@
+example_google
+==============
+
+.. py:module:: example_google
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   example_google.agent
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   example_google.run
+
+
+Module Contents
+---------------
+
+.. py:function:: run(agent: llama_index.core.agent.AgentRunner)
+
+.. py:data:: agent
+

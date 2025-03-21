@@ -1,0 +1,33 @@
+hyperdock_llamaindex.dock
+=========================
+
+.. py:module:: hyperdock_llamaindex.dock
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   hyperdock_llamaindex.dock.LlamaIndexDock
+
+
+Module Contents
+---------------
+
+.. py:class:: LlamaIndexDock
+
+   Bases: :py:obj:`hyperpocket.tool.dock.Dock`
+
+
+   .. py:method:: dock_list(tool_func: List[llama_index.core.tools.function_tool.FunctionTool], auth: Optional[dict[str, str]] = None, tool_vars: Optional[dict[str, str]] = None, llamaindex_tool_args: Optional[dict[str, str]] = None) -> List[hyperpocket.tool.function.tool.FunctionTool]
+      :classmethod:
+
+
+
+   .. py:method:: dock(tool_func: llama_index.core.tools.function_tool.FunctionTool, auth: Optional[dict[str, str]] = None, tool_vars: Optional[dict[str, str]] = None, llamaindex_tool_args: Optional[dict[str, str]] = None) -> hyperpocket.tool.function.tool.FunctionTool
+      :classmethod:
+
+
+
