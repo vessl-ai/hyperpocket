@@ -14,9 +14,8 @@ from llama_index.core.workflow import (
 )
 from llama_index.llms.openai import OpenAI
 
-from hyperdock_llamaindex import LlamaIndexToolRequest, dock as llamaindex_dock
+from hyperdock_llamaindex import LlamaIndexDock
 from llama_index.tools.duckduckgo import DuckDuckGoSearchToolSpec
-from hyperpocket.tool import from_dock
 from hyperpocket.config import config
 from hyperpocket.server.server import PocketServer
 from hyperpocket_llamaindex import PocketLlamaindex
@@ -33,23 +32,17 @@ class DuckDuckGoWorkflow(Workflow):
     ) -> StopEvent:
         message = ChatMessage(str(ev.get("message", "")))
         
-        dock = llamaindex_dock(
-            LlamaIndexToolRequest(
-                tool_func=DuckDuckGoSearchToolSpec().duckduckgo_full_search,
-                tool_args={
-                    "max_results": 10,
-                },
-            )
+        dock = LlamaIndexDock.dock(
+            tool_func=DuckDuckGoSearchToolSpec().duckduckgo_full_search,
+            llamaindex_tool_args={
+                "max_results": 10,
+            },
         )
         
         pocket = PocketLlamaindex(
             tools=[
-                *from_dock(dock),
+                dock,
             ],
-            server=PocketServer(
-                internal_server_port=8004,
-                proxy_port=8003
-            )
         )
         tools = pocket.get_tools()
 

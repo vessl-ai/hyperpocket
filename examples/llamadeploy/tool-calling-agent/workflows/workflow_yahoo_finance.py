@@ -16,9 +16,9 @@ from llama_index.core.workflow import (
 )
 from llama_index.llms.openai import OpenAI
 
-from hyperdock_llamaindex import LlamaIndexToolRequest, dock as llamaindex_dock
+from hyperdock_llamaindex import LlamaIndexDock
 from llama_index.tools.yahoo_finance import YahooFinanceToolSpec
-from hyperpocket.tool import from_dock, from_func
+from hyperpocket.tool import from_func
 from hyperpocket_llamaindex import PocketLlamaindex
 from hyperpocket.server.server import PocketServer
 from .workflow_duckduckgo import DuckDuckGoWorkflow
@@ -72,22 +72,16 @@ class YahooFinanceWorkflow(Workflow):
             """Useful for returning a direct response to the user."""
             return response
 
-        dock = llamaindex_dock(
-            LlamaIndexToolRequest(
-                tool_func=YahooFinanceToolSpec().stock_basic_info,
-            )
+        dock = LlamaIndexDock.dock(
+            tool_func=YahooFinanceToolSpec().stock_basic_info,
         )
         
         pocket = PocketLlamaindex(
             tools=[
-                *from_dock(dock),
+                dock,
                 from_func(func=run_query, afunc=run_query),
                 from_func(func=return_response, afunc=return_response),
             ],
-            server=PocketServer(
-                internal_server_port=8006,
-                proxy_port=8005
-            )
         )
         tools = pocket.get_tools()
         

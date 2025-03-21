@@ -5,11 +5,11 @@ from llama_deploy import (
 )
 
 async def main():
-		# Deploy the workflow as a service
-		await deploy_core(
-		    control_plane_config=ControlPlaneConfig(),
-		    message_queue_config=SimpleMessageQueueConfig(),
-		)
+    # Deploy the workflow as a service
+    await deploy_core(
+        control_plane_config=ControlPlaneConfig(),
+        message_queue_config=SimpleMessageQueueConfig(),
+    )
 
 if __name__ == "__main__":
     import asyncio
