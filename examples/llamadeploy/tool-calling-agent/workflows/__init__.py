@@ -1,0 +1,7 @@
+from .workflow_duckduckgo import build_duckduckgo_workflow
+from .workflow_yahoo_finance import build_yahoo_finance_workflow, build_agentic_workflow
+
+duckduckgo_workflow = build_duckduckgo_workflow()
+yahoo_finance_workflow = build_yahoo_finance_workflow()
+
+all_workflows = build_agentic_workflow(duckduckgo_workflow=duckduckgo_workflow)

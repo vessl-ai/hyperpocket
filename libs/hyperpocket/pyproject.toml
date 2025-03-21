@@ -15,12 +15,12 @@ dependencies = [
     "toml>=0.10.2",
     "jinja2>=3.1.4",
     "pygithub>=2.5.0",
-    "python-multipart>=0.0.19",
     "multiprocess>=0.70.17",
     "gitpython>=3.1.43",
     "redis>=5.2.1",
     "dynaconf>=3.2.6",
     "nest-asyncio>=1.6.0",
+    "python-multipart>=0.0.18",
 ]
 
 [project.urls]
