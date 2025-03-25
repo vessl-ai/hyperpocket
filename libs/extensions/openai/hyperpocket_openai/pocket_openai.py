@@ -27,22 +27,22 @@ class PocketOpenAI(Pocket):
 
         await self.wait_tool_auth(thread_id=thread_id, profile=profile)
 
-    def invoke(self, tool_call: ChatCompletionMessageToolCall, **kwargs):
+    def invoke(self, tool_call: ChatCompletionMessageToolCall, thread_id=None, profile=None, **kwargs):
         loop = asyncio.get_running_loop()
-        result = loop.run_until_complete(self.ainvoke(tool_call, **kwargs))
+        result = loop.run_until_complete(self.ainvoke(tool_call, thread_id, profile, **kwargs))
         return result
 
-    async def ainvoke(self, tool_call: ChatCompletionMessageToolCall, **kwargs):
+    async def ainvoke(self, tool_call: ChatCompletionMessageToolCall, thread_id=None, profile=None, **kwargs):
         arg_json = json.loads(tool_call.function.arguments)
 
         if self.use_profile:
             body = arg_json["body"]
-            thread_id = arg_json.pop("thread_id", "default")
-            profile = arg_json.pop("profile", "default")
+            thread_id = thread_id or arg_json.pop("thread_id", "default")
+            profile = profile or arg_json.pop("profile", "default")
         else:
             body = arg_json
-            thread_id = "default"
-            profile = "default"
+            thread_id = thread_id or "default"
+            profile = profile or "default"
 
         if isinstance(body, str):
             body = json.loads(body)
