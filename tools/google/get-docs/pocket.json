@@ -1,0 +1,31 @@
+{
+  "tool": {
+    "name": "google_get_docs",
+    "description": "get google docs",
+    "inputSchema": {
+      "properties": {
+        "url": {
+          "description": "The url of the google doc to get the content of",
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "title": "GoogleGetDocsRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "google",
+    "scopes": [
+      "https://www.googleapis.com/auth/documents"
+    ]
+  },
+  "language": "python",
+  "entrypoint": {
+    "build": "pip install -r requirements.txt",
+    "run": "python get_docs.py"
+  }
+}
