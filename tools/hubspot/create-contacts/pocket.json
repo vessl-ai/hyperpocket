@@ -36,8 +36,9 @@
     ]
   },
   "language": "python",
+  "baseImage": "ghcr.io/astral-sh/uv:python3.11-bookworm-slim",
   "entrypoint": {
     "build": "uv sync",
-    "run": "python create_contacts.py"
+    "run": "uv run python create_contacts.py"
   }
 }

@@ -2,7 +2,6 @@ import json
 import os
 import sys
 from typing import List, Optional
-import requests
 from pydantic import BaseModel, Field
 import hubspot
 from pprint import pprint
@@ -73,8 +72,11 @@ def create_contacts(req: HubspotCreateContactsRequest):
             batch_input_simple_public_object_input_for_create=batch_input_simple_public_object_input_for_create
         )
         pprint(api_response)
+
+        return {"success": True, "message": "Contacts created successfully"}
     except ApiException as e:
         print("Exception when calling batch_api->create: %s\n" % e)
+        return {"success": False, "message": str(e)}
 
 
 def main():
