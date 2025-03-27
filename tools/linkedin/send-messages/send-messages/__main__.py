@@ -294,7 +294,7 @@ def send_messages(
     with sync_playwright() as p:
         print("Launching browser")
         browser = p.chromium.launch(
-            headless=False, args=["--disable-extentions", "--disable-file-system"]
+            headless=True, args=["--disable-extentions", "--disable-file-system"]
         )
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
