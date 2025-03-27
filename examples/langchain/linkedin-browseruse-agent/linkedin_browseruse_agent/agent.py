@@ -54,6 +54,7 @@ if __name__ == "__main__":
     with PocketLangchain(
         tools=[
             "https://github.com/vessl-ai/hyperpocket/tree/kyle/tools/tools/linkedin/get-recent-connections",
+            "https://github.com/vessl-ai/hyperpocket/tree/kyle/tools/tools/linkedin/send-messages",
         ],
     ) as pocket:
         agent(pocket)

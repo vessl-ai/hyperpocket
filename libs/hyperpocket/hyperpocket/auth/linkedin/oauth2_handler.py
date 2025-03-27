@@ -29,7 +29,7 @@ class LinkedinOAuth2AuthHandler(AuthHandlerInterface):
 
     @staticmethod
     def provider_default() -> bool:
-        return True
+        return False
 
     @staticmethod
     def recommended_scopes() -> set[str]:

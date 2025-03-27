@@ -1,7 +1,7 @@
 from hyperpocket.auth.context import AuthContext
 
 
-class BasicAuthContext(AuthContext):
+class LinkedinBasicAuthContext(AuthContext):
     _ACCESS_TOKEN_KEY: str = "BASIC_AUTH"
 
     def to_dict(self) -> dict[str, str]:

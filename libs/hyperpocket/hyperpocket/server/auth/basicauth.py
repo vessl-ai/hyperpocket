@@ -17,7 +17,7 @@ async def basicauth_form(redirect_uri: str, state: str = ""):
     html = f"""    
     <html>
         <body>
-            <h2>Enter Token</h2>
+            <h2>Enter ID and Password</h2>
                      <form action="submit" method="post">
                 <input type="hidden" name="redirect_uri" value="{redirect_uri}">
                 <input type="hidden" name="state" value="{state}">
@@ -75,8 +75,8 @@ def add_query_params(url: str, params: dict):
 basicauth_router = APIRouter(prefix="/basicauth")
 
 
-@basicauth_router.get("/token/callback")
-async def basicauth_token_callback(state: str, token: str):
+@basicauth_router.get("/basicauth/callback")
+async def basicauth_basicauth_callback(state: str, token: str):
     try:
         key = DefaultAuthConfig.secret_key.encode()
         decrypted = Fernet(key).decrypt(token.encode()).decode()

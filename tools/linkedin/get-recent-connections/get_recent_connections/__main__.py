@@ -43,7 +43,7 @@ class LinkedInGetRecentConnectionsResponse(BaseModel):
 print("Initializing OpenAI client...")
 from openai import OpenAI
 
-basic_auth = os.getenv("BASIC_AUTH")
+basic_auth = os.getenv("LINKEDIN_BASIC_AUTH")
 
 
 def handle_model_action(page, action):

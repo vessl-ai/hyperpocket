@@ -4,8 +4,11 @@ from urllib.parse import urlencode, urljoin
 from hyperpocket.auth import AuthProvider
 from hyperpocket.auth.context import AuthContext
 from hyperpocket.auth.handler import AuthHandlerInterface
-from hyperpocket.auth.basicauth.token_context import BasicAuthContext
-from hyperpocket.auth.basicauth.token_schema import BasicAuthRequest, BasicAuthResponse
+from hyperpocket.auth.basicauth.basicauth_context import BasicAuthContext
+from hyperpocket.auth.basicauth.basicauth_schema import (
+    BasicAuthRequest,
+    BasicAuthResponse,
+)
 from hyperpocket.config import config
 from hyperpocket.futures import FutureStore
 
