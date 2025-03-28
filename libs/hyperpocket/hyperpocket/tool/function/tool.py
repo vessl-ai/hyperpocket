@@ -17,7 +17,6 @@ class FunctionTool(Tool):
 
     func: Optional[Callable[..., str]]
     afunc: Optional[Callable[..., Coroutine[Any, Any, str]]]
-    keep_structured_arguments: bool = False
 
     def invoke(self, **kwargs) -> str:
         binding_args = self._get_binding_args(kwargs)
@@ -62,10 +61,6 @@ class FunctionTool(Tool):
             return "There was an error while executing the tool: " + str(e)
 
     def _get_binding_args(self, kwargs):
-        if self.keep_structured_arguments:
-            if kwargs.get("envs") is not None:
-                kwargs["envs"] |= self.tool_vars
-            return kwargs
         _kwargs = copy.deepcopy(kwargs)
 
         # make body args to model
@@ -79,22 +74,17 @@ class FunctionTool(Tool):
         # binding args
         binding_args = {}
         sig = inspect.signature(self.func)
-        for param_name, param in sig.parameters.items():
-            if param_name not in args:
-                continue
+        is_kwargs_existing = any([param.kind == param.VAR_KEYWORD for param in sig.parameters.values()])
 
-            if param.kind == param.VAR_KEYWORD:
-                # var keyword args should be passed by plain dict
-                binding_args |= args[param_name]
-                binding_args |= _kwargs.get("envs", {}) | self.tool_vars
-
-                if "envs" in _kwargs:
-                    _kwargs.pop("envs")
-
-                binding_args |= _kwargs  # add other kwargs
-                continue
-
-            binding_args[param_name] = args[param_name]
+        # if kwargs exist in function, we don't get binding all args one by one.
+        # just put all the values into binding_args in order of priority.
+        if is_kwargs_existing:
+            binding_args |= args | _kwargs.pop("envs", {}) | _kwargs | self.tool_vars
+        else:
+            # but kwargs don't exist in function, we should bind all the values one by one.
+            for param_name, parma in sig.parameters.items():
+                if param_name in args:
+                    binding_args[param_name] = args[param_name]
 
         return binding_args
 
