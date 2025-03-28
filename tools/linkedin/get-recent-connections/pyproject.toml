@@ -1,0 +1,13 @@
+[project]
+name = "get-recent-connections"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "debugpy>=1.8.13",
+    "openai>=1.68.2",
+    "playwright==1.42.0",
+    "pydantic==2.6.1",
+    "python-dotenv==1.0.1",
+]

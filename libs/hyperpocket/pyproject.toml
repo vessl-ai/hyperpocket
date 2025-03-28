@@ -21,6 +21,7 @@ dependencies = [
     "dynaconf>=3.2.6",
     "nest-asyncio>=1.6.0",
     "python-multipart>=0.0.18",
+    "cryptography>=44.0.0",
 ]
 
 [project.urls]

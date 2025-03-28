@@ -308,6 +308,24 @@ client_secret = "" # your slack client secret
 - in this case, by putting your slack app client_id and client_secret on `.secrets.toml`, you can manage your sensitive
   data more safely.
 
+#### When using Basic Auth
+
+IMPORTANT: You should update `auth_encryption_secret_key` in `{WORKDIR}/.secret.toml` with your own secret key.
+
+```toml
+[auth]
+auth_encryption_secret_key = "<YOUR_SECRET_KEY>"
+```
+
+The secret key should be a 32 Base64 encoded string.
+
+You can generate the secret key with the following command.
+
+```shell
+pip install cryptography
+python -c 'from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())'
+```
+
 #### How to integrate github OAuth app
 
 1. Follow the github documentation to create a new OAuth

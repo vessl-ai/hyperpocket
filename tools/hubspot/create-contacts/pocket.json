@@ -1,0 +1,44 @@
+{
+  "tool": {
+    "name": "hubspot_create_contact",
+    "description": "create a contact in hubspot",
+    "inputSchema": {
+      "properties": {
+        "firstname": {
+          "description": "The first name of the contact to create",
+          "title": "First Name",
+          "type": "string"
+        },
+        "lastname": {
+          "description": "The last name of the contact to create",
+          "title": "Last Name",
+          "type": "string"
+        },
+        "email": {
+          "description": "The email of the contact to create",
+          "title": "Email",
+          "type": "string"
+        }
+      },
+      "required": [
+        "firstname",
+        "lastname"
+      ],
+      "title": "HubspotCreateContactRequest",
+      "type": "object"
+    }
+  },
+  "auth": {
+    "auth_provider": "hubspot",
+    "scopes": [
+      "crm.objects.contacts.read",
+      "crm.objects.contacts.write"
+    ]
+  },
+  "language": "python",
+  "baseImage": "ghcr.io/astral-sh/uv:python3.11-bookworm-slim",
+  "entrypoint": {
+    "build": "uv sync",
+    "run": "uv run python create_contacts.py"
+  }
+}
