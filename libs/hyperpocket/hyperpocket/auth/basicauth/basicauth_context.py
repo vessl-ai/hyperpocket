@@ -1,10 +1,10 @@
-from hyperpocket.auth.basicauth.context import LinkedinBasicAuthContext
+from hyperpocket.auth.basicauth.context import BasicAuthContext
 from hyperpocket.auth.basicauth.basicauth_schema import (
     BasicAuthResponse,
 )
 
 
-class LinkedinBasicAuthContext(LinkedinBasicAuthContext):
+class BasicAuthContext(BasicAuthContext):
     @classmethod
     def from_api_token_response(cls, response: BasicAuthResponse):
         description = "Api Token Context logged in"
