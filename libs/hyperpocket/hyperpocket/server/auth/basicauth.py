@@ -45,7 +45,7 @@ async def submit_basicauth(
 ):
     token = f"{username}:{password}"
     base64_token = base64.b64encode(token.encode()).decode("utf-8")
-    key = DefaultAuthConfig.secret_key.encode()
+    key = DefaultAuthConfig.auth_encryption_secret_key.encode()
     encrypted = Fernet(key).encrypt(base64_token.encode()).decode()
     new_callback_url = add_query_params(
         redirect_uri, {"token": encrypted, "state": state}
@@ -78,7 +78,7 @@ basicauth_router = APIRouter(prefix="/basicauth")
 @basicauth_router.get("/basicauth/callback")
 async def basicauth_basicauth_callback(state: str, token: str):
     try:
-        key = DefaultAuthConfig.secret_key.encode()
+        key = DefaultAuthConfig.auth_encryption_secret_key.encode()
         decrypted = Fernet(key).decrypt(token.encode()).decode()
         FutureStore.resolve_future(state, decrypted)
     except ValueError:

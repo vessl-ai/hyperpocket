@@ -20,7 +20,7 @@ async def linkedin_oauth2_callback(state: str, code: str):
 @linkedin_auth_router.get("/basicauth/callback")
 async def linkedin_basicauth_callback(state: str, token: str):
     try:
-        key = DefaultAuthConfig.secret_key.encode()
+        key = DefaultAuthConfig.auth_encryption_secret_key.encode()
         decrypted = Fernet(key).decrypt(token.encode()).decode()
         FutureStore.resolve_future(state, decrypted)
         FutureStore.resolve_future(state, token)
