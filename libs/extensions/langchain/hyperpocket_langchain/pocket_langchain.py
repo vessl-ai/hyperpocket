@@ -5,6 +5,7 @@ from langchain_core.tools import BaseTool, StructuredTool
 
 from hyperpocket import Pocket
 from hyperpocket.tool import Tool
+from hyperpocket.util.convert_pydantic_to_dict import convert_pydantic_to_dict
 
 
 class PocketLangchain(Pocket):
@@ -25,6 +26,10 @@ class PocketLangchain(Pocket):
                 body = kwargs
                 thread_id = "default"
                 profile = "default"
+
+            if isinstance(body, str):
+                body = json.loads(body)
+            body = convert_pydantic_to_dict(body)
 
             result, interrupted = self.invoke_with_state(
                 pocket_tool.name,
@@ -50,6 +55,7 @@ class PocketLangchain(Pocket):
 
             if isinstance(body, str):
                 body = json.loads(body)
+            body = convert_pydantic_to_dict(body)
 
             result, interrupted = await self.ainvoke_with_state(
                 pocket_tool.name, body=body, thread_id=thread_id, profile=profile

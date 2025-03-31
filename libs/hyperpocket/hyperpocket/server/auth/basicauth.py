@@ -2,12 +2,13 @@ import base64
 from http import HTTPStatus
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
+from cryptography.fernet import Fernet
 from fastapi import APIRouter, Form
-from hyperpocket.config.auth import DefaultAuthConfig
 from starlette.responses import HTMLResponse, RedirectResponse
 
+from hyperpocket.config import config
+from hyperpocket.config.auth import DefaultAuthConfig
 from hyperpocket.futures import FutureStore
-from cryptography.fernet import Fernet
 
 default_router = APIRouter()
 
@@ -45,7 +46,7 @@ async def submit_basicauth(
 ):
     token = f"{username}:{password}"
     base64_token = base64.b64encode(token.encode()).decode("utf-8")
-    key = DefaultAuthConfig.auth_encryption_secret_key.encode()
+    key = config().auth.auth_encryption_secret_key.encode()
     encrypted = Fernet(key).encrypt(base64_token.encode()).decode()
     new_callback_url = add_query_params(
         redirect_uri, {"token": encrypted, "state": state}
