@@ -17,6 +17,7 @@ class FunctionTool(Tool):
 
     func: Optional[Callable[..., str]]
     afunc: Optional[Callable[..., Coroutine[Any, Any, str]]]
+    keep_structured_arguments: bool = False
 
     def invoke(self, **kwargs) -> str:
         binding_args = self._get_binding_args(kwargs)
@@ -61,6 +62,10 @@ class FunctionTool(Tool):
             return "There was an error while executing the tool: " + str(e)
 
     def _get_binding_args(self, kwargs):
+        if getattr(self, "keep_structured_arguments", True):
+            if kwargs.get("envs") is not None:
+                kwargs["envs"] |= self.tool_vars
+            return kwargs
         _kwargs = copy.deepcopy(kwargs)
 
         # make body args to model
