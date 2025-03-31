@@ -1,0 +1,20 @@
+libs.hyperpocket.hyperpocket.util.convert_pydantic_to_dict
+==========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.util.convert_pydantic_to_dict
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.util.convert_pydantic_to_dict.convert_pydantic_to_dict
+
+
+Module Contents
+---------------
+
+.. py:function:: convert_pydantic_to_dict(data: Any)
+

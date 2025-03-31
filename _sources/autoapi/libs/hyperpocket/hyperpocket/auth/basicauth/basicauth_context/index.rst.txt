@@ -1,0 +1,28 @@
+libs.hyperpocket.hyperpocket.auth.basicauth.basicauth_context
+=============================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.basicauth.basicauth_context
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.basicauth.basicauth_context.BasicAuthContext
+
+
+Module Contents
+---------------
+
+.. py:class:: BasicAuthContext
+
+   Bases: :py:obj:`BasicAuthContext`
+
+
+   .. py:method:: from_api_token_response(response: hyperpocket.auth.basicauth.basicauth_schema.BasicAuthResponse)
+      :classmethod:
+
+
+

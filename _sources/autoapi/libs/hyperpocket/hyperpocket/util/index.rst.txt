@@ -11,6 +11,7 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
+   /autoapi/libs/hyperpocket/hyperpocket/util/convert_pydantic_to_dict/index
    /autoapi/libs/hyperpocket/hyperpocket/util/extract_func_param_desc_from_docstring/index
    /autoapi/libs/hyperpocket/hyperpocket/util/find_all_leaf_class_in_package/index
    /autoapi/libs/hyperpocket/hyperpocket/util/find_all_subclass_in_package/index

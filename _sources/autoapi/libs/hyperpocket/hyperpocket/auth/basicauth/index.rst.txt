@@ -1,0 +1,19 @@
+libs.hyperpocket.hyperpocket.auth.basicauth
+===========================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.basicauth
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/libs/hyperpocket/hyperpocket/auth/basicauth/basicauth_context/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/basicauth/basicauth_handler/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/basicauth/basicauth_schema/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/basicauth/context/index
+
+

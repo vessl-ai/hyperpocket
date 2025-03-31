@@ -35,10 +35,10 @@ Module Contents
 
 
 
-   .. py:method:: invoke(tool_call: openai.types.chat.ChatCompletionMessageToolCall, **kwargs)
+   .. py:method:: invoke(tool_call: openai.types.chat.ChatCompletionMessageToolCall, thread_id=None, profile=None, **kwargs)
 
 
-   .. py:method:: ainvoke(tool_call: openai.types.chat.ChatCompletionMessageToolCall, **kwargs)
+   .. py:method:: ainvoke(tool_call: openai.types.chat.ChatCompletionMessageToolCall, thread_id=None, profile=None, **kwargs)
       :async:
 
 

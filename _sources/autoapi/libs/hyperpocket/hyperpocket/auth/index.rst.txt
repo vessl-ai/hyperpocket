@@ -22,6 +22,7 @@ Submodules
    /autoapi/libs/hyperpocket/hyperpocket/auth/apitoken/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/asana/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/bamboohr/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/basicauth/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/bitbucket/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/bitwarden/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/brevo/index

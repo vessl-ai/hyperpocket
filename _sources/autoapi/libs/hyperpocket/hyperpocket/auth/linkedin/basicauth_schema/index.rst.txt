@@ -1,0 +1,33 @@
+libs.hyperpocket.hyperpocket.auth.linkedin.basicauth_schema
+===========================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.auth.linkedin.basicauth_schema
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.auth.linkedin.basicauth_schema.LinkedinBasicAuthRequest
+   libs.hyperpocket.hyperpocket.auth.linkedin.basicauth_schema.LinkedinBasicAuthResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: LinkedinBasicAuthRequest
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateRequest`
+
+
+.. py:class:: LinkedinBasicAuthResponse
+
+   Bases: :py:obj:`hyperpocket.auth.schema.AuthenticateResponse`
+
+
+   .. py:attribute:: access_token
+      :type:  str
+
+

@@ -11,6 +11,9 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
+   /autoapi/libs/hyperpocket/hyperpocket/auth/linkedin/basicauth_context/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/linkedin/basicauth_handler/index
+   /autoapi/libs/hyperpocket/hyperpocket/auth/linkedin/basicauth_schema/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/linkedin/context/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/linkedin/oauth2_context/index
    /autoapi/libs/hyperpocket/hyperpocket/auth/linkedin/oauth2_handler/index

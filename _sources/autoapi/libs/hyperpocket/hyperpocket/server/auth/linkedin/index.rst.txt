@@ -19,7 +19,7 @@ Functions
 .. autoapisummary::
 
    libs.hyperpocket.hyperpocket.server.auth.linkedin.linkedin_oauth2_callback
-   libs.hyperpocket.hyperpocket.server.auth.linkedin.linkedin_token_callback
+   libs.hyperpocket.hyperpocket.server.auth.linkedin.linkedin_basicauth_callback
 
 
 Module Contents
@@ -31,7 +31,7 @@ Module Contents
    :async:
 
 
-.. py:function:: linkedin_token_callback(state: str, token: str)
+.. py:function:: linkedin_basicauth_callback(state: str, token: str)
    :async:
 
 

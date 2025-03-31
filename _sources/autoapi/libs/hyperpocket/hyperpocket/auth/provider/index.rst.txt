@@ -386,6 +386,11 @@ Module Contents
 
 
 
+   .. py:attribute:: BASICAUTH
+      :value: 'basicauth'
+
+
+
    .. py:method:: get_auth_provider(auth_provider_name: str) -> AuthProvider
       :classmethod:
 

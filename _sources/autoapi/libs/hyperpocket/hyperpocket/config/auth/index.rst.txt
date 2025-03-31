@@ -277,5 +277,9 @@ Module Contents
       :type:  bool
 
 
+   .. py:attribute:: auth_encryption_secret_key
+      :type:  Optional[str]
+
+
 .. py:data:: DefaultAuthConfig
 

@@ -1,0 +1,48 @@
+libs.hyperpocket.hyperpocket.server.auth.basicauth
+==================================================
+
+.. py:module:: libs.hyperpocket.hyperpocket.server.auth.basicauth
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.basicauth.default_router
+   libs.hyperpocket.hyperpocket.server.auth.basicauth.basicauth_router
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   libs.hyperpocket.hyperpocket.server.auth.basicauth.basicauth_form
+   libs.hyperpocket.hyperpocket.server.auth.basicauth.submit_basicauth
+   libs.hyperpocket.hyperpocket.server.auth.basicauth.add_query_params
+   libs.hyperpocket.hyperpocket.server.auth.basicauth.basicauth_basicauth_callback
+
+
+Module Contents
+---------------
+
+.. py:data:: default_router
+
+.. py:function:: basicauth_form(redirect_uri: str, state: str = '')
+   :async:
+
+
+.. py:function:: submit_basicauth(username: str = Form(...), password: str = Form(...), redirect_uri: str = Form(...), state: str = Form(...))
+   :async:
+
+
+.. py:function:: add_query_params(url: str, params: dict)
+
+.. py:data:: basicauth_router
+
+.. py:function:: basicauth_basicauth_callback(state: str, token: str)
+   :async:
+
+
