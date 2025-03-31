@@ -104,6 +104,7 @@ class AuthConfig(BaseModel):
     linear: Optional[LinearAuthConfig] = None
     facebook: Optional[FacebookAuthConfig] = None
     use_prebuilt_auth: bool = Field(default=True)
+    auth_encryption_secret_key: Optional[str] = Field(default=None)
 
 
 DefaultAuthConfig = AuthConfig()

@@ -52,6 +52,24 @@ client_id = "<SLACK_CLIENT_ID>"
 client_secret = "<SLACK_CLIENT_SECRET>"
 ```
 
+#### When using Basic Auth
+
+IMPORTANT: You should update `auth_encryption_secret_key` in `{WORKDIR}/.secret.toml` with your own secret key.
+
+```toml
+[auth]
+auth_encryption_secret_key = "<YOUR_SECRET_KEY>"
+```
+
+The secret key should be a 32 Base64 encoded string.
+
+You can generate the secret key with the following command.
+
+```shell
+pip install cryptography
+python -c 'from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())'
+```
+
 setting openai api key env for this example.
 
 ```shell
@@ -168,32 +186,32 @@ Pocket provides way to use end user auth easily.
 
 - Supported methods
 
-    - [x] OAuth
-    - [x] Token
-    - [ ] Basic Auth (Username, Password)
+  - [x] OAuth
+  - [x] Token
+  - [ ] Basic Auth (Username, Password)
 
 - Supported OAuth Providers
 
-    - [x] Google
-    - [x] GitHub
-    - [x] Slack
-    - [x] Reddit
-    - [x] Calendly
-    - [ ] Facebook
-    - [ ] X (Previously Twitter)
-    - [ ] LinkedIn
-    - [ ] Discord
-    - [ ] Zoom
-    - [ ] Microsoft
-    - [ ] Spotify
-    - [ ] Twitch
+  - [x] Google
+  - [x] GitHub
+  - [x] Slack
+  - [x] Reddit
+  - [x] Calendly
+  - [ ] Facebook
+  - [ ] X (Previously Twitter)
+  - [ ] LinkedIn
+  - [ ] Discord
+  - [ ] Zoom
+  - [ ] Microsoft
+  - [ ] Spotify
+  - [ ] Twitch
 
 - Supported Token Providers
-    - [x] Notion
-    - [x] Slack
-    - [x] Linear
-    - [x] Gumloop
-    - [x] Github
+  - [x] Notion
+  - [x] Slack
+  - [x] Linear
+  - [x] Gumloop
+  - [x] Github
 
 You can manage your auths in request-wise level. (e.g. you can use different auths for different requests)
 
@@ -315,15 +333,15 @@ client_secret = "" # your slack client secret
 
 - While creating your github OAuth app, configuring your app's `Authorization callback URL` is different for your
   development environment and production environment.
-    - For local testing environment, you can use `https://localhost:8001/proxy/auth/<provider>/callback` for TLS enabled
-      redirect url. (ex. `https://localhost:8001/proxy/auth/github/callback`)
-        - **Note**: Default port for hyperpocket dev server is `8000`. If you are using a different port, make sure to
-          replace `8000` with your actual port number.
-        - **Note**: But for easy dev experience, you can use TLS proxy on port `8001` provided out-of-the-box.
-            - You can change the `proxy` prefix in settings.toml to your desired prefix with
-              `callback_url_rewrite_prefix` key.
-    - For production environment, you can use `https://yourdomain.com/auth/github/callback`
-        - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.
+  - For local testing environment, you can use `https://localhost:8001/proxy/auth/<provider>/callback` for TLS enabled
+    redirect url. (ex. `https://localhost:8001/proxy/auth/github/callback`)
+    - **Note**: Default port for hyperpocket dev server is `8000`. If you are using a different port, make sure to
+      replace `8000` with your actual port number.
+    - **Note**: But for easy dev experience, you can use TLS proxy on port `8001` provided out-of-the-box.
+      - You can change the `proxy` prefix in settings.toml to your desired prefix with
+        `callback_url_rewrite_prefix` key.
+  - For production environment, you can use `https://yourdomain.com/auth/github/callback`
+    - **Note**: Make sure to replace `yourdomain.com` with your actual domain name that this app will be hosted on.
 
 #### How to integrate SLACK OAuth app
 
@@ -334,16 +352,16 @@ client_secret = "" # your slack client secret
 - Redirect URLs :
   `{public_server_protocol}://{public_hostname}:[{public_server_port}]/{callback_url_rewrite_prefix}/auth/slack/oauth2/callback`
 - Scopes : What you want to request to user.
-    - Recommended scopes :
-        - channels:history,
-        - channels:read,
-        - chat:write,
-        - groups:history,
-        - groups:read,
-        - im:history,
-        - mpim:history,
-        - reactions:read,
-        - reactions:write,
+  - Recommended scopes :
+    - channels:history,
+    - channels:read,
+    - chat:write,
+    - groups:history,
+    - groups:read,
+    - im:history,
+    - mpim:history,
+    - reactions:read,
+    - reactions:write,
 
 3. Set your Slack APP Client ID / Client Secret in `{WORKDIR}/settings.toml`
 

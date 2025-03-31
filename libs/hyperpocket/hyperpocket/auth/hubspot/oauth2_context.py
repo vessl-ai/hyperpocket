@@ -12,9 +12,7 @@ class HubspotOAuth2AuthContext(HubspotAuthContext):
 
     @classmethod
     def from_hubspot_oauth2_response(cls, response: HubspotOAuth2Response):
-        description = (
-            f"Hubspot OAuth2 Context logged in as a user {response.authed_user.id}"
-        )
+        description = "Hubspot OAuth2 Context logged in"
         now = datetime.now(tz=timezone.utc)
 
         access_token = response.access_token
@@ -22,7 +20,7 @@ class HubspotOAuth2AuthContext(HubspotAuthContext):
         expires_in = response.expires_in
 
         if expires_in:
-            expires_at = now + timedelta(seconds=response.authed_user.expires_in)
+            expires_at = now + timedelta(seconds=response.expires_in)
         else:
             expires_at = None
 
