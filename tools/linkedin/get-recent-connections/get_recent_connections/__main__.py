@@ -46,176 +46,176 @@ from openai import OpenAI
 basic_auth = os.getenv("LINKEDIN_BASIC_AUTH")
 
 
-def handle_model_action(page, action):
-    """
-    Given a computer action (e.g., click, double_click, scroll, etc.),
-    execute the corresponding operation on the Playwright page.
-    """
-    action_type = action.type
+# def handle_model_action(page, action):
+#     """
+#     Given a computer action (e.g., click, double_click, scroll, etc.),
+#     execute the corresponding operation on the Playwright page.
+#     """
+#     action_type = action.type
 
-    try:
-        match action_type:
-            case "click":
-                x, y = action.x, action.y
-                button = action.button
-                print(f"Action: click at ({x}, {y}) with button '{button}'")
-                # Not handling things like middle click, etc.
-                if button != "left" and button != "right":
-                    button = "left"
-                page.mouse.click(x, y, button=button)
+#     try:
+#         match action_type:
+#             case "click":
+#                 x, y = action.x, action.y
+#                 button = action.button
+#                 print(f"Action: click at ({x}, {y}) with button '{button}'")
+#                 # Not handling things like middle click, etc.
+#                 if button != "left" and button != "right":
+#                     button = "left"
+#                 page.mouse.click(x, y, button=button)
 
-            case "scroll":
-                x, y = action.x, action.y
-                scroll_x, scroll_y = action.scroll_x, action.scroll_y
-                print(
-                    f"Action: scroll at ({x}, {y}) with offsets (scroll_x={scroll_x}, scroll_y={scroll_y})"
-                )
-                page.mouse.move(x, y)
-                page.evaluate(f"window.scrollBy({scroll_x}, {scroll_y})")
+#             case "scroll":
+#                 x, y = action.x, action.y
+#                 scroll_x, scroll_y = action.scroll_x, action.scroll_y
+#                 print(
+#                     f"Action: scroll at ({x}, {y}) with offsets (scroll_x={scroll_x}, scroll_y={scroll_y})"
+#                 )
+#                 page.mouse.move(x, y)
+#                 page.evaluate(f"window.scrollBy({scroll_x}, {scroll_y})")
 
-            case "keypress":
-                keys = action.keys
-                for k in keys:
-                    print(f"Action: keypress '{k}'")
-                    # A simple mapping for common keys; expand as needed.
-                    if k.lower() == "enter":
-                        page.keyboard.press("Enter")
-                    elif k.lower() == "space":
-                        page.keyboard.press(" ")
-                    else:
-                        page.keyboard.press(k)
+#             case "keypress":
+#                 keys = action.keys
+#                 for k in keys:
+#                     print(f"Action: keypress '{k}'")
+#                     # A simple mapping for common keys; expand as needed.
+#                     if k.lower() == "enter":
+#                         page.keyboard.press("Enter")
+#                     elif k.lower() == "space":
+#                         page.keyboard.press(" ")
+#                     else:
+#                         page.keyboard.press(k)
 
-            case "type":
-                text = action.text
-                print(f"Action: type text: {text}")
-                page.keyboard.type(text)
+#             case "type":
+#                 text = action.text
+#                 print(f"Action: type text: {text}")
+#                 page.keyboard.type(text)
 
-            case "wait":
-                print(f"Action: wait")
-                time.sleep(2)
+#             case "wait":
+#                 print(f"Action: wait")
+#                 time.sleep(2)
 
-            case "screenshot":
-                # Nothing to do as screenshot is taken at each turn
-                print(f"Action: screenshot")
+#             case "screenshot":
+#                 # Nothing to do as screenshot is taken at each turn
+#                 print(f"Action: screenshot")
 
-            # Handle other actions here
+#             # Handle other actions here
 
-            case _:
-                print(f"Unrecognized action: {action}")
+#             case _:
+#                 print(f"Unrecognized action: {action}")
 
-    except Exception as e:
-        print(f"Error handling action {action}: {e}")
+#     except Exception as e:
+#         print(f"Error handling action {action}: {e}")
 
 
-def cua_to_solve_challenge(page: Page):
-    try:
-        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-    except Exception as e:
-        print(f"Error creating OpenAI client: {str(e)}")
-        return None
+# def cua_to_solve_challenge(page: Page):
+#     try:
+#         client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+#     except Exception as e:
+#         print(f"Error creating OpenAI client: {str(e)}")
+#         return None
 
-    screenshot = page.screenshot()
-    screenshot_base64 = base64.b64encode(screenshot).decode("utf-8")
-    response = client.responses.create(
-        model="computer-use-preview-2025-03-11",
-        tools=[
-            {
-                "type": "computer_use_preview",
-                "display_width": 1024,
-                "display_height": 768,
-                "environment": "browser",
-            }
-        ],
-        input=[
-            {
-                "role": "system",
-                "content": [
-                    {
-                        "type": "input_text",
-                        "text": """
-System Instruction
-You are an intelligent autonomous agent tasked with solving LinkedIn’s image-orientation CAPTCHA challenge, specifically identifying the image where the frog is positioned upright.
+#     screenshot = page.screenshot()
+#     screenshot_base64 = base64.b64encode(screenshot).decode("utf-8")
+#     response = client.responses.create(
+#         model="computer-use-preview-2025-03-11",
+#         tools=[
+#             {
+#                 "type": "computer_use_preview",
+#                 "display_width": 1024,
+#                 "display_height": 768,
+#                 "environment": "browser",
+#             }
+#         ],
+#         input=[
+#             {
+#                 "role": "system",
+#                 "content": [
+#                     {
+#                         "type": "input_text",
+#                         "text": """
+# System Instruction
+# You are an intelligent autonomous agent tasked with solving LinkedIn’s image-orientation CAPTCHA challenge, specifically identifying the image where the frog is positioned upright.
 
-Step-by-step procedure:
-	1.	Analyze all provided images quickly, using visual recognition tools to identify the frog in each.
-	2.	Assess the orientation of each frog image to detect which one is correctly positioned (upright).
-	•	The upright frog typically has the eyes above, legs positioned below, and natural gravity-aligned posture.
-	3.	Confirm your choice by cross-verifying anatomical features such as eye placement, limb position, and overall body alignment.
-	4.	Select the correctly oriented (upright) frog image swiftly and accurately.
+# Step-by-step procedure:
+# 	1.	Analyze all provided images quickly, using visual recognition tools to identify the frog in each.
+# 	2.	Assess the orientation of each frog image to detect which one is correctly positioned (upright).
+# 	•	The upright frog typically has the eyes above, legs positioned below, and natural gravity-aligned posture.
+# 	3.	Confirm your choice by cross-verifying anatomical features such as eye placement, limb position, and overall body alignment.
+# 	4.	Select the correctly oriented (upright) frog image swiftly and accurately.
 
-Always aim for precision on the first attempt to mimic natural human interaction effectively.
-""",
-                    }
-                ],
-            },
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "input_text",
-                        "text": "process this verify human challenge",
-                    },
-                    {
-                        "type": "input_image",
-                        "image_url": f"data:image/png;base64,{screenshot_base64}",
-                    },
-                ],
-            },
-        ],
-        reasoning={"generate_summary": "concise"},
-        truncation="auto",
-    )
+# Always aim for precision on the first attempt to mimic natural human interaction effectively.
+# """,
+#                     }
+#                 ],
+#             },
+#             {
+#                 "role": "user",
+#                 "content": [
+#                     {
+#                         "type": "input_text",
+#                         "text": "process this verify human challenge",
+#                     },
+#                     {
+#                         "type": "input_image",
+#                         "image_url": f"data:image/png;base64,{screenshot_base64}",
+#                     },
+#                 ],
+#             },
+#         ],
+#         reasoning={"generate_summary": "concise"},
+#         truncation="auto",
+#     )
 
-    try:
-        while True:
-            reasoning = list(filter(lambda x: x.type == "reasoning", response.output))
-            print("Reasoning: ", reasoning)
-            computer_calls = [
-                item for item in response.output if item.type == "computer_call"
-            ]
-            if not computer_calls:
-                print("No computer call found. Output from model:")
-                for item in response.output:
-                    print(item)
-                break  # Exit when no computer calls are issued.
+#     try:
+#         while True:
+#             reasoning = list(filter(lambda x: x.type == "reasoning", response.output))
+#             print("Reasoning: ", reasoning)
+#             computer_calls = [
+#                 item for item in response.output if item.type == "computer_call"
+#             ]
+#             if not computer_calls:
+#                 print("No computer call found. Output from model:")
+#                 for item in response.output:
+#                     print(item)
+#                 break  # Exit when no computer calls are issued.
 
-            computer_call = computer_calls[0]
-            last_call_id = computer_call.call_id
-            action = computer_call.action
+#             computer_call = computer_calls[0]
+#             last_call_id = computer_call.call_id
+#             action = computer_call.action
 
-            handle_model_action(page, action)
-            time.sleep(1)
+#             handle_model_action(page, action)
+#             time.sleep(1)
 
-            screenshot = page.screenshot()
-            screenshot_base64 = base64.b64encode(screenshot).decode("utf-8")
-            response = client.responses.create(
-                model="computer-use-preview-2025-03-11",
-                previous_response_id=response.id,
-                tools=[
-                    {
-                        "type": "computer_use_preview",
-                        "display_width": 1024,
-                        "display_height": 768,
-                        "environment": "browser",
-                    }
-                ],
-                input=[
-                    {
-                        "call_id": last_call_id,
-                        "type": "computer_call_output",
-                        "output": {
-                            "type": "input_image",
-                            "image_url": f"data:image/png;base64,{screenshot_base64}",
-                        },
-                    }
-                ],
-                truncation="auto",
-            )
-        return "Success"
-    except Exception as e:
-        print(f"Error solving challenge: {str(e)}")
-        traceback.print_exc()
-        return None
+#             screenshot = page.screenshot()
+#             screenshot_base64 = base64.b64encode(screenshot).decode("utf-8")
+#             response = client.responses.create(
+#                 model="computer-use-preview-2025-03-11",
+#                 previous_response_id=response.id,
+#                 tools=[
+#                     {
+#                         "type": "computer_use_preview",
+#                         "display_width": 1024,
+#                         "display_height": 768,
+#                         "environment": "browser",
+#                     }
+#                 ],
+#                 input=[
+#                     {
+#                         "call_id": last_call_id,
+#                         "type": "computer_call_output",
+#                         "output": {
+#                             "type": "input_image",
+#                             "image_url": f"data:image/png;base64,{screenshot_base64}",
+#                         },
+#                     }
+#                 ],
+#                 truncation="auto",
+#             )
+#         return "Success"
+#     except Exception as e:
+#         print(f"Error solving challenge: {str(e)}")
+#         traceback.print_exc()
+#         return None
 
 
 def get_recent_connections(
@@ -262,23 +262,23 @@ def get_recent_connections(
                         reasoning="Failed to login - login challenge detected",
                         error=f"Failed to login at url {page.url}",
                     )
-                    # disable for now
-                    print("Solving challenge...")
-                    result = cua_to_solve_challenge(page)
-                    if result != "Success":
-                        print("Failed to solve challenge")
-                        print("Login failed - taking screenshot for debugging")
-                        # Take screenshot if not redirected to feed
-                        return LinkedInGetRecentConnectionsResponse(
-                            connections=[],
-                            error="Failed to login",
-                            # screenshot=screenshot_base64,
-                        )
+                    # # disable for now
+                    # print("Solving challenge...")
+                    # result = cua_to_solve_challenge(page)
+                    # if result != "Success":
+                    #     print("Failed to solve challenge")
+                    #     print("Login failed - taking screenshot for debugging")
+                    #     # Take screenshot if not redirected to feed
+                    #     return LinkedInGetRecentConnectionsResponse(
+                    #         connections=[],
+                    #         error="Failed to login",
+                    #         # screenshot=screenshot_base64,
+                    #     )
 
-                    # retry waiting for feed page
-                    page.wait_for_url("https://www.linkedin.com/feed/", timeout=15000)
-                    page.wait_for_selector("div.feed-outlet", timeout=10000)
-                    print("Successfully logged in to LinkedIn")
+                    # # retry waiting for feed page
+                    # page.wait_for_url("https://www.linkedin.com/feed/", timeout=15000)
+                    # page.wait_for_selector("div.feed-outlet", timeout=10000)
+                    # print("Successfully logged in to LinkedIn")
                 else:
                     print("Login failed")
                     url = page.url

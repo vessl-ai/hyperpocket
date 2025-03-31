@@ -24,7 +24,6 @@ async def linkedin_basicauth_callback(state: str, token: str):
         key = config().auth.auth_encryption_secret_key.encode()
         decrypted = Fernet(key).decrypt(token.encode()).decode()
         FutureStore.resolve_future(state, decrypted)
-        FutureStore.resolve_future(state, token)
     except ValueError:
         return HTMLResponse(content="failed")
 

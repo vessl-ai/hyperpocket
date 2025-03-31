@@ -37,7 +37,7 @@ def agent(pocket: PocketLangchain):
     )
 
     print("\n\n\n")
-    print("Hello, this is langchain slack agent.")
+    print("Hello, this is linkedin browseruse agent.")
     while True:
         print("user(q to quit) : ", end="")
         user_input = input()
