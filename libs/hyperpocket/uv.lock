@@ -479,7 +479,7 @@ requires-dist = [
     { name = "httpx", specifier = "==0.27" },
     { name = "hyperdock-container", marker = "extra == 'standard'", editable = "../docks/hyperdock-container" },
     { name = "jinja2", specifier = ">=3.1.4" },
-    { name = "multiprocess", specifier = ">=0.70.17" },
+    { name = "multiprocess", specifier = ">=0.70.16" },
     { name = "nest-asyncio", specifier = ">=1.6.0" },
     { name = "pydantic", specifier = ">=2.10.2" },
     { name = "pygithub", specifier = ">=2.5.0" },
