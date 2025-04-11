@@ -11,7 +11,7 @@ dependencies = [
     "uvicorn>=0.32.1",
     "click>=8.1.7",
     "requests>=2.32.3",
-    "httpx==0.27",
+    "httpx==0.28.1",
     "toml>=0.10.2",
     "jinja2>=3.1.4",
     "pygithub>=2.5.0",
