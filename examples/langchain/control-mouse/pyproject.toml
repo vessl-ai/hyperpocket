@@ -1,0 +1,21 @@
+[project]
+name = "control-mouse"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "boto3>=1.36.2",
+    "hyperpocket",
+    "hyperpocket-langchain",
+    "langchain>=0.3.15",
+    "langchain-openai>=0.3.1",
+    "opencv-python>=4.11.0.86",
+    "pillow>=11.1.0",
+    "pyautogui>=0.9.54",
+    "pyscreeze>=1.0.1",
+]
+
+[tool.uv.sources]
+hyperpocket-langchain = { path = "../../../libs/extensions/langchain", editable = true }
+hyperpocket = { path = "../../../libs/hyperpocket", editable = true }
