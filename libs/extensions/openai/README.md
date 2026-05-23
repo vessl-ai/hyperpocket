@@ -97,7 +97,7 @@ if choice.finish_reason == "tool_calls":
         tool_message = pocket.invoke(tool_call)
         messages.append(tool_message)
 
-    repsonse_after_tool_call = llm.chat.completions.create(
+    response_after_tool_call = llm.chat.completions.create(
         model=os.getenv("OPEN_AI_MODEL"),
         messages=messages,
         tools=tool_specs
